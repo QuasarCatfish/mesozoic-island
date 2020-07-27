@@ -158,28 +158,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>repackage-app</id>
-						<phase>package</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<target name="repack-app">
-								<property name="workDirectory" value="${project.build.directory}/app-repack" />
-								<property name="sourceArtifact" value="${project.build.directory}/SPRING-BOOT-app.jar" />
-								<property name="appendWith" value="${project.build.directory}/${project.artifactId}-${project.version}.jar" />
-								<ant antfile="${packager.utilities.directory}/build.xml">
-									<target name="append-and-repack-spring-boot-artiafact" />
-								</ant>
-							</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 </project>
