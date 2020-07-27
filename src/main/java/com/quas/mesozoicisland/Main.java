@@ -37,4 +37,9 @@ public class Main {
 		jda.shutdown();
 		System.exit(0);
 	}
+
+	@RequestMapping("/")
+	String index() {
+		return "index";
+	}
 }
