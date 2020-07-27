@@ -1,5 +1,5 @@
 {
-  "name": "Start on Heroku: Java",
-  "description": "A barebones Java app, which can easily be deployed to Heroku.",
-  "addons": [ "heroku-postgresql" ]
+  "name": "Mesozoic Island",
+  "description": "A dinosaur game for Discord, where players can collect, train, and battle with dinosaurs.",
+  "addons": [ "heroku-jawsdb", "heroku-papertrail" ]
 }
