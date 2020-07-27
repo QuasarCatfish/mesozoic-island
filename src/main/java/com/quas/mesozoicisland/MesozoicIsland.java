@@ -14,6 +14,11 @@ public class MesozoicIsland {
 	public static JDA jda;
 	
 	public static void main(String[] args) throws LoginException, InterruptedException {
+
+		for (String s : args) {
+			System.out.println("argument received : " + s);
+		}
+
 		jda = JDABuilder.create("NjQ0MzQ3MTM3NzIyODEwMzY4.XrHFqw.Hdy_ftzhp-0Ju-aes2YnSMS13U8",
 				GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS)).addEventListeners(new ListenerAdapter() {
 
