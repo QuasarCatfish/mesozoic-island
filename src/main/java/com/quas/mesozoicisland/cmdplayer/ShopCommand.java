@@ -1,0 +1,88 @@
+package com.quas.mesozoicisland.cmdplayer;
+
+import java.util.TreeMap;
+import java.util.regex.Pattern;
+
+import com.quas.mesozoicisland.cmdbase.ICommand;
+import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DiscordChannel;
+import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ShopType;
+import com.quas.mesozoicisland.objects.Item;
+import com.quas.mesozoicisland.objects.Player;
+import com.quas.mesozoicisland.objects.ShopItem;
+import com.quas.mesozoicisland.util.Constants;
+
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+
+public class ShopCommand implements ICommand {
+
+	@Override
+	public Pattern getCommand() {
+		return pattern("shop( .*)?");
+	}
+
+	@Override
+	public AccessLevel getAccessLevel() {
+		return AccessLevel.Trainer;
+	}
+
+	@Override
+	public String getCommandName() {
+		return "shop";
+	}
+
+	@Override
+	public String getCommandSyntax() {
+		return "shop [store]";
+	}
+
+	@Override
+	public String getCommandDescription() {
+		return "Gets a list of items you can purchase in the shop.\nCurrent Stores: " + ShopType.listValues() + ".";
+	}
+
+	@Override
+	public DiscordChannel[] getUsableChannels() {
+		return DiscordChannel.STANDARD_CHANNELS;
+	}
+
+	@Override
+	public DiscordRole[] getRequiredRoles() {
+		return null;
+	}
+
+	@Override
+	public String getRequiredState() {
+		return null;
+	}
+
+	@Override
+	public void run(MessageReceivedEvent event, String... args) {
+		Player p = Player.getPlayer(event.getAuthor().getIdLong());
+		if (p == null) return;
+		
+		ShopType shop = ShopType.of(args.length == 0 ? "" : String.join(" ", args));
+		if (shop == ShopType.Debug && p.getAccessLevel().getLevel() < AccessLevel.Admin.getLevel()) shop = ShopType.Standard;
+		
+		EmbedBuilder eb = new EmbedBuilder();
+		if (shop == ShopType.Tutorial) eb.setTitle("Mesozoic Island Shop - Tutorial");
+		else eb.setTitle("Mesozoic Island Shop - " + shop.getName());
+		eb.setDescription("To purchase one of these items, use `buy <package> [count]`.");
+		eb.setColor(Constants.COLOR);
+		
+		TreeMap<Item, Long> bag = p.getBag();
+		for (ShopItem si : ShopItem.values()) {
+			if (!si.isVisible()) continue;
+			if (si.getShopType() != shop) continue;
+			
+			long stock = si.getPlayerStock(p.getIdLong());
+			String fname = stock == -1 ? "**" + si.getName() + "**" : String.format("**%s** (%,d left in stock)", si.getName(), stock);
+			String fvalue = String.format("__Receive:__ %,d %s (You have %,d)%n__Pay:__ %,d %s (You have %,d)", si.getBuyCount(), si.getBuyItem().toString(si.getBuyCount()), bag.getOrDefault(si.getBuyItem(), 0L), si.getPayCount(), si.getPayItem().toString(si.getPayCount()), bag.getOrDefault(si.getPayItem(), 0L));
+			eb.addField(fname, fvalue, false);
+		}
+		
+		event.getChannel().sendMessage(eb.build()).complete();
+	}
+}
