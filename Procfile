@@ -1,1 +1,1 @@
-worker: sh target/bin/worker
+worker: java -jar target/mesozoic-island-1.0.jar
