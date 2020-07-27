@@ -30,7 +30,14 @@ public class MesozoicIsland {
 					@Override
 					public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
 						if (event.getMessage().getContentRaw().equalsIgnoreCase("!quit")) {
-							shutdown();
+							if (event.getAuthor().getIdLong() == 563661703124877322L) {
+								event.getChannel().sendMessage("Shutting down.").complete();
+								shutdown();
+							} else {
+								event.getChannel().sendMessage("You do not have permission to run this command.").complete();
+							}
+						} else if (event.getMessage().getContentRaw().equalsIgnoreCase("ping")) {
+							event.getChannel().sendMessageFormat("Pong! (%d ms)", event.getJDA().getRestPing().complete()).complete();
 						}
 					}
 				}).build().awaitReady();
