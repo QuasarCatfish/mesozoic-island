@@ -30,7 +30,7 @@ public class MesozoicIsland {
 					}
 				}).build().awaitReady();
 
-		System.out.println("Ready!");
+		System.out.println("Ready for action!");
 	}
 
 	public static void shutdown() {
