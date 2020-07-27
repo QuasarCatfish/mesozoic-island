@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="utilities" basedir=".">
+
+	<!-- Repack and append artifact to Spring Boot App -->
+	<target name="append-and-repack-spring-boot-artiafact">
+
+		<!-- Clean -->
+		<delete dir="${workDirectory}" failonerror="false" />
+		<mkdir dir="${workDirectory}" />
+
+		<!-- Copy the original files -->
+		<copy file="${sourceArtifact}" todir="${workDirectory}" />
+		<copy file="${appendWith}" todir="${workDirectory}" />
+
+		<!-- Get basename -->
+		<basename property="sourceArtifactName" file="${sourceArtifact}" />
+		<basename property="appendArtifactName" file="${appendWith}" />
+
+		<!-- repackage and append -->
+		<repack-jar artifact="${appendArtifactName}" reworkOutputDir="${workDirectory}/repackaged" />
+		<append artifact="${sourceArtifactName}" appendFrom="${workDirectory}/repackaged" location="BOOT-INF/lib" />
+
+	</target>
+
+	<!-- Repackage a single jar -->
+	<macrodef name="repack-jar">
+		<attribute name="artifact" />
+		<attribute name="reworkOutputDir" />
+		<sequential>
+			<echo message="-------------- Repackaging @{artifact} --------------" />
+			<!-- Unpack and delete jar -->
+			<unzip dest="${workDirectory}/tmp" src="${workDirectory}/@{artifact}" />
+			<delete file="${workDirectory}/@{artifact}" />
+
+			<!-- Package jar -->
+			<jar manifest="${workDirectory}/tmp/META-INF/MANIFEST.MF" compress="false" basedir="${workDirectory}/tmp" destfile="@{reworkOutputDir}/@{artifact}" />
+			<delete dir="${workDirectory}/tmp" />
+		</sequential>
+	</macrodef>
+
+	<!-- Append artifact to jar -->
+	<macrodef name="append">
+		<attribute name="artifact" />
+		<attribute name="appendFrom" />
+		<attribute name="location" />
+		<sequential>
+			<echo message="-------------- Unpacking @{artifact} --------------" />
+			<!-- Unpack and delete jar -->
+			<unzip dest="${workDirectory}/tmp" src="${workDirectory}/@{artifact}" />
+			<delete file="${workDirectory}/@{artifact}" />
+
+			<copy todir="${workDirectory}/tmp/@{location}" overwrite="true" force="true">
+				<fileset dir="@{appendFrom}" includes="*.jar" />
+			</copy>
+
+			<!-- Package jar -->
+			<jar manifest="${workDirectory}/tmp/META-INF/MANIFEST.MF" compress="false" basedir="${workDirectory}/tmp" destfile="${workDirectory}/@{artifact}" />
+			<delete dir="${workDirectory}/tmp" />
+		</sequential>
+	</macrodef>
+</project>
