@@ -136,7 +136,10 @@ public class TestCommand implements ICommand {
 			
 			case "actions": {
 				ArrayList<String> print = new ArrayList<String>();
-				for (Action a : Action.getActions()) print.add(a.toString());
+				for (Action a : Action.getActions()) {
+					if (a.isDeleted()) continue;
+					print.add(a.toString());
+				}
 				for (String s : Util.bulkify(print)) event.getChannel().sendMessage(s).complete();
 			} break;
 

@@ -55,6 +55,10 @@ public class Action implements Comparable<Action> {
 		return String.format("(%d, %d, %d, '%s', %d)", action.getActionType(), from, recipient, msg, time);
 	}
 
+	public boolean isDeleted() {
+		return delete;
+	}
+
 	////////////////////////////////////////////////////////////////
 
 	private static TreeSet<Action> actions = new TreeSet<Action>();
@@ -64,9 +68,11 @@ public class Action implements Comparable<Action> {
 	}
 
 	public static void initialize() {
+		System.out.println("Initializing Actions:");
 		try (ResultSet res = JDBC.executeQuery("select * from actions")) {
 			while (res.next()) {
-				new Action(ActionType.getActionType(res.getInt("actionid")), res.getLong("bot"), res.getLong("recipient"), res.getString("msg"), res.getLong("time"));
+				Action a = new Action(ActionType.getActionType(res.getInt("actionid")), res.getLong("bot"), res.getLong("recipient"), res.getString("msg"), res.getLong("time"));
+				System.out.println("\t" + a.toString());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
