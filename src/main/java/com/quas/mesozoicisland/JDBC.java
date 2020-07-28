@@ -37,9 +37,9 @@ public class JDBC {
 	
 	private JDBC() {
 		try {
-			connection = DriverManager.getConnection("jdbc:mysql://jsk3f4rbvp8ayd7w.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/", "zegb93elad8rfnl0", "lq0oocxozsn8egj6");
+			connection = DriverManager.getConnection("jdbc:mysql://blonze2d5mrbmcgf.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/", "h271gdakdzg2x3sm", "ajm5gcmbmn4dmta4");
 			Statement s = connection.createStatement();
-			s.execute("use nskkqzax7tfjfm66;");
+			s.execute("use hehofv6giy6n2qcu;");
 			s.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
