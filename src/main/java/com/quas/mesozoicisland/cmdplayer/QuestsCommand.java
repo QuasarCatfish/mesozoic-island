@@ -93,7 +93,7 @@ public class QuestsCommand implements ICommand {
 				
 				long progress = bag.getOrDefault(item, 0L) - start;
 				
-				sb.append("\n� ");
+				sb.append("\n• ");
 				if (res.getInt("special") == 1) sb.append("[EVENT] ");
 				sb.append("**");
 				sb.append(name);

@@ -73,7 +73,7 @@ public class AdminHelpCommand implements ICommand {
 			// Add command to the list
 			if (command.getCommandName().equalsIgnoreCase(args[1]) && command.canBeUsed(event)) {
 				help.add(command);
-				sb.append("� `");
+				sb.append("• `");
 				sb.append(command.getCommandSyntax());
 				sb.append("`: `");
 				sb.append(command.getCommand().pattern());

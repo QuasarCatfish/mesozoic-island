@@ -1,8 +1,5 @@
 package com.quas.mesozoicisland;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 import javax.security.auth.login.LoginException;
 
 import com.quas.mesozoicisland.battle.SpawnManager;

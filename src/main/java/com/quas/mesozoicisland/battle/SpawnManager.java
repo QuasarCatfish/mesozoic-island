@@ -201,7 +201,7 @@ public class SpawnManager {
 			
 			sb.append("\nDinosaurs:");
 			for (Dinosaur d : wilds.get(tier)) {
-				sb.append("\n� ");
+				sb.append("\n• ");
 				sb.append(d.toString());
 				sb.append(" [");
 				sb.append(d.getElement().toString());

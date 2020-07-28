@@ -228,24 +228,24 @@ public class JDBC {
 				int itemid = in.nextInt();
 				long itemdmg = in.nextLong();
 				long count = in.hasNextLong() ? in.nextLong() : 1L;
-				ret.append(String.format("� %,d %s%n", count, Item.getItem(new Pair<Integer, Long>(itemid, itemdmg)).toString(count)));
+				ret.append(String.format("• %,d %s%n", count, Item.getItem(new Pair<Integer, Long>(itemid, itemdmg)).toString(count)));
 				break;
 			case "d": case "dino": case "dinosaur":
 				int dinoid = in.nextInt();
 				int dinoform = in.nextInt();
 				int dinorp = in.hasNextInt() ? in.nextInt() : 1;
-				ret.append(String.format("� %,d %s Crystal%s%n", dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
+				ret.append(String.format("• %,d %s Crystal%s%n", dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
 				break;
 			case "r": case "rune":
 				int runeid = in.nextInt();
 				int runerp = in.hasNextInt() ? in.nextInt() : 1;
-				ret.append(String.format("� %,d %s Rune%s%n", runerp, Rune.getRune(runeid).getName(), runerp == 1 || runerp == -1 ? "" : "s"));
+				ret.append(String.format("• %,d %s Rune%s%n", runerp, Rune.getRune(runeid).getName(), runerp == 1 || runerp == -1 ? "" : "s"));
 				break;
 			case "e": case "egg":
 				int eggdex = in.nextInt();
 				int eggform = in.nextInt();
 				Egg egg = Egg.getRandomEgg(new Pair<Integer, Integer>(eggdex, eggform));
-				ret.append(String.format("� %s %s%n", Util.getArticle(egg.getEggName()), egg.getEggName()));
+				ret.append(String.format("• %s %s%n", Util.getArticle(egg.getEggName()), egg.getEggName()));
 				break;
 			}
 		}

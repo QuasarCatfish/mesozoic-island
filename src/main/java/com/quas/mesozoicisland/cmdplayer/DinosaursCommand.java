@@ -44,7 +44,7 @@ public class DinosaursCommand implements ICommand {
 
 	@Override
 	public String getCommandDescription() {
-		return "Lists the dinosaurs that you own.\n� Filters: " + DinosaurFilter.listValues() + ".\n� Orderings: " + DinosaurOrder.listValues() + ".";
+		return "Lists the dinosaurs that you own.\n• Filters: " + DinosaurFilter.listValues() + ".\n• Orderings: " + DinosaurOrder.listValues() + ".";
 	}
 
 	@Override
