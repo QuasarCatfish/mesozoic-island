@@ -36,7 +36,6 @@ public class Action implements Comparable<Action> {
 		this.msg = msg;
 		this.time = time;
 		this.delete = false;
-		actions.add(this);
 		System.out.println("Creating new action - " + this.toString());
 	}
 
@@ -52,7 +51,7 @@ public class Action implements Comparable<Action> {
 
 	@Override
 	public String toString() {
-		return String.format("(%d, %d, %d, '%s', %d)", action.getActionType(), from, recipient, msg, time);
+		return String.format("(%d, %d, %d, '%s', %d)", action.getActionType(), from, recipient, msg.replaceAll("\\*\''", "\\\''"), time);
 	}
 
 	public boolean isDeleted() {
@@ -62,15 +61,12 @@ public class Action implements Comparable<Action> {
 	////////////////////////////////////////////////////////////////
 
 	private static ArrayList<Action> actions = new ArrayList<Action>();
-	public static final int DO_ACTIONS = 0;
-	public static final int LOG = 1;
-
 
 	public static ArrayList<Action> getActions() {
 		return actions;
 	}
 
-	public static void initialize() {
+	public static synchronized void initialize() {
 		System.out.println("Initializing Actions:");
 		try (ResultSet res = JDBC.executeQuery("select * from actions;")) {
 			while (res.next()) {
@@ -81,18 +77,7 @@ public class Action implements Comparable<Action> {
 		}
 	}
 
-	public static synchronized void run(Guild g, int var) {
-		switch (var) {
-		case DO_ACTIONS:
-			doActions(g);
-			break;
-		case LOG:
-			log();
-			break;
-		}
-	}
-
-	private static void log() {
+	public static synchronized void log() {
 		for (int q = 0; q < actions.size(); q++) {
 			if (actions.get(q).delete) {
 				actions.remove(q);
@@ -104,7 +89,7 @@ public class Action implements Comparable<Action> {
 		JDBC.executeUpdate("insert into actions(actiontype, bot, recipient, msg, time) values %s;", Util.join(actions, ",", 0, actions.size()));
 	}
 
-	private static void doActions(Guild guild) {
+	public static synchronized void doActions(Guild guild) {
 		long self = guild.getSelfMember().getUser().getIdLong();
 		MessageChannel channel = Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getBot(self));
 
@@ -190,99 +175,99 @@ public class Action implements Comparable<Action> {
 		}
 	}
 
-	public static void sendMessage(long from, DiscordChannel channel, String...msg) {
+	public static synchronized void sendMessage(long from, DiscordChannel channel, String...msg) {
 		for (String m : msg) {
-			new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), 0);
+			actions.add(new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), 0));
 		}
 	}
 	
-	public static void sendMessage(long from, MessageChannel channel, String...msg) {
+	public static synchronized void sendMessage(long from, MessageChannel channel, String...msg) {
 		for (String m : msg) {
-			new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), 0);
+			actions.add(new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), 0));
 		}
 	}
 	
-	public static void sendDelayedMessage(long from, long after, DiscordChannel channel, String...msg) {
+	public static synchronized void sendDelayedMessage(long from, long after, DiscordChannel channel, String...msg) {
 		for (String m : msg) {
-			new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), System.currentTimeMillis() + after);
+			actions.add(new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), System.currentTimeMillis() + after));
 		}
 	}
 	
-	public static void sendDelayedMessage(long from, long after, MessageChannel channel, String...msg) {
+	public static synchronized void sendDelayedMessage(long from, long after, MessageChannel channel, String...msg) {
 		for (String m : msg) {
-			new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), System.currentTimeMillis() + after);
+			actions.add(new Action(ActionType.SendGuildMessage, from, channel.getIdLong(), Util.cleanQuotes(m), System.currentTimeMillis() + after));
 		}
 	}
 	
-	public static void sendPrivateMessage(long from, long to, String...msg) {
+	public static synchronized void sendPrivateMessage(long from, long to, String...msg) {
 		for (String m : msg) {
-			new Action(ActionType.SendPrivateMessage, from, to, Util.cleanQuotes(m), 0);
+			actions.add(new Action(ActionType.SendPrivateMessage, from, to, Util.cleanQuotes(m), 0));
 		}
 	}
 	
-	public static void sendDelayedPrivateMessage(long from, long to, long after, String...msg) {
+	public static synchronized void sendDelayedPrivateMessage(long from, long to, long after, String...msg) {
 		for (String m : msg) {
-			new Action(ActionType.SendPrivateMessage, from, to, Util.cleanQuotes(m), System.currentTimeMillis() + after);
+			actions.add(new Action(ActionType.SendPrivateMessage, from, to, Util.cleanQuotes(m), System.currentTimeMillis() + after));
 		}
 	}
 	
-	public static void deleteMessage(long from, long channel, long messageid) {
-		new Action(ActionType.DeleteMessage, from, channel, Long.toString(messageid), 0);
+	public static synchronized void deleteMessage(long from, long channel, long messageid) {
+		actions.add(new Action(ActionType.DeleteMessage, from, channel, Long.toString(messageid), 0));
 	}
 	
-	public static void deleteMessageDelayed(long from, long channel, long messageid, long after) {
-		new Action(ActionType.DeleteMessage, from, channel, Long.toString(messageid), System.currentTimeMillis() + after);
+	public static synchronized void deleteMessageDelayed(long from, long channel, long messageid, long after) {
+		actions.add(new Action(ActionType.DeleteMessage, from, channel, Long.toString(messageid), System.currentTimeMillis() + after));
 	}
 	
-	public static void logBattleChannel(long from, long channel) {
-		new Action(ActionType.LogBattleChannel, from, channel, "", 0);
+	public static synchronized void logBattleChannel(long from, long channel) {
+		actions.add(new Action(ActionType.LogBattleChannel, from, channel, "", 0));
 	}
 	
-	public static void logBattleChannelDelayed(long from, long channel, long after) {
-		new Action(ActionType.LogBattleChannel, from, channel, "", System.currentTimeMillis() + after);
+	public static synchronized void logBattleChannelDelayed(long from, long channel, long after) {
+		actions.add(new Action(ActionType.LogBattleChannel, from, channel, "", System.currentTimeMillis() + after));
 	}
 	
-	public static void removePlayerFromBattle(long player) {
-		new Action(ActionType.RemovePlayerFromBattle, 0, player, "", 0);
+	public static synchronized void removePlayerFromBattle(long player) {
+		actions.add(new Action(ActionType.RemovePlayerFromBattle, 0, player, "", 0));
 	}
 	
-	public static void removePlayerFromBattleDelayed(long player, long after) {
-		new Action(ActionType.RemovePlayerFromBattle, 0, player, "", System.currentTimeMillis() + after);
+	public static synchronized void removePlayerFromBattleDelayed(long player, long after) {
+		actions.add(new Action(ActionType.RemovePlayerFromBattle, 0, player, "", System.currentTimeMillis() + after));
 	}
 	
-	public static void addDinosaur(long to, String dino) {
-		new Action(ActionType.GiveDinosaur, 0, to, dino, 0);
+	public static synchronized void addDinosaur(long to, String dino) {
+		actions.add(new Action(ActionType.GiveDinosaur, 0, to, dino, 0));
 	}
 	
-	public static void addDinosaurDelayed(long to, long after, String dino) {
-		new Action(ActionType.GiveDinosaur, 0, to, dino, System.currentTimeMillis() + after);
+	public static synchronized void addDinosaurDelayed(long to, long after, String dino) {
+		actions.add(new Action(ActionType.GiveDinosaur, 0, to, dino, System.currentTimeMillis() + after));
 	}
 	
-	public static void addRune(long to, int rune) {
-		new Action(ActionType.GiveRune, 0, to, Integer.toString(rune), 0);
+	public static synchronized void addRune(long to, int rune) {
+		actions.add(new Action(ActionType.GiveRune, 0, to, Integer.toString(rune), 0));
 	}
 	
-	public static void addRuneDelayed(long to, long after, int rune) {
-		new Action(ActionType.GiveRune, 0, to, Integer.toString(rune), System.currentTimeMillis() + after);
+	public static synchronized void addRuneDelayed(long to, long after, int rune) {
+		actions.add(new Action(ActionType.GiveRune, 0, to, Integer.toString(rune), System.currentTimeMillis() + after));
 	}
 	
-	public static void addItem(long to, Pair<Integer, Long> item, long count) {
-		new Action(ActionType.GiveItem, 0, to, String.format("%d %d %d", item.getFirstValue(), item.getSecondValue(), count), 0);
+	public static synchronized void addItem(long to, Pair<Integer, Long> item, long count) {
+		actions.add(new Action(ActionType.GiveItem, 0, to, String.format("%d %d %d", item.getFirstValue(), item.getSecondValue(), count), 0));
 	}
 	
-	public static void addItemDelayed(long to, long after, Pair<Integer, Long> item, long count) {
-		new Action(ActionType.GiveItem, 0, to, String.format("%d %d %d", item.getFirstValue(), item.getSecondValue(), count), System.currentTimeMillis() + after);
+	public static synchronized void addItemDelayed(long to, long after, Pair<Integer, Long> item, long count) {
+		actions.add(new Action(ActionType.GiveItem, 0, to, String.format("%d %d %d", item.getFirstValue(), item.getSecondValue(), count), System.currentTimeMillis() + after));
 	}
 	
-	public static void addXp(long to, String dino, long xp) {
-		new Action(ActionType.AddXpToDinosaur, 0, to, dino + " " + xp, 0);
+	public static synchronized void addXp(long to, String dino, long xp) {
+		actions.add(new Action(ActionType.AddXpToDinosaur, 0, to, dino + " " + xp, 0));
 	}
 	
-	public static void addXpDelayed(long to, long after, String dino, long xp) {
-		new Action(ActionType.AddXpToDinosaur, 0, to, dino + " " + xp, System.currentTimeMillis() + after);
+	public static synchronized void addXpDelayed(long to, long after, String dino, long xp) {
+		actions.add(new Action(ActionType.AddXpToDinosaur, 0, to, dino + " " + xp, System.currentTimeMillis() + after));
 	}
 	
-	public static void addRedeemDelayed(long from, long to, long after, String redeem) {
-		new Action(ActionType.Redeem, from, to, redeem, System.currentTimeMillis() + after);
+	public static synchronized void addRedeemDelayed(long from, long to, long after, String redeem) {
+		actions.add(new Action(ActionType.Redeem, from, to, redeem, System.currentTimeMillis() + after));
 	}
 }
