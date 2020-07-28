@@ -59,6 +59,10 @@ public class Action implements Comparable<Action> {
 
 	private static TreeSet<Action> actions = new TreeSet<Action>();
 
+	public static TreeSet<Action> getActions() {
+		return actions;
+	}
+
 	public static void initialize() {
 		try (ResultSet res = JDBC.executeQuery("select * from actions")) {
 			while (res.next()) {

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
@@ -15,10 +16,12 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ShopType;
 import com.quas.mesozoicisland.objects.Egg;
+import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Daily;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Pair;
+import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -131,6 +134,12 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, `%s`.", event.getAuthor().getAsMention(), ShopType.Tutorial.getName()).complete();
 			} break;
 			
+			case "actions": {
+				ArrayList<String> print = new ArrayList<String>();
+				for (Action a : Action.getActions()) print.add(a.toString());
+				for (String s : Util.bulkify(print)) event.getChannel().sendMessage(s).complete();
+			} break;
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
