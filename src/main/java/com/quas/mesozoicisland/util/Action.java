@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
 import com.quas.mesozoicisland.JDBC;
@@ -38,6 +37,7 @@ public class Action implements Comparable<Action> {
 		this.time = time;
 		this.delete = false;
 		actions.add(this);
+		System.out.println("Creating new action - " + this.toString());
 	}
 
 	@Override
@@ -61,9 +61,12 @@ public class Action implements Comparable<Action> {
 
 	////////////////////////////////////////////////////////////////
 
-	private static TreeSet<Action> actions = new TreeSet<Action>();
+	private static ArrayList<Action> actions = new ArrayList<Action>();
+	public static final int DO_ACTIONS = 0;
+	public static final int LOG = 1;
 
-	public static TreeSet<Action> getActions() {
+
+	public static ArrayList<Action> getActions() {
 		return actions;
 	}
 
@@ -71,24 +74,37 @@ public class Action implements Comparable<Action> {
 		System.out.println("Initializing Actions:");
 		try (ResultSet res = JDBC.executeQuery("select * from actions;")) {
 			while (res.next()) {
-				Action a = new Action(ActionType.getActionType(res.getInt("actionid")), res.getLong("bot"), res.getLong("recipient"), res.getString("msg"), res.getLong("time"));
-				System.out.println("\t" + a.toString());
+				new Action(ActionType.getActionType(res.getInt("actiontype")), res.getLong("bot"), res.getLong("recipient"), res.getString("msg"), res.getLong("time"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public static void log() {
-		ArrayList<Action> delete = new ArrayList<Action>();
-		for (Action a : actions) if (a.delete) delete.add(a);
-		actions.removeAll(delete);
+	public static synchronized void run(Guild g, int var) {
+		switch (var) {
+		case DO_ACTIONS:
+			doActions(g);
+			break;
+		case LOG:
+			log();
+			break;
+		}
+	}
 
-		// JDBC.executeUpdate("delete from actions where actionid > 0;");
+	private static void log() {
+		for (int q = 0; q < actions.size(); q++) {
+			if (actions.get(q).delete) {
+				actions.remove(q);
+				q--;
+			}
+		}
+
+		JDBC.executeUpdate("delete from actions where actionid > 0;");
 		JDBC.executeUpdate("insert into actions(actiontype, bot, recipient, msg, time) values %s;", Util.join(actions, ",", 0, actions.size()));
 	}
 
-	public static void doActions(Guild guild) {
+	private static void doActions(Guild guild) {
 		long self = guild.getSelfMember().getUser().getIdLong();
 		MessageChannel channel = Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getBot(self));
 

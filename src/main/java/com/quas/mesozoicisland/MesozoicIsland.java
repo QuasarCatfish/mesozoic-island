@@ -334,8 +334,8 @@ public class MesozoicIsland {
 				while (true) {
 					// Do for 10 minute.
 					for (int q = 1; q <= 600; q++) {
-						Action.doActions(professor.getGuild());
-						Action.doActions(assistant.getGuild());
+						Action.run(professor.getGuild(), Action.DO_ACTIONS);
+						Action.run(assistant.getGuild(), Action.DO_ACTIONS);
 						if (SpawnManager.doAutoSpawn()) SpawnManager.trySpawn();
 						if (Constants.UPDATE_EGG_HP && q % 60 == 0) JDBC.updateEggs();
 						Util.sleep(1_000);
@@ -343,7 +343,7 @@ public class MesozoicIsland {
 					
 					// Ping database.
 					System.out.printf("Ping at %s!\n", Util.formatTime(System.currentTimeMillis() - start));
-					Action.log();
+					Action.run(null, Action.LOG);
 				}
 			};
 		}.start();
@@ -352,7 +352,7 @@ public class MesozoicIsland {
 			@Override
 			public void run() {
 				System.out.println("Shutting down.");
-				Action.log();
+				Action.run(null, Action.LOG);
 				professor.getJDA().shutdown();
 				assistant.getJDA().shutdown();
 			}

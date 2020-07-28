@@ -48,16 +48,16 @@ public class Util {
 		return sb.toString();
 	}
 	
-	public static <T extends Collection<V>, V> String join(T arr, String join, int start, int end) {
+	public static String join(Collection<?> arr, String join, int start, int end) {
 		StringBuilder sb = new StringBuilder();
 		int q = -1;
-		for (V var : arr) {
+		for (Object var : arr) {
 			q++;
 			if (q < start || q >= end) continue;
 			sb.append(var.toString());
 			sb.append(join);
 		}
-		sb.setLength(sb.length() - join.length());
+		if (sb.length() >= join.length()) sb.setLength(sb.length() - join.length());
 		return sb.toString();
 	}
 	
