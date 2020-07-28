@@ -136,6 +136,7 @@ public class TestCommand implements ICommand {
 			
 			case "actions": {
 				ArrayList<String> print = new ArrayList<String>();
+				print.add("Actions:");
 				for (Action a : Action.getActions()) {
 					if (a.isDeleted()) continue;
 					print.add(a.toString());

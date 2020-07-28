@@ -69,7 +69,7 @@ public class Action implements Comparable<Action> {
 
 	public static void initialize() {
 		System.out.println("Initializing Actions:");
-		try (ResultSet res = JDBC.executeQuery("select * from actions")) {
+		try (ResultSet res = JDBC.executeQuery("select * from actions;")) {
 			while (res.next()) {
 				Action a = new Action(ActionType.getActionType(res.getInt("actionid")), res.getLong("bot"), res.getLong("recipient"), res.getString("msg"), res.getLong("time"));
 				System.out.println("\t" + a.toString());
@@ -84,7 +84,7 @@ public class Action implements Comparable<Action> {
 		for (Action a : actions) if (a.delete) delete.add(a);
 		actions.removeAll(delete);
 
-		JDBC.executeUpdate("delete from actions where actionid > 0;");
+		// JDBC.executeUpdate("delete from actions where actionid > 0;");
 		JDBC.executeUpdate("insert into actions(actiontype, bot, recipient, msg, time) values %s;", Util.join(actions, ",", 0, actions.size()));
 	}
 

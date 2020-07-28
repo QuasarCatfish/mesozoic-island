@@ -351,6 +351,7 @@ public class MesozoicIsland {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
 			public void run() {
+				System.out.println("Shutting down.");
 				Action.log();
 				professor.getJDA().shutdown();
 				assistant.getJDA().shutdown();
