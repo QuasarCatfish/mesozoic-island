@@ -93,7 +93,8 @@ public class Action implements Comparable<Action> {
 		long self = guild.getSelfMember().getUser().getIdLong();
 		MessageChannel channel = Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getBot(self));
 
-		for (Action a : actions) {
+		for (int q = 0; q < actions.size(); q++) {
+			Action a = actions.get(q);
 			if (a.delete) continue;
 			if (System.currentTimeMillis() < a.time) continue;
 			if (a.from != 0 && a.from != self) continue;
