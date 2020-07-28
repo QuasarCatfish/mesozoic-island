@@ -6,7 +6,6 @@ import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
-import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 

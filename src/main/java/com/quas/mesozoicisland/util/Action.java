@@ -52,7 +52,7 @@ public class Action implements Comparable<Action> {
 
 	@Override
 	public String toString() {
-		return String.format("(%d, %d, %d '%s', %d)");
+		return String.format("(%d, %d, %d '%s', %d)", action.getActionType(), from, recipient, msg, time);
 	}
 
 	////////////////////////////////////////////////////////////////
