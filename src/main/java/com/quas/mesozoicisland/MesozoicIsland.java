@@ -21,11 +21,11 @@ import com.quas.mesozoicisland.cmdadmin.GiveRuneCommand;
 import com.quas.mesozoicisland.cmdadmin.GuildDemoteCommand;
 import com.quas.mesozoicisland.cmdadmin.GuildKickCommand;
 import com.quas.mesozoicisland.cmdadmin.GuildPromoteCommand;
+import com.quas.mesozoicisland.cmdadmin.InformationChannelsCommand;
 import com.quas.mesozoicisland.cmdadmin.MuteCommand;
 import com.quas.mesozoicisland.cmdadmin.RadioCommand;
 import com.quas.mesozoicisland.cmdadmin.RemindCommand;
 import com.quas.mesozoicisland.cmdadmin.RenamePlayerCommand;
-import com.quas.mesozoicisland.cmdadmin.RulesCommand;
 import com.quas.mesozoicisland.cmdadmin.SetColorCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnDungeonCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnEggCommand;
@@ -68,6 +68,7 @@ import com.quas.mesozoicisland.cmdplayer.InfoTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.ItemCommand;
 import com.quas.mesozoicisland.cmdplayer.ListEventsCommand;
 import com.quas.mesozoicisland.cmdplayer.ListTeamsCommand;
+import com.quas.mesozoicisland.cmdplayer.MailCheckAllCommand;
 import com.quas.mesozoicisland.cmdplayer.MailCheckCommand;
 import com.quas.mesozoicisland.cmdplayer.MailOpenCommand;
 import com.quas.mesozoicisland.cmdplayer.NicknameCommand;
@@ -162,7 +163,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(professor.getIdLong(), new SuggestionMarker());
 		CommandManager.addCommand(professor.getIdLong(), new AnnounceCommand());
 		CommandManager.addCommand(professor.getIdLong(), new ClearChannelCommand());
-		CommandManager.addCommand(professor.getIdLong(), new RulesCommand());
+		CommandManager.addCommand(professor.getIdLong(), new InformationChannelsCommand());
 //		CommandManager.addCommand(professor.getIdLong(), new Command());
 //		CommandManager.addCommand(professor.getIdLong(), new Command());
 		
@@ -249,6 +250,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new ListTeamsCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new RedeemCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new MailCheckCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new MailCheckAllCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new MailOpenCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new GuildJoinCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new GuildKickCommand());
@@ -304,7 +306,6 @@ public class MesozoicIsland {
 		
 		// Other Initialization
 		Event.initialize();
-		Action.initialize();
 		
 		// Send Ready Message
 		Action.sendMessage(professor.getIdLong(), Constants.SPAWN_CHANNEL, "Ready.");
@@ -343,7 +344,7 @@ public class MesozoicIsland {
 					
 					// Ping database.
 					System.out.printf("Ping at %s!\n", Util.formatTime(System.currentTimeMillis() - start));
-					Action.log();
+					JDBC.ping();
 				}
 			};
 		}.start();
@@ -352,7 +353,6 @@ public class MesozoicIsland {
 			@Override
 			public void run() {
 				System.out.println("Shutting down.");
-				Action.log();
 				professor.getJDA().shutdown();
 				assistant.getJDA().shutdown();
 			}

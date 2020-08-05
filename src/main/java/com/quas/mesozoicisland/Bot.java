@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 public class Bot {
 
 	private JDA jda;
+	private Guild guild = null;
 	
 	public Bot(String token, MesozoicListenerAdapter mla) throws LoginException, InterruptedException {
 		jda = JDABuilder.create(token, GatewayIntent.getIntents(GatewayIntent.ALL_INTENTS)).addEventListeners(mla).build().awaitReady();
@@ -27,7 +28,8 @@ public class Bot {
 	}
 	
 	public Guild getGuild() {
-		return jda.getGuildById(Constants.GUILD_ID);
+		if (guild == null) guild = jda.getGuildById(Constants.GUILD_ID);
+		return guild;
 	}
 	
 	public String getName() {

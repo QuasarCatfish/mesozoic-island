@@ -72,7 +72,7 @@ public class AnnounceCommand implements ICommand {
 		mb.append(m.getContentRaw());
 		mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.ROLE, MentionType.USER);
 		if (!m.getEmbeds().isEmpty()) mb.setEmbed(m.getEmbeds().get(0));
-		DiscordChannel.PastAnnouncemens.getChannel(MesozoicIsland.getProfessor()).sendMessage(mb.build()).complete();
+		DiscordChannel.AnnouncementLog.getChannel(MesozoicIsland.getProfessor()).sendMessage(mb.build()).complete();
 		
 		event.getChannel().sendMessageFormat("%s, announcement sent!", event.getAuthor().getAsMention()).complete();
 	}

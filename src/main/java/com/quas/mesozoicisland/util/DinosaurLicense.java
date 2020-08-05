@@ -85,7 +85,7 @@ public class DinosaurLicense {
 			g.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
 			g.drawString("Issued: " + p.getJoinDate(), LEFT, TEXT_X + LINE_HEIGHT / 2);
 			
-			File file = new File(p.getId() + ".png");
+			File file = new File(Constants.RESOURCE_PATH + "Licenses\\" + p.getId() + ".png");
 			ImageIO.write(bi, "PNG", file);
 			return file;
 		} catch (Exception e) {

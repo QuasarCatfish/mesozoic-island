@@ -16,6 +16,7 @@ import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.EggColor;
 import com.quas.mesozoicisland.enums.EggPattern;
 import com.quas.mesozoicisland.enums.EggPattern.EggPatternTag;
+import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 
@@ -112,10 +113,10 @@ public class Egg implements Comparable<Egg> {
 	}
 	
 	public File getImage() {
-		File out = new File(String.format("SavedEggs/egg_c%d_bp%d_bpc%d_p%d_pc%d.png", color.getId(), basepattern.getId(), basepatterncolor.getId(), pattern.getId(), patterncolor.getId()));
+		File out = new File(String.format(Constants.RESOURCE_PATH + "SavedEggs\\egg_c%d_bp%d_bpc%d_p%d_pc%d.png", color.getId(), basepattern.getId(), basepatterncolor.getId(), pattern.getId(), patterncolor.getId()));
 		if (out.exists()) return out;
 		
-		File folder = new File("Eggs");
+		File folder = new File(Constants.RESOURCE_PATH + "Eggs");
 		
 		File egg = null, pattern = null, basepattern = null;
 		for (File f : folder.listFiles()) {
@@ -278,6 +279,20 @@ public class Egg implements Comparable<Egg> {
 		return e;
 	}
 	
+	public static Egg getEgg(EggColor color) {
+		return getEgg(color, EggPattern.None, EggColor.Black, EggPattern.None, EggColor.Black);
+	}
+
+	public static Egg getEgg(EggColor color, EggPattern basepattern, EggColor basepatterncolor, EggPattern pattern, EggColor patterncolor) {
+		Egg egg = new Egg();
+		egg.color = color;
+		egg.basepattern = basepattern;
+		egg.basepatterncolor = basepatterncolor;
+		egg.pattern = pattern;
+		egg.patterncolor = patterncolor;
+		return egg;
+	}
+
 	public static EggColor nextRandomColor(DinosaurForm form) {
 		return EggColor.getChoosableColors()[MesozoicRandom.nextInt(EggColor.getChoosableColors().length)];
 	}

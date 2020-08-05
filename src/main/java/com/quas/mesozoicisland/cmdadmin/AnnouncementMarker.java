@@ -63,7 +63,7 @@ public class AnnouncementMarker implements ICommand {
 
 	@Override
 	public void run(MessageReceivedEvent event, String... args) {
-		TextChannel pa = DiscordChannel.PastAnnouncemens.getChannel(MesozoicIsland.getProfessor());
+		TextChannel pa = DiscordChannel.AnnouncementLog.getChannel(MesozoicIsland.getProfessor());
 		String raw = event.getMessage().getContentRaw();
 		
 		MessageBuilder mb = new MessageBuilder();

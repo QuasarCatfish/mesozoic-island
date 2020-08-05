@@ -19,10 +19,11 @@ public enum DiscordChannel {
 	
 	// Information
 	Rules(650471046436356107L),
+	Introduction(650471102933630995L),
+	Channels(730762074401275914L),
 	Announcements(650471070180180021L),
 	DailyAnnouncements(717248577839300618L),
-	PastAnnouncemens(726486491177680977L),
-	Introduction(650471102933630995L),
+	AnnouncementLog(726486491177680977L),
 	Changelog(650471168872022069L),
 	
 	// Game

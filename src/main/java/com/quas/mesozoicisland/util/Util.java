@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -366,11 +367,20 @@ public class Util {
 	///////////////////////////////////////////////////////////////
 	
 	public static long getLineCount() {
-		File main = new File("C:\\Users\\ctsn9\\eclipse-workspace\\Mesozoic Island Discord Bot\\src\\");
+		File main = new File(Constants.JAVA_PATH);
 		long lines = 0;
 		
-		for (File folder : main.listFiles()) {
-			for (File f : folder.listFiles()) {
+		ArrayDeque<File> queue = new ArrayDeque<File>();
+		queue.add(main);
+
+		while (!queue.isEmpty()) {
+			File f = queue.poll();
+
+			if (f.isDirectory()) {
+				for (File ff : f.listFiles()) {
+					queue.add(ff);
+				}
+			} else {
 				try (Scanner read = new Scanner(f)) {
 					int linenum = 0;
 					while (read.hasNextLine()) {
@@ -390,7 +400,7 @@ public class Util {
 				}
 			}
 		}
-		
+
 		return lines;
 	}
 	
