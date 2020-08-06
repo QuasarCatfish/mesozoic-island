@@ -1,5 +1,0 @@
-{
-  "name": "Mesozoic Island",
-  "description": "A dinosaur game for Discord, where players can collect, train, and battle with dinosaurs.",
-  "addons": [ "heroku-jawsdb", "heroku-papertrail" ]
-}

@@ -1,1 +1,0 @@
-worker: java -jar target/mesozoic-island-1.0.jar
