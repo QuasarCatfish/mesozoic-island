@@ -90,6 +90,7 @@ public class Constants {
 	
 	// Misc
 	public static final String ZERO_WIDTH_SPACE = "\u200B";
+	public static final String BULLET_POINT = "\u2022";
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {
 		ArrayList<Pair<Dinosaur, String>> pairs = new ArrayList<Pair<Dinosaur, String>>();

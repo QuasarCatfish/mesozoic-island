@@ -24,8 +24,8 @@ public class Daily {
 		
 		// Daily & Dinosaur Tickets
 		sb.append(String.format("\n**Daily Update - %s %s**", Util.getMonth(today.getMonthInt()), Util.getOrdinal(today.getDayInt())));
-		sb.append("\n� Players can now claim their daily again.");
-		sb.append("\n� Dungeon Ticket dinosaurs have been refreshed.");
+		sb.append("\n" + Constants.BULLET_POINT + " Players can now claim their daily again.");
+		sb.append("\n" + Constants.BULLET_POINT + " Dungeon Ticket dinosaurs have been refreshed.");
 
 		// Raid Passes
 		{
@@ -36,19 +36,19 @@ public class Daily {
 				// No Update
 			} else if (var == null) {
 				JDBC.executeUpdate("update vars set value = null where var = 'raidpass';");
-				sb.append("\n� Raid Passes have been cleared. There is no raid available today.");
+				sb.append("\n" + Constants.BULLET_POINT + " Raid Passes have been cleared. There is no raid available today.");
 			} else if (old == null) {
 				JDBC.executeUpdate("update vars set value = '%s' where var = 'raidpass';", Util.cleanQuotes(var));
 				Item item = Item.getItem(new Pair<Integer, Long>(701, Long.parseLong(var)));
 				Dinosaur raidboss = Dinosaur.getDinosaur(Integer.parseInt(item.getData().split("\\s+")[0]), DinosaurForm.RaidBoss.getId());
-				sb.append("\n� Today's raid features ");
+				sb.append("\n" + Constants.BULLET_POINT + " Today's raid features ");
 				sb.append(raidboss.getEffectiveName());
 				sb.append(".");
 			} else {
 				JDBC.executeUpdate("update vars set value = '%s' where var = 'raidpass';", Util.cleanQuotes(var));
 				Item item = Item.getItem(new Pair<Integer, Long>(701, Long.parseLong(var)));
 				Dinosaur raidboss = Dinosaur.getDinosaur(Integer.parseInt(item.getData().split("\\s+")[0]), DinosaurForm.RaidBoss.getId());
-				sb.append("\n� Raid Passes have been cleared. Today's raid features ");
+				sb.append("\n" + Constants.BULLET_POINT + " Raid Passes have been cleared. Today's raid features ");
 				sb.append(raidboss.getEffectiveName());
 				sb.append(".");
 			}
@@ -81,7 +81,7 @@ public class Daily {
 								player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward));
 					}
 					
-					sb.append("\n� Today's quest is \"");
+					sb.append("\n" + Constants.BULLET_POINT + " Today's quest is \"");
 					sb.append(name);
 					sb.append("\". All players with space in their ");
 					sb.append(Item.getItem(new Pair<Integer, Long>(5, 0L)).toString());
@@ -106,7 +106,7 @@ public class Daily {
 				sb.append("\n\n**Birthdays**");
 				for (long id : birthdays) {
 					Player p = Player.getPlayer(id);
-					sb.append("\n� ");
+					sb.append("\n" + Constants.BULLET_POINT);
 					sb.append(p.getAsMention());
 					Constants.addBirthdayMail(p);
 				}

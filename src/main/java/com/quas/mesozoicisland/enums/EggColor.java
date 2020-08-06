@@ -121,7 +121,7 @@ public enum EggColor {
 	Red("Red", 255, 0, 0),
 	RosyBrown("Rosy Brown", 188, 143, 143),
 	RoyalBlue("Royal Blue", 65, 105, 225),
-	SaddleBrown("Saddle Brown", 139, 69, 19),
+	SaddleBrown("Chocolate", 139, 69, 19),
 	Salmon("Salmon", 250, 128, 114),
 	SandyBrown("Sandy Brown", 244, 164, 96),
 	SeaGreen("Sea Green", 46, 139, 87),

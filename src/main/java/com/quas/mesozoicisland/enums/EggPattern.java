@@ -6,7 +6,7 @@ public enum EggPattern {
 
 	None("None", "", EggPatternTag.None),
 	Star("Star", "star.png", EggPatternTag.None),
-	Circle("Circle", "circle.png", EggPatternTag.None),
+	Circle("Circles", "circle.png", EggPatternTag.None),
 	TwoTone1("Two-Tone", "twotone1.png", EggPatternTag.TwoTone, false),
 	TwoTone2("Two-Tone", "twotone2.png", EggPatternTag.TwoTone, false),
 	TwoTone3("Two-Tone", "twotone3.png", EggPatternTag.TwoTone, false),
