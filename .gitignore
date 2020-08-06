@@ -8,5 +8,4 @@ target/
 docs/tmp/
 docs/java-getting-started/
 docs/deploying-spring-boot-apps/
-src/main/resources/SavedEggs/
 src/main/java/com/quas/mesozoicisland/util/Secrets.java
