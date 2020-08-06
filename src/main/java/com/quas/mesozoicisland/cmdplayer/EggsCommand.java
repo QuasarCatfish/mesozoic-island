@@ -14,7 +14,6 @@ import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
-import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.entities.PrivateChannel;
