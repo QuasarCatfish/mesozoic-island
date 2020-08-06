@@ -10,9 +10,9 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ShopType;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.ShopItem;
-import com.quas.mesozoicisland.util.Stats;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -108,7 +108,7 @@ public class BuyCommand implements ICommand {
 		JDBC.addItem(p.getIdLong(), shopitem.getPayItem().getIdDmg(), -pcount);
 		JDBC.addItem(p.getIdLong(), shopitem.getBuyItem().getIdDmg(), bcount);
 		event.getChannel().sendMessageFormat("%s, you have bought %,d %s for %,d %s.", event.getAuthor().getAsMention(), bcount, shopitem.getBuyItem().toString(bcount), pcount, shopitem.getPayItem().toString(pcount)).complete();
-		JDBC.addItem(p.getIdLong(), Stats.of(Stats.TRANSACTIONS_MADE), count);
+		JDBC.addItem(p.getIdLong(), Stat.TransactionsMade.getId(), count);
 		
 		// Update Stock
 		if (shopitem.getTotalStock() > 0) JDBC.executeUpdate("update shop set totalstock = totalstock - %d where shopid = %d;", count, shopitem.getId());

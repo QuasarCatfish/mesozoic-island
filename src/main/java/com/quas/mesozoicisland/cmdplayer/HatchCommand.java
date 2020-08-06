@@ -7,10 +7,10 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Player;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -77,6 +77,6 @@ public class HatchCommand implements ICommand {
 		event.getChannel().sendMessageFormat("%s, your %s hatched into %s %s!", p.getAsMention(), egg.getEggName(), Util.getArticle(d.getDinosaurName()), d.getDinosaurName()).complete();
 		JDBC.executeUpdate("update eggs set player = 1 where eggid = %d;", egg.getId());
 		JDBC.addDinosaur(event.getChannel(), p.getIdLong(), d.getIdPair());
-		JDBC.addItem(p.getIdLong(), Stats.of(Stats.EGGS_HATCHED));
+		JDBC.addItem(p.getIdLong(), Stat.EggsHatched.getId());
 	}
 }

@@ -8,6 +8,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Pair;
@@ -82,7 +83,7 @@ public class Tutorial13 implements ICommand {
 		event.getChannel().sendMessage("Here, I'll even give you enough money to buy one.").complete();
 		
 		int count = 2000;
-		Item money = Item.getItem(new Pair<Integer, Long>(100, 2L));
+		Item money = Item.getItem(ItemID.TutorialDinosaurCoin);
 		
 		Util.sleep(1000);
 		JDBC.addItem(p.getIdLong(), money.getIdDmg(), count);

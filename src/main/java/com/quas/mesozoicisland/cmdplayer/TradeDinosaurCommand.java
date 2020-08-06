@@ -8,11 +8,11 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.TradeManager;
 import com.quas.mesozoicisland.util.Pair;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -130,8 +130,8 @@ public class TradeDinosaurCommand implements ICommand {
 			JDBC.addDinosaur(event.getChannel(), p2.getIdLong(), d1.getIdPair(), 1);
 			JDBC.addDinosaur(null, p2.getIdLong(), d2.getIdPair(), -1);
 			JDBC.addDinosaur(event.getChannel(), p1.getIdLong(), d2.getIdPair(), 1);
-			JDBC.addItem(p1.getIdLong(), Stats.of(Stats.TRADE_COUNT));
-			JDBC.addItem(p2.getIdLong(), Stats.of(Stats.TRADE_COUNT));
+			JDBC.addItem(p1.getIdLong(), Stat.TimesTraded.getId());
+			JDBC.addItem(p2.getIdLong(), Stat.TimesTraded.getId());
 		} else {
 			StringBuilder sb = new StringBuilder();
 			sb.append(p1.getAsMention());

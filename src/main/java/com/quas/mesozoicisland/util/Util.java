@@ -387,7 +387,7 @@ public class Util {
 						String line = read.nextLine();
 						linenum++;
 						
-						if (line.contains("rrrrrrrrrrrrrrrrrrrrrr") && !line.contains("line.contains")) {
+						if (line.contains("rrrrrrrrrrrrrrrrrrrrrrrrrrrr") && !line.contains("line.contains")) {
 							System.out.printf("%s Line %d :: %s%n", f.getName(), linenum, line.trim());
 						}
 						

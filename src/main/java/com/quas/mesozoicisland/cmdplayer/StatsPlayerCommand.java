@@ -10,9 +10,9 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -84,7 +84,7 @@ public class StatsPlayerCommand implements ICommand {
 		
 		{
 			eb.addField("Join Date", p.getJoinDate(), true);
-			Item i = Item.getItem(Stats.of(Stats.DAILIES_CLAIMED));
+			Item i = Item.getItem(Stat.DailiesClaimed.getId());
 			eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
 			eb.addField("Daily Streak", String.format("%,d Day%s", p.getDailyStreak(), p.getDailyStreak() == 1 ? "" : "s"), true);
 		}

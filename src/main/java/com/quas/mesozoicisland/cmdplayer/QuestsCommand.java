@@ -12,11 +12,12 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Pair;
-import com.quas.mesozoicisland.util.Stats;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -68,7 +69,7 @@ public class QuestsCommand implements ICommand {
 		if (p == null) return;
 		
 		TreeMap<Item, Long> bag = p.getBag();
-		Item questBook = Item.getItem(new Pair<Integer, Long>(5, 0L));
+		Item questBook = Item.getItem(ItemID.QuestBook);
 		if (bag.getOrDefault(questBook, 0L) <= 0) {
 			event.getChannel().sendMessageFormat("%s, you don't have a %s.", p.getAsMention(), questBook.toString()).complete();
 			return;
@@ -84,7 +85,7 @@ public class QuestsCommand implements ICommand {
 			while (res.next()) {
 				String name = res.getString("questname");
 				long quest = res.getLong("questtype");
-				Item item = Item.getItem(new Pair<Integer, Long>(0, quest));
+				Item item = Item.getItem(Stat.of(quest));
 				if (item == null) continue;
 				
 				long start = res.getLong("start");
@@ -103,7 +104,7 @@ public class QuestsCommand implements ICommand {
 					sb.append("COMPLETED");
 					JDBC.executeUpdate("update quests set completed = true where questid = %d;", res.getInt("questid"));
 					rewards.add(new Pair<String, String>(name, res.getString("reward")));
-					JDBC.addItem(p.getIdLong(), Stats.of(Stats.QUESTS_COMPLETED), 1);
+					JDBC.addItem(p.getIdLong(), Stat.QuestsCompleted.getId(), 1);
 				} else {
 					sb.append(String.format("%,d of %,d (%1.0f%% Complete)", progress, end, 100d * progress / end));
 				}

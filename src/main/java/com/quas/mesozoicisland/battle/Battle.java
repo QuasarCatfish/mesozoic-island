@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Item;
@@ -16,7 +18,6 @@ import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 public class Battle {
@@ -148,7 +149,7 @@ public class Battle {
 				// Add Win and Loss
 				if (attack.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
 					JDBC.addWin(attack.getPlayer().getIdLong(), attack.getDinosaur().getIdPair());
-					JDBC.addItem(attack.getPlayer().getIdLong(), Stats.of(Stats.DINOSAURS_DEFEATED));
+					JDBC.addItem(attack.getPlayer().getIdLong(), Stat.DinosaursDefeated.getId());
 				}
 				if (defend.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
 					JDBC.addLoss(defend.getPlayer().getIdLong(), defend.getDinosaur().getIdPair());
@@ -204,7 +205,7 @@ public class Battle {
 			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, String.format("**%s:** %s wins the battle.", tier.toString(), winner.getPlayer().getName()));
 			
 			// Stat - Battles Won
-			Action.addItemDelayed(winner.getPlayer().getIdLong(), time, Stats.of(Stats.BATTLES_WON), 1);
+			Action.addItemDelayed(winner.getPlayer().getIdLong(), time, Stat.BattlesWon.getId(), 1);
 			
 			// Random Item Dropped at the end of the battle.
 			switch (MesozoicRandom.nextInt(5)) {
@@ -214,7 +215,7 @@ public class Battle {
 				int amount = MesozoicRandom.nextInt(1, 50);
 				if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis())
 					amount *= 1 + Constants.MONEY_FRAGRANCE_BONUS;
-				Pair<Integer, Long> money = new Pair<Integer, Long>(100, 0L);
+				Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
 				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s on the battlefield.", winner.getPlayer().getAsMention(), amount, Item.getItem(money).toString(amount)));
 				Action.addItemDelayed(winner.getPlayer().getIdLong(), time, money, amount);
 			} break;
@@ -351,8 +352,8 @@ public class Battle {
 					damage += attack.getDinosaur().getRune().getPower() + Element.getEffectiveness(attack.getDinosaur().getRune().getElement(), defend.getDinosaur().getElement());
 					sb.append(String.format("%s's %s uses the %s rune and attacks %s's %s. ", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), attack.getDinosaur().getRune().getName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName()));
 					
-					Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stats.of(Stats.DAMAGE_DEALT), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
-					Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stats.of(Stats.DAMAGE_RECEIVED), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
+					Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DamageDealt.getId(), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
+					Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
 					defend.getDinosaur().damage(damage);
 					if (defend.getDinosaur().getCurrentHealth() > 0) {
 						sb.append(String.format("%s's %s took %,d damage and has %,d health remaining.", defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), damage, defend.getDinosaur().getCurrentHealth()));
@@ -400,8 +401,8 @@ public class Battle {
 		}
 		
 		// Damage
-		Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stats.of(Stats.DAMAGE_DEALT), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
-		Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stats.of(Stats.DAMAGE_RECEIVED), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
+		Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DamageDealt.getId(), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
+		Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(), Math.min(damage, defend.getDinosaur().getCurrentHealth()));
 		defend.getDinosaur().damage(damage);
 		if (defend.getDinosaur().getCurrentHealth() > 0) {
 			sb.append(String.format("%s's %s took %,d damage and has %,d health remaining.", defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), damage, defend.getDinosaur().getCurrentHealth()));

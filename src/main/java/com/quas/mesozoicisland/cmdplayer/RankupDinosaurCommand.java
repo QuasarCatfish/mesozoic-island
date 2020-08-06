@@ -7,10 +7,10 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -71,7 +71,7 @@ public class RankupDinosaurCommand implements ICommand {
 			event.getChannel().sendMessageFormat("%s, your %s is at the max rank and cannot rankup any further.", event.getAuthor().getAsMention(), d.getEffectiveName()).complete();
 		} else {
 			JDBC.rankup(p.getIdLong(), d.getIdPair());
-			JDBC.addItem(p.getIdLong(), Stats.of(Stats.DINOSAURS_RANKED_UP));
+			JDBC.addItem(p.getIdLong(), Stat.DinosaursRankedUp.getId());
 			
 			Dinosaur d2 = Dinosaur.getDinosaur(p.getIdLong(), d.getIdPair());
 			if (d2.canRankup() && d2.getRank() < Constants.MAX_RANK) {

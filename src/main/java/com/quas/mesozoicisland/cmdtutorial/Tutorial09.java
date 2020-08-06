@@ -8,6 +8,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
@@ -119,7 +120,7 @@ public class Tutorial09 implements ICommand {
 		Util.sleep(1000);
 		
 		sendTyping(event.getChannel(), 1000);
-		event.getChannel().sendMessageFormat("As thanks for helping me with my research, I pay a salary of %,d %s every day to each dinosaur trainer, provided that they claim it.", Constants.DAILY_MONEY, Item.getItem(new Pair<Integer, Long>(100, 0L)).toString(Constants.DAILY_MONEY)).complete();
+		event.getChannel().sendMessageFormat("As thanks for helping me with my research, I pay a salary of %,d %s every day to each dinosaur trainer, provided that they claim it.", Constants.DAILY_MONEY, Item.getItem(ItemID.DinosaurCoin).toString(Constants.DAILY_MONEY)).complete();
 		Util.sleep(1000);
 		
 		sendTyping(event.getChannel(), 2000);

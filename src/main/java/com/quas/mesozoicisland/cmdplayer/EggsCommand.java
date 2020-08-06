@@ -10,6 +10,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
@@ -66,7 +67,7 @@ public class EggsCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		Item inc = Item.getItem(new Pair<Integer, Long>(91, 0L));
+		Item inc = Item.getItem(ItemID.EggIncubator);
 		long incubators = p.getBag().getOrDefault(inc, 0L);
 		long hatch = 0;
 		

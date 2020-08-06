@@ -14,6 +14,7 @@ import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.NewPlayerStatus;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Item;
@@ -24,7 +25,6 @@ import com.quas.mesozoicisland.util.MesozoicCalendar;
 import com.quas.mesozoicisland.util.MesozoicDate;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -127,8 +127,8 @@ public class JDBC {
 	
 	public static synchronized boolean addItem(long playerid, Pair<Integer, Long> item, long count) {
 		if (item.getFirstValue() == 100 && item.getSecondValue() == 0L) {
-			if (count > 0) addItem(playerid, Stats.of(Stats.COINS_OBTAINED), count);
-			if (count < 0) addItem(playerid, Stats.of(Stats.COINS_SPENT), -count);
+			if (count > 0) addItem(playerid, Stat.DinosaurCoinsCollected.getId(), count);
+			if (count < 0) addItem(playerid, Stat.DinosaurCoinsSpent.getId(), -count);
 		}
 		
 		try (ResultSet res = executeQuery("select * from bags where player = %d and item = %d and dmg = %d;", playerid, item.getFirstValue(), item.getSecondValue())) {
@@ -228,24 +228,24 @@ public class JDBC {
 				int itemid = in.nextInt();
 				long itemdmg = in.nextLong();
 				long count = in.hasNextLong() ? in.nextLong() : 1L;
-				ret.append(String.format("• %,d %s%n", count, Item.getItem(new Pair<Integer, Long>(itemid, itemdmg)).toString(count)));
+				ret.append(String.format("%s %,d %s%n", Constants.BULLET_POINT, count, Item.getItem(new Pair<Integer, Long>(itemid, itemdmg)).toString(count)));
 				break;
 			case "d": case "dino": case "dinosaur":
 				int dinoid = in.nextInt();
 				int dinoform = in.nextInt();
 				int dinorp = in.hasNextInt() ? in.nextInt() : 1;
-				ret.append(String.format("• %,d %s Crystal%s%n", dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
+				ret.append(String.format("• %,d %s Crystal%s%n", Constants.BULLET_POINT, dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
 				break;
 			case "r": case "rune":
 				int runeid = in.nextInt();
 				int runerp = in.hasNextInt() ? in.nextInt() : 1;
-				ret.append(String.format("• %,d %s Rune%s%n", runerp, Rune.getRune(runeid).getName(), runerp == 1 || runerp == -1 ? "" : "s"));
+				ret.append(String.format("%s %,d %s Rune%s%n", Constants.BULLET_POINT, runerp, Rune.getRune(runeid).getName(), runerp == 1 || runerp == -1 ? "" : "s"));
 				break;
 			case "e": case "egg":
 				int eggdex = in.nextInt();
 				int eggform = in.nextInt();
 				Egg egg = Egg.getRandomEgg(new Pair<Integer, Integer>(eggdex, eggform));
-				ret.append(String.format("• %s %s%n", Util.getArticle(egg.getEggName()), egg.getEggName()));
+				ret.append(String.format("%s %s %s%n", Constants.BULLET_POINT, Util.getArticle(egg.getEggName()), egg.getEggName()));
 				break;
 			}
 		}
@@ -358,7 +358,7 @@ public class JDBC {
 			break;
 		}
 		
-		JDBC.addItem(pid, Stats.of(Stats.EGGS_RECEIVED));
+		JDBC.addItem(pid, Stat.EggsReceived.getId());
 		
 		if (egg.hasCustomName()) {
 			return executeUpdate("insert into eggs(dex, form, player, incubator, original, maxhp, color, patterncolor, pattern, eggname) values(%d, %d, %d, %d, %d, %d, %d, %d, %d, '%s');",
@@ -381,13 +381,13 @@ public class JDBC {
 		Dinosaur d = Dinosaur.getDinosaur(pid, dino);
 		if (d == null) {
 			boolean b = executeUpdate("insert into captures(player, dex, form) values(%d, %d, %d);", pid, dino.getFirstValue(), dino.getSecondValue());
-			JDBC.addItem(pid, Stats.of(Stats.DINOSAURS_CAUGHT));
+			JDBC.addItem(pid, Stat.DinosaursCaught.getId());
 			if (rp > 1) return b && addDinosaur(channel, pid, dino, rp - 1);
 			setLatest(pid, Dinosaur.getDinosaur(dino));
 			return b;
 		} else {
 			boolean b = executeUpdate("update captures set rp = rp + %d where player = %d and dex = %d and form = %d;", rp, pid, dino.getFirstValue(), dino.getSecondValue());
-			JDBC.addItem(pid, Stats.of(Stats.DINOSAURS_CAUGHT), rp);
+			JDBC.addItem(pid, Stat.DinosaursCaught.getId(), rp);
 			if (!d.canRankup() && Dinosaur.getDinosaur(pid, dino).canRankup()) {
 				channel.sendMessageFormat("%s, your %s can now rankup to **Rank %s**. Use `rankup %s` to rankup this dinosaur.", d.getPlayer().getAsMention(), d.getEffectiveName(), d.getNextRankString(), d.getId()).complete();
 			}
@@ -402,7 +402,7 @@ public class JDBC {
 		boolean b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
 		Dinosaur d2 = Dinosaur.getDinosaur(pid, dino);
 		if (d.getLevel() < d2.getLevel()) {
-			JDBC.addItem(pid, Stats.of(Stats.DINOSAURS_LEVELED_UP), d2.getLevel() - d.getLevel());
+			JDBC.addItem(pid, Stat.DinosaursLeveledUp.getId(), d2.getLevel() - d.getLevel());
 			channel.sendMessageFormat("%s, your %s is now **Level %,d**.", d.getPlayer().getAsMention(), d.getEffectiveName(), d2.getLevel()).complete();
 		}
 		updatePlayerXp(pid);

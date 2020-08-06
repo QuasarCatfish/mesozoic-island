@@ -8,7 +8,9 @@ import java.util.TreeMap;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.ItemCategory;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemType;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Pair;
 
 public class Item implements Comparable<Item> {
@@ -87,6 +89,14 @@ public class Item implements Comparable<Item> {
 		map.clear();
 	}
 	
+	public static Item getItem(ItemID itemid) {
+		return getItem(itemid.getId());
+	}
+
+	public static Item getItem(Stat stat) {
+		return getItem(stat.getId());
+	}
+
 	public static Item getItem(Pair<Integer, Long> itemid) {
 		if (map.containsKey(itemid)) return map.get(itemid);
 		

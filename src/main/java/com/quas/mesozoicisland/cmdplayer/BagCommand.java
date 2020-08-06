@@ -8,6 +8,7 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemCategory;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
@@ -73,7 +74,7 @@ public class BagCommand implements ICommand {
 		}
 		
 		StringBuilder sb = new StringBuilder();
-		Item money = Item.getItem(new Pair<Integer, Long>(100, 0L));
+		Item money = Item.getItem(ItemID.DinosaurCoin);
 		sb.append(String.format("%,d %s\n\n**Compartments:**\n", bag.getOrDefault(money, 0L), money.toString(bag.getOrDefault(money, 0L))));
 		
 		for (ItemCategory ic : map.keySet()) {

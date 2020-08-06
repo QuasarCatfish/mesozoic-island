@@ -11,7 +11,9 @@ import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Dungeon;
 import com.quas.mesozoicisland.objects.Egg;
@@ -21,7 +23,6 @@ import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -148,7 +149,7 @@ public class SpawnManager {
 		List<Player> players = new ArrayList<Player>();
 		Util.complete(m.delete());
 		
-		Item incubator = Item.getItem(new Pair<Integer, Long>(91, 0L));
+		Item incubator = Item.getItem(ItemID.EggIncubator);
 		for (User u : users) {
 			if (u.isBot()) continue;
 			if (u.isFake()) continue;
@@ -253,7 +254,7 @@ public class SpawnManager {
 			if (bt.isInvalid()) continue;
 			if (!teams.containsKey(bt.getBattleTier())) teams.put(bt.getBattleTier(), new ArrayList<BattleTeam>());
 			teams.get(bt.getBattleTier()).add(bt.setMax(wilds.get(bt.getBattleTier()).length));
-			JDBC.addItem(bt.getPlayer().getIdLong(), Stats.of(Stats.BATTLES_ENTERED));
+			JDBC.addItem(bt.getPlayer().getIdLong(), Stat.BattlesEntered.getId());
 		}
 		
 		// Create Joined Players Embed
@@ -352,7 +353,7 @@ public class SpawnManager {
 			BattleTeam bt = new BattleTeam(u.getIdLong());
 			if (bt.isInvalid()) continue;
 			teams.add(bt);
-			JDBC.addItem(bt.getPlayer().getIdLong(), Stats.of(Stats.DUNGEONS_ENTERED));
+			JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DungeonsEntered.getId());
 			players++;
 		}
 		
@@ -387,7 +388,7 @@ public class SpawnManager {
 				timer = b.start(q + 1);
 				if (b.didBossWin()) break;
 				else if (q == d.getFloorCount() - 1) {
-					Item token = Item.getItem(new Pair<Integer, Long>(101, 0L));
+					Item token = Item.getItem(ItemID.DungeonToken);
 					String winmsg = "";
 					if (teams.size() == 1) winmsg = String.format("The player has defeated **all floors** of the dungeon! A crate of %,d %s were left as the dungeon disappeared.", d.getTokenCount(), token.toString(d.getTokenCount()));
 					else winmsg = String.format("The players have defeated **all floors** of the dungeon! A crate of %,d %s were left as the dungeon disappeared. The players each get %,d %s.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getTokenCount(), token.toString(d.getTokenCount()));
@@ -396,7 +397,7 @@ public class SpawnManager {
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, winmsg);
 					
 					for (BattleTeam bt : teams) {
-						Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stats.of(Stats.DUNGEONS_CLEARED), 1);
+						Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
 						Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, token.getIdDmg(), d.getTokenCount());
 					}
 				}

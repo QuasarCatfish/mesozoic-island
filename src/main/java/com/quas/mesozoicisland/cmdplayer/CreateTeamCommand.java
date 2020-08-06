@@ -10,6 +10,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Pair;
@@ -64,7 +65,7 @@ public class CreateTeamCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		Item i = Item.getItem(new Pair<Integer, Long>(102, 0L));
+		Item i = Item.getItem(ItemID.TeamToken);
 		TreeMap<Item, Long> bag = p.getBag();
 		
 		if (bag.getOrDefault(i, 0L) <= 0L) {

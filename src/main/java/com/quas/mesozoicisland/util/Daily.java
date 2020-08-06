@@ -10,6 +10,8 @@ import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
@@ -39,14 +41,14 @@ public class Daily {
 				sb.append("\n" + Constants.BULLET_POINT + " Raid Passes have been cleared. There is no raid available today.");
 			} else if (old == null) {
 				JDBC.executeUpdate("update vars set value = '%s' where var = 'raidpass';", Util.cleanQuotes(var));
-				Item item = Item.getItem(new Pair<Integer, Long>(701, Long.parseLong(var)));
+				Item item = Item.getItem(new Pair<Integer, Long>(ItemID.RaidPass.getItemId(), Long.parseLong(var)));
 				Dinosaur raidboss = Dinosaur.getDinosaur(Integer.parseInt(item.getData().split("\\s+")[0]), DinosaurForm.RaidBoss.getId());
 				sb.append("\n" + Constants.BULLET_POINT + " Today's raid features ");
 				sb.append(raidboss.getEffectiveName());
 				sb.append(".");
 			} else {
 				JDBC.executeUpdate("update vars set value = '%s' where var = 'raidpass';", Util.cleanQuotes(var));
-				Item item = Item.getItem(new Pair<Integer, Long>(701, Long.parseLong(var)));
+				Item item = Item.getItem(new Pair<Integer, Long>(ItemID.RaidPass.getItemId(), Long.parseLong(var)));
 				Dinosaur raidboss = Dinosaur.getDinosaur(Integer.parseInt(item.getData().split("\\s+")[0]), DinosaurForm.RaidBoss.getId());
 				sb.append("\n" + Constants.BULLET_POINT + " Raid Passes have been cleared. Today's raid features ");
 				sb.append(raidboss.getEffectiveName());
@@ -74,7 +76,7 @@ public class Daily {
 					long type = res.getLong("questtype");
 					long goal = res.getLong("goal");
 					String reward = res.getString("reward");
-					Item item = Item.getItem(new Pair<Integer, Long>(0, type));
+					Item item = Item.getItem(Stat.of(type));
 					
 					for (long player : valid) {
 						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward) values(%d, '%s', %d, %d, %d, '%s');",
@@ -84,7 +86,7 @@ public class Daily {
 					sb.append("\n" + Constants.BULLET_POINT + " Today's quest is \"");
 					sb.append(name);
 					sb.append("\". All players with space in their ");
-					sb.append(Item.getItem(new Pair<Integer, Long>(5, 0L)).toString());
+					sb.append(Item.getItem(ItemID.QuestBook).toString());
 					sb.append(" have received this quest.");
 				}
 			} catch (SQLException e) {

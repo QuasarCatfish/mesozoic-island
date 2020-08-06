@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.quas.mesozoicisland.JDBC;
+import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
@@ -400,6 +401,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return null;
 	}
 	
+	public static Dinosaur getDinosaur(DinoID dex, DinosaurForm form) {
+		return getDinosaur(dex.getId(form));
+	}
+
 	public static Dinosaur getDinosaur(Pair<Integer, Integer> dexform) {
 		return getDinosaur(dexform.getFirstValue(), dexform.getSecondValue());
 	}

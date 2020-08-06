@@ -9,6 +9,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Pair;
@@ -117,7 +118,7 @@ public class Tutorial05 implements ICommand {
 			assistantChannel.sendMessageFormat("*Snaps a picture of %s.*", p.getRawName()).complete();
 			Util.sleep(1500);
 			
-			Item license = Item.getItem(new Pair<Integer, Long>(1, 0L));
+			Item license = Item.getItem(ItemID.MesozoicIslandTrainerLicense);
 			
 			sendTyping(event.getChannel(), 2000);
 			event.getChannel().sendMessage("Here we have it, your official " + license.toString() + "!").complete();
@@ -128,7 +129,7 @@ public class Tutorial05 implements ICommand {
 			Util.sleep(1000);
 			
 			sendTyping(event.getChannel(), 2000);
-			event.getChannel().sendMessage("To check it out, you can use the command `use 1`.").complete();
+			event.getChannel().sendMessageFormat("To check it out, you can use the command `use %d`.", license.getId()).complete();
 			
 			JDBC.setColor(p.getIdLong(), c);
 			JDBC.setState(p.getIdLong(), "Tutorial06");	

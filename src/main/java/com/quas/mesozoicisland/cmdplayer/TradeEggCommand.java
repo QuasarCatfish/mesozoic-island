@@ -8,11 +8,11 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.TradeManager;
 import com.quas.mesozoicisland.util.Pair;
-import com.quas.mesozoicisland.util.Stats;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -113,8 +113,8 @@ public class TradeEggCommand implements ICommand {
 			
 			JDBC.executeUpdate("update eggs set player = %d, incubator = %d where eggid = %d;", p2.getIdLong(), e2.getIncubatorSlot(), e1.getId());
 			JDBC.executeUpdate("update eggs set player = %d, incubator = %d where eggid = %d;", p1.getIdLong(), e1.getIncubatorSlot(), e2.getId());
-			JDBC.addItem(p1.getIdLong(), Stats.of(Stats.TRADE_COUNT));
-			JDBC.addItem(p2.getIdLong(), Stats.of(Stats.TRADE_COUNT));
+			JDBC.addItem(p1.getIdLong(), Stat.TimesTraded.getId());
+			JDBC.addItem(p2.getIdLong(), Stat.TimesTraded.getId());
 		} else {
 			StringBuilder sb = new StringBuilder();
 			sb.append(p1.getAsMention());

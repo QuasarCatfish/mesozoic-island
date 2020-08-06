@@ -7,6 +7,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
@@ -67,11 +68,11 @@ public class GuildJoinCommand implements ICommand {
 			return;
 		}
 		
-		Item token = Item.getItem(new Pair<Integer, Long>(2, 0L));
-		long count = p.getBag().getOrDefault(token, 0L);
+		Item badge = Item.getItem(ItemID.GuildBadge);
+		long count = p.getBag().getOrDefault(badge, 0L);
 		
 		if (count <= 0) {
-			event.getChannel().sendMessageFormat("%s, you do not have %s %s.", p.getAsMention(), Util.getArticle(token.toString()), token.toString()).complete();
+			event.getChannel().sendMessageFormat("%s, you do not have %s %s.", p.getAsMention(), Util.getArticle(badge.toString()), badge.toString()).complete();
 		} else {
 			Element e = getElement(args[1]);
 			if (e == null) {
@@ -80,8 +81,8 @@ public class GuildJoinCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, you have joined the %s Guild!", p.getAsMention(), e.getName()).complete();
 				JDBC.executeUpdate("update players set mainelement = %d where playerid = %d;", e.getId(), p.getIdLong());
 				Util.addRoleToMember(event.getMember(), e.getRole());
-				JDBC.addItem(p.getIdLong(), new Pair<Integer, Long>(2, 0L), -1);
-				JDBC.addItem(p.getIdLong(), new Pair<Integer, Long>(2, (long)e.getId()));
+				JDBC.addItem(p.getIdLong(), ItemID.GuildBadge.getId(), -1);
+				JDBC.addItem(p.getIdLong(), new Pair<Integer, Long>(ItemID.GuildBadge.getItemId(), (long)e.getId()));
 				event.getGuild().getTextChannelById(e.getGuild()).sendMessageFormat("Welcome %s to the %s Guild!", p.getAsMention(), e.getName()).complete();
 			}
 		}

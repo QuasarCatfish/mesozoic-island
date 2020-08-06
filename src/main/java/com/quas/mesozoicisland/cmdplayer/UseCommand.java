@@ -20,7 +20,9 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EggColor;
 import com.quas.mesozoicisland.enums.ItemCategory;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemType;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Item;
@@ -28,8 +30,6 @@ import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicRandom;
-import com.quas.mesozoicisland.util.Pair;
-import com.quas.mesozoicisland.util.Stats;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -131,47 +131,39 @@ public class UseCommand implements ICommand {
 			break;
 			
 		case PersistWithCustomUse:
-			switch (i.getId()) {
-			
-			// Trainer License
-			case 1: {
+
+			if (i.getId() == ItemID.MesozoicIslandTrainerLicense.getItemId()) {
 				File f = p.getTrainerLicense();
 				EmbedBuilder eb = new EmbedBuilder();
 				eb.setTitle(String.format("%s's Mesozoic Island License", p.getName()));
 				eb.setColor(Constants.COLOR);
 				eb.setImage("attachment://" + f.getName());
 				event.getChannel().sendMessage(eb.build()).addFile(f, f.getName()).complete();
-			} break;
+			}
 			
-			// Quest Book
-			case 5: {
+			else if (i.getId() == ItemID.QuestBook.getItemId()) {
 				CommandManager.handleCommand(event, "quests");
-			} break;
+			}
 			
-			// Egg Incubator
-			case 91: {
+			else if (i.getId() == ItemID.EggIncubator.getItemId()) {
 				CommandManager.handleCommand(event, "eggs");
-			} break;
-			
-			// Title Remover
-			case 10000: {
+			}
+
+			else if (i.getId() == ItemID.TitleRemover.getItemId()) {
 				if (p.hasInvertedTitle()) event.getChannel().sendMessageFormat("%s, you will no longer be recognized as \"%s\".", p.getAsMention(), p.getTitle()).complete();
 				else event.getChannel().sendMessageFormat("%s, you will no longer be recognized as %s \"%s\".", p.getAsMention(), Util.getArticle(p.getTitle()), p.getTitle()).complete();
 				JDBC.setTitle(p.getIdLong(), null, false);
-			} break;
-			
-			default:
+			}
+
+			else {
 				sendUnimplemented(event);
 				SUCCESS = false;
-				break;
 			}
 			break;
 			
 		case Consume:
-			switch (i.getId()) {
-			
-			// Battle Fragrance
-			case 212: case 213: case 214: {
+
+			if (i.getId() == ItemID.ScentOfBattle.getItemId() || i.getId() == ItemID.FragranceOfBattle.getItemId() || i.getId() == ItemID.EauDeBataille.getItemId()) {
 				long time = Long.parseLong(i.getData());
 				long curtime = p.getFragranceBattleTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
@@ -179,10 +171,9 @@ public class UseCommand implements ICommand {
 				
 				event.getChannel().sendMessageFormat("%s, the Fragrance of Battle fills the air around you for %s %s.", p.getAsMention(), adj, Util.formatTime(time)).complete();
 				JDBC.executeUpdate("update players set fragrancebattle = %d where playerid = %d;", end, p.getIdLong());
-			} break;
-			
-			// Experience Fragrance
-			case 215: case 216: case 217: {
+			}
+
+			else if (i.getId() == ItemID.ScentOfExperience.getItemId() || i.getId() == ItemID.FragranceOfExperience.getItemId() || i.getId() == ItemID.EauDeExperience.getItemId()) {
 				long time = Long.parseLong(i.getData());
 				long curtime = p.getFragranceBattleTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
@@ -190,10 +181,9 @@ public class UseCommand implements ICommand {
 				
 				event.getChannel().sendMessageFormat("%s, the Fragrance of Experience fills the air around you for %s %s.", p.getAsMention(), adj, Util.formatTime(time)).complete();
 				JDBC.executeUpdate("update players set fragrancexp = %d where playerid = %d;", end, p.getIdLong());
-			} break;
-			
-			// Money Fragrance
-			case 218: case 219: case 220: {
+			}
+
+			else if (i.getId() == ItemID.ScentOfMoney.getItemId() || i.getId() == ItemID.FragranceOfMoney.getItemId() || i.getId() == ItemID.EauDeArgent.getItemId()) {
 				long time = Long.parseLong(i.getData());
 				long curtime = p.getFragranceBattleTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
@@ -201,10 +191,9 @@ public class UseCommand implements ICommand {
 				
 				event.getChannel().sendMessageFormat("%s, the Fragrance of Money fills the air around you for %s %s.", p.getAsMention(), adj, Util.formatTime(time)).complete();
 				JDBC.executeUpdate("update players set fragrancemoney = %d where playerid = %d;", end, p.getIdLong());
-			} break;
-			
-			// Dinosaur Locator
-			case 221: {
+			}
+
+			else if (i.getId() == ItemID.DinosaurLocator.getItemId()) {
 				if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
@@ -221,10 +210,9 @@ public class UseCommand implements ICommand {
 						};
 					}.start();
 				}
-			} break;
-			
-			// Egg Locator
-			case 222: {
+			}
+
+			else if (i.getId() == ItemID.EggLocator.getItemId()) {
 				if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
@@ -238,10 +226,9 @@ public class UseCommand implements ICommand {
 						};
 					}.start();
 				}
-			} break;
-			
-			// Dungeon Locator
-			case 223: {
+			}
+
+			else if (i.getId() == ItemID.DungeonLocator.getItemId()) {
 				if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
@@ -258,11 +245,10 @@ public class UseCommand implements ICommand {
 						};
 					}.start();
 				}
-			} break;
-			
-			// Egg Voucher
-			case 406: {
-				if (bag.getOrDefault(Item.getItem(new Pair<Integer, Long>(91, 0L)), 0L) > p.getEggCount()) {
+			}
+
+			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
+				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getEggCount()) {
 					event.getChannel().sendMessageFormat("%s, you have redeemed a Chocolate Egg!", p.getAsMention()).complete();
 					Egg egg = Egg.getRandomEgg(MesozoicRandom.nextDinosaur().getIdPair());
 					egg.setEggName("Chocolate Egg");
@@ -272,16 +258,14 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s, you don't have any open incubator slots.", p.getAsMention()).complete();
 					SUCCESS = false;
 				}
-			} break;
-			
-			// Dinosaur Voucher
-			case 501: {
+			}
+
+			else if (i.getId() == ItemID.DinosaurVoucher.getItemId()) {
 				sendUnimplemented(event);
 				SUCCESS = false;
-			} break;
-			
-			// Dungeon Ticket
-			case 502: case 503: {
+			}
+
+			else if (i.getId() == ItemID.DungeonTicket.getItemId() || i.getId() == ItemID.PremiumDungeonTicket.getItemId()) {
 				int tier = Integer.parseInt(i.getData());
 				JDBC.generateDungeonTickets();
 				if (args.length > 1) {
@@ -321,10 +305,9 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessage(sb.toString()).complete();
 					SUCCESS = false;
 				}
-			} break;
-			
-			// Raid Pass
-			case 701: {
+			}
+
+			else if (i.getId() == ItemID.RaidPass.getItemId()) {
 				if (Battle.isPlayerBattling(p.getIdLong())) {
 					event.getChannel().sendMessageFormat("%s, you cannot challenge this Raid Boss because you are already in another battle.", p.getAsMention()).complete();
 					SUCCESS = false;
@@ -349,7 +332,7 @@ public class UseCommand implements ICommand {
 					// Start Battle
 					Battle.markPlayerBattling(CustomPlayer.RaidChallenge.getIdLong(), true);
 					Battle.markPlayerBattling(p.getIdLong(), true);
-					JDBC.addItem(p.getIdLong(), Stats.of(Stats.RAIDS_ATTEMPTED));
+					JDBC.addItem(p.getIdLong(), Stat.RaidsAttempted.getId());
 					long time = b.start(0);
 					
 					// End Battle
@@ -361,26 +344,23 @@ public class UseCommand implements ICommand {
 						String prize = "item 100 0 1000";
 						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1_000, Constants.SPAWN_CHANNEL, String.format("%s, you find these rewards from the %s:\n%s", p.getAsMention(), raid.getEffectiveName(), JDBC.getRedeemMessage(prize)));
 						Action.addRedeemDelayed(MesozoicIsland.getAssistant().getIdLong(), p.getIdLong(), time + 1_000, prize);
-						Action.addItemDelayed(p.getIdLong(), time + 1_000, Stats.of(Stats.RAIDS_DEFEATED), 1);
+						Action.addItemDelayed(p.getIdLong(), time + 1_000, Stat.RaidsAttempted.getId(), 1);
 					}
 					
 					// Log Channel
 					Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), BattleChannel.Special.getBattleChannel().getIdLong(), time + 30_000);
 				}
-			} break;
-			
-			default:
+			}
+
+			else {
 				sendUnimplemented(event);
 				SUCCESS = false;
-				break;
 			}
 			break;
 			
 		case ConsumeDinosaur:
 			
-			switch (i.getId()) {
-			// Specific XP Potion
-			case 200: {
+			if (i.getId() == ItemID.XPPotion.getItemId()) {
 				String[] split = i.getData().split("\\s+");
 				int dex = Integer.parseInt(split[0]);
 				int form = Integer.parseInt(split[1]);
@@ -399,11 +379,9 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on a %s.", p.getAsMention(), d2.getDinosaurName()).complete();
 					SUCCESS = false;
 				}
-				
-			} break;
+			}
 			
-			// XP Potions
-			case 201: case 202: case 203: case 204: case 205: case 206: case 207: case 208: case 209: case 210: {
+			else if (i.getId() == ItemID.FTierXPPotion.getItemId() || i.getId() == ItemID.ETierXPPotion.getItemId() || i.getId() == ItemID.DTierXPPotion.getItemId() || i.getId() == ItemID.CTierXPPotion.getItemId() || i.getId() == ItemID.BTierXPPotion.getItemId() || i.getId() == ItemID.ATierXPPotion.getItemId() || i.getId() == ItemID.STierXPPotion.getItemId() || i.getId() == ItemID.SSTierXPPotion.getItemId() || i.getId() == ItemID.SSSTierXPPotion.getItemId() || i.getId() == ItemID.StarTierXPPotion.getItemId()) {
 				if (d.getLevel() == Constants.MAX_LEVEL) {
 					event.getChannel().sendMessageFormat("%s, your %s is at the max level. You cannot use the %s on it.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
@@ -412,11 +390,13 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s, your %s gained %s XP from the %s.", p.getAsMention(), d.getEffectiveName(), i.getId() == 210 ? "∞" : Util.formatNumber(xp), i.toString()).complete();
 					JDBC.addXp(event.getChannel(), p.getIdLong(), d.getIdPair(), xp);
 				}
-			} break;
-			
-			// Prismatic Converter
-			case 211: {
-				if (d.isTradeable()) {
+			}
+
+			else if (i.getId() == ItemID.PrismaticConverter.getItemId()) {
+				if (d.getDinosaurForm() != DinosaurForm.Standard) {
+					event.getChannel().sendMessageFormat("%s, you can only convert a Standard form dinosaur into its Prismatic form.", p.getAsMention()).complete();
+					SUCCESS = false;
+				} else if (d.isTradeable()) {
 					Dinosaur prismatic = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Prismatic.getId());
 					event.getChannel().sendMessageFormat("%s, 1 RP from your %s was converted into a %s.", p.getAsMention(), d.getEffectiveName(), prismatic.getDinosaurName()).complete();
 					JDBC.addDinosaur(null, p.getIdLong(), d.getIdPair(), -1);
@@ -425,18 +405,15 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s, your %s does not have any RP to use.", p.getAsMention(), d.getEffectiveName()).complete();
 					SUCCESS = false;
 				}
-			} break;
-			
-			// Dinosaur Treat
-			case 404: {
+			}
+
+			else if (i.getId() == ItemID.DinosaurTreat.getItemId()) {
 				SUCCESS = useTreat(event.getChannel(), d, i);
-				if (SUCCESS) JDBC.addItem(p.getIdLong(), Stats.of(Stats.SNACKS_FED));
-			} break;
-			
-			default:
+			}
+
+			else {
 				sendUnimplemented(event);
 				SUCCESS = false;
-				break;
 			}
 			break;
 			
@@ -524,11 +501,11 @@ public class UseCommand implements ICommand {
 			int value = MesozoicRandom.nextInt(Math.min(max, Constants.MAX_SNACK_GAIN)) + 1;
 			channel.sendMessageFormat("%s, you feed the %s to your %s, and it gained +%d%% %s.", d.getPlayer().getAsMention(), item.toString(), d.getEffectiveName(), value, name).complete();
 			JDBC.executeUpdate("update captures set %s = %s + %d where player = %d and dex = %d and form = %d;", column, column, value, d.getPlayerId(), d.getDex(), d.getForm());
+			JDBC.addItem(d.getPlayerId(), Stat.SnacksFed.getId());
 			return true;
 		} else {
 			channel.sendMessageFormat("%s, your %s has maxed stats and refuses to eat the %s.", d.getPlayer().getAsMention(), d.getEffectiveName(), item.toString()).complete();
 			return false;
 		}
-		
 	}
 }
