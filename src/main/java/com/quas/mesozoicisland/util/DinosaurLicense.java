@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -61,7 +62,10 @@ public class DinosaurLicense {
 			g.fillRect(LEFT, LEFT, PFP_SIZE + 2 * PFP_BORDER, PFP_SIZE + 2 * PFP_BORDER);
 			
 			// PFP
-			BufferedImage pfp = ImageIO.read(new URL(Util.getAvatar(member.getUser())));
+			URL url = new URL(Util.getAvatar(member.getUser()));
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.setRequestProperty("User-Agent", "");
+			BufferedImage pfp = ImageIO.read(con.getInputStream());
 			g.drawImage(pfp, LEFT + PFP_BORDER, LEFT + PFP_BORDER, PFP_SIZE, PFP_SIZE, null);
 			
 			// Stamp

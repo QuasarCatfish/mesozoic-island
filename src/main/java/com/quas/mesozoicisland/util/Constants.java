@@ -37,7 +37,7 @@ public class Constants {
 	public static final float SPECIAL_DAMAGE_MODIFIER = 1.5f;
 	
 	// Spawn
-	public static boolean SPAWN = true;
+	public static boolean SPAWN = false;
 	public static final long MIN_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(2);
 	public static final long MAX_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(8);
 	public static final long BATTLE_WAIT = TimeUnit.SECONDS.toMillis(90);

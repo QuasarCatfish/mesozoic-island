@@ -2,7 +2,6 @@ package com.quas.mesozoicisland.cmdadmin;
 
 import java.util.regex.Pattern;
 
-import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
