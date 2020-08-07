@@ -200,6 +200,9 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.isWildBattleHappening()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a battle.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
+				} else if (!Constants.SPAWN) {
+					event.getChannel().sendMessageFormat("%s uses the %s, but dinosaur spawning is disabled.", p.getAsMention(), i.toString()).complete();
+					SUCCESS = false;
 				} else {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for dinosaurs to battle.", p.getAsMention(), i.toString()).complete();
 					
@@ -215,6 +218,9 @@ public class UseCommand implements ICommand {
 			else if (i.getId() == ItemID.EggLocator.getItemId()) {
 				if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
+					SUCCESS = false;
+				} else if (!Constants.SPAWN_EGGS) {
+					event.getChannel().sendMessageFormat("%s uses the %s, but egg spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for some eggs.", p.getAsMention(), i.toString()).complete();
@@ -234,6 +240,9 @@ public class UseCommand implements ICommand {
 					SUCCESS = false;
 				} else if (SpawnManager.isDungeonSpawned()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
+					SUCCESS = false;
+				} else if (Constants.SPAWN_DUNGEONS) {
+					event.getChannel().sendMessageFormat("%s uses the %s, but dungeon spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for a dungeon to explore.", p.getAsMention(), i.toString()).complete();

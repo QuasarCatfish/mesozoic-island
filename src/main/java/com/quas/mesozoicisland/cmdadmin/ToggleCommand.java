@@ -67,7 +67,7 @@ public class ToggleCommand implements ICommand {
 		} else if (t.isEnabled()) {
 			switch (t) {
 			case Spawn:
-				SpawnManager.setSpawnTime(Long.MAX_VALUE - 1);
+				Constants.SPAWN = false;
 				break;
 			case Dungeon:
 				Constants.SPAWN_DUNGEONS = false;
@@ -85,7 +85,7 @@ public class ToggleCommand implements ICommand {
 		} else {
 			switch (t) {
 			case Spawn:
-				SpawnManager.setSpawnTime();
+				Constants.SPAWN = true;
 				break;
 			case Dungeon:
 				Constants.SPAWN_DUNGEONS = true;

@@ -43,6 +43,8 @@ public class SpawnManager {
 	public static synchronized void trySpawn() {
 		Util.sleep(100);
 		if (MesozoicIsland.isQuitting()) return;
+		if (!Constants.SPAWN) return;
+		
 		if (waiting || isWildBattleHappening()) {
 			spawntime = Long.MAX_VALUE;
 			return;
