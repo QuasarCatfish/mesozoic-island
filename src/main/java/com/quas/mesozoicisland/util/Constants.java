@@ -25,7 +25,7 @@ public class Constants {
 	public static boolean DEBUG_COMMAND = false;
 	public static boolean DEBUG_BATTLE = false;
 	public static int MAX_DEX_DIGITS = 3;
-	public static boolean HIDE_ITEMS = false;
+	public static boolean HIDE_ITEMS = true;
 	
 	// Multipliers
 	public static final float XP_MULTIPLIER = 1f;
@@ -97,20 +97,20 @@ public class Constants {
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {
 		ArrayList<Pair<Dinosaur, String>> pairs = new ArrayList<Pair<Dinosaur, String>>();
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Megalosaurus, DinosaurForm.Standard), "Megalosaurus/Fire")); // Megalosaurus Fire
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Hadrosaurus, DinosaurForm.Standard), "Hadrosaurus/Leaf")); // Hadrosaurus Leaf
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Mosasaurus, DinosaurForm.Standard), "Mosasaurus/Water")); // Mosasaurus Water
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Stegosaurus, DinosaurForm.Standard), "Stegosaurus/Metal")); // Stegosaurus Metal
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Apatosaurus, DinosaurForm.Standard), "Apatosaurus/Ice")); // Apatosaurus Ice
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Pterodactylus, DinosaurForm.Standard), "Pterodactylus/Air")); // Pterodactylus Air
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Compsognathus, DinosaurForm.Standard), "Compsognathus/Lightning")); // Compsognathus Lightning
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Dysganus, DinosaurForm.Standard), "Dysganus/Earth")); // Dysganus Earth
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Megalosaurus, DinosaurForm.Standard), "Megalosaurus, meaning 'Great Lizard', is a Fire-type Dinosaur. It is a large carnivore from Europe that lived during the Middle Jurassic Period. It is thought to be the apex predator at the time for its habitat."));
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Hadrosaurus, DinosaurForm.Standard), "Hadrosaurus, meaning 'Bulky Lizard', is a Leaf-type Dinosaur. It is a large herbivore from North America that lived during the Late Cretaceous Period. Hadrosaurus is the state fossil of New Jersey."));
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Mosasaurus, DinosaurForm.Standard), "Mosasaurus, meaning 'Lizard of the Meuse River', is a Water-type Mosasaur. It is a very large carnivore from the Atlantic Ocean that lived during the Late Cretaceous Period. It preyed on virtually anything, including bony fish, sharks, birds, and even other mosasaurs."));
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Stegosaurus, DinosaurForm.Standard), "Stegosaurus, meaning 'Roofed Lizard', is a Metal-type Dinosaur. It is a large herbivore from North America that lived during the Late Jurassic Period. Due to the upright plates on its back and spikes on its tail, Stegosaurus is one of the most recognizable dinosaurs."));
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Apatosaurus, DinosaurForm.Standard), "Apatosaurus, meaning 'Deceptive Lizard', is an Ice-type Dinosaur. It is a very large herbivore from from North America that lived during the Late Jurassic Period. Apatosaurus may have used its tail as a whip to create loud noises."));
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Pterodactylus, DinosaurForm.Standard), "Pterodactylus, meaning 'Winged Finger', is an Air-type Pterosaur. It is a small carnivore from Europe and Africa that lived during the Late Jurassic Period. Pterodactylus is the first genus of pterosaur to be discovered."));
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Compsognathus, DinosaurForm.Standard), "Compsognathus, meaning 'Elegant Jaw', is a Lightning-type Dinosaur. It is a small carnivore from Europe that lived during the Late Jurassic Period. Many sources say that the Compsognathus is 'chicken-sized', but those specimens are likely juvenile."));
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Dysganus, DinosaurForm.Standard), "Dysganus, meaning 'Rough Enamel', is an Earth-type Dinosaur. It is a large herbivore from North America that lived during the Later Cretaceous Period. It is a species that is known only by a handful of teeth."));
 		return pairs;
 	}
 	
 	public static void addStarterMail(Player p) {
 		JDBC.addMail(p.getIdLong(), "Welcome to Mesozoic Island", "The Mesozoic Island Team",
-				String.format("Welcome, %s, to Mesozoic Island! As a thank you gift for starting your adventure on this island, here's a small welcome gift from us to you.", p.getRawName()),
+				String.format("Welcome, %s, to Mesozoic Island! To welcome you as an official dinosaur trainer on Mesozoic Island, here's a small welcome gift to celebrate.", p.getRawName()),
 				JDBC.getReward("starter"));
 	}
 	
@@ -120,113 +120,9 @@ public class Constants {
 				JDBC.getReward("birthday"));
 	}
 	
-	private static final String[] LEVEL_UP_REWARDS = new String[] {
-			null, // Level 0
-			null, // Level 1
-			"item 100 0 1000", // Level 2
-			"item 100 0 1000", // Level 3
-			"item 100 0 1000", // Level 4
-			"item 100 0 1000 item 5 0 1", // Level 5
-			"item 100 0 1000", // Level 6
-			"item 100 0 1000", // Level 7
-			"item 100 0 1000", // Level 8
-			"item 100 0 1000", // Level 9
-			"item 100 0 1000", // Level 10
-			"item 100 0 1000", // Level 11
-			"item 100 0 1000", // Level 12
-			"item 100 0 1000", // Level 13
-			"item 100 0 1000", // Level 14
-			"item 100 0 1000", // Level 15
-			"item 100 0 1000", // Level 16
-			"item 100 0 1000", // Level 17
-			"item 100 0 1000", // Level 18
-			"item 100 0 1000", // Level 19
-			"item 100 0 1000 item 2 0 1", // Level 20
-			"item 100 0 1000", // Level 21
-			"item 100 0 1000", // Level 22
-			"item 100 0 1000", // Level 23
-			"item 100 0 1000", // Level 24
-			"item 100 0 1000", // Level 25
-			"item 100 0 1000", // Level 26
-			"item 100 0 1000", // Level 27
-			"item 100 0 1000", // Level 28
-			"item 100 0 1000", // Level 29
-			"item 100 0 1000", // Level 30
-			"item 100 0 1000", // Level 31
-			"item 100 0 1000", // Level 32
-			"item 100 0 1000", // Level 33
-			"item 100 0 1000", // Level 34
-			"item 100 0 1000", // Level 35
-			"item 100 0 1000", // Level 36
-			"item 100 0 1000", // Level 37
-			"item 100 0 1000", // Level 38
-			"item 100 0 1000", // Level 39
-			"item 100 0 1000", // Level 40
-			"item 100 0 1000", // Level 41
-			"item 100 0 1000", // Level 42
-			"item 100 0 1000", // Level 43
-			"item 100 0 1000", // Level 44
-			"item 100 0 1000", // Level 45
-			"item 100 0 1000", // Level 46
-			"item 100 0 1000", // Level 47
-			"item 100 0 1000", // Level 48
-			"item 100 0 1000", // Level 49
-			"item 100 0 1000", // Level 50
-			"item 100 0 1000", // Level 51
-			"item 100 0 1000", // Level 52
-			"item 100 0 1000", // Level 53
-			"item 100 0 1000", // Level 54
-			"item 100 0 1000", // Level 55
-			"item 100 0 1000", // Level 56
-			"item 100 0 1000", // Level 57
-			"item 100 0 1000", // Level 58
-			"item 100 0 1000", // Level 59
-			"item 100 0 1000", // Level 60
-			"item 100 0 1000", // Level 61
-			"item 100 0 1000", // Level 62
-			"item 100 0 1000", // Level 63
-			"item 100 0 1000", // Level 64
-			"item 100 0 1000", // Level 65
-			"item 100 0 1000", // Level 66
-			"item 100 0 1000", // Level 67
-			"item 100 0 1000", // Level 68
-			"item 100 0 1000", // Level 69
-			"item 100 0 1000", // Level 70
-			"item 100 0 1000", // Level 71
-			"item 100 0 1000", // Level 72
-			"item 100 0 1000", // Level 73
-			"item 100 0 1000", // Level 74
-			"item 100 0 1000", // Level 75
-			"item 100 0 1000", // Level 76
-			"item 100 0 1000", // Level 77
-			"item 100 0 1000", // Level 78
-			"item 100 0 1000", // Level 79
-			"item 100 0 1000", // Level 80
-			"item 100 0 1000", // Level 81
-			"item 100 0 1000", // Level 82
-			"item 100 0 1000", // Level 83
-			"item 100 0 1000", // Level 84
-			"item 100 0 1000", // Level 85
-			"item 100 0 1000", // Level 86
-			"item 100 0 1000", // Level 87
-			"item 100 0 1000", // Level 88
-			"item 100 0 1000", // Level 89
-			"item 100 0 1000", // Level 90
-			"item 100 0 1000", // Level 91
-			"item 100 0 1000", // Level 92
-			"item 100 0 1000", // Level 93
-			"item 100 0 1000", // Level 94
-			"item 100 0 1000", // Level 95
-			"item 100 0 1000", // Level 96
-			"item 100 0 1000", // Level 97
-			"item 100 0 1000", // Level 98
-			"item 100 0 1000", // Level 99
-			"item 100 0 1000", // Level 100
-	};
-	
 	public static void addLevelUpMail(Player p, int level) {
 		JDBC.addMail(p.getIdLong(), String.format("Level %,d Reward", level), "The Mesozoic Island Team",
 				String.format("Congratulations on reaching Level %,d, %s!", level, p.getRawName()),
-				level < LEVEL_UP_REWARDS.length ? LEVEL_UP_REWARDS[level] : null);
+				JDBC.getReward("level" + level));
 	}
 }
