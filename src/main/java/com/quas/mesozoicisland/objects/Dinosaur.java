@@ -165,8 +165,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return player;
 	}
 	
+	private Player playerobj = null;
 	public Player getPlayer() {
-		return Player.getPlayer(player);
+		if (playerobj == null) playerobj = Player.getPlayer(player);
+		return playerobj;
 	}
 	
 	public String getNickname() {

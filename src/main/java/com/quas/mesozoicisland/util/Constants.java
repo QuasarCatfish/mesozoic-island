@@ -97,14 +97,14 @@ public class Constants {
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {
 		ArrayList<Pair<Dinosaur, String>> pairs = new ArrayList<Pair<Dinosaur, String>>();
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Pterodactylus, DinosaurForm.Standard), "Pterodactylus/Air")); // Pterodactylus Air
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Mosasaurus, DinosaurForm.Standard), "Mosasaurus/Water")); // Mosasaurus Water
 		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Megalosaurus, DinosaurForm.Standard), "Megalosaurus/Fire")); // Megalosaurus Fire
 		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Hadrosaurus, DinosaurForm.Standard), "Hadrosaurus/Leaf")); // Hadrosaurus Leaf
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Mosasaurus, DinosaurForm.Standard), "Mosasaurus/Water")); // Mosasaurus Water
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Stegosaurus, DinosaurForm.Standard), "Stegosaurus/Metal")); // Stegosaurus Metal
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Apatosaurus, DinosaurForm.Standard), "Apatosaurus/Ice")); // Apatosaurus Ice
+		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Pterodactylus, DinosaurForm.Standard), "Pterodactylus/Air")); // Pterodactylus Air
 		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Compsognathus, DinosaurForm.Standard), "Compsognathus/Lightning")); // Compsognathus Lightning
 		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Dysganus, DinosaurForm.Standard), "Dysganus/Earth")); // Dysganus Earth
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Apatosaurus, DinosaurForm.Standard), "Apatosaurus/Ice")); // Apatosaurus Ice
-		pairs.add(new Pair<Dinosaur, String>(Dinosaur.getDinosaur(DinoID.Stegosaurus, DinosaurForm.Standard), "Stegosaurus/Metal")); // Stegosaurus Metal
 		return pairs;
 	}
 	

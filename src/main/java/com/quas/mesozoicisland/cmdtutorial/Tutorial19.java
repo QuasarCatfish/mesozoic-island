@@ -9,9 +9,12 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
@@ -82,21 +85,36 @@ public class Tutorial19 implements ICommand {
 		Util.sleep(5000);
 		assistantChannel.sendMessageFormat("**%s's Team:**\n\t%s\n\n**%s's Team:**\n\t%s", p.getRawName(), play.toString(), event.getGuild().getSelfMember().getEffectiveName(), prof.toString()).complete();
 
-		Util.sleep(5000);
-		assistantChannel.sendMessage("*Battle Text 1/5*").complete();
+		// Battle against Professor
+		String professor = event.getGuild().getSelfMember().getEffectiveName();
+		while (prof.getCurrentHealth() > 0) {
+			StringBuilder sb = new StringBuilder();
+			if (getDamage(prof, play) > play.getCurrentHealth() || MesozoicRandom.nextBoolean()) {
+				// Player attacks professor
+				long damage = getDamage(play, prof);
+				sb.append(String.format("%s's %s attacks %s's %s. ", p.getName(), play.getEffectiveName(), professor, prof.getEffectiveName()));
+				JDBC.addItem(p.getIdLong(), Stat.DamageDealt.getId(), Math.min(damage, prof.getCurrentHealth()));
+				
+				prof.damage(damage);
+				if (prof.getCurrentHealth() > 0) {
+					sb.append(String.format("%s's %s took %,d damage and has %,d health remaining.", professor, prof.getEffectiveName(), damage, prof.getCurrentHealth()));
+				} else {
+					sb.append(String.format("%s's %s took %,d damage and was defeated.", professor, prof.getEffectiveName(), damage));
+				}
+			} else {
+				// Professor attacks player
+				long damage = getDamage(prof, play);
+				sb.append(String.format("%s's %s attacks %s's %s. ", professor, prof.getEffectiveName(), p.getName(), play.getEffectiveName()));
+				JDBC.addItem(p.getIdLong(), Stat.DamageReceived.getId(), Math.min(damage, play.getCurrentHealth()));
 
-		Util.sleep(5000);
-		assistantChannel.sendMessage("*Battle Text 2/5*").complete();
+				play.damage(damage);
+				sb.append(String.format("%s's %s took %,d damage and has %,d health remaining.", p.getName(), play.getEffectiveName(), damage, play.getCurrentHealth()));
+			}
+			
+			Util.sleep(5000);
+			assistantChannel.sendMessage(sb.toString()).complete();
+		}
 
-		Util.sleep(5000);
-		assistantChannel.sendMessage("*Battle Text 3/5*").complete();
-
-		Util.sleep(5000);
-		assistantChannel.sendMessage("*Battle Text 4/5*").complete();
-
-		Util.sleep(5000);
-		assistantChannel.sendMessage("*Battle Text 5/5*").complete();
-		
 		Util.sleep(3000);
 		sendTyping(event.getChannel(), 2000);
 		event.getChannel().sendMessage("Well, darn. I thought I had you there.").complete();
@@ -163,7 +181,7 @@ public class Tutorial19 implements ICommand {
 		else assistantChannel.sendMessage("Unable to delete tutorial channel.").complete();
 	}
 	
-	public Dinosaur getProfessorDinosaur(Dinosaur player) {
+	private Dinosaur getProfessorDinosaur(Dinosaur player) {
 		ArrayList<Pair<Dinosaur, String>> starters = Constants.getStarterDinosaurs();
 		for (int q = 0; q < starters.size(); q++) {
 			if (starters.get(q).getFirstValue().getIdPair().equals(player.getIdPair())) {
@@ -171,5 +189,12 @@ public class Tutorial19 implements ICommand {
 			}
 		}
 		return starters.get(0).getFirstValue();
+	}
+
+	private long getDamage(Dinosaur attack, Dinosaur defend) {
+		long damage = Math.round(1d * attack.getAttack() * attack.getAttack() / defend.getDefense() / 4d);
+		double effectiveness = Element.getEffectiveness(attack.getElement(), defend.getElement());
+		damage *= effectiveness;
+		return damage;
 	}
 }
