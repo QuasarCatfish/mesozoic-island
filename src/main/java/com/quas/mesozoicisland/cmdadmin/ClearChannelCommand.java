@@ -36,7 +36,7 @@ public class ClearChannelCommand implements ICommand {
 
 	@Override
 	public String getCommandDescription() {
-		return "Clears the previous 100 messages in the current channel.";
+		return "Clears all messages in the current channel.";
 	}
 
 	@Override
