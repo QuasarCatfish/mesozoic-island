@@ -9,6 +9,7 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.MessageBuilder;
@@ -97,7 +98,71 @@ public class InformationChannelsCommand implements ICommand {
 
 		{ // INTRODUCTION
 			ArrayList<String> introduction = new ArrayList<String>();
-			introduction.add("WIP");
+			introduction.add("Welcome, trainers, to **Mesozoic Island**, an island inhabited by hundreds of species of dinosaurs! I am the resident researcher on this island, Professor Megan Lowe, and it is my dream to discover all the secrets and mysteries that this island holds.");
+			introduction.add("My assistant is <@644300007259897856>, but most people just call her Elise. She's a robot that helps me and all of you a whole bunch, even if you don't realize it.");
+			introduction.add("A lot of information about Mesozoic Island can be found on various pages on our wiki. Check it out at <https://mesozoic-island.amazingwikis.org/wiki/Main_Page>.");
+			introduction.add(DiscordEmote.Blank.toString());
+			
+			introduction.add("__Helpful Commands:__");
+			introduction.add(Constants.BULLET_POINT + " Using the `help` command lists all usable commands. You can also use this command to learn more about other commands.");
+			introduction.add(Constants.BULLET_POINT + " Resetting at midnight every day, you can use the `daily` command to receive 1,000 Dinosaur Coins. Some events might give you extra items when you claim your daily.");
+			introduction.add(Constants.BULLET_POINT + " The `bag` command lists all of the items you have with you.");
+			introduction.add(Constants.BULLET_POINT + " To learn more about a specific item, you can use the `item` command.");
+			introduction.add(Constants.BULLET_POINT + " To receive pings for various happenings, use the `pingme` command.");
+			introduction.add(Constants.BULLET_POINT + " The `shop` command lists all items available for purcahse, which you can purchase with the `buy` command.");
+			introduction.add(Constants.BULLET_POINT + " For more information about commands, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Commands>.");
+			introduction.add(DiscordEmote.Blank.toString());
+			
+			introduction.add("__Dinosaurs:__");
+			introduction.add(Constants.BULLET_POINT + " There are a few key stats to note about each dinosaur: Element, Rarity, Health, Attack, Defense, Level, and Rank.");
+			introduction.add(Constants.BULLET_POINT + " The Element of your dinosaur determines if its attacks are strong or weak against another dinosaur and your own.");
+			introduction.add(Constants.BULLET_POINT + " The Rarity of your dinosaur governs how likely it is to spawn. The rarer your dinosaur, the less likely you are to encounter it in a wild battle.");
+			introduction.add(Constants.BULLET_POINT + " The Health of your dinosaur dictates how much damage your dinosaur can take before it gets knocked out. The higher your dinosaur's health, the longer it will last in battle.");
+			introduction.add(Constants.BULLET_POINT + " The Attack of your dinosaur dictates how much damage your dinosaur deals to other dinosaurs each time it attacks. The higher your dinosaur's attack, the faster your opponents will get knocked out.");
+			introduction.add(Constants.BULLET_POINT + " The Defense of your dinosaur dictates how much damage your dinosaur resists when getting attacked. The higher your dinosaur's defense, the less damage it will take each attack.");
+			introduction.add(Constants.BULLET_POINT + " The Level of your dinosaur relates to how much Experience your dinosaur has earned. You can earn experience from defeating other dinosaurs or giving it potions.");
+			introduction.add(Constants.BULLET_POINT + " The Rank of your dinosaur relates to how many of that dinosaur you have caught. Since you can only have one of each type of dinosaur, defeating another wild one will yield a Rank Point instead of a dinosaur.");
+			introduction.add(Constants.BULLET_POINT + " The higher the Level and Rank of your dinosaur, the stronger it will be.");
+			introduction.add(Constants.BULLET_POINT + " The `dinos` command lists all dinosaurs you currently own.");
+			introduction.add(Constants.BULLET_POINT + " To create more of a bond, you can give your dinosaur a name with the `nickname` command.");
+			introduction.add(Constants.BULLET_POINT + " Using the `elements` command will list which elements are strong or weak against other elements.");
+			introduction.add(Constants.BULLET_POINT + " Learn more about a specific dinosaur of yours with the `info` command.");
+			introduction.add(Constants.BULLET_POINT + " For more information about dinosaurs, including a list of every dinosaur currently in the game, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dinosaurs>.");
+			introduction.add(DiscordEmote.Blank.toString());
+			
+			/**
+			introduction.add("__Runes:__");
+			introduction.add(Constants.BULLET_POINT + "");
+			introduction.add(DiscordEmote.Blank.toString());
+			*/
+
+			introduction.add("__Battles:__");
+			introduction.add(Constants.BULLET_POINT + " To enter a battle, you must select a team of up to three dinosaurs to participate, using the `select` command.");
+			introduction.add(Constants.BULLET_POINT + " Wild dinosaurs can spawn in groups of one, two, or three for each of the tiers of battle. This is also the maximum number of dinosaurs that will be sent into battle, even if you have more selected.");
+			introduction.add(Constants.BULLET_POINT + " Battles against wild dinosaurs are free-for-alls. Players and the wild dinosaurs can each attack all players in the battle. Any player who defeats a wild dinosaur will receive its crystal and add it to their collection.");
+			introduction.add(Constants.BULLET_POINT + " Defeating any dinosaur in a battle will reward your dinosaur with Experience, used to level up your dinosaur.");
+			introduction.add(Constants.BULLET_POINT + " The tier of battle that you enter is dictated by which dinosaurs you have selected. When selecting your dinosaurs, or when you use the `selected` command, the tier of your team will be displayed.");
+			introduction.add(DiscordEmote.Blank.toString());
+
+			introduction.add("__Eggs:__");
+			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosaurs spawning, an Egg will have been found. As long as you have a free Egg Incubator, you have a chance of taking home that egg.");
+			introduction.add(Constants.BULLET_POINT + " Eggs have a set number of Hatch Points they need before they are able to be hatched.");
+			introduction.add(Constants.BULLET_POINT + " Every minute, all eggs gain a random amount of Hatch Points between one and three.");
+			introduction.add(Constants.BULLET_POINT + " To see the list of eggs you have, and how many Hatch Points they have and need, you can use the `eggs` command.");
+			introduction.add(Constants.BULLET_POINT + " To see more detailed information about your egg, you can use the `info` command.");
+			introduction.add(Constants.BULLET_POINT + " If your egg has the required hatch points, you can hatch the egg with the `hatch` command.");
+			introduction.add(Constants.BULLET_POINT + " For more information about Eggs, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Eggs>.");
+			introduction.add(DiscordEmote.Blank.toString());
+
+			introduction.add("__Dungeons:__");
+			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosuars spawning, a Dungeon will appear. All players of any tier are able to join the dungeon expedition.");
+			introduction.add(Constants.BULLET_POINT + " Unlike wild battles, dinosaur trainers work together to defeat the Dungeon Dinosaurs present in the mysterious Dungeons.");
+			introduction.add(Constants.BULLET_POINT + " Dungeons are made up of multiple floors, each floor having a difficult battle. There can range between three and ten floors in a dungeon.");
+			introduction.add(Constants.BULLET_POINT + " The final floor of the dungeon houses a single dinosaur, the Dungeon Boss. This dinosaur is extremely difficult to defeat.");
+			introduction.add(Constants.BULLET_POINT + " Dungeons also have an associated difficulty. The more stars a dungeon has, the harder each battle will be, but the better rewards you'll find at the top.");
+			introduction.add(Constants.BULLET_POINT + " Defeating a dungeon rewards all players with Dungeon Tokens, which can be used to obtain Dungeon Dinosaurs of your own.");
+			introduction.add(Constants.BULLET_POINT + " For more information about Dungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
+			introduction.add(DiscordEmote.Blank.toString());
 
 			TextChannel channel = DiscordChannel.Introduction.getChannel(MesozoicIsland.getProfessor());
 			for (String s : Util.bulkify(introduction, "\n")) {
