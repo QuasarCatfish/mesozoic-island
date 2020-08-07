@@ -98,14 +98,14 @@ public class InformationChannelsCommand implements ICommand {
 
 		{ // INTRODUCTION
 			ArrayList<String> introduction = new ArrayList<String>();
-			introduction.add("Welcome, trainers, to **Mesozoic Island**, an island inhabited by hundreds of species of dinosaurs! I am the resident researcher on this island, Professor Megan Lowe, and it is my dream to discover all the secrets and mysteries that this island holds.");
+			introduction.add("Welcome, trainers, to **Mesozoic Island**, an island inhabited by hundreds of dinosaur species! I am the resident researcher on this island, Professor Megan Lowe, and it is my dream to discover all the secrets and mysteries that this island holds.");
 			introduction.add("My assistant is <@644300007259897856>, but most people just call her Elise. She's a robot that helps me and all of you a whole bunch, even if you don't realize it.");
 			introduction.add("A lot of information about Mesozoic Island can be found on various pages on our wiki. Check it out at <https://mesozoic-island.amazingwikis.org/wiki/Main_Page>.");
 			introduction.add(DiscordEmote.Blank.toString());
 			
 			introduction.add("__Helpful Commands:__");
 			introduction.add(Constants.BULLET_POINT + " Using the `help` command lists all usable commands. You can also use this command to learn more about other commands.");
-			introduction.add(Constants.BULLET_POINT + " Resetting at midnight every day, you can use the `daily` command to receive 1,000 Dinosaur Coins. Some events might give you extra items when you claim your daily.");
+			introduction.add(Constants.BULLET_POINT + " You can use the `daily` command to receive 1,000 Dinosaur Coins every day. The timer to use this command resets every midnight. Some events might give you extra items when you claim your daily.");
 			introduction.add(Constants.BULLET_POINT + " The `bag` command lists all of the items you have with you.");
 			introduction.add(Constants.BULLET_POINT + " To learn more about a specific item, you can use the `item` command.");
 			introduction.add(Constants.BULLET_POINT + " To receive pings for various happenings, use the `pingme` command.");
@@ -145,7 +145,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(DiscordEmote.Blank.toString());
 
 			introduction.add("__Eggs:__");
-			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosaurs spawning, an Egg will have been found. As long as you have a free Egg Incubator, you have a chance of taking home that egg.");
+			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosaurs spawning, an Egg will be found. As long as you have a free Egg Incubator, you have a chance of taking home that egg.");
 			introduction.add(Constants.BULLET_POINT + " Eggs have a set number of Hatch Points they need before they are able to be hatched.");
 			introduction.add(Constants.BULLET_POINT + " Every minute, all eggs gain a random amount of Hatch Points between one and three.");
 			introduction.add(Constants.BULLET_POINT + " To see the list of eggs you have, and how many Hatch Points they have and need, you can use the `eggs` command.");
