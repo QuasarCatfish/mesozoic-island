@@ -83,9 +83,10 @@ public class MailCheckCommand implements ICommand {
 		if (dc != DiscordChannel.DirectMessages && count > Constants.PUBLIC_MAIL_DISPLAY) {
 			print.add(String.format("+ %,d more messages", count - Constants.PUBLIC_MAIL_DISPLAY));
 		}
+		print.add("You can open mail with the `mail open <id>` command.");
 		
 		if (print.isEmpty()) {
-			event.getChannel().sendMessageFormat("%s, you don't have any mail.", p.getAsMention()).complete();
+			event.getChannel().sendMessageFormat("%s, you don't have pending mail. To see all your mail, use the command `mail all` in DMs with ELISE.", p.getAsMention()).complete();
 		} else {
 			print.add(0, String.format("%s, here is your pending mail:", p.getAsMention()));
 			for (String s : Util.bulkify(print)) {

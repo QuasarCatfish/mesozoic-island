@@ -4,9 +4,15 @@ import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.util.Util;
 
 public enum Location {
-	Beach1("Beach #1"),
-	Beach2("Beach #2"),
-	Beach3("Beach #3");
+	Plains("Plains"),
+	Volcano("Volcano", Element.of(2)),
+	Mountain("Mountain", Element.of(4)),
+	Jungle("Jungle", Element.of(8)),
+	Plateau("Plateau", Element.of(16)),
+	Tundra("Tundra", Element.of(32)),
+	Cave("Cave", Element.of(64)),
+	Beach("Beach", Element.of(128)),
+	Cliffs("Cliffs", Element.of(256));
 	
 	private String name;
 	private Element[] boost;
