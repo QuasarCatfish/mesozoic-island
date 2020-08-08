@@ -56,16 +56,19 @@ public class ShopItem {
 	
 	public long getPlayerStock(long player) {
 		if (isPlayerSpecific()) {
+			long purchase = 0;
+
 			try (ResultSet res = JDBC.executeQuery("select * from purchases where shopid = %d and player = %d;", id, player)) {
 				if (res.next()) {
-					return playerstock - res.getInt("count");
+					purchase = res.getInt("count");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			
-			if (getTotalStock() < 0) return playerstock;
-			return Math.min(playerstock, getTotalStock());
+			if (getTotalStock() == -1) return playerstock - purchase;
+			if (playerstock == -1) return -1;
+			return Math.min(playerstock - purchase, getTotalStock());
 		}
 		
 		return getTotalStock();

@@ -62,11 +62,10 @@ public class ListTeamsCommand implements ICommand {
 		
 		try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d;", p.getIdLong())) {
 			if (res.next()) {
-				res.beforeFirst();
 				StringBuilder sb = new StringBuilder();
 				
 				int q = 1;
-				while (res.next()) {
+				do {
 					sb.append(q);
 					sb.append(") Team `");
 					sb.append(res.getString("teamname"));
@@ -77,7 +76,7 @@ public class ListTeamsCommand implements ICommand {
 					if (len != 1) sb.append("s");
 					sb.append("\n");
 					q++;
-				}
+				} while (res.next());
 				
 				event.getChannel().sendMessageFormat("%s, here are your teams:\n%s", p.getAsMention(), sb.toString()).complete();
 			} else {

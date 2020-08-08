@@ -413,7 +413,7 @@ public class JDBC {
 		Player p = Player.getPlayer(playerid);
 		boolean b = executeUpdate("update players set xp = %d where playerid = %d;", calculatePlayerXp(playerid), playerid);
 		Player p2 = Player.getPlayer(playerid);
-		if (p2.getLevel() == 2) return b;
+		if (p2.getLevel() <= 2) return b;
 		
 		for (int level = p.getLevel() + 1; level <= p2.getLevel(); level++) {
 			Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s, you have leveled up to **Level %,d**! Check your mailbox for your reward.", p.getAsMention(), level).complete();

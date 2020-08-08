@@ -98,6 +98,7 @@ public class EggsCommand implements ICommand {
 		sb.append("/");
 		sb.append(Util.formatNumber(eggs.size()));
 		
+		sb.append("\nYou'll find a full list of your egg incubators in your DMs.");
 		event.getChannel().sendMessage(sb.toString()).complete();
 		
 		ArrayList<String> print = new ArrayList<String>();
