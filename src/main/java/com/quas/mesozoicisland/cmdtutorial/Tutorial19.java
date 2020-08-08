@@ -115,6 +115,11 @@ public class Tutorial19 implements ICommand {
 			assistantChannel.sendMessage(sb.toString()).complete();
 		}
 
+		JDBC.addItem(p.getIdLong(), Stat.BattlesWon.getId());
+		JDBC.addItem(p.getIdLong(), Stat.BattlesEntered.getId());
+		JDBC.addItem(p.getIdLong(), Stat.DinosaursDefeated.getId());
+		JDBC.addWin(p.getIdLong(), play.getIdPair());
+
 		Util.sleep(3000);
 		sendTyping(event.getChannel(), 2000);
 		event.getChannel().sendMessage("Well, darn. I thought I had you there.").complete();
