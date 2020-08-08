@@ -168,7 +168,8 @@ public class Tutorial19 implements ICommand {
 		assistantChannel.sendMessage("I'll do you a favor and introduce you to everyone.").complete();
 		
 		Util.sleep(2000);
-		MesozoicIsland.getAssistant().getGuild().getTextChannelById(Constants.SPAWN_CHANNEL.getIdLong()).sendMessageFormat("Please welcome %s and their %s to Mesozoic Island.", p.getAsMention(), Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(p.getStarter())).getDinosaurName()).complete();
+		MesozoicIsland.getAssistant().getGuild().getTextChannelById(Constants.SPAWN_CHANNEL.getIdLong()).sendMessageFormat("Please welcome %s and their %s to Mesozoic Island.", p.getName(), Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(p.getStarter())).getDinosaurName()).complete();
+		MesozoicIsland.getAssistant().getGuild().getTextChannelById(Constants.SPAWN_CHANNEL.getIdLong()).sendMessageFormat("%s, you have been given mail. Check your mailbox with the `mail` command.", p.getAsMention()).complete();
 		Constants.addStarterMail(p);
 		
 		Util.sleep(2000);

@@ -8,6 +8,7 @@ import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.NewPlayerStatus;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Action;
+import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.Permission;
@@ -33,8 +34,7 @@ public class NewMember extends ListenerAdapter {
 		if (event.getAuthor().isFake()) return;
 		if (!event.getMessage().getContentRaw().toLowerCase().matches("begin " + ICommand.PLAYER)) return;
 		
-		Player p = Player.getPlayer(event.getAuthor().getIdLong());
-		if (p == null) return;
+		if (event.getAuthor().getIdLong() != Constants.QUAS_ID) return;
 		
 		String id = event.getMessage().getContentRaw().replaceAll("\\D", "");
 		Member m = event.getGuild().getMemberById(id);

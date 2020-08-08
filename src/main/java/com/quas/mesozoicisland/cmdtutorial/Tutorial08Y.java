@@ -71,7 +71,7 @@ public class Tutorial08Y implements ICommand {
 		Util.sleep(500);
 		
 		JDBC.addDinosaur(null, p.getIdLong(), dino.getIdPair());
-		MesozoicIsland.getAssistant().getGuild().getTextChannelById(event.getChannel().getIdLong()).sendMessageFormat("%s, you have been given a %s crystal.", p.getAsMention(), dino.getDinosaurName()).complete();
+		MesozoicIsland.getAssistant().getGuild().getTextChannelById(event.getChannel().getIdLong()).sendMessageFormat("%s, you have been given %s %s crystal.", p.getAsMention(), Util.getArticle(dino.getDinosaurName()), dino.getDinosaurName()).complete();
 		Util.sleep(1500);
 		
 		sendTyping(event.getChannel(), 2000);

@@ -63,6 +63,7 @@ public interface ICommand {
 	// Can be used
 	public default boolean canBeUsed(MessageReceivedEvent event) {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
+		if (p == null) return false;
 		
 		// Check Channel
 		DiscordChannel dc = DiscordChannel.getChannel(event.getChannel());
