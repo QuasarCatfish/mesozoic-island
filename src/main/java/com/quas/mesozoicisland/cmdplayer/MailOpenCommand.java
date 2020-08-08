@@ -64,9 +64,10 @@ public class MailOpenCommand implements ICommand {
 			if (res.next()) {
 				if (res.getLong("player") == p.getIdLong()) {
 					String msg = String.format("\n\n**%s** (from %s)\n> %s", res.getString("name"), res.getString("from"), res.getString("message"));
-					String prize = res.getString("reward") == null || res.getBoolean("opened") ? "" : "\n\nInside you also find:\n" + JDBC.getRedeemMessage(res.getString("reward"));
+					boolean hasPrize = res.getString("reward") != null && !res.getBoolean("opened");
+					String prize = hasPrize ? "\n\nInside you also find:\n" + JDBC.getRedeemMessage(res.getString("reward")) : "";
 					event.getChannel().sendMessageFormat("%s opens the piece of mail:%s%s", p.getAsMention(), msg, prize).complete();
-					JDBC.redeem(event.getChannel(), p.getIdLong(), res.getString("reward"));
+					if (hasPrize) JDBC.redeem(event.getChannel(), p.getIdLong(), res.getString("reward"));
 					JDBC.executeUpdate("update mail set opened = true where id = %d;", res.getInt("id"));
 				} else {
 					event.getChannel().sendMessageFormat("%s, this piece of mail isn't yours.", p.getAsMention()).complete();

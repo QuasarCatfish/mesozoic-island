@@ -86,38 +86,47 @@ public class Tutorial03 implements ICommand {
 		switch (month.toLowerCase()) {
 		case "january":
 		case "jan":
+		case "01":
 		case "1":
 			return 1;
 		case "february":
 		case "feb":
+		case "02":
 		case "2":
 			return 2;
 		case "march":
 		case "mar":
+		case "03":
 		case "3":
 			return 3;
 		case "april":
 		case "apr":
+		case "04":
 		case "4":
 			return 4;
 		case "may":
+		case "05":
 		case "5":
 			return 5;
 		case "june":
 		case "jun":
+		case "06":
 		case "6":
 			return 6;
 		case "july":
 		case "jul":
+		case "07":
 		case "7":
 			return 7;
 		case "august":
 		case "aug":
+		case "08":
 		case "8":
 			return 8;
 		case "september":
 		case "sept":
 		case "sep":
+		case "09":
 		case "9":
 			return 9;
 		case "october":
@@ -139,15 +148,15 @@ public class Tutorial03 implements ICommand {
 	
 	private int getDay(String day) {
 		switch (day) {
-		case "1": case "1st": return 1;
-		case "2": case "2nd": return 2;
-		case "3": case "3rd": return 3;
-		case "4": case "4th": return 4;
-		case "5": case "5th": return 5;
-		case "6": case "6th": return 6;
-		case "7": case "7th": return 7;
-		case "8": case "8th": return 8;
-		case "9": case "9th": return 9;
+		case "1": case "01": case "1st": return 1;
+		case "2": case "02": case "2nd": return 2;
+		case "3": case "03": case "3rd": return 3;
+		case "4": case "04": case "4th": return 4;
+		case "5": case "05": case "5th": return 5;
+		case "6": case "06": case "6th": return 6;
+		case "7": case "07": case "7th": return 7;
+		case "8": case "08": case "8th": return 8;
+		case "9": case "09": case "9th": return 9;
 		case "10": case "10th": return 10;
 		case "11": case "11th": return 11;
 		case "12": case "12th": return 12;

@@ -10,6 +10,7 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Pair;
@@ -101,12 +102,16 @@ public class Tutorial06 implements ICommand {
 			
 			eb.addField("Dinosaur Name", pair.getFirstValue().getDinosaurName(), true);
 			eb.addField("Element", pair.getFirstValue().getElement().getName(), true);
-//			eb.addField("", "", true);
-			if (pair.getFirstValue().getImageLink() != null) eb.setThumbnail("attachment://" + pair.getFirstValue().getImageLink());
+			eb.addField("Element Effectiveness", getElementEffectiveness(pair.getFirstValue().getElement()), true);
 			eb.addField("Dinosaur Description", pair.getSecondValue(), false);
-			
+
 			MessageAction ma = assistantChannel.sendMessage(eb.build());
-			if (pair.getFirstValue().getImageLink() != null) ma.addFile(pair.getFirstValue().getImage());
+
+			if (pair.getFirstValue().getImageLink() != null) {
+				eb.setThumbnail("attachment://" + pair.getFirstValue().getImageLink());
+				ma.addFile(pair.getFirstValue().getImage());
+			}
+			
 			ma.complete();
 			Util.sleep(1000);
 		}
@@ -115,5 +120,32 @@ public class Tutorial06 implements ICommand {
 		event.getChannel().sendMessageFormat("So, %s, take your choice. Which dinosaur do you want as your starter?", p.getRawName()).complete();
 		
 		JDBC.setState(p.getIdLong(), "Tutorial07");
+	}
+
+	private String getElementEffectiveness(Element e1) {
+		ArrayList<String> strong = new ArrayList<String>();
+		ArrayList<String> weak = new ArrayList<String>();
+
+		for (Element e2 : Element.values()) {
+			if (e2.getId() < 0) continue;
+			if (Integer.bitCount(e2.getId()) > 1) continue;
+			
+			double eff = e1.getEffectivenessAgainst(e2);
+			if (eff > 1.001) {
+				strong.add(e2.getName());
+			} else if (eff < .999) {
+				weak.add(e2.getName());
+			}
+		}
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("Strong Against: ");
+		if (strong.isEmpty()) sb.append("None");
+		else sb.append(String.join(", ", strong));
+		sb.append("\nWeak Against: ");
+		if (weak.isEmpty()) sb.append("None");
+		else sb.append(String.join(", ", weak));
+
+		return sb.toString();
 	}
 }
