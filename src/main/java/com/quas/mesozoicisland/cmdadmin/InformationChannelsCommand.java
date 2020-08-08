@@ -75,7 +75,7 @@ public class InformationChannelsCommand implements ICommand {
 			rules.add(bullet + "**No advertising**\nDo not advertise other Discord servers, YouTube channels, streams, etc. This includes advertising through DMs.");
 			rules.add(bullet + "**No outside conflicts**\nBringing conflicts or drama from another server to this one is not allowed.");
 			rules.add(bullet + "**Dinosaur nicknames**\nDo not name your dinosaur something that violates the rules.");
-			rules.add(bullet + "**Do not ignore warnings and mutes**\nIf you have been warned or muted, there was a reason for it. Make chances to improve your behavior so it doesn't happen again. Additionally, do not use alts to talk if you have been muted.");
+			rules.add(bullet + "**Do not ignore warnings and mutes**\nIf you have been warned or muted, there was a reason for it. Make changes to improve your behavior so it doesn't happen again. Additionally, do not use alts to talk if you have been muted.");
 			rules.add(bullet + "**No toxic behavior**\nExcessive passive-agressiveness, talking back to other players, putting others down regularly, and not being a kind person is considered toxic. Please avoid this.");
 			rules.add(bullet + "**No spam**\nDo not send the same message repeatedly in a short time period. Additionally, do not send messages excessively filled with emoticons.");
 			rules.add(bullet + "**Do not mass ping**\nPinging @everyone and @here is disabled, but you will receive a warning if you attempt to. This includes pinging a large number of people in one message.");
