@@ -21,7 +21,7 @@ public class InfoTeamCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("team info ", ALPHA);
+		return pattern("team info .+");
 	}
 
 	@Override
@@ -64,6 +64,11 @@ public class InfoTeamCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
+		if (!args[1].matches(ALPHA) || args.length > 2) {
+			event.getChannel().sendMessageFormat("%s, you don't have a team with this name.", p.getAsMention()).complete();
+			return;
+		}
+
 		try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d and teamname = '%s';", p.getIdLong(), Util.cleanQuotes(args[1]))) {
 			if (res.next()) {
 				String selected = res.getString("selected");

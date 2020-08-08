@@ -71,7 +71,7 @@ public class NicknameCommand implements ICommand {
 			JDBC.setNickname(p.getIdLong(), d.getDex(), d.getForm(), nick);
 			event.getChannel().sendMessageFormat("%s, your %s shall now be known as \"%s\".", event.getAuthor().getAsMention(), d.getDinosaurName(), nick).complete();
 		} else {
-			event.getChannel().sendMessageFormat("%s, \"%s\" is an invalid nickname for a dinosaur.", event.getAuthor().getAsMention(), nick).complete();
+			event.getChannel().sendMessageFormat("%s, that is an invalid nickname for a dinosaur.", event.getAuthor().getAsMention()).complete();
 		}
 	}
 }

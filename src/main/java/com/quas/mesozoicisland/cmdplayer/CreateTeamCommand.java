@@ -21,7 +21,7 @@ public class CreateTeamCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("team create ", ALPHA);
+		return pattern("team create .+");
 	}
 
 	@Override
@@ -66,6 +66,11 @@ public class CreateTeamCommand implements ICommand {
 		
 		Item i = Item.getItem(ItemID.TeamToken);
 		TreeMap<Item, Long> bag = p.getBag();
+
+		if (!args[1].matches(ALPHA) || args.length > 2) {
+			event.getChannel().sendMessageFormat("%s, that is an invalid name for a team.", p.getAsMention()).complete();
+			return;
+		}
 		
 		if (bag.getOrDefault(i, 0L) <= 0L) {
 			event.getChannel().sendMessageFormat("%s, you do not have %s %s.", p.getAsMention(), Util.getArticle(i.toString()), i.toString()).complete();

@@ -20,7 +20,7 @@ public class DeleteTeamCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("team delete ", ALPHA);
+		return pattern("team delete .+");
 	}
 
 	@Override
@@ -65,6 +65,11 @@ public class DeleteTeamCommand implements ICommand {
 		
 		Item i = Item.getItem(ItemID.TeamToken);
 		
+		if (!args[1].matches(ALPHA) || args.length > 2) {
+			event.getChannel().sendMessageFormat("%s, you don't have a team with this name.", p.getAsMention()).complete();
+			return;
+		}
+
 		try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d and teamname = '%s';", p.getIdLong(), Util.cleanQuotes(args[1]))) {
 			if (res.next()) {
 				JDBC.executeUpdate("delete from teams where playerid = %d and teamname = '%s';", p.getIdLong(), Util.cleanQuotes(args[1]));
