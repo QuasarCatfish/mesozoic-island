@@ -83,7 +83,8 @@ public class DinosaurLicense {
 			g.drawString("ID: " + p.getId(), TEXT_X, TEXT_Y + 2 * LINE_HEIGHT);
 			g.drawString("Birthday: " + (p.getBirthday() > 0 ? Util.getBirthday(p.getBirthday()) : "Unknown"), TEXT_X, TEXT_Y + 3 * LINE_HEIGHT);
 			g.drawString("Trainer Level: " + p.getLevel(), TEXT_X, TEXT_Y + 4 * LINE_HEIGHT);
-			g.drawString("Dinodex: " + p.getDexCount(DinosaurForm.AllForms.getId()) + " Dinosaurs", TEXT_X, TEXT_Y + 5 * LINE_HEIGHT);
+			int dex =p.getDexCount(DinosaurForm.AllForms.getId());
+			g.drawString("Dinodex: " + dex + " Dinosaur" + (dex == 1 ? "" : "s"), TEXT_X, TEXT_Y + 5 * LINE_HEIGHT);
 			if (p.getMainElement().getId() > 0) g.drawString("Guild: " + p.getMainElement(), TEXT_X, TEXT_Y + 6 * LINE_HEIGHT);
 			
 			g.setFont(new Font(FONT, Font.PLAIN, FONT_SIZE));
