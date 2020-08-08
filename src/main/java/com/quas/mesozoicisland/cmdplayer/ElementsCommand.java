@@ -84,7 +84,7 @@ public class ElementsCommand implements ICommand {
 			sb.append("Strong Against: ");
 			if (strong.isEmpty()) sb.append("None");
 			else sb.append(String.join(", ", strong));
-			sb.append("\nWeak Against: ");
+			sb.append("\nResisted By: ");
 			if (weak.isEmpty()) sb.append("None");
 			else sb.append(String.join(", ", weak));
 			
