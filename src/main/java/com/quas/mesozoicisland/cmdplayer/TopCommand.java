@@ -78,6 +78,7 @@ public class TopCommand implements ICommand {
 		case DinosaurLevel:
 			try (ResultSet res = JDBC.executeQuery("select * from captures where %s order by xp desc limit %d;", lbc.getWhereClause(), Constants.MAX_LEADERBOARD_CHECK)) {
 				while (res.next()) {
+					if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 					Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 					lb.addEntry(d.getXp(), d.getPlayer().getName(), d.getEffectiveName(), d.getLevel(), d.getXpMinusLevel());
 				}
@@ -88,6 +89,7 @@ public class TopCommand implements ICommand {
 		case DinosaurRank:
 			try (ResultSet res = JDBC.executeQuery("select *, (1000000000000 * rnk + rp) as effrp from captures where %s order by effrp desc limit %d;", lbc.getWhereClause(), Constants.MAX_LEADERBOARD_CHECK)) {
 				while (res.next()) {
+					if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 					Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 					lb.addEntry(res.getLong("effrp"), d.getPlayer().getName(), d.getEffectiveName(), d.getRankString(), d.getRp());
 				}
@@ -100,6 +102,7 @@ public class TopCommand implements ICommand {
 			case STAT_WINS:
 				try (ResultSet res = JDBC.executeQuery("select * from captures where wins + losses >= %d order by wins desc limit %d;", Constants.LEADERBOARD_REQUIRED_BATTLES, Constants.MAX_LEADERBOARD_CHECK)) {
 					while (res.next()) {
+						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 						lb.addEntry(d.getXp(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins");
 					}
@@ -115,6 +118,7 @@ public class TopCommand implements ICommand {
 			case TWOSTAT_WTL:
 				try (ResultSet res = JDBC.executeQuery("select *, (case when losses = 0 then 999999999 else wins / losses end) as wtl from captures where wins + losses >= %d order by wtl desc, wins desc limit %d;", Constants.LEADERBOARD_REQUIRED_BATTLES, Constants.MAX_LEADERBOARD_CHECK)) {
 					while (res.next()) {
+						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 						lb.addEntry(d.getXp(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins", d.getLosses(), d.getLosses() == 1 ? "Loss" : "Losses");
 					}
@@ -149,6 +153,7 @@ public class TopCommand implements ICommand {
 				Item item = Item.getItem(new Pair<Integer, Long>(lbc.getItems()[0], (long)lbc.getItems()[1]));
 				while (res.next()) {
 					Player p = Player.getPlayer(res.getLong("player"));
+					if (p.getIdLong() < CustomPlayer.getUpperLimit()) continue;
 					lb.addEntry(res.getLong("count"), p.getName(), res.getLong("count"), item.toString(res.getLong("count")));
 				}
 			} catch (SQLException e) {
