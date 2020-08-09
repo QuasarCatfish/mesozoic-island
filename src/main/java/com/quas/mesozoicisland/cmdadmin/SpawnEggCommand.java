@@ -7,6 +7,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.SpawnType;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -54,7 +55,10 @@ public class SpawnEggCommand implements ICommand {
 
 	@Override
 	public void run(MessageReceivedEvent event, String... args) {
-		event.getChannel().sendMessageFormat("%s is spawning an egg.", event.getAuthor().getAsMention()).complete();
-		SpawnManager.spawnEgg();
+		if (SpawnManager.trySpawn(SpawnType.Egg)) {
+			event.getChannel().sendMessageFormat("%s is spawning an egg.", event.getAuthor().getAsMention()).complete();
+		} else {
+			event.getChannel().sendMessageFormat("%s, failed to spawn an egg.", event.getAuthor().getAsMention()).complete();
+		}
 	}
 }

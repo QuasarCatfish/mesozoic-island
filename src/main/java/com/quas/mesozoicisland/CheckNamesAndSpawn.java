@@ -1,6 +1,7 @@
 package com.quas.mesozoicisland;
 
 import com.quas.mesozoicisland.battle.SpawnManager;
+import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
 
@@ -36,7 +37,7 @@ public class CheckNamesAndSpawn extends ListenerAdapter {
 		
 		if (event.getChannel().getIdLong() == Constants.SPAWN_CHANNEL.getIdLong()) {
 			if (!SpawnManager.doAutoSpawn()) {
-				SpawnManager.trySpawn();
+				SpawnManager.trySpawn(SpawnType.Random);
 			}
 		}
 	}

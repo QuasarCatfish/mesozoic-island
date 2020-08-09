@@ -132,6 +132,7 @@ import com.quas.mesozoicisland.cmdtutorial.TutorialSelectedCommand;
 import com.quas.mesozoicisland.cmdtutorial.TutorialShopCommand;
 import com.quas.mesozoicisland.cmdtutorial.TutorialUseCommand;
 import com.quas.mesozoicisland.enums.DiscordChannel;
+import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
@@ -337,7 +338,7 @@ public class MesozoicIsland {
 					for (int q = 1; q <= 600; q++) {
 						Action.doActions(professor.getGuild());
 						Action.doActions(assistant.getGuild());
-						if (SpawnManager.doAutoSpawn()) SpawnManager.trySpawn();
+						if (SpawnManager.doAutoSpawn()) SpawnManager.trySpawn(SpawnType.Random);
 						if (Constants.UPDATE_EGG_HP && q % 60 == 0) JDBC.updateEggs();
 						Util.sleep(1_000);
 					}

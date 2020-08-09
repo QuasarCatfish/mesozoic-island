@@ -13,6 +13,7 @@ import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
+import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Dungeon;
@@ -31,24 +32,32 @@ import net.dv8tion.jda.api.entities.User;
 
 public class SpawnManager {
 
-	private static long spawntime = System.currentTimeMillis() + Constants.MIN_SPAWN_TIMER;
-	private static long lastspawn = 0;
-	private static boolean autospawn = true;
-	private static volatile boolean waiting = false;
+	public static long spawntime = System.currentTimeMillis() + Constants.MIN_SPAWN_TIMER;
+	public static long lastspawn = 0;
+	public static boolean autospawn = true;
+	public static volatile boolean waiting = false;
 	
 	public static boolean doAutoSpawn() {
 		return autospawn;
 	}
 	
-	public static synchronized void trySpawn() {
+	public static synchronized boolean trySpawn(final SpawnType spawntype) {
 		Util.sleep(100);
-		if (MesozoicIsland.isQuitting()) return;
-		if (!Constants.SPAWN) return;
+		if (MesozoicIsland.isQuitting()) return false;
+		if (!Constants.SPAWN) return false;
 		
-		if (waiting || isWildBattleHappening()) {
-			spawntime = Long.MAX_VALUE;
-			return;
+		if (waiting) {
+			if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild) && isWildBattleHappening()) {
+				spawntime = Long.MAX_VALUE;
+				return false;
+			} else if (spawntype == SpawnType.Dungeon && isDungeonSpawned()) {
+				return false;
+			}
 		}
+
+		if (!Constants.SPAWN_EGGS && spawntype == SpawnType.Egg) return false;
+		if (!Constants.SPAWN_DUNGEONS && spawntype == SpawnType.Dungeon) return false;
+
 		if (spawntime == Long.MAX_VALUE && lastspawn + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) resetSpawnTime();
 		if (spawntime == Long.MAX_VALUE) setSpawnTime();
 		if (spawntime <= System.currentTimeMillis()) {
@@ -57,59 +66,91 @@ public class SpawnManager {
 				public void run() {
 					// Spawn Dinosaur
 					autospawn = true;
-					if (Constants.SPAWN_DUNGEONS && MesozoicRandom.nextInt(Constants.DUNGEON_SPAWN_CHANCE) == 0 && !isDungeonSpawned()) {
-						spawnDungeon();
-					} else if (Constants.SPAWN_EGGS && MesozoicRandom.nextInt(Constants.EGG_SPAWN_CHANCE) == 0) {
-						spawnEgg();
-					} else {
-						spawnWild();
+					SpawnType spawn = spawntype;
+
+					if (spawn == SpawnType.Random) {
+						if (Constants.SPAWN_DUNGEONS && MesozoicRandom.nextInt(Constants.DUNGEON_SPAWN_CHANCE) == 0 && !isDungeonSpawned()) {
+							spawn = SpawnType.Dungeon;
+						} else if (Constants.SPAWN_EGGS && MesozoicRandom.nextInt(Constants.EGG_SPAWN_CHANCE) == 0) {
+							spawn = SpawnType.Egg;
+						} else {
+							spawn = SpawnType.Wild;
+						}
 					}
+
+					switch (spawn) {
+						case Wild:
+							spawnWild();
+							break;
+						case Dungeon:
+							spawnDungeon();
+							break;
+						case Egg:
+							spawnEgg();
+							break;
+						default:
+							break;
+
+					}
+					
 					lastspawn = System.currentTimeMillis();
 				}
 			}.start();
+			return true;
 		}
+
+		return false;
 	}
 	
-	public static void setSpawnTime() {
+	public static synchronized void setSpawnTime() {
 		spawntime = System.currentTimeMillis() + getRandomSpawnTime();
 	}
 	
-	public static void setSpawnTime(long time) {
+	public static synchronized void setSpawnTime(long time) {
 		spawntime = time;
 	}
 	
-	public static long getRandomSpawnTime() {
+	public static synchronized long getRandomSpawnTime() {
 		return MesozoicRandom.nextLong(Constants.MIN_SPAWN_TIMER, Constants.MAX_SPAWN_TIMER);
 	}
 	
-	public static void resetSpawnTime() {
+	public static synchronized void resetSpawnTime() {
 		spawntime = 0;
 	}
 	
-	public static long getSpawnTime() {
+	public static synchronized long getSpawnTime() {
 		return spawntime;
 	}
 	
 	public static boolean isWildBattleHappening() {
 		for (BattleTier bc : BattleTier.getBattleTiers()) {
 			MessageHistory mh = bc.getBattleChannel().getBattleChannel().getChannel(MesozoicIsland.getProfessor()).getHistory();
-			mh.retrievePast(1).complete();
-			if (!mh.isEmpty()) return true;
+			List<Message> messages = mh.retrievePast(20).complete();
+			for (Message message : messages) {
+				if (message.getAuthor().getIdLong() == MesozoicIsland.getAssistant().getIdLong()) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
 	
 	public static boolean isDungeonSpawned() {
 		MessageHistory mh = BattleChannel.Dungeon.getBattleChannel().getChannel(MesozoicIsland.getProfessor()).getHistory();
-		mh.retrievePast(1).complete();
-		return !mh.isEmpty();
+		List<Message> messages = mh.retrievePast(20).complete();
+		for (Message message : messages) {
+			if (message.getAuthor().getIdLong() == MesozoicIsland.getAssistant().getIdLong()) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
-	public static int getSpawnCount() {
+	public static synchronized int getSpawnCount() {
 		return 10 / MesozoicRandom.nextInt(3, 11);
 	}
 	
-	public static void spawnEgg() {
+	private static synchronized void spawnEgg() {
 		waiting = true;
 		
 		// Generate Egg
@@ -177,7 +218,7 @@ public class SpawnManager {
 		waiting = false;
 	}
 	
-	public static void spawnWild() {
+	private static synchronized void spawnWild() {
 		waiting = true;
 		
 		// Generate Wild Dinosaurs
@@ -303,7 +344,7 @@ public class SpawnManager {
 		waiting = false;
 	}
 	
-	public static void spawnDungeon() {
+	private static synchronized void spawnDungeon() {
 		waiting = true;
 		
 		// Generate Dungeon
@@ -421,13 +462,13 @@ public class SpawnManager {
 		waiting = false;
 	}
 	
-	public static void spawnPVP() {
+	private static synchronized void spawnPVP() {
 		waiting = true;
 		
 		waiting = false;
 	}
 	
-	public static void spawnCustom(long player, Dinosaur[] dinos) {
+	private static synchronized void spawnCustom(long player, Dinosaur[] dinos) {
 		waiting = true;
 		
 		waiting = false;

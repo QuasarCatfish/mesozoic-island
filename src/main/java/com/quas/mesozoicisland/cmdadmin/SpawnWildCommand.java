@@ -7,6 +7,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.SpawnType;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -54,7 +55,10 @@ public class SpawnWildCommand implements ICommand {
 
 	@Override
 	public void run(MessageReceivedEvent event, String... args) {
-		event.getChannel().sendMessageFormat("%s is spawning a wild dinosaur battle.", event.getAuthor().getAsMention()).complete();
-		SpawnManager.spawnWild();
+		if (SpawnManager.trySpawn(SpawnType.Wild)) {
+			event.getChannel().sendMessageFormat("%s is spawning a wild dinosaur battle.", event.getAuthor().getAsMention()).complete();
+		} else {
+			event.getChannel().sendMessageFormat("%s, failed to a wild dinosaur battle.", event.getAuthor().getAsMention()).complete();
+		}
 	}
 }

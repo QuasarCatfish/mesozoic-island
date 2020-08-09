@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.cmdadmin;
 import java.io.File;
 import java.util.regex.Pattern;
 
+import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
@@ -92,6 +93,18 @@ public class TestCommand implements ICommand {
 					event.getChannel().sendMessage(eb.build()).addFile(f).complete();
 				}
 				event.getChannel().sendMessage("Done.").complete();
+			} break;
+
+			case "spawncheck": {
+				StringBuilder sb = new StringBuilder();
+				sb.append("```");
+				sb.append("\nspawn time  = " + SpawnManager.spawntime);
+				sb.append("\ncurrent     = " + System.currentTimeMillis());
+				sb.append("\nwaiting     = " + SpawnManager.waiting);
+				sb.append("\nwild battle = " + SpawnManager.isWildBattleHappening());
+				sb.append("\ncfg spawn   = " + Constants.SPAWN);
+				sb.append("\n```");
+				event.getChannel().sendMessage(sb.toString()).complete();
 			} break;
 			
 			}

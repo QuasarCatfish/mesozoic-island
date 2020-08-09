@@ -22,6 +22,7 @@ import com.quas.mesozoicisland.enums.EggColor;
 import com.quas.mesozoicisland.enums.ItemCategory;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemType;
+import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
@@ -200,18 +201,11 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else if (SpawnManager.isWildBattleHappening()) {
+				} else if (SpawnManager.trySpawn(SpawnType.Wild)) {
+					event.getChannel().sendMessageFormat("%s uses the %s to look for dinosaurs to battle.", p.getAsMention(), i.toString()).complete();
+				} else {
 					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a battle.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else {
-					event.getChannel().sendMessageFormat("%s uses the %s to look for dinosaurs to battle.", p.getAsMention(), i.toString()).complete();
-					
-					new Thread() {
-						@Override
-						public void run() {
-							SpawnManager.spawnWild();
-						};
-					}.start();
 				}
 			}
 
@@ -222,15 +216,11 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else {
+				} else if (SpawnManager.trySpawn(SpawnType.Egg)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for some eggs.", p.getAsMention(), i.toString()).complete();
-					
-					new Thread() {
-						@Override
-						public void run() {
-							SpawnManager.spawnEgg();
-						};
-					}.start();
+				} else {
+					event.getChannel().sendMessageFormat("%s uses the %s, but it failed.", p.getAsMention(), i.toString()).complete();
+					SUCCESS = false;
 				}
 			}
 
@@ -244,15 +234,11 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.isDungeonSpawned()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else {
+				} else if (SpawnManager.trySpawn(SpawnType.Dungeon)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for a dungeon to explore.", p.getAsMention(), i.toString()).complete();
-					
-					new Thread() {
-						@Override
-						public void run() {
-							SpawnManager.spawnDungeon();
-						};
-					}.start();
+				} else {
+					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
+					SUCCESS = false;
 				}
 			}
 
