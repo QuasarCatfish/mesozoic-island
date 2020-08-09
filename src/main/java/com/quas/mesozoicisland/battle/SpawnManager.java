@@ -335,6 +335,7 @@ public class SpawnManager {
 				}
 			} else {
 				eb.addField(tier.toString(), "None", true);
+				locations.get(tier).setInUse(false);
 			}
 		}
 		
@@ -459,6 +460,7 @@ public class SpawnManager {
 			eb.addField("Joined", Util.join(names.toArray(new String[0]), ", ", 0, names.size()), true);
 		} else {
 			eb.addField("Joined", "None", true);
+			d.getLocation().setInUse(false);
 		}
 		
 		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessage(eb.build()));
