@@ -69,7 +69,7 @@ public class SaveTeamCommand implements ICommand {
 		try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d and teamname = '%s';", p.getIdLong(), Util.cleanQuotes(args[1]))) {
 			if (res.next()) {
 				JDBC.executeUpdate("update teams set selected = '%s' where playerid = %d and teamname = '%s';", p.getSelected(), p.getIdLong(), Util.cleanQuotes(args[1]));
-				event.getChannel().sendMessageFormat("%s, you have saved your selected dinosaurs onto Team `%s`.", p.getAsMention(), args[1]).complete();
+				event.getChannel().sendMessageFormat("%s, you have saved your selected dinosaurs onto Team `%s`.", p.getAsMention(), res.getString("teamname")).complete();
 			} else {
 				event.getChannel().sendMessageFormat("%s, you don't have a team named `%s`.", p.getAsMention(), args[1]).complete();
 			}

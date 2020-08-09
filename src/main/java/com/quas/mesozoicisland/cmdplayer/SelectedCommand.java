@@ -80,7 +80,7 @@ public class SelectedCommand implements ICommand {
 			Dinosaur[] team = new Dinosaur[select.length];
 			for (int q = 0; q < select.length; q++) {
 				team[q] = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(select[q]));
-				sb.append(String.format("%d) %s\n", q + 1, team[q]));
+				sb.append(String.format("%d) %s [%s]\n", q + 1, team[q], team[q].getElement()));
 			}
 			
 			BattleTier bt = DinoMath.getBattleTier(team);

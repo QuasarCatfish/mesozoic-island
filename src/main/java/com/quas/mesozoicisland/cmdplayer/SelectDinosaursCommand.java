@@ -68,6 +68,7 @@ public class SelectDinosaursCommand implements ICommand {
 		int contest = 0;
 		for (int q = 0; q < args.length; q++) {
 			dinos[q] = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(args[q]));
+			if (dinos[q] == null) continue;
 			if (dinos[q].getDinosaurForm() == DinosaurForm.Contest) contest++;
 		}
 		

@@ -77,7 +77,7 @@ public class CreateTeamCommand implements ICommand {
 		} else {
 			try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d and teamname = '%s';", p.getIdLong(), Util.cleanQuotes(args[1]))) {
 				if (res.next()) {
-					event.getChannel().sendMessageFormat("%s, you already have a team named `%s`.", p.getAsMention(), args[1]).complete();
+					event.getChannel().sendMessageFormat("%s, you already have a team named `%s`.", p.getAsMention(), res.getString("teamname")).complete();
 				} else {
 					JDBC.executeUpdate("insert into teams(playerid, teamname) values(%d, '%s');", p.getIdLong(), Util.cleanQuotes(args[1]));
 					JDBC.addItem(p.getIdLong(), i.getIdDmg(), -1);

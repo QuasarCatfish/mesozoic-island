@@ -56,7 +56,7 @@ public class CreditsCommand implements ICommand {
 	public void run(MessageReceivedEvent event, String... args) {
 		event.getChannel().sendMessage(
 				"__**Credits:**__"
-				+ "Developer: Quas"
+				+ "\nDeveloper: Quas"
 				+ "").complete();
 	}
 }

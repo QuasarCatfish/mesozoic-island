@@ -104,7 +104,7 @@ public class TopCommand implements ICommand {
 					while (res.next()) {
 						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
-						lb.addEntry(d.getXp(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins");
+						lb.addEntry(d.getWins(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins");
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -120,7 +120,7 @@ public class TopCommand implements ICommand {
 					while (res.next()) {
 						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
-						lb.addEntry(d.getXp(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins", d.getLosses(), d.getLosses() == 1 ? "Loss" : "Losses");
+						lb.addEntry((long)(1_000_000L * res.getDouble("wtl")), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins", d.getLosses(), d.getLosses() == 1 ? "Loss" : "Losses");
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

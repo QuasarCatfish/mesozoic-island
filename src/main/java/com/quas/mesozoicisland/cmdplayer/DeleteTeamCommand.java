@@ -74,7 +74,7 @@ public class DeleteTeamCommand implements ICommand {
 			if (res.next()) {
 				JDBC.executeUpdate("delete from teams where playerid = %d and teamname = '%s';", p.getIdLong(), Util.cleanQuotes(args[1]));
 				JDBC.addItem(p.getIdLong(), i.getIdDmg());
-				event.getChannel().sendMessageFormat("%s, you have deleted Team `%s`, which returned %s %s.", p.getAsMention(), args[1], Util.getArticle(i.toString()), i.toString()).complete();
+				event.getChannel().sendMessageFormat("%s, you have deleted Team `%s`, which returned %s %s.", p.getAsMention(), res.getString("teamname"), Util.getArticle(i.toString()), i.toString()).complete();
 			} else {
 				event.getChannel().sendMessageFormat("%s, you don't have a team named `%s`.", p.getAsMention(), args[1]).complete();
 			}

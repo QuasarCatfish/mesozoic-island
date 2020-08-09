@@ -73,7 +73,7 @@ public class InfoTeamCommand implements ICommand {
 			if (res.next()) {
 				String selected = res.getString("selected");
 				if (selected == null) {
-					event.getChannel().sendMessageFormat("%s, you have not saved any dinosaurs to Team `%s`.", p.getAsMention(), args[1]).complete();
+					event.getChannel().sendMessageFormat("%s, you have not saved any dinosaurs to Team `%s`.", p.getAsMention(), res.getString("teamname")).complete();
 				} else {
 					String[] split = selected.split("\\s+");
 					StringBuilder sb = new StringBuilder();
@@ -81,13 +81,13 @@ public class InfoTeamCommand implements ICommand {
 					
 					if (split.length == 1) sb.append(", here is the dinosaur on Team ");
 					else sb.append(", here are the dinosaurs on Team ");
-					sb.append(args[1]);
+					sb.append(res.getString("teamname"));
 					sb.append(":\n");
 					
 					Dinosaur[] team = new Dinosaur[split.length];
 					for (int q = 0; q < split.length; q++) {
 						team[q] = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(split[q]));
-						sb.append(String.format("%d) %s\n", q + 1, team[q]));
+						sb.append(String.format("%d) %s [%s]\n", q + 1, team[q], team[q].getElement()));
 					}
 					
 					BattleTier bt = DinoMath.getBattleTier(team);

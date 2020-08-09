@@ -21,7 +21,7 @@ public class SelectTeamCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("select ", ALPHA);
+		return pattern("select .+");
 	}
 
 	@Override
@@ -63,12 +63,19 @@ public class SelectTeamCommand implements ICommand {
 	public void run(MessageReceivedEvent event, String... args) {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
+
+		if (!args[0].toLowerCase().matches(TEAM_NAME) || args.length > 1) {
+			event.getChannel().sendMessageFormat("%s, that is an invalid name for a team.", p.getAsMention()).complete();
+			return;
+		}
 		
 		String[] select = null;
-		
+		String teamname = null;
 		try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d and teamname = '%s';", p.getIdLong(), Util.cleanQuotes(args[0]))) {
 			if (res.next()) {
-				select = res.getString("selected").split("\\s+");
+				String selected = res.getString("selected");
+				teamname = res.getString("teamname");
+				if (selected != null) select = selected.split("\\s+");
 			} else {
 				event.getChannel().sendMessageFormat("%s, you don't have a team named `%s`.", p.getAsMention(), args[0]).complete();
 				return;
@@ -78,7 +85,7 @@ public class SelectTeamCommand implements ICommand {
 		}
 		
 		if (select == null) {
-			event.getChannel().sendMessageFormat("%s, you have not saved any dinosaurs to Team `%s`.", args[0]).complete();
+			event.getChannel().sendMessageFormat("%s, you have not saved any dinosaurs to Team `%s`.", p.getAsMention(), teamname == null ? args[0] : teamname).complete();
 			return;
 		}
 		
