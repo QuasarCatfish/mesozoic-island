@@ -41,18 +41,18 @@ public class SpawnManager {
 		return autospawn;
 	}
 	
-	public static synchronized boolean trySpawn(final SpawnType spawntype) {
+	public static boolean trySpawn(final SpawnType spawntype) {
 		Util.sleep(100);
 		if (MesozoicIsland.isQuitting()) return false;
 		if (!Constants.SPAWN) return false;
 		
-		if (waiting) {
-			if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild) && isWildBattleHappening()) {
-				spawntime = Long.MAX_VALUE;
-				return false;
-			} else if (spawntype == SpawnType.Dungeon && isDungeonSpawned()) {
-				return false;
-			}
+		if (waiting) return false;
+		
+		if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild) && isWildBattleHappening()) {
+			spawntime = Long.MAX_VALUE;
+			return false;
+		} else if (spawntype == SpawnType.Dungeon && isDungeonSpawned()) {
+			return false;
 		}
 
 		if (!Constants.SPAWN_EGGS && spawntype == SpawnType.Egg) return false;
@@ -102,23 +102,23 @@ public class SpawnManager {
 		return false;
 	}
 	
-	public static synchronized void setSpawnTime() {
+	public static void setSpawnTime() {
 		spawntime = System.currentTimeMillis() + getRandomSpawnTime();
 	}
 	
-	public static synchronized void setSpawnTime(long time) {
+	public static void setSpawnTime(long time) {
 		spawntime = time;
 	}
 	
-	public static synchronized long getRandomSpawnTime() {
+	public static long getRandomSpawnTime() {
 		return MesozoicRandom.nextLong(Constants.MIN_SPAWN_TIMER, Constants.MAX_SPAWN_TIMER);
 	}
 	
-	public static synchronized void resetSpawnTime() {
+	public static void resetSpawnTime() {
 		spawntime = 0;
 	}
 	
-	public static synchronized long getSpawnTime() {
+	public static long getSpawnTime() {
 		return spawntime;
 	}
 	
@@ -146,7 +146,7 @@ public class SpawnManager {
 		return false;
 	}
 	
-	public static synchronized int getSpawnCount() {
+	public static int getSpawnCount() {
 		return 10 / MesozoicRandom.nextInt(3, 11);
 	}
 	
