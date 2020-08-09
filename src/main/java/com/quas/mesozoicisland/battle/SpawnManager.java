@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
@@ -58,6 +59,7 @@ public class SpawnManager {
 		if (!Constants.SPAWN_EGGS && spawntype == SpawnType.Egg) return false;
 		if (!Constants.SPAWN_DUNGEONS && spawntype == SpawnType.Dungeon) return false;
 
+		if (lastspawn + TimeUnit.MINUTES.toMillis(1) >= System.currentTimeMillis()) return false;
 		if (spawntime == Long.MAX_VALUE && lastspawn + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) resetSpawnTime();
 		if (spawntime == Long.MAX_VALUE) setSpawnTime();
 		if (spawntime <= System.currentTimeMillis()) {
@@ -77,6 +79,8 @@ public class SpawnManager {
 							spawn = SpawnType.Wild;
 						}
 					}
+
+					lastspawn = System.currentTimeMillis();
 
 					switch (spawn) {
 						case Wild:

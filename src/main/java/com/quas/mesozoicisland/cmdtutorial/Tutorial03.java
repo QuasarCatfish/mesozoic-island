@@ -62,6 +62,14 @@ public class Tutorial03 implements ICommand {
 		Util.sleep(500);
 		JDBC.setState(p.getIdLong(), "TutorialXX");
 		
+		if (event.getMessage().getContentRaw().toLowerCase().equals("skip")) {
+			sendTyping(event.getChannel(), 1500);
+			event.getChannel().sendMessageFormat("Are you sure you want to skip entering your birthday?").complete();
+			
+			JDBC.setState(p.getIdLong(), "Tutorial04");
+			return;
+		}
+
 		String[] bday = event.getMessage().getContentRaw().toLowerCase().split("\\s+");
 		int month = bday.length < 1 ? -1 : getMonth(bday[0]);
 		int day = bday.length < 2 ? -1 : getDay(bday[1]);

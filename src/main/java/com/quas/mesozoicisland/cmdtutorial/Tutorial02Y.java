@@ -65,7 +65,7 @@ public class Tutorial02Y implements ICommand {
 		
 		sendTyping(event.getChannel(), 2000);
 		if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) event.getMember().modifyNickname(p.getRawName()).complete();
-		event.getChannel().sendMessageFormat("Alright, %s, next question. When is your birthday?", p.getRawName()).complete();
+		event.getChannel().sendMessageFormat("Alright, %s, next question. When is your birthday? If you don't want to put your birthday, you can type `skip` to move past this part.", p.getRawName()).complete();
 		
 		JDBC.setState(p.getIdLong(), "Tutorial03");
 	}
