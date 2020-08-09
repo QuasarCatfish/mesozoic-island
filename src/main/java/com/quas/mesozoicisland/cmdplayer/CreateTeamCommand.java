@@ -67,7 +67,7 @@ public class CreateTeamCommand implements ICommand {
 		Item i = Item.getItem(ItemID.TeamToken);
 		TreeMap<Item, Long> bag = p.getBag();
 
-		if (!args[1].toLowerCase().matches(ALPHA) || args.length > 2) {
+		if (!args[1].toLowerCase().matches(TEAM_NAME) || args.length > 2) {
 			event.getChannel().sendMessageFormat("%s, that is an invalid name for a team.", p.getAsMention()).complete();
 			return;
 		}
