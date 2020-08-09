@@ -102,6 +102,9 @@ public class UseCommand implements ICommand {
 		if (i == null || i.getItemCategory() == ItemCategory.None) {
 			event.getChannel().sendMessageFormat("%s, this item doesn't exist.", p.getAsMention()).complete();
 			return;
+		} else if (!i.isDiscovered()) {
+			event.getChannel().sendMessageFormat("%s, you don't have this unknown item.", p.getAsMention()).complete();
+			return;
 		} else if (bag.getOrDefault(i, 0L) <= 0) {
 			event.getChannel().sendMessageFormat("%s, you don't have %s %s.", p.getAsMention(), Util.getArticle(i.toString()), i.toString()).complete();
 			return;
@@ -170,7 +173,7 @@ public class UseCommand implements ICommand {
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
 				long end = Math.max(curtime, System.currentTimeMillis()) + time;
 				
-				event.getChannel().sendMessageFormat("%s, the Fragrance of Battle fills the air around you for %s %s.", p.getAsMention(), adj, Util.formatTime(time)).complete();
+				event.getChannel().sendMessageFormat("%s, the %s fills the air around you for %s %s.", p.getAsMention(), i.toString(), adj, Util.formatTime(time)).complete();
 				JDBC.executeUpdate("update players set fragrancebattle = %d where playerid = %d;", end, p.getIdLong());
 			}
 
@@ -180,7 +183,7 @@ public class UseCommand implements ICommand {
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
 				long end = Math.max(curtime, System.currentTimeMillis()) + time;
 				
-				event.getChannel().sendMessageFormat("%s, the Fragrance of Experience fills the air around you for %s %s.", p.getAsMention(), adj, Util.formatTime(time)).complete();
+				event.getChannel().sendMessageFormat("%s, the %s fills the air around you for %s %s.", p.getAsMention(), i.toString(), adj, Util.formatTime(time)).complete();
 				JDBC.executeUpdate("update players set fragrancexp = %d where playerid = %d;", end, p.getIdLong());
 			}
 
@@ -190,7 +193,7 @@ public class UseCommand implements ICommand {
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
 				long end = Math.max(curtime, System.currentTimeMillis()) + time;
 				
-				event.getChannel().sendMessageFormat("%s, the Fragrance of Money fills the air around you for %s %s.", p.getAsMention(), adj, Util.formatTime(time)).complete();
+				event.getChannel().sendMessageFormat("%s, the %s fills the air around you for %s %s.", p.getAsMention(), i.toString(), adj, Util.formatTime(time)).complete();
 				JDBC.executeUpdate("update players set fragrancemoney = %d where playerid = %d;", end, p.getIdLong());
 			}
 

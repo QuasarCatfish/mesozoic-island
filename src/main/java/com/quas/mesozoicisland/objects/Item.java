@@ -80,6 +80,16 @@ public class Item implements Comparable<Item> {
 	public boolean equals(Item that) {
 		return this.compareTo(that) == 0;
 	}
+
+	public boolean isDiscovered() {
+		try (ResultSet res = JDBC.executeQuery("select * from bags where item = %d and dmg = %d;", getId(), getDamage())) {
+			return res.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
 	
 	/////////////////////////////////////////////////////
 	

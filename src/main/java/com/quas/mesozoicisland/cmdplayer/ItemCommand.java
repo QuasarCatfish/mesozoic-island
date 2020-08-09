@@ -1,10 +1,7 @@
 package com.quas.mesozoicisland.cmdplayer;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.regex.Pattern;
 
-import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
@@ -71,7 +68,7 @@ public class ItemCommand implements ICommand {
 				if (s.equalsIgnoreCase(itemname)) {
 					EmbedBuilder eb = new EmbedBuilder();
 					eb.setColor(Constants.COLOR);
-					if (!Constants.HIDE_ITEMS || isDiscovered(i)) {
+					if (!Constants.HIDE_ITEMS || i.isDiscovered()) {
 						eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
 						eb.setDescription(i.getDescription());
 					} else {
@@ -85,15 +82,5 @@ public class ItemCommand implements ICommand {
 		}
 		
 		event.getChannel().sendMessageFormat("%s, this item does not exist.", event.getAuthor().getAsMention()).complete();
-	}
-	
-	private static boolean isDiscovered(Item i) {
-		try (ResultSet res = JDBC.executeQuery("select * from bags where item = %d and dmg = %d;", i.getId(), i.getDamage())) {
-			if (res.next()) return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return false;
 	}
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.Stat;
@@ -119,7 +120,7 @@ public class Battle {
 			for (Dinosaur d : bt.getDinosaursInBattle()) {
 				print.add("\t" + d.toString());
 			}
-			print.add("");
+			print.add(DiscordEmote.Blank.toString());
 		}
 		
 		time += 1_000;
