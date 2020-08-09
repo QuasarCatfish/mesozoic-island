@@ -65,7 +65,7 @@ public class DeleteTeamCommand implements ICommand {
 		
 		Item i = Item.getItem(ItemID.TeamToken);
 		
-		if (!args[1].matches(ALPHA) || args.length > 2) {
+		if (!args[1].toLowerCase().matches(ALPHA) || args.length > 2) {
 			event.getChannel().sendMessageFormat("%s, you don't have a team with this name.", p.getAsMention()).complete();
 			return;
 		}

@@ -29,6 +29,7 @@ public interface ICommand {
 	public final String TIME = "((" + INTEGER + "[a-z])+)";
 	public final String YES = "(yes|yep|yeah|yea|ya|ye|mhm|y)";
 	public final String NO = "(no|nope|nah|na|n)";
+	public final String TEAM_NAME = "(([a-z0-9]){1,100})";
 	
 	// Help Stuff
 	public Pattern getCommand();

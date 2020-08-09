@@ -61,7 +61,7 @@ public class SaveTeamCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		if (!args[1].matches(ALPHA) || args.length > 2) {
+		if (!args[1].toLowerCase().matches(ALPHA) || args.length > 2) {
 			event.getChannel().sendMessageFormat("%s, you don't have a team with this name.", p.getAsMention()).complete();
 			return;
 		}
