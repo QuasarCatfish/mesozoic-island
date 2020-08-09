@@ -18,7 +18,7 @@ public class RenamePlayerCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("admin rename ", PLAYER, " ", NAME);
+		return pattern("admin rename ", PLAYER, " ", NICKNAME);
 	}
 
 	@Override
