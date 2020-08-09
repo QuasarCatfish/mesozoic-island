@@ -453,6 +453,7 @@ public class SpawnManager {
 			for (BattleTeam bt : teams) {
 				Action.removePlayerFromBattleDelayed(bt.getPlayer().getIdLong(), timer);
 			}
+			d.getLocation().setInUse(false, timer);
 			
 			Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), BattleChannel.Dungeon.getBattleChannel().getIdLong(), timer + 30_000);
 			eb.addField("Joined", Util.join(names.toArray(new String[0]), ", ", 0, names.size()), true);

@@ -10,6 +10,7 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EggColor;
+import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.ShopType;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.util.Constants;
@@ -107,6 +108,17 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessage(sb.toString()).complete();
 			} break;
 			
+			case "locations": {
+				StringBuilder sb = new StringBuilder();
+				for (Location loc : Location.values()) {
+					sb.append(loc.toString());
+					sb.append(" - ");
+					sb.append(loc.isInUse());
+					sb.append("\n");
+				}
+				event.getChannel().sendMessage(sb.toString()).complete();
+			} break;
+
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

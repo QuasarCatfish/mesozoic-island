@@ -49,7 +49,9 @@ public class MesozoicRandom {
 		if (locations.isEmpty()) {
 			return Location.values()[nextInt(Location.values().length)];
 		} else {
-			return locations.get(nextInt(locations.size()));
+			Location loc = locations.get(nextInt(locations.size()));
+			loc.setInUse(true);
+			return loc;
 		}
 	}
 	
