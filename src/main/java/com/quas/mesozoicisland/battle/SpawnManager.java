@@ -34,7 +34,7 @@ import net.dv8tion.jda.api.entities.User;
 public class SpawnManager {
 
 	public static long spawntime = System.currentTimeMillis() + Constants.MIN_SPAWN_TIMER;
-	public static long lastspawn = 0;
+	public static long lastspawn = System.currentTimeMillis() - Constants.MIN_TIME_FOR_NEW_SPAWN;
 	public static boolean autospawn = true;
 	public static volatile boolean waiting = false;
 	
@@ -59,8 +59,8 @@ public class SpawnManager {
 		if (!Constants.SPAWN_EGGS && spawntype == SpawnType.Egg) return false;
 		if (!Constants.SPAWN_DUNGEONS && spawntype == SpawnType.Dungeon) return false;
 
-		if (lastspawn + TimeUnit.MINUTES.toMillis(1) >= System.currentTimeMillis()) return false;
-		if (spawntime == Long.MAX_VALUE && lastspawn + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) resetSpawnTime();
+		if (lastspawn + Constants.MIN_TIME_FOR_NEW_SPAWN >= System.currentTimeMillis()) return false;
+		if (spawntime == Long.MAX_VALUE && lastspawn + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) setSpawnTime();
 		if (spawntime == Long.MAX_VALUE) setSpawnTime();
 		if (spawntime <= System.currentTimeMillis() || forcespawn) {
 			new Thread() {

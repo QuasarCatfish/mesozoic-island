@@ -43,6 +43,7 @@ public class Constants {
 	public static final long MAX_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(8);
 	public static final long BATTLE_WAIT = TimeUnit.SECONDS.toMillis(90);
 	public static final DiscordChannel SPAWN_CHANNEL = DiscordChannel.Game;
+	public static final long MIN_TIME_FOR_NEW_SPAWN = TimeUnit.SECONDS.toMillis(45);
 	
 	// Eggs
 	public static boolean SPAWN_EGGS = true;
