@@ -277,7 +277,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new RadioCommand()); // DISABLED
 		CommandManager.addCommand(assistant.getIdLong(), new GiveDinosaurCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new GiveItemCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new GiveRuneCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new GiveRuneCommand()); // RUNE RELATED
 		CommandManager.addCommand(assistant.getIdLong(), new EventsCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ThreadsCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new RemindCommand());

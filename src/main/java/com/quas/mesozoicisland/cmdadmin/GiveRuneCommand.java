@@ -24,7 +24,8 @@ public class GiveRuneCommand implements ICommand {
 
 	@Override
 	public AccessLevel getAccessLevel() {
-		return AccessLevel.Admin;
+		// return AccessLevel.Admin;
+		return AccessLevel.Disabled;
 	}
 
 	@Override
