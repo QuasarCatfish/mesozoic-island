@@ -25,6 +25,7 @@ public class CheckNamesAndSpawn extends ListenerAdapter {
 				System.out.println("Checking Member " + m.getEffectiveName());
 				Player p = Player.getPlayer(m.getIdLong());
 				if (p == null) continue;
+				if (p.getRawName().equals("New Player")) continue;
 				
 				if (!m.hasPermission(Permission.ADMINISTRATOR) && !m.getEffectiveName().equalsIgnoreCase(p.getRawName())) {
 					m.modifyNickname(p.getRawName()).complete();

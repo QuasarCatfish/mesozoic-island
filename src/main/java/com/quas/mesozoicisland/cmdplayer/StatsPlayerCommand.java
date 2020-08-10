@@ -47,7 +47,7 @@ public class StatsPlayerCommand implements ICommand {
 
 	@Override
 	public DiscordChannel[] getUsableChannels() {
-		return DiscordChannel.STANDARD_CHANNELS;
+		return DiscordChannel.STANDARD_CHANNELS_DMS;
 	}
 
 	@Override
@@ -84,6 +84,8 @@ public class StatsPlayerCommand implements ICommand {
 		
 		{
 			eb.addField("Join Date", p.getJoinDate(), true);
+			eb.addField("Trainer Level and XP", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
+
 			Item i = Item.getItem(Stat.DailiesClaimed.getId());
 			eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
 			eb.addField("Daily Streak", String.format("%,d Day%s", p.getDailyStreak(), p.getDailyStreak() == 1 ? "" : "s"), true);

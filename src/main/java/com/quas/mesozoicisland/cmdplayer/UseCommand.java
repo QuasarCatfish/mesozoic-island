@@ -137,12 +137,7 @@ public class UseCommand implements ICommand {
 		case PersistWithCustomUse:
 
 			if (i.getId() == ItemID.MesozoicIslandTrainerLicense.getItemId()) {
-				File f = p.getTrainerLicense();
-				EmbedBuilder eb = new EmbedBuilder();
-				eb.setTitle(String.format("%s's Mesozoic Island License", p.getName()));
-				eb.setColor(Constants.COLOR);
-				eb.setImage("attachment://" + f.getName());
-				event.getChannel().sendMessage(eb.build()).addFile(f, f.getName()).complete();
+				CommandManager.handleCommand(event, "license");
 			}
 			
 			else if (i.getId() == ItemID.QuestBook.getItemId()) {

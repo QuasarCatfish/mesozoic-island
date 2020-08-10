@@ -106,7 +106,7 @@ public class TopCommand implements ICommand {
 					while (res.next()) {
 						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
-						lb.addEntry(d.getWins(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins");
+						lb.addEntry(d.getWins(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Dinosaur Defeated" : "Dinosaurs Defeated");
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();

@@ -66,6 +66,7 @@ import com.quas.mesozoicisland.cmdplayer.InfoRuneCommand;
 import com.quas.mesozoicisland.cmdplayer.InfoStringCommand;
 import com.quas.mesozoicisland.cmdplayer.InfoTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.ItemCommand;
+import com.quas.mesozoicisland.cmdplayer.LicenseCommand;
 import com.quas.mesozoicisland.cmdplayer.ListEventsCommand;
 import com.quas.mesozoicisland.cmdplayer.ListTeamsCommand;
 import com.quas.mesozoicisland.cmdplayer.MailCheckAllCommand;
@@ -98,6 +99,7 @@ import com.quas.mesozoicisland.cmdplayer.UnequipRuneCommand;
 import com.quas.mesozoicisland.cmdplayer.UnnicknameCommand;
 import com.quas.mesozoicisland.cmdplayer.UptimeCommand;
 import com.quas.mesozoicisland.cmdplayer.UseCommand;
+import com.quas.mesozoicisland.cmdplayer.WikiCommand;
 import com.quas.mesozoicisland.cmdtutorial.Tutorial00;
 import com.quas.mesozoicisland.cmdtutorial.Tutorial01;
 import com.quas.mesozoicisland.cmdtutorial.Tutorial02N;
@@ -266,8 +268,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new CreditsCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new DinodexCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new QuestsCommand());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
+		CommandManager.addCommand(assistant.getIdLong(), new WikiCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new LicenseCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		

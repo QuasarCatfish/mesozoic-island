@@ -66,7 +66,7 @@ public class Tutorial01 implements ICommand {
 		
 		String name = event.getMessage().getContentRaw();
 		
-		try (ResultSet res = JDBC.executeQuery("select * from players where lower(playername) = '%s';", Util.cleanQuotes(Util.fixString(name)).toLowerCase())) {
+		try (ResultSet res = JDBC.executeQuery("select * from players where lower(playername) = '%s' and playerid != %d;", Util.cleanQuotes(Util.fixString(name)).toLowerCase(), p.getIdLong())) {
 			if (res.next()) {
 				event.getChannel().sendMessage("Unfortunately, there is already a player with this name. Please enter a different name.").complete();
 				JDBC.setState(p.getIdLong(), "Tutorial01");

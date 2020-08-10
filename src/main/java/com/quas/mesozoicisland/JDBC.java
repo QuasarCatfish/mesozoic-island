@@ -361,11 +361,11 @@ public class JDBC {
 		JDBC.addItem(pid, Stat.EggsReceived.getId());
 		
 		if (egg.hasCustomName()) {
-			return executeUpdate("insert into eggs(dex, form, player, incubator, original, maxhp, color, patterncolor, pattern, eggname) values(%d, %d, %d, %d, %d, %d, %d, %d, %d, '%s');",
-					egg.getDex(), egg.getForm(), pid, slot, pid, egg.getMaxHatchPoints(), egg.getEggColor().getId(), egg.getPatternColor().getId(), egg.getPattern().getId(), egg.getEggName());
+			return executeUpdate("insert into eggs(dex, form, player, incubator, original, maxhp, color, patterncolorbase, patternbase, patterncolor, pattern, eggname) values(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '%s');",
+					egg.getDex(), egg.getForm(), pid, slot, pid, egg.getMaxHatchPoints(), egg.getEggColor().getId(), egg.getBasePatternColor().getId(), egg.getBasePattern().getId(), egg.getPatternColor().getId(), egg.getPattern().getId(), egg.getEggName());
 		} else {
-			return executeUpdate("insert into eggs(dex, form, player, incubator, original, maxhp, color, patterncolor, pattern) values(%d, %d, %d, %d, %d, %d, %d, %d, %d);",
-					egg.getDex(), egg.getForm(), pid, slot, pid, egg.getMaxHatchPoints(), egg.getEggColor().getId(), egg.getPatternColor().getId(), egg.getPattern().getId());
+			return executeUpdate("insert into eggs(dex, form, player, incubator, original, maxhp, color, patterncolorbase, patternbase, patterncolor, pattern) values(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d);",
+					egg.getDex(), egg.getForm(), pid, slot, pid, egg.getMaxHatchPoints(), egg.getEggColor().getId(), egg.getBasePatternColor().getId(), egg.getBasePattern().getId(), egg.getPatternColor().getId(), egg.getPattern().getId());
 		}
 	}
 	

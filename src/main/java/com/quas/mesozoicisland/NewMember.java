@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class NewMember extends ListenerAdapter {
@@ -52,11 +53,19 @@ public class NewMember extends ListenerAdapter {
 			c.getManager().setName(m.getEffectiveName().trim().toLowerCase().replaceAll(" |-|_", "A").replaceAll("[^Aa-z0-9]", "").replace("A", "-") + "-tutorial").putPermissionOverride(m, Util.list(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE), new ArrayList<Permission>()).complete();
 		} else if (nps == NewPlayerStatus.Returning) {
 			Player p = Player.getPlayer(m.getIdLong());
-			m.getUser().openPrivateChannel().complete().sendMessageFormat("Welcome back to Mesozoic Island, %s.", p.getName()).complete();
+
+			// Send Welcome Back DM
+			try {
+				m.getUser().openPrivateChannel().complete().sendMessageFormat("Welcome back to Mesozoic Island, %s.", p.getName()).complete();
+			} catch (ErrorResponseException e) {}
+
+			// Add Roles
+			Util.addRoleToMember(m, DiscordRole.DinosaurTrainer.getIdLong());
+			if (p.getMainElement() != null && p.getMainElement().getId() > 0) Util.addRoleToMember(m, p.getMainElement().getRole());
+			if (p.isMuted()) Util.addRoleToMember(m, DiscordRole.Muted.getIdLong());
+
+			// Edit Nickname
 			if (!m.hasPermission(Permission.ADMINISTRATOR)) {
-				Util.addRoleToMember(m, DiscordRole.DinosaurTrainer.getIdLong());
-				if (p.getMainElement() != null && p.getMainElement().getId() > 0) Util.addRoleToMember(m, p.getMainElement().getRole());
-				if (p.isMuted()) Util.addRoleToMember(m, DiscordRole.Muted.getIdLong());
 				m.modifyNickname(p.getRawName()).complete();
 			}
 		}
