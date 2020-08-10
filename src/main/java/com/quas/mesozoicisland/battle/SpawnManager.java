@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.concurrent.TimeUnit;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
@@ -34,6 +35,7 @@ public class SpawnManager {
 
 	public static long spawntime = System.currentTimeMillis() + Constants.MIN_SPAWN_TIMER;
 	public static long lastspawn = System.currentTimeMillis() - Constants.MIN_TIME_FOR_NEW_SPAWN;
+	public static long lastattempt = 0;
 	public static boolean autospawn = true;
 	public static volatile boolean waiting = false;
 	
@@ -45,13 +47,13 @@ public class SpawnManager {
 		Util.sleep(100);
 		if (MesozoicIsland.isQuitting()) return false;
 		if (!Constants.SPAWN) return false;
-		
 		if (waiting) return false;
+		if (!forcespawn && lastattempt + TimeUnit.SECONDS.toMillis(3) >= System.currentTimeMillis()) return false;
 		
 		if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild) && isWildBattleHappening()) {
 			spawntime = Long.MAX_VALUE;
 			return false;
-		} else if (spawntype == SpawnType.Dungeon && isDungeonSpawned()) {
+		} else if (spawntype == SpawnType.Dungeon && (isDungeonSpawned() || isWildBattleHappening())) {
 			return false;
 		}
 
@@ -171,7 +173,7 @@ public class SpawnManager {
 		
 		// Send Spawn Message
 		Util.setRolesMentionable(true, DiscordRole.SpawnPing, DiscordRole.EggPing);
-		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s %s", DiscordRole.SpawnPing.toString(), DiscordRole.EggPing.toString()).embed(eb.build()));
+		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s %s %s", DiscordRole.SpawnPing.toString(), DiscordRole.EggPing.toString(), eb.build().getTitle()).embed(eb.build()));
 		Util.setRolesMentionable(false, DiscordRole.SpawnPing, DiscordRole.EggPing);
 		
 		// Send Timer Message
@@ -266,7 +268,7 @@ public class SpawnManager {
 		
 		// Send Spawn Message
 		Util.setRolesMentionable(true, DiscordRole.SpawnPing);
-		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s", DiscordRole.SpawnPing).embed(eb.build()));
+		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s %s", DiscordRole.SpawnPing, eb.build().getTitle()).embed(eb.build()));
 		Util.setRolesMentionable(false, DiscordRole.SpawnPing);
 		
 		// Send Timer Message
@@ -368,7 +370,7 @@ public class SpawnManager {
 		
 		// Send Initial Message
 		Util.setRolesMentionable(true, DiscordRole.SpawnPing, DiscordRole.DungeonPing);
-		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s %s", DiscordRole.SpawnPing, DiscordRole.DungeonPing).embed(eb.build()));
+		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s %s %s", DiscordRole.SpawnPing, DiscordRole.DungeonPing, eb.build().getTitle()).embed(eb.build()));
 		Util.setRolesMentionable(false, DiscordRole.SpawnPing, DiscordRole.DungeonPing);
 		
 		// Send Timer Mesage

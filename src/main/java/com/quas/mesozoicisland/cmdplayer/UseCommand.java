@@ -1,6 +1,5 @@
 package com.quas.mesozoicisland.cmdplayer;
 
-import java.io.File;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -33,7 +32,6 @@ import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Util;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -194,48 +192,48 @@ public class UseCommand implements ICommand {
 
 			else if (i.getId() == ItemID.DinosaurLocator.getItemId()) {
 				if (!Constants.SPAWN) {
-					event.getChannel().sendMessageFormat("%s uses the %s, but dinosaur spawning is disabled.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but dinosaur spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
-					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.trySpawn(SpawnType.Wild, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for dinosaurs to battle.", p.getAsMention(), i.toString()).complete();
 				} else {
-					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a battle.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but there's already a spawn or battle.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				}
 			}
 
 			else if (i.getId() == ItemID.EggLocator.getItemId()) {
 				if (!Constants.SPAWN_EGGS) {
-					event.getChannel().sendMessageFormat("%s uses the %s, but egg spawning is disabled.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but egg spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
-					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.trySpawn(SpawnType.Egg, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for some eggs.", p.getAsMention(), i.toString()).complete();
 				} else {
-					event.getChannel().sendMessageFormat("%s uses the %s, but it failed.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but it failed.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				}
 			}
 
 			else if (i.getId() == ItemID.DungeonLocator.getItemId()) {
 				if (Constants.SPAWN_DUNGEONS) {
-					event.getChannel().sendMessageFormat("%s uses the %s, but dungeon spawning is disabled.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but dungeon spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
-					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.isDungeonSpawned()) {
-					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.trySpawn(SpawnType.Dungeon, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for a dungeon to explore.", p.getAsMention(), i.toString()).complete();
 				} else {
-					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				}
 			}

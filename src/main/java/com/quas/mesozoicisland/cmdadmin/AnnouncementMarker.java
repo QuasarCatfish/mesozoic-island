@@ -10,6 +10,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.MessageBuilder;
@@ -77,7 +78,7 @@ public class AnnouncementMarker implements ICommand {
 		ArrayList<File> delete = new ArrayList<File>();
 		for (Attachment a : event.getMessage().getAttachments()) {
 			try {
-				File f = a.downloadToFile(new File("download/" + a.getFileName())).get();
+				File f = a.downloadToFile(new File(Constants.RESOURCE_PATH + "download\\" + a.getFileName())).get();
 				ma.addFile(f);
 				delete.add(f);
 			} catch (InterruptedException | ExecutionException e) {

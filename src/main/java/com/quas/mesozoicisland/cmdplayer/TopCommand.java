@@ -53,7 +53,7 @@ public class TopCommand implements ICommand {
 
 	@Override
 	public DiscordChannel[] getUsableChannels() {
-		return DiscordChannel.STANDARD_CHANNELS;
+		return DiscordChannel.STANDARD_CHANNELS_DMS;
 	}
 
 	@Override
@@ -164,6 +164,17 @@ public class TopCommand implements ICommand {
 			break;
 		case PlayerStat:
 			break;
+		case PlayerLevel:
+			try (ResultSet res = JDBC.executeQuery("select * from players order by xp desc limit %d;", Constants.MAX_LEADERBOARD_CHECK)) {
+				while (res.next()) {
+					Player p = Player.getPlayer(res.getLong("playerid"));
+					if (p.getIdLong() < CustomPlayer.getUpperLimit()) continue;
+					lb.addEntry(res.getLong("xp"), p.getName(), p.getLevel(), p.getXpMinusLevel());
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			break;
 		}
 		
 		ArrayList<String> print = new ArrayList<String>();
@@ -217,6 +228,9 @@ public class TopCommand implements ICommand {
 		// Dinosaur Stats
 		WTL(Util.arr("wtl", "wintoloss", "winstolosses"), "Dinosaur Win-to-Loss Ratio", LeaderboardType.DinosaurTwoStat, null, Long.parseLong(TWOSTAT_WTL)),
 		Wins(Util.arr("wins", "win"), "Dinosaur Wins", LeaderboardType.DinosaurStat, null, Long.parseLong(STAT_WINS)),
+
+		// Player Level
+		PlayerLevel(Util.arr("trainer level", "trainer lvl", "trainer lv", "trainer", "tlvl", "tlv"), "Trainer Level", LeaderboardType.PlayerLevel, null),
 		;
 		
 		private String[] names;
@@ -288,7 +302,8 @@ public class TopCommand implements ICommand {
 		PlayerDexCount("%s - %,d/%,d Dinosaurs"),
 		PlayerRuneCount("%s - %,d/%,d Runes"),
 		PlayerItem("%s - %,d %s"),
-		PlayerStat("%s - %,d %s");
+		PlayerStat("%s - %,d %s"),
+		PlayerLevel("%s - Level %,d + %,d XP");
 		
 		private String regex;
 		private LeaderboardType(String regex) {
