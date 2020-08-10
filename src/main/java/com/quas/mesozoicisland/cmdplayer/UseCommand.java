@@ -204,7 +204,7 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else if (SpawnManager.trySpawn(SpawnType.Wild)) {
+				} else if (SpawnManager.trySpawn(SpawnType.Wild, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for dinosaurs to battle.", p.getAsMention(), i.toString()).complete();
 				} else {
 					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a battle.", p.getAsMention(), i.toString()).complete();
@@ -219,7 +219,7 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else if (SpawnManager.trySpawn(SpawnType.Egg)) {
+				} else if (SpawnManager.trySpawn(SpawnType.Egg, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for some eggs.", p.getAsMention(), i.toString()).complete();
 				} else {
 					event.getChannel().sendMessageFormat("%s uses the %s, but it failed.", p.getAsMention(), i.toString()).complete();
@@ -237,7 +237,7 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.isDungeonSpawned()) {
 					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else if (SpawnManager.trySpawn(SpawnType.Dungeon)) {
+				} else if (SpawnManager.trySpawn(SpawnType.Dungeon, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for a dungeon to explore.", p.getAsMention(), i.toString()).complete();
 				} else {
 					event.getChannel().sendMessageFormat("%s uses the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();

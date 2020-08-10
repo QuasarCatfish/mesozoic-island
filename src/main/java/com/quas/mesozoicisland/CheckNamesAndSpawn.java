@@ -37,7 +37,7 @@ public class CheckNamesAndSpawn extends ListenerAdapter {
 		
 		if (event.getChannel().getIdLong() == Constants.SPAWN_CHANNEL.getIdLong()) {
 			if (!SpawnManager.doAutoSpawn()) {
-				SpawnManager.trySpawn(SpawnType.Random);
+				SpawnManager.trySpawn(SpawnType.Random, false);
 			}
 		}
 	}

@@ -42,7 +42,7 @@ public class SpawnManager {
 		return autospawn;
 	}
 	
-	public static boolean trySpawn(final SpawnType spawntype) {
+	public static boolean trySpawn(final SpawnType spawntype, boolean forcespawn) {
 		Util.sleep(100);
 		if (MesozoicIsland.isQuitting()) return false;
 		if (!Constants.SPAWN) return false;
@@ -62,7 +62,7 @@ public class SpawnManager {
 		if (lastspawn + TimeUnit.MINUTES.toMillis(1) >= System.currentTimeMillis()) return false;
 		if (spawntime == Long.MAX_VALUE && lastspawn + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) resetSpawnTime();
 		if (spawntime == Long.MAX_VALUE) setSpawnTime();
-		if (spawntime <= System.currentTimeMillis()) {
+		if (spawntime <= System.currentTimeMillis() || forcespawn) {
 			new Thread() {
 				@Override
 				public void run() {

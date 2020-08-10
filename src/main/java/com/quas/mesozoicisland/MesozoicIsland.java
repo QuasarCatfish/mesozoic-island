@@ -338,7 +338,7 @@ public class MesozoicIsland {
 					for (int q = 1; q <= 600; q++) {
 						Action.doActions(professor.getGuild());
 						Action.doActions(assistant.getGuild());
-						if (SpawnManager.doAutoSpawn()) SpawnManager.trySpawn(SpawnType.Random);
+						if (SpawnManager.doAutoSpawn()) SpawnManager.trySpawn(SpawnType.Random, false);
 						if (Constants.UPDATE_EGG_HP && q % 60 == 0) JDBC.updateEggs();
 						Util.sleep(1_000);
 					}
