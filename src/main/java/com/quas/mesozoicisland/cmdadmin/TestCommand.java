@@ -16,7 +16,6 @@ import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Daily;
 import com.quas.mesozoicisland.util.DinoMath;
-import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

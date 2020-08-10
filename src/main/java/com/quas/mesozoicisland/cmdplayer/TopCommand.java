@@ -12,6 +12,8 @@ import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Leaderboard;
@@ -98,7 +100,7 @@ public class TopCommand implements ICommand {
 			}
 			break;
 		case DinosaurStat:
-			switch (lbc.getItems()[0]) {
+			switch (Long.toString(lbc.getItems()[0])) {
 			case STAT_WINS:
 				try (ResultSet res = JDBC.executeQuery("select * from captures where wins + losses >= %d order by wins desc limit %d;", Constants.LEADERBOARD_REQUIRED_BATTLES, Constants.MAX_LEADERBOARD_CHECK)) {
 					while (res.next()) {
@@ -114,7 +116,7 @@ public class TopCommand implements ICommand {
 			}
 			break;
 		case DinosaurTwoStat:
-			switch (lbc.getItems()[0]) {
+			switch (Long.toString(lbc.getItems()[0])) {
 			case TWOSTAT_WTL:
 				try (ResultSet res = JDBC.executeQuery("select *, (case when losses = 0 then 999999999 else wins / losses end) as wtl from captures where wins + losses >= %d order by wtl desc, wins desc limit %d;", Constants.LEADERBOARD_REQUIRED_BATTLES, Constants.MAX_LEADERBOARD_CHECK)) {
 					while (res.next()) {
@@ -132,7 +134,7 @@ public class TopCommand implements ICommand {
 			
 			break;
 		case PlayerDexCount:
-			DinosaurForm form = DinosaurForm.of(lbc.getItems()[0]);
+			DinosaurForm form = DinosaurForm.of((int)lbc.getItems()[0]);
 			int total = JDBC.getDexCount(form.getId());
 			for (Player p : Player.values()) {
 				if (p.getIdLong() < CustomPlayer.getUpperLimit()) continue;
@@ -150,7 +152,7 @@ public class TopCommand implements ICommand {
 			break;
 		case PlayerItem:
 			try (ResultSet res = JDBC.executeQuery("select * from bags where item = %d and dmg = %d order by count desc limit %d;", lbc.getItems()[0], lbc.getItems()[1], Constants.MAX_LEADERBOARD_CHECK)) {
-				Item item = Item.getItem(new Pair<Integer, Long>(lbc.getItems()[0], (long)lbc.getItems()[1]));
+				Item item = Item.getItem(new Pair<Integer, Long>((int)lbc.getItems()[0], (long)lbc.getItems()[1]));
 				while (res.next()) {
 					Player p = Player.getPlayer(res.getLong("player"));
 					if (p.getIdLong() < CustomPlayer.getUpperLimit()) continue;
@@ -186,35 +188,51 @@ public class TopCommand implements ICommand {
 //		Runes(Util.arr("runes", "rune"), "Rune Count", LeaderboardType.PlayerRuneCount, null),
 		
 		// Level
-		Level(Util.arr("level"), "Dinosaur Level", LeaderboardType.DinosaurLevel, null),
-		LevelStandard(Util.arr("level standard"), "Dinosaur Level (Standard)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Standard.getId()),
-		LevelPrismatic(Util.arr("level prismatic"), "Dinosaur Level (Prismatic)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Prismatic.getId()),
-		LevelDungeon(Util.arr("level dungeon"), "Dinosaur Level (Dungeon)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Dungeon.getId()),
-		LevelHalloween(Util.arr("level halloween"), "Dinosaur Level (Halloween)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Halloween.getId()),
-		LevelThanksgiving(Util.arr("level thanksgiving"), "Dinosaur Level (Thanksgiving)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Thanksgiving.getId()),
+		Level(Util.arr("level", "lvl", "lv"), "Dinosaur Level", LeaderboardType.DinosaurLevel, null),
+		LevelStandard(Util.arr("level standard", "level std", "lvl standard", "lvl std", "lv standard", "lv std"), "Dinosaur Level (Standard)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Standard.getId()),
+		LevelPrismatic(Util.arr("level prismatic", "lvl prismatic", "lv prismatic"), "Dinosaur Level (Prismatic)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Prismatic.getId()),
+		LevelDungeon(Util.arr("level dungeon", "lvl dungeon", "lv dungeon"), "Dinosaur Level (Dungeon)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Dungeon.getId()),
+		LevelHalloween(Util.arr("level halloween", "lvl halloween", "lv halloween"), "Dinosaur Level (Halloween)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Halloween.getId()),
+		LevelThanksgiving(Util.arr("level thanksgiving", "lvl thanksgiving", "lv thanksgiving"), "Dinosaur Level (Thanksgiving)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Thanksgiving.getId()),
 		
 		// Rank
 		Rank(Util.arr("rank"), "Dinosaur Rank", LeaderboardType.DinosaurRank, null),
-		RankStandard(Util.arr("rank standard"), "Dinosaur Rank (Standard)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Standard.getId()),
+		RankStandard(Util.arr("rank standard", "rank std"), "Dinosaur Rank (Standard)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Standard.getId()),
 		RankPrismatic(Util.arr("rank prismatic"), "Dinosaur Rank (Prismatic)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Prismatic.getId()),
 		RankDungeon(Util.arr("rank dungeon"), "Dinosaur Rank (Dungeon)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Dungeon.getId()),
 		RankHalloween(Util.arr("rank halloween"), "Dinosaur Rank (Halloween)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Halloween.getId()),
 		RankThanksgiving(Util.arr("rank thanksgiving"), "Dinosaur Rank (Thanksgiving)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Thanksgiving.getId()),
 		
 		// Item
-		Money(Util.arr("money", "coins"), "Player Wealth", LeaderboardType.PlayerItem, null, 100, 0),
-		Cookies(Util.arr("cookies", "cookie"), "Cookie Count", LeaderboardType.PlayerItem, null, 90, 0),
+		Money(Util.arr("money", "coins"), "Player Wealth", LeaderboardType.PlayerItem, null, ItemID.DinosaurCoin),
+		Cookies(Util.arr("cookies", "cookie"), "Cookie Count", LeaderboardType.PlayerItem, null, ItemID.Cookie),
+
+		// Stats
+		BattlesEntered(Util.arr("battles entered"), "Battles Entered", LeaderboardType.PlayerItem, null, Stat.BattlesEntered),
+		BattlesWon(Util.arr("battles won"), "Battles Won", LeaderboardType.PlayerItem, null, Stat.BattlesWon),
+		DamageDealt(Util.arr("damage dealt"), "Damage Dealt", LeaderboardType.PlayerItem, null, Stat.DamageDealt),
+		DamageReceived(Util.arr("damage received"), "Damage Received", LeaderboardType.PlayerItem, null, Stat.DamageReceived),
+		DinosaursCaught(Util.arr("dinosaurs caught"), "Dinosaurs Caught", LeaderboardType.PlayerItem, null, Stat.DinosaursCaught),
 		
 		// Dinosaur Stats
-		WTL(Util.arr("wtl", "wintoloss", "winstolosses"), "Dinosaur Win-to-Loss Ratio", LeaderboardType.DinosaurTwoStat, null, TWOSTAT_WTL),
-		Wins(Util.arr("wins", "win"), "Dinosaur Wins", LeaderboardType.DinosaurStat, null, STAT_WINS),
+		WTL(Util.arr("wtl", "wintoloss", "winstolosses"), "Dinosaur Win-to-Loss Ratio", LeaderboardType.DinosaurTwoStat, null, Long.parseLong(TWOSTAT_WTL)),
+		Wins(Util.arr("wins", "win"), "Dinosaur Wins", LeaderboardType.DinosaurStat, null, Long.parseLong(STAT_WINS)),
 		;
 		
 		private String[] names;
 		private String name, where;
-		private int[] items;
+		private long[] items;
 		private LeaderboardType lbt;
-		private LeaderboardCategory(String[] names, String name, LeaderboardType lbt, String where, int...items) {
+
+		private LeaderboardCategory(String[] names, String name, LeaderboardType lbt, String where, Stat stat) {
+			this(names, name, lbt, where, stat.getId().getFirstValue(), stat.getStatId());
+		}
+
+		private LeaderboardCategory(String[] names, String name, LeaderboardType lbt, String where, ItemID item) {
+			this(names, name, lbt, where, item.getItemId(), item.getItemDamage());
+		}
+
+		private LeaderboardCategory(String[] names, String name, LeaderboardType lbt, String where, long...items) {
 			this.names = names;
 			this.name = name;
 			this.lbt = lbt;
@@ -230,7 +248,7 @@ public class TopCommand implements ICommand {
 			return lbt;
 		}
 		
-		public int[] getItems() {
+		public long[] getItems() {
 			return items;
 		}
 		
@@ -267,8 +285,8 @@ public class TopCommand implements ICommand {
 		DinosaurRank("%s's %s - Rank %s + %,d RP"),
 		DinosaurStat("%s's %s - %,d %s"),
 		DinosaurTwoStat("%s's %s - %,d %s to %,d %s"),
-		PlayerDexCount("%s - %,d/%,d"),
-		PlayerRuneCount("%s - %,d/%,d"),
+		PlayerDexCount("%s - %,d/%,d Dinosaurs"),
+		PlayerRuneCount("%s - %,d/%,d Runes"),
 		PlayerItem("%s - %,d %s"),
 		PlayerStat("%s - %,d %s");
 		
@@ -282,6 +300,6 @@ public class TopCommand implements ICommand {
 		}
 	}
 	
-	private static final int TWOSTAT_WTL = 1;
-	private static final int STAT_WINS = 2;
+	private static final String TWOSTAT_WTL = "1";
+	private static final String STAT_WINS = "2";
 }

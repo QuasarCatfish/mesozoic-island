@@ -164,9 +164,9 @@ public class Battle {
 					
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
-					Action.addDinosaurDelayed(attack.getPlayer().getIdLong(), time + 1000, defend.getDinosaur().getId());
-					if (defend.getDinosaur().hasRune()) Action.addRuneDelayed(attack.getPlayer().getIdLong(), time + 1000, defend.getDinosaur().getRune().getId());
-					if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1000, defend.getDinosaur().getItem().getIdDmg(), 1);
+					Action.addDinosaurDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getId());
+					if (defend.getDinosaur().hasRune()) Action.addRuneDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getRune().getId());
+					if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getItem().getIdDmg(), 1);
 				}
 				
 				// Dinosaur gains XP
