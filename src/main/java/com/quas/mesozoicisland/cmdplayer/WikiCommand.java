@@ -14,7 +14,7 @@ public class WikiCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("wiki .+");
+		return pattern("wiki( .+)?");
 	}
 
 	@Override
@@ -54,6 +54,10 @@ public class WikiCommand implements ICommand {
 
 	@Override
 	public void run(MessageReceivedEvent event, String... args) {
-		event.getChannel().sendMessageFormat("%s, here's your link to the wiki!\n<https://mesozoic-island.amazingwikis.org/wiki/index.php?search=%s>", event.getAuthor().getAsMention(), Util.join(args, "+", 0, args.length)).complete();
+		if (args.length == 0) {
+			event.getChannel().sendMessageFormat("%s, here's your link to the wiki!\n<https://mesozoic-island.amazingwikis.org/wiki/Main_Page>", event.getAuthor().getAsMention()).complete();
+		} else {
+			event.getChannel().sendMessageFormat("%s, here's your link to the wiki!\n<https://mesozoic-island.amazingwikis.org/wiki/index.php?search=%s>", event.getAuthor().getAsMention(), Util.join(args, "+", 0, args.length)).complete();
+		}
 	}
 }
