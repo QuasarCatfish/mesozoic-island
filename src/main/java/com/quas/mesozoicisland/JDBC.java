@@ -234,7 +234,7 @@ public class JDBC {
 				int dinoid = in.nextInt();
 				int dinoform = in.nextInt();
 				int dinorp = in.hasNextInt() ? in.nextInt() : 1;
-				ret.append(String.format("• %,d %s Crystal%s%n", Constants.BULLET_POINT, dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
+				ret.append(String.format("%s %,d %s Crystal%s%n", Constants.BULLET_POINT, dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
 				break;
 			case "r": case "rune":
 				int runeid = in.nextInt();

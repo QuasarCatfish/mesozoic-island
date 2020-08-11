@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.cmdadmin;
 import java.io.File;
 import java.util.regex.Pattern;
 
+import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
@@ -119,6 +120,15 @@ public class TestCommand implements ICommand {
 				}
 				event.getChannel().sendMessage(sb.toString()).complete();
 			} break;
+
+			case "reward": {
+				String reward = JDBC.getReward(args[2]);
+				if (reward == null) {
+					event.getChannel().sendMessageFormat("%s, there is no reward named `%s`.", event.getAuthor().getAsMention(), args[2]).complete();
+				} else {
+					event.getChannel().sendMessageFormat("%s, the reward for `%s` is:\n%s", event.getAuthor().getAsMention(), args[2], JDBC.getRedeemMessage(reward)).complete();
+				}
+			}
 
 			}
 		} catch (Exception e) {
