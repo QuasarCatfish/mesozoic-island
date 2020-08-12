@@ -1,24 +1,23 @@
 package com.quas.mesozoicisland.cmdplayer;
 
-import java.io.File;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ShopType;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
-import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class LicenseCommand implements ICommand {
+public class ShopListCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("license");
+		return pattern("shop");
 	}
 
 	@Override
@@ -28,22 +27,22 @@ public class LicenseCommand implements ICommand {
 
 	@Override
 	public String getCommandName() {
-		return "license";
+		return "shop";
 	}
 
 	@Override
 	public String getCommandSyntax() {
-		return "license";
+		return "shop";
 	}
 
 	@Override
 	public String getCommandDescription() {
-		return "Displays your Trainer License.";
+		return "Gets a list of the stores and what type of items they sell.";
 	}
 
 	@Override
 	public DiscordChannel[] getUsableChannels() {
-		return Util.union(DiscordChannel.STANDARD_CHANNELS_DMS, Util.arr(DiscordChannel.CloneMe, DiscordChannel.ClonedChannel)).toArray(new DiscordChannel[0]);
+		return DiscordChannel.STANDARD_CHANNELS;
 	}
 
 	@Override
@@ -60,12 +59,17 @@ public class LicenseCommand implements ICommand {
 	public void run(MessageReceivedEvent event, String... args) {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
-
-		File f = p.getTrainerLicense();
+		
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle(String.format("%s's Mesozoic Island License", p.getName()));
+		eb.setTitle("Mesozoic Island Shop");
+		eb.setDescription("To see the packages sold in each of these stores, use `shop <store>`.");
 		eb.setColor(Constants.COLOR);
-		eb.setImage("attachment://" + f.getName());
-		event.getChannel().sendMessage(eb.build()).addFile(f, f.getName()).complete();
+
+		for (ShopType st : ShopType.values()) {
+			if (!st.isVisible()) continue;
+			eb.addField(st.getName(), st.getDescription(), false);
+		}
+
+		event.getChannel().sendMessage(eb.build()).complete();
 	}
 }

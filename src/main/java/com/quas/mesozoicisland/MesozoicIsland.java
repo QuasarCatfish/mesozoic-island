@@ -86,6 +86,7 @@ import com.quas.mesozoicisland.cmdplayer.SelectDinosaursCommand;
 import com.quas.mesozoicisland.cmdplayer.SelectTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.SelectedCommand;
 import com.quas.mesozoicisland.cmdplayer.ShopCommand;
+import com.quas.mesozoicisland.cmdplayer.ShopListCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsPlayerCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsSelfCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsServerCommand;
@@ -158,6 +159,8 @@ public class MesozoicIsland {
 		// Add Extra Listeners
 		professor.getJDA().addEventListener(new NewMember());
 		professor.getJDA().addEventListener(new CheckNamesAndSpawn());
+		professor.getJDA().addEventListener(new CheckMassPings());
+		professor.getJDA().addEventListener(new CheckBattleMessage());
 		
 		// Professor Bot
 		CommandManager.addCommand(professor.getIdLong(), new PingCommand());
@@ -219,6 +222,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new BirthdayCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new DinosaursCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new BuyCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new ShopListCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ShopCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ItemCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new PingmeAllCommand()); // RUNES (in PingType Enum)
@@ -336,18 +340,22 @@ public class MesozoicIsland {
 				long start = System.currentTimeMillis();
 				
 				while (true) {
-					// Do for 10 minute.
-					for (int q = 1; q <= 600; q++) {
-						Action.doActions(professor.getGuild());
-						Action.doActions(assistant.getGuild());
-						if (SpawnManager.doAutoSpawn()) SpawnManager.trySpawn(SpawnType.Random, false);
-						if (Constants.UPDATE_EGG_HP && q % 60 == 0) JDBC.updateEggs();
-						Util.sleep(1_000);
+					try {
+						// Do for 10 minute.
+						for (int q = 1; q <= 600; q++) {
+							Action.doActions(professor.getGuild());
+							Action.doActions(assistant.getGuild());
+							if (Constants.UPDATE_EGG_HP && q % 60 == 0) JDBC.updateEggs();
+							if (SpawnManager.doAutoSpawn()) SpawnManager.trySpawn(SpawnType.Random, false);
+							Util.sleep(1_000);
+						}
+						
+						// Ping database.
+						System.out.printf("Ping at %s!\n", Util.formatTime(System.currentTimeMillis() - start));
+						JDBC.ping();
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					
-					// Ping database.
-					System.out.printf("Ping at %s!\n", Util.formatTime(System.currentTimeMillis() - start));
-					JDBC.ping();
 				}
 			};
 		}.start();

@@ -17,7 +17,7 @@ public class MailOpenCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("mail(box)? open ", INTEGER);
+		return pattern("(mail(box)? open|open mail(box)?) ", INTEGER);
 	}
 
 	@Override

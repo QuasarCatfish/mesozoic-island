@@ -36,8 +36,10 @@ public class SpawnManager {
 	public static long spawntime = System.currentTimeMillis() + Constants.MIN_SPAWN_TIMER;
 	public static long lastspawn = System.currentTimeMillis() - Constants.MIN_TIME_FOR_NEW_SPAWN;
 	public static long lastattempt = 0;
+	public static long lasterror = 0;
 	public static boolean autospawn = true;
 	public static volatile boolean waiting = false;
+	public static volatile long lastupdate = System.currentTimeMillis();
 	
 	public static boolean doAutoSpawn() {
 		return autospawn;
@@ -49,7 +51,25 @@ public class SpawnManager {
 		if (!Constants.SPAWN) return false;
 		if (waiting) return false;
 		if (!forcespawn && lastattempt + TimeUnit.SECONDS.toMillis(3) >= System.currentTimeMillis()) return false;
+		lastattempt = System.currentTimeMillis();
 		
+		// No progress in battle in the last few minutes
+		if (spawntime == Long.MAX_VALUE && lastupdate + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) {
+			DiscordChannel.Game.getChannel(MesozoicIsland.getAssistant()).sendMessage("Battle error detected. Please wait while the issue is automatically being fixed.").complete();
+			ArrayList<Message> delete = new ArrayList<Message>();
+			for (DiscordChannel dc : DiscordChannel.BATTLE_CHANNELS) {
+				delete.addAll(Util.getMessages(dc.getChannel(MesozoicIsland.getAssistant())));
+			}
+			
+			for (Message m : delete) {
+				m.delete().complete();
+			}
+			
+			JDBC.executeUpdate("update players set inbattle = false;");
+			spawntime = System.currentTimeMillis();
+			lastupdate = System.currentTimeMillis();
+		}
+
 		if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild) && isWildBattleHappening()) {
 			spawntime = Long.MAX_VALUE;
 			return false;
@@ -61,7 +81,7 @@ public class SpawnManager {
 		if (!Constants.SPAWN_DUNGEONS && spawntype == SpawnType.Dungeon) return false;
 
 		if (lastspawn + Constants.MIN_TIME_FOR_NEW_SPAWN >= System.currentTimeMillis()) return false;
-		if (spawntime == Long.MAX_VALUE && lastspawn + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) setSpawnTime();
+
 		if (spawntime == Long.MAX_VALUE) setSpawnTime();
 		if (spawntime <= System.currentTimeMillis() || forcespawn) {
 			new Thread() {
@@ -99,6 +119,7 @@ public class SpawnManager {
 					}
 					
 					lastspawn = System.currentTimeMillis();
+					lastupdate = System.currentTimeMillis();
 				}
 			}.start();
 			return true;
@@ -232,7 +253,7 @@ public class SpawnManager {
 		for (BattleTier tier : BattleTier.getBattleTiers()) {
 			Dinosaur[] wild = new Dinosaur[getSpawnCount()];
 			for (int q = 0; q < wild.length; q++) {
-				wild[q] = MesozoicRandom.nextDinosaur().setLevel(tier.getRandomLevel());
+				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
 			}
 			wilds.put(tier, wild);
 			locations.put(tier, MesozoicRandom.nextUnusedLocation());

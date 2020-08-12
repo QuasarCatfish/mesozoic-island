@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
 
 import net.dv8tion.jda.api.entities.Guild;
@@ -31,6 +32,13 @@ public class Util {
 
 	@SafeVarargs
 	public static <T> T[] arr(T...arr) {
+		return arr;
+	}
+
+	public static <T> ArrayList<T> union(T[] a, T[] b) {
+		ArrayList<T> arr = new ArrayList<T>();
+		for (T t : a) arr.add(t);
+		for (T t : b) if (!arr.contains(t)) arr.add(t);
 		return arr;
 	}
 	
@@ -342,14 +350,13 @@ public class Util {
 		StringBuilder sb = new StringBuilder();
 		
 		for (String string : list) {
-			if (sb.length() + sep.length() + string.length() <= Message.MAX_CONTENT_LENGTH) {
-				sb.append(sep);
-				sb.append(string);
-			} else {
+			if (sb.length() + sep.length() + string.length() > Message.MAX_CONTENT_LENGTH) {
 				if (newlist.isEmpty()) newlist.add(sb.substring(sep.length()));
 				else newlist.add(sb.toString());
 				sb.setLength(0);
 			}
+			sb.append(sep);
+			sb.append(string);
 		}
 		
 		if (sb.length() > 0) newlist.add(sb.toString());
@@ -362,6 +369,15 @@ public class Util {
 		String sform = dino.replaceAll("(\\d|-)", "");
 		DinosaurForm form = DinosaurForm.of(sform);
 		return new Pair<Integer, Integer>(Integer.parseInt(sdex), form.getId());
+	}
+
+	public static String printDinosaur(Dinosaur d) {
+		Dinosaur base = Dinosaur.getDinosaur(d.getIdPair());
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("\n\n== %s's %s ==", d.getPlayer().getName(), d.getEffectiveName()));
+		sb.append(String.format("\nHealth: %,d (%,d Base) (%d%% Boost)", d.getHealth(), base.getHealth(), d.getHealthMultiplier()));
+		sb.append(String.format("\nCurrent Damage: %,d", d.getDamage()));
+		return sb.toString();
 	}
 	
 	///////////////////////////////////////////////////////////////

@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.cmdplayer;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
@@ -20,7 +21,7 @@ public class ShopCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("shop( .*)?");
+		return pattern("shop .*");
 	}
 
 	@Override
@@ -35,12 +36,12 @@ public class ShopCommand implements ICommand {
 
 	@Override
 	public String getCommandSyntax() {
-		return "shop [store]";
+		return "shop <store>";
 	}
 
 	@Override
 	public String getCommandDescription() {
-		return "Gets a list of items you can purchase in the shop.\nCurrent Stores: " + ShopType.listValues() + ".";
+		return "Gets a list of items you can purchase in the given store.\nCurrent Stores: " + ShopType.listValues() + ".";
 	}
 
 	@Override
@@ -63,8 +64,18 @@ public class ShopCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		ShopType shop = ShopType.of(args.length == 0 ? "" : String.join(" ", args));
-		if (shop == ShopType.Debug && p.getAccessLevel().getLevel() < AccessLevel.Admin.getLevel()) shop = ShopType.Standard;
+		ShopType shop = ShopType.of(String.join(" ", args));
+
+		if (!shop.isVisible()) {
+			if (shop == ShopType.Debug && p.getAccessLevel().getLevel() < AccessLevel.Admin.getLevel()) shop = ShopType.None;
+			else if (shop == ShopType.Tutorial);
+			else shop = ShopType.None;
+		}
+
+		if (shop == ShopType.None) {
+			CommandManager.handleCommand(event, "shop");
+			return;
+		}
 		
 		EmbedBuilder eb = new EmbedBuilder();
 		if (shop == ShopType.Tutorial) eb.setTitle("Mesozoic Island Shop - Tutorial");

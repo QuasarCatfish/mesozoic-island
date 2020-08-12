@@ -9,7 +9,7 @@ public enum ItemCategory {
 	Consumable(3, "Consumables", "Consumable", "Consume"),
 	HeldItems(4, "Held Items", "Held Item", "Held", "Hold Items", "Hold Item", "Hold", "HI"),
 	Tickets(5, "Tickets", "Ticket", "Tix"),
-	Event(6, "Event Items", "Event", "EI"),
+	Event(6, "Event Items", "Event", "Events", "EI"),
 	
 	Titles(99, "Titles", "Title"),
 	

@@ -56,15 +56,41 @@ public class MesozoicRandom {
 	}
 	
 	public static Dinosaur nextDinosaur() {
+		return nextDinosaur(0);
+	}
+
+	public static Dinosaur nextDinosaur(int rerolls) {
 		Dinosaur[] values = Dinosaur.values();
 		long sum = 0;
 		for (Dinosaur d : values) sum += d.getRarity().getDinoCount();
-		long rand = nextLong(sum);
-		for (Dinosaur d : values) {
-			rand -= d.getRarity().getDinoCount();
-			if (rand < 0) return d;
+
+		Dinosaur[] select = new Dinosaur[rerolls + 1];
+		for (int q = 0; q < select.length; q++) {
+			long rand = nextLong(sum);
+			for (Dinosaur d : values) {
+				rand -= d.getRarity().getDinoCount();
+				if (rand < 0) {
+					select[q] = d;
+					break;
+				}
+			}
 		}
-		return values[0];
+
+		int maxrarity = select[0].getRarity().getId();
+		for (int q = 1; q < select.length; q++) {
+			int rarity = select[q].getRarity().getId();
+			if (rarity > maxrarity) {
+				maxrarity = rarity;
+			}
+		}
+		
+		for (int q = 0; q < select.length; q++) {
+			if (select[q].getRarity().getId() == maxrarity) {
+				return select[q];
+			}
+		}
+
+		return select[0];
 	}
 	
 	public static Dinosaur nextDinosaur(Rarity r) {

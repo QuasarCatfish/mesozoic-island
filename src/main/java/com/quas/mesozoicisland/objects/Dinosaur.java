@@ -100,6 +100,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 	
 	public long getCurrentHealth() {
+		if (damage < 0) damage = 0;
 		return getHealth() - damage;
 	}
 	
@@ -271,6 +272,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	
 	public void heal() {
 		this.damage = 0;
+	}
+
+	public long getDamage() {
+		return damage;
 	}
 	
 	public void damage(long dmg) {

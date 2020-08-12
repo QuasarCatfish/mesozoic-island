@@ -83,15 +83,15 @@ public enum DiscordChannel {
 	DinoRadio(-1L);
 	
 	// Channel Categories
-//	private static final long STAFF = 646819581801005076L;
-//	private static final long INFORMATION = 650470957680427040L;
-	private static final long WELCOME = 650473166434598943L;
-//	private static final long GAME = 650474782738874387L;
-//	private static final long GUILDS = 650508616251736091L;
-	private static final long CHATTING = 650475185157308419L;
-//	private static final long BATTLE = 650478092825001994L;
-//	private static final long ARCADE = 650494504842952714L;
-//	private static final long SUGGESTIONS = 650480904527151134L;
+	public static final long CATEGORY_STAFF = 646819581801005076L;
+	public static final long CATEGORY_INFORMATION = 650470957680427040L;
+	public static final long CATEGORY_WELCOME = 650473166434598943L;
+	public static final long CATEGORY_GAME = 650474782738874387L;
+	public static final long CATEGORY_GUILDS = 650508616251736091L;
+	public static final long CATEGORY_CHATTING = 650475185157308419L;
+	public static final long CATEGORY_BATTLE = 650478092825001994L;
+	public static final long CATEGORY_ARCADE = 650494504842952714L;
+	public static final long CATEGORY_SUGGESTIONS = 650480904527151134L;
 	
 	// Channel Groups
 	public static final DiscordChannel[] NONE = new DiscordChannel[0];
@@ -103,9 +103,7 @@ public enum DiscordChannel {
 	public static final DiscordChannel[] TESTING_CHANNELS_DMS = Util.arr(Admins, GameTesting, DirectMessages);
 	public static final DiscordChannel[] GUILD_CHANNELS = Util.arr(FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
 	public static final DiscordChannel[] GUILDMASTER_GUILD_CHANNELS = Util.arr(Guildmasters, FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
-	
-	// Channel Categories
-	public static final long CATEGORY_BATTLE = 650478092825001994L;
+	public static final DiscordChannel[] BATTLE_CHANNELS = Util.arr(Battle1, Battle2, Battle3, BattlePVP, BattleContest, BattleDungeon, BattleTest, BattleSpecial);
 	
 	/////////////////////////////////////////
 	
@@ -141,8 +139,8 @@ public enum DiscordChannel {
 		
 		TextChannel tc = MesozoicIsland.getProfessor().getGuild().getTextChannelById(channel.getId());
 		if (tc == null) return DirectMessages;
-		if (Util.isChannelInCategory(tc, WELCOME)) return ClonedChannel;
-		if (Util.isChannelInCategory(tc, CHATTING)) return Chatting;
+		if (Util.isChannelInCategory(tc, CATEGORY_WELCOME)) return ClonedChannel;
+		if (Util.isChannelInCategory(tc, CATEGORY_CHATTING)) return Chatting;
 		return None;
 	}
 }

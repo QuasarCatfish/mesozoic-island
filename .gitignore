@@ -8,6 +8,7 @@ target/
 docs/tmp/
 docs/java-getting-started/
 docs/deploying-spring-boot-apps/
+src/main/resources/debug/
 src/main/resources/download/
 src/main/resources/SavedEggs/
 src/main/resources/Licenses/

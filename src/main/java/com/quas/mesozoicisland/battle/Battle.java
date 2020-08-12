@@ -118,7 +118,7 @@ public class Battle {
 		for (BattleTeam bt : teams) {
 			print.add("**" + bt.getPlayer().getName() + "'s Team:**");
 			for (Dinosaur d : bt.getDinosaursInBattle()) {
-				print.add("\t" + d.toString());
+				print.add(String.format("%s %s (%,d Health)", Constants.BULLET_POINT, d.toString(), d.getHealth()));
 			}
 			print.add(DiscordEmote.Blank.toString());
 		}
@@ -213,7 +213,7 @@ public class Battle {
 			
 			// Money - 20% Chance
 			case 0: {
-				int amount = MesozoicRandom.nextInt(1, 50);
+				int amount = MesozoicRandom.nextInt(20, 51);
 				if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis())
 					amount *= 1 + Constants.MONEY_FRAGRANCE_BONUS;
 				Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
@@ -234,15 +234,15 @@ public class Battle {
 		ArrayList<String> print = new ArrayList<String>();
 		print.add("**" + boss.getPlayer().getName() + "'s Team:**");
 		for (Dinosaur d : boss.getDinosaursInBattle()) {
-			print.add("\t" + d.toString());
+			print.add(String.format("%s %s (%,d Health)", Constants.BULLET_POINT, d.toString(), d.getHealth()));
 		}
-		print.add("");
+		print.add(DiscordEmote.Blank.toString());
 		for (BattleTeam bt : teams) {
 			print.add("**" + bt.getPlayer().getName() + "'s Team:**");
 			for (Dinosaur d : bt.getDinosaursInBattle()) {
-				print.add("\t" + d.toString());
+				print.add(String.format("%s %s (%,d Health)", Constants.BULLET_POINT, d.toString(), d.getHealth()));
 			}
-			print.add("");
+			print.add(DiscordEmote.Blank.toString());
 		}
 		
 		time += 1_000;
@@ -284,7 +284,7 @@ public class Battle {
 					double xp = DinoMath.getXpDropped(defend.getDinosaur().getLevel()) / getAliveTeamCount();
 					for (BattleTeam team : getAliveTeams()) {
 						if (attack.getPlayer().getIdLong() < CustomPlayer.getUpperLimit()) continue;
-						double mult = Constants.XP_MULTIPLIER;
+						double mult = Constants.XP_MULTIPLIER * Constants.DUNGEON_XP_MULTIPLIER;
 						if (team.getPlayer().getFragranceXpTimer() > System.currentTimeMillis()) mult += Constants.XP_FRAGRANCE_BONUS;
 						Action.addXpDelayed(team.getPlayer().getIdLong(), time, team.getDinosaur().getId(), Math.round(mult * xp));
 					}
@@ -344,6 +344,7 @@ public class Battle {
 		long damage = Math.round(1d * attack.getDinosaur().getAttack() * attack.getDinosaur().getAttack() / defend.getDinosaur().getDefense() / 4d);
 		double effectiveness = Element.getEffectiveness(attack.getDinosaur().getElement(), defend.getDinosaur().getElement());
 		damage *= effectiveness;
+		if (damage < 0) damage = 0;
 		
 		StringBuilder sb = new StringBuilder();
 		BattleAttack atkeff = MesozoicRandom.nextAttackingBattleEffect(attack.getDinosaur().getDinosaurForm());

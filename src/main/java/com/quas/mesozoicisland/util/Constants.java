@@ -29,10 +29,11 @@ public class Constants {
 	public static boolean HIDE_ITEMS = true;
 	
 	// Multipliers
-	public static final float XP_MULTIPLIER = 1f;
-	public static final float XP_FRAGRANCE_BONUS = 1f;
-	public static final float MONEY_FRAGRANCE_BONUS = 0.5f;
-	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f;
+	public static final float XP_MULTIPLIER = 1f; // default 1f
+	public static final float DUNGEON_XP_MULTIPLIER = 1f; // default 1f
+	public static final float XP_FRAGRANCE_BONUS = 1f; // default 1f
+	public static final float MONEY_FRAGRANCE_BONUS = 0.5f; // default 0.5f
+	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f; // default 0.2f
 	
 	// Battle
 	public static final float SPECIAL_DAMAGE_MODIFIER = 1.5f;
@@ -58,6 +59,7 @@ public class Constants {
 	public static final int MAX_DUNGEON_DIFFICULTY = 5;
 	public static final int MIN_DUNGEON_FLOORS = 3;
 	public static final int MAX_DUNGEON_FLOORS = 10;
+	public static final int DUNGEON_BOOST = 50;
 	public static final long DUNGEON_WAIT = TimeUnit.SECONDS.toMillis(150);
 	
 	// Raids

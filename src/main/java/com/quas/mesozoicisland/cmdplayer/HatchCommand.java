@@ -69,7 +69,8 @@ public class HatchCommand implements ICommand {
 		}
 		
 		if (!egg.isHatchable()) {
-			event.getChannel().sendMessageFormat("%s, your %s needs %,d more Hatch Points before it's ready to hatch.", p.getAsMention(), egg.getEggName(), egg.getMaxHatchPoints() - egg.getCurrentHatchPoints()).complete();
+			int delta = egg.getMaxHatchPoints() - egg.getCurrentHatchPoints();
+			event.getChannel().sendMessageFormat("%s, your %s needs %,d more Hatch Point%s before it's ready to hatch.", p.getAsMention(), egg.getEggName(), delta, delta == 1 ? "" : "s").complete();
 			return;
 		}
 		

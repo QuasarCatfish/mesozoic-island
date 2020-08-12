@@ -206,7 +206,7 @@ public class UseCommand implements ICommand {
 			}
 
 			else if (i.getId() == ItemID.EggLocator.getItemId()) {
-				if (!Constants.SPAWN_EGGS) {
+				if (!Constants.SPAWN || !Constants.SPAWN_EGGS) {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but egg spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
@@ -221,7 +221,7 @@ public class UseCommand implements ICommand {
 			}
 
 			else if (i.getId() == ItemID.DungeonLocator.getItemId()) {
-				if (Constants.SPAWN_DUNGEONS) {
+				if (!Constants.SPAWN || !Constants.SPAWN_DUNGEONS) {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but dungeon spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {

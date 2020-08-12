@@ -108,7 +108,7 @@ public class Daily {
 				sb.append("\n\n**Birthdays**");
 				for (long id : birthdays) {
 					Player p = Player.getPlayer(id);
-					sb.append("\n" + Constants.BULLET_POINT);
+					sb.append("\n" + Constants.BULLET_POINT + " ");
 					sb.append(p.getAsMention());
 					Constants.addBirthdayMail(p);
 				}

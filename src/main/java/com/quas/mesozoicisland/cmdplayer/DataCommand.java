@@ -63,7 +63,7 @@ public class DataCommand implements ICommand {
 	public void run(MessageReceivedEvent event, String... args) {
 		String dinosaur = Util.join(args, " ", 0, args.length);
 		
-		if (dinosaur.matches(DINOSAUR)) {
+		if (dinosaur.toLowerCase().matches(DINOSAUR)) {
 			Dinosaur dino = Dinosaur.getDinosaur(Util.getDexForm(dinosaur));
 			if (dino != null) dinosaur = dino.getDinosaurName();
 		}
@@ -92,7 +92,7 @@ public class DataCommand implements ICommand {
 				
 				event.getChannel().sendMessage(eb.build()).complete();
 			} else {
-				event.getChannel().sendMessageFormat("%s, the dinosaur '%s' could not be found.", event.getAuthor().getAsMention(), Util.fixString(dinosaur)).complete();
+				event.getChannel().sendMessageFormat("%s, this dinosaur could not be found.", event.getAuthor().getAsMention()).complete();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

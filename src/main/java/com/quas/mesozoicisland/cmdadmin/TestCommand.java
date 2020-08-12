@@ -1,6 +1,5 @@
 package com.quas.mesozoicisland.cmdadmin;
 
-import java.io.File;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
@@ -10,15 +9,9 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
-import com.quas.mesozoicisland.enums.EggColor;
-import com.quas.mesozoicisland.enums.Location;
-import com.quas.mesozoicisland.enums.ShopType;
-import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.util.Constants;
-import com.quas.mesozoicisland.util.Daily;
 import com.quas.mesozoicisland.util.DinoMath;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class TestCommand implements ICommand {
@@ -72,31 +65,10 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, a Level %,d dinosaur would have %,d XP.", event.getAuthor().getAsMention(), level, DinoMath.getXp(level)).complete();
 			} break;
 			
-			case "daily": {
-				Daily.doUpdate(System.currentTimeMillis());
-			} break;
-			
 			case "commands": {
 				event.getChannel().sendMessageFormat("%s, there are %,d commands.", event.getAuthor().getAsMention(), CommandManager.values().size()).complete();
 			} break;
 			
-			case "shop": {
-				event.getChannel().sendMessageFormat("%s, `%s`.", event.getAuthor().getAsMention(), ShopType.Tutorial.getName()).complete();
-			} break;
-
-			case "egggen": {
-				for (EggColor ec : EggColor.values()) {
-					Egg egg = Egg.getEgg(ec);
-					File f = egg.getImage();
-					
-					EmbedBuilder eb = new EmbedBuilder();
-					eb.setTitle(ec.toString());
-					eb.setImage("attachment://" + f.getName());
-					event.getChannel().sendMessage(eb.build()).addFile(f).complete();
-				}
-				event.getChannel().sendMessage("Done.").complete();
-			} break;
-
 			case "spawncheck": {
 				StringBuilder sb = new StringBuilder();
 				sb.append("```");
@@ -110,17 +82,6 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessage(sb.toString()).complete();
 			} break;
 			
-			case "locations": {
-				StringBuilder sb = new StringBuilder();
-				for (Location loc : Location.values()) {
-					sb.append(loc.toString());
-					sb.append(" - ");
-					sb.append(loc.isInUse());
-					sb.append("\n");
-				}
-				event.getChannel().sendMessage(sb.toString()).complete();
-			} break;
-
 			case "reward": {
 				String reward = JDBC.getReward(args[2]);
 				if (reward == null) {
@@ -128,7 +89,14 @@ public class TestCommand implements ICommand {
 				} else {
 					event.getChannel().sendMessageFormat("%s, the reward for `%s` is:\n%s", event.getAuthor().getAsMention(), args[2], JDBC.getRedeemMessage(reward)).complete();
 				}
-			}
+			} break;
+
+			case "givehp": {
+				int x = Integer.parseInt(args[2]);
+				while (x --> 0) {
+					JDBC.updateEggs();
+				}
+			} break;
 
 			}
 		} catch (Exception e) {
