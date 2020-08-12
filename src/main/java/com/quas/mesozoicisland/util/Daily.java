@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.util;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
@@ -58,19 +59,20 @@ public class Daily {
 		
 		// Daily Quest
 		{
-			ArrayList<Long> valid = new ArrayList<Long>();
+			TreeMap<Long, Integer> valid = new TreeMap<Long, Integer>();
 			try (ResultSet res = JDBC.executeQuery("select players.playerid, x.quests, y.books from players left join (select playerid, count(*) as quests from quests where special = 0 and completed = false group by playerid) as x on players.playerid = x.playerid left join (select player, count as books from bags where item = 5 and dmg = 0) as y on players.playerid = y.player where players.playerid > %d;", CustomPlayer.getUpperLimit())) {
 				while (res.next()) {
-					if (res.getInt("x.quests") >= 3) continue;
+					if (res.getInt("x.quests") >= Constants.MAX_QUESTS) continue;
 					if (res.getInt("y.books") <= 0) continue;
-					valid.add(res.getLong("players.playerid"));
+					valid.put(res.getLong("players.playerid"), Constants.MAX_QUESTS - res.getInt("y.quests"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 			
-			try (ResultSet res = JDBC.executeQuery("select *, rand() as r from questlist where lastday < %d order by r limit 1;", day - Constants.DAYS_BETWEEN_SAME_QUEST)) {
-				if (res.next()) {
+			ArrayList<String> questnames = new ArrayList<String>();
+			try (ResultSet res = JDBC.executeQuery("select *, rand() as r from questlist where lastday < %d order by r limit %d;", day - Constants.DAYS_BETWEEN_SAME_QUEST, Constants.QUESTS_PER_DAY)) {
+				while (res.next()) {
 					JDBC.executeUpdate("update questlist set lastday = %d where questid = %d;", day, res.getInt("questid"));
 					String name = res.getString("questname");
 					long type = res.getLong("questtype");
@@ -78,20 +80,27 @@ public class Daily {
 					String reward = res.getString("reward");
 					Item item = Item.getItem(Stat.of(type));
 					
-					for (long player : valid) {
-						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward) values(%d, '%s', %d, %d, %d, '%s');",
-								player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward));
+					for (long player : valid.keySet()) {
+						if (valid.get(player) <= 0) continue;
+						valid.put(player, valid.get(player) - 1);
+						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward) values(%d, '%s', %d, %d, %d, '%s');", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward));
 					}
 					
-					sb.append("\n" + Constants.BULLET_POINT + " Today's quest is \"");
-					sb.append(name);
-					sb.append("\". All players with space in their ");
-					sb.append(Item.getItem(ItemID.QuestBook).toString());
-					sb.append(" have received this quest.");
+					questnames.add("\"" + name + "\"");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+			
+			sb.append("\n");
+			sb.append(Constants.BULLET_POINT);
+			sb.append(" Today's Quest");
+			if (Constants.QUESTS_PER_DAY > 1) sb.append("s");
+			sb.append(": ");
+			sb.append(Util.join(questnames, ", ", 0, questnames.size()));
+			sb.append(". All players with space in their ");
+			sb.append(Item.getItem(ItemID.QuestBook).toString());
+			sb.append(" have received this quest.");
 		}
 		
 		// Get Birthdays

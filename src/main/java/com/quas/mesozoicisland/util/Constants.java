@@ -52,6 +52,8 @@ public class Constants {
 	public static final int EGG_SPAWN_CHANCE = 20;
 	public static final int MAX_EGG_SPAWN = 1;
 	public static final long EGG_WAIT = TimeUnit.SECONDS.toMillis(90);
+	public static final int MIN_HP_PER_MINUTE = 1;
+	public static final int MAX_HP_PER_MINUTE = 3;
 	
 	// Dungeons
 	public static boolean SPAWN_DUNGEONS = true;
@@ -81,6 +83,11 @@ public class Constants {
 	public static final int MAX_LEADERBOARD_CHECK = 25;
 	public static final int LEADERBOARD_REQUIRED_BATTLES = 5;
 	
+	// Quests
+	public static final int DAYS_BETWEEN_SAME_QUEST = 14;
+	public static final int MAX_QUESTS = 3;
+	public static final int QUESTS_PER_DAY = 2;
+
 	// Limits
 	public static final int DINOS_PER_TEAM = 3;
 	public static final int MAX_LEVEL = 50;
@@ -90,10 +97,7 @@ public class Constants {
 	public static final int MAX_STAT_BOOST = 25;
 	public static final int MAX_SNACK_GAIN = 2;
 	public static final int LOCATION_BOOST = 10;
-	public static final int MIN_HP_PER_MINUTE = 1;
-	public static final int MAX_HP_PER_MINUTE = 3;
 	public static final int PUBLIC_MAIL_DISPLAY = 5;
-	public static final int DAYS_BETWEEN_SAME_QUEST = 14;
 	
 	// Misc
 	public static final String ZERO_WIDTH_SPACE = "\u200B";
