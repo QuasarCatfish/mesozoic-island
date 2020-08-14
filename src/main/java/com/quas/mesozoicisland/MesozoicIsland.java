@@ -10,8 +10,6 @@ import com.quas.mesozoicisland.cmdadmin.CheckBattlesCommand;
 import com.quas.mesozoicisland.cmdadmin.CheckBirthdaysCommand;
 import com.quas.mesozoicisland.cmdadmin.ClearCacheCommand;
 import com.quas.mesozoicisland.cmdadmin.ClearChannelCommand;
-import com.quas.mesozoicisland.cmdadmin.ColorCommand;
-import com.quas.mesozoicisland.cmdadmin.ColorHexCommand;
 import com.quas.mesozoicisland.cmdadmin.EchoCommand;
 import com.quas.mesozoicisland.cmdadmin.EventsCommand;
 import com.quas.mesozoicisland.cmdadmin.GenerateRedeemCommand;
@@ -47,6 +45,8 @@ import com.quas.mesozoicisland.cmdplayer.BagCategoryCommand;
 import com.quas.mesozoicisland.cmdplayer.BagCommand;
 import com.quas.mesozoicisland.cmdplayer.BirthdayCommand;
 import com.quas.mesozoicisland.cmdplayer.BuyCommand;
+import com.quas.mesozoicisland.cmdplayer.ColorCommand;
+import com.quas.mesozoicisland.cmdplayer.ColorHexCommand;
 import com.quas.mesozoicisland.cmdplayer.CreateTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.CreditsCommand;
 import com.quas.mesozoicisland.cmdplayer.DailyCommand;
@@ -274,6 +274,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new QuestsCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new WikiCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new LicenseCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new ColorHexCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new ColorCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
@@ -298,8 +300,6 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new TestCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new EchoCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new SpawnEggCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new ColorHexCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new ColorCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ToggleCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new CheckBirthdaysCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new BirthdayMailCommand());

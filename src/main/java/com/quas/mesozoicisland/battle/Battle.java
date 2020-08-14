@@ -274,10 +274,14 @@ public class Battle {
 			if (!defend.getDinosaur().isAlive()) {
 				
 				// Add Win and Loss
-				if (attack.getPlayer().getIdLong() > CustomPlayer.getUpperLimit())
+				if (attack.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
 					JDBC.addWin(attack.getPlayer().getIdLong(), attack.getDinosaur().getIdPair());
-				if (defend.getPlayer().getIdLong() > CustomPlayer.getUpperLimit())
+					JDBC.addItem(attack.getPlayer().getIdLong(), Stat.DinosaursDefeated.getId());
+
+				}
+				if (defend.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
 					JDBC.addLoss(defend.getPlayer().getIdLong(), defend.getDinosaur().getIdPair());
+				}
 				
 				// Dinosaur gains XP
 				if (attack.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {

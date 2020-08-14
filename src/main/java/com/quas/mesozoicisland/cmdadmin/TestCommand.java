@@ -1,5 +1,8 @@
 package com.quas.mesozoicisland.cmdadmin;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
@@ -7,10 +10,15 @@ import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.Stat;
+import com.quas.mesozoicisland.objects.Item;
+import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
+import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -95,6 +103,43 @@ public class TestCommand implements ICommand {
 				int x = Integer.parseInt(args[2]);
 				while (x --> 0) {
 					JDBC.updateEggs();
+				}
+			} break;
+
+			case "quests": {
+				int questid = Integer.parseInt(args[2]);
+
+				TreeMap<Long, Integer> valid = new TreeMap<Long, Integer>();
+				try (ResultSet res = JDBC.executeQuery("select players.playerid, x.quests, y.books from players left join (select playerid, count(*) as quests from quests where special = 0 and completed = false group by playerid) as x on players.playerid = x.playerid left join (select player, count as books from bags where item = 5 and dmg = 0) as y on players.playerid = y.player where players.playerid > %d;", CustomPlayer.getUpperLimit())) {
+					while (res.next()) {
+						if (res.getInt("x.quests") >= Constants.MAX_QUESTS) continue;
+						if (res.getInt("y.books") <= 0) continue;
+						valid.put(res.getLong("players.playerid"), Constants.MAX_QUESTS - res.getInt("x.quests"));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				try (ResultSet res = JDBC.executeQuery("select * from questlist where questid = %d;", questid)) {
+					if (res.next()) {
+						String name = res.getString("questname");
+						long type = res.getLong("questtype");
+						long goal = res.getLong("goal");
+						String reward = res.getString("reward");
+						Item item = Item.getItem(Stat.of(type));
+						
+						for (long player : valid.keySet()) {
+							if (valid.get(player) <= 0) continue;
+							valid.put(player, valid.get(player) - 1);
+							JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward) values(%d, '%s', %d, %d, %d, '%s');", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward));
+						}
+
+						event.getChannel().sendMessageFormat("%s, all players with space in their quest book have been given the '%s' Quest.", event.getAuthor().getAsMention(), name).complete();
+					} else {
+						event.getChannel().sendMessageFormat("%s, there is no quest with ID %d.", event.getAuthor().getAsMention(), questid).complete();
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			} break;
 

@@ -172,7 +172,7 @@ public class UseCommand implements ICommand {
 
 			else if (i.getId() == ItemID.ScentOfExperience.getItemId() || i.getId() == ItemID.FragranceOfExperience.getItemId() || i.getId() == ItemID.EauDeExperience.getItemId()) {
 				long time = Long.parseLong(i.getData());
-				long curtime = p.getFragranceBattleTimer();
+				long curtime = p.getFragranceXpTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
 				long end = Math.max(curtime, System.currentTimeMillis()) + time;
 				
@@ -182,7 +182,7 @@ public class UseCommand implements ICommand {
 
 			else if (i.getId() == ItemID.ScentOfMoney.getItemId() || i.getId() == ItemID.FragranceOfMoney.getItemId() || i.getId() == ItemID.EauDeArgent.getItemId()) {
 				long time = Long.parseLong(i.getData());
-				long curtime = p.getFragranceBattleTimer();
+				long curtime = p.getFragranceMoneyTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
 				long end = Math.max(curtime, System.currentTimeMillis()) + time;
 				
@@ -279,15 +279,19 @@ public class UseCommand implements ICommand {
 					}
 				} else {
 					String[] dinos = JDBC.getDungeonTickets(tier).split("\\s+");
+					String[] lowtier = JDBC.getDungeonTickets(tier - 1).split("\\s+");
 					
 					StringBuilder sb = new StringBuilder();
 					sb.append(p.getAsMention());
 					sb.append(", here is today's selection of dinosaurs:");
 					for (String dino : dinos) {
+						boolean lower = false;
+						for (String s : lowtier) if (s.equals(dino)) lower = true;
+
 						Dinosaur d2 = Dinosaur.getDinosaur(Util.getDexForm(dino));
-						sb.append(String.format("\n• %s [%s] [%s]", d2.toString(), d2.getElement().getName(), d2.getRarity().getName()));
+						sb.append(String.format("\n• %s%s [%s] [%s]", d2.toString(), lower ? "\u2020" : "", d2.getElement().getName(), d2.getRarity().getName()));
 					}
-					sb.append("\n\nTo redeem one of these dinosaurs, use the command `use ");
+					sb.append("\n\n\u2020This dinosaur appears in a lower tier of Dungeon Ticket.\nTo redeem one of these dinosaurs, use the command `use ");
 					sb.append(i.getId());
 					sb.append(" <dino id>`.\nThis selection will reset in ");
 					sb.append(Util.formatTime(Util.getTimeLeftInDay()));

@@ -165,8 +165,8 @@ public class DinosaursCommand implements ICommand {
 		// Dinosaur Rarity
 		Special("Special", "special", "dinosaurs.rarity % 10 = 0", false),
 		CopperRare("Copper Rare", "copper(rare)?|cr", "dinosaurs.rarity % 10 = 1", false),
-		IronRare("Iron Rare", "iron(rare)?|ir", "dinosaurs.rarity % 10 = 2", false),
-		BronzeRare("Bronze Rare", "bronze(rare)?|br", "dinosaurs.rarity % 10 = 3", false),
+		BronzeRare("Bronze Rare", "bronze(rare)?|br", "dinosaurs.rarity % 10 = 2", false),
+		IronRare("Iron Rare", "iron(rare)?|ir", "dinosaurs.rarity % 10 = 3", false),
 		SilverRare("Silver Rare", "silver(rare)?|sr", "dinosaurs.rarity % 10 = 4", false),
 		GoldRare("Gold Rare", "gold(rare)?|gr", "dinosaurs.rarity % 10 = 5", false),
 		PlatinumRare("Platinum Rare", "plat(inum)?(rare)?|pr", "dinosaurs.rarity % 10 = 6", false),

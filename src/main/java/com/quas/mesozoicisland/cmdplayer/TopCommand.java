@@ -82,7 +82,7 @@ public class TopCommand implements ICommand {
 				while (res.next()) {
 					if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 					Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
-					lb.addEntry(d.getXp(), d.getPlayer().getName(), d.getEffectiveName(), d.getLevel(), d.getXpMinusLevel());
+					lb.addEntry(d.getXp() + 1, d.getPlayer().getName(), d.getEffectiveName(), d.getLevel(), d.getXpMinusLevel());
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -222,8 +222,10 @@ public class TopCommand implements ICommand {
 		BattlesEntered(Util.arr("battles entered"), "Battles Entered", LeaderboardType.PlayerItem, null, Stat.BattlesEntered),
 		BattlesWon(Util.arr("battles won"), "Battles Won", LeaderboardType.PlayerItem, null, Stat.BattlesWon),
 		DamageDealt(Util.arr("damage dealt"), "Damage Dealt", LeaderboardType.PlayerItem, null, Stat.DamageDealt),
-		DamageReceived(Util.arr("damage received"), "Damage Received", LeaderboardType.PlayerItem, null, Stat.DamageReceived),
-		DinosaursCaught(Util.arr("dinosaurs caught"), "Dinosaurs Caught", LeaderboardType.PlayerItem, null, Stat.DinosaursCaught),
+		DamageReceived(Util.arr("damage received", "damage taken"), "Damage Received", LeaderboardType.PlayerItem, null, Stat.DamageReceived),
+		DinosaursCaught(Util.arr("dinosaurs caught", "dinos caught"), "Dinosaurs Caught", LeaderboardType.PlayerItem, null, Stat.DinosaursCaught),
+		QuestsCompleted(Util.arr("quests", "quests completed"), "Quests Completed", LeaderboardType.PlayerItem, null, Stat.QuestsCompleted),
+		EggsHatched(Util.arr("eggs", "eggs hatched"), "Eggs Hatched", LeaderboardType.PlayerItem, null, Stat.EggsHatched),
 		
 		// Dinosaur Stats
 		WTL(Util.arr("wtl", "wintoloss", "winstolosses"), "Dinosaur Win-to-Loss Ratio", LeaderboardType.DinosaurTwoStat, null, Long.parseLong(TWOSTAT_WTL)),

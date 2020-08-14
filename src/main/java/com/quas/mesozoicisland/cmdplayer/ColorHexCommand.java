@@ -1,4 +1,4 @@
-package com.quas.mesozoicisland.cmdadmin;
+package com.quas.mesozoicisland.cmdplayer;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,15 +9,10 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import com.quas.mesozoicisland.cmdbase.ICommand;
-import com.quas.mesozoicisland.enums.AccessLevel;
-import com.quas.mesozoicisland.enums.DiscordChannel;
-import com.quas.mesozoicisland.enums.DiscordRole;
-
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public class ColorHexCommand implements ICommand {
+public class ColorHexCommand extends ColorCommand {
 
 	@Override
 	public Pattern getCommand() {
@@ -25,38 +20,13 @@ public class ColorHexCommand implements ICommand {
 	}
 
 	@Override
-	public AccessLevel getAccessLevel() {
-		return AccessLevel.Admin;
-	}
-
-	@Override
-	public String getCommandName() {
-		return null;
-	}
-
-	@Override
 	public String getCommandSyntax() {
-		return null;
+		return "color <hex>";
 	}
 
 	@Override
 	public String getCommandDescription() {
-		return null;
-	}
-
-	@Override
-	public DiscordChannel[] getUsableChannels() {
-		return DiscordChannel.ALL_CHANNELS;
-	}
-
-	@Override
-	public DiscordRole[] getRequiredRoles() {
-		return null;
-	}
-
-	@Override
-	public String getRequiredState() {
-		return null;
+		return "Gets a sample of the color with the given hexadecimal code.";
 	}
 
 	@Override

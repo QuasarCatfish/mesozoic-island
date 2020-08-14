@@ -28,7 +28,7 @@ public enum EggColor {
 	Cyan("Cyan", 0, 255, 255),
 	DarkBlue("Dark Blue", 0, 0, 139),
 	DarkCyan("Dark Cyan", 0, 139, 139),
-	DarkGoldenrod("Dark Goldenrod", 184, 134, 187),
+	DarkGoldenrod("Dark Goldenrod", 184, 134, 11),
 	DarkGrey("Dark Grey", 169, 169, 169),
 	DarkGreen("Dark Green", 0, 100, 0),
 	DarkKhaki("Dark Khaki", 189, 183, 107),

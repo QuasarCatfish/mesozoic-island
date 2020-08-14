@@ -1,4 +1,4 @@
-package com.quas.mesozoicisland.cmdadmin;
+package com.quas.mesozoicisland.cmdplayer;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -27,27 +27,27 @@ public class ColorCommand implements ICommand {
 
 	@Override
 	public AccessLevel getAccessLevel() {
-		return AccessLevel.Admin;
+		return AccessLevel.Trainer;
 	}
 
 	@Override
 	public String getCommandName() {
-		return null;
+		return "color";
 	}
 
 	@Override
 	public String getCommandSyntax() {
-		return null;
+		return "color <name>";
 	}
 
 	@Override
 	public String getCommandDescription() {
-		return null;
+		return "Gets a sample of the color with the given name.";
 	}
 
 	@Override
 	public DiscordChannel[] getUsableChannels() {
-		return DiscordChannel.ALL_CHANNELS;
+		return Util.arr(DiscordChannel.BotCommands, DiscordChannel.GameTesting, DiscordChannel.DirectMessages);
 	}
 
 	@Override

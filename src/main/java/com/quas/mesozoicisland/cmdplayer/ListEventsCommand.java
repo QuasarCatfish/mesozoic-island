@@ -40,7 +40,7 @@ public class ListEventsCommand implements ICommand {
 
 	@Override
 	public DiscordChannel[] getUsableChannels() {
-		return DiscordChannel.STANDARD_CHANNELS;
+		return DiscordChannel.STANDARD_CHANNELS_DMS;
 	}
 
 	@Override

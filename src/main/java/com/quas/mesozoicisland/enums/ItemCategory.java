@@ -46,6 +46,8 @@ public enum ItemCategory {
 	}
 	
 	public static ItemCategory of(String cat) {
+		while (cat.charAt(0) == '0') cat = cat.substring(1);
+
 		for (ItemCategory ic : values()) {
 			if (ic == None) continue;
 			if (Integer.toString(ic.category).equals(cat)) {

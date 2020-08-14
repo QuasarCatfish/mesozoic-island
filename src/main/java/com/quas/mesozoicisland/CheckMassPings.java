@@ -12,6 +12,8 @@ public class CheckMassPings extends ListenerAdapter {
 	
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+		if (event.getAuthor().isBot()) return;
+		if (event.getAuthor().isFake()) return;
 		if (event.getMember().hasPermission(Permission.ADMINISTRATOR)) return;
 
 		String raw = event.getMessage().getContentRaw().toLowerCase();

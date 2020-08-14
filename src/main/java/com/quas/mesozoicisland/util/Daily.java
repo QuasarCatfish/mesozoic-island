@@ -64,7 +64,7 @@ public class Daily {
 				while (res.next()) {
 					if (res.getInt("x.quests") >= Constants.MAX_QUESTS) continue;
 					if (res.getInt("y.books") <= 0) continue;
-					valid.put(res.getLong("players.playerid"), Constants.MAX_QUESTS - res.getInt("y.quests"));
+					valid.put(res.getLong("players.playerid"), Constants.MAX_QUESTS - res.getInt("x.quests"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -100,7 +100,9 @@ public class Daily {
 			sb.append(Util.join(questnames, ", ", 0, questnames.size()));
 			sb.append(". All players with space in their ");
 			sb.append(Item.getItem(ItemID.QuestBook).toString());
-			sb.append(" have received this quest.");
+			sb.append(" have received ");
+			if (Constants.QUESTS_PER_DAY > 1) sb.append("these quests.");
+			else sb.append("this quest.");
 		}
 		
 		// Get Birthdays

@@ -59,7 +59,8 @@ public class ItemCommand implements ICommand {
 	@Override
 	public void run(MessageReceivedEvent event, String... args) {
 		String itemname = Util.join(args, " ", 0, args.length);
-		
+		while (itemname.charAt(0) == '0') itemname = itemname.substring(1);
+
 		for (Item i : Item.values()) {
 			if (i.getItemCategory() == ItemCategory.None) continue;
 			
