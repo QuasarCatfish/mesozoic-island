@@ -70,20 +70,23 @@ public class Daily {
 				e.printStackTrace();
 			}
 			
+			final int quests = MesozoicRandom.nextInt(Constants.MAX_QUESTS_PER_DAY) + 1;
+
 			ArrayList<String> questnames = new ArrayList<String>();
-			try (ResultSet res = JDBC.executeQuery("select *, rand() as r from questlist where lastday < %d order by r limit %d;", day - Constants.DAYS_BETWEEN_SAME_QUEST, Constants.QUESTS_PER_DAY)) {
+			try (ResultSet res = JDBC.executeQuery("select *, rand() as r from questlist where lastday < %d and special = 0 order by r limit %d;", day - Constants.DAYS_BETWEEN_SAME_QUEST, quests)) {
 				while (res.next()) {
 					JDBC.executeUpdate("update questlist set lastday = %d where questid = %d;", day, res.getInt("questid"));
 					String name = res.getString("questname");
 					long type = res.getLong("questtype");
 					long goal = res.getLong("goal");
 					String reward = res.getString("reward");
+					int special = res.getInt("special");
 					Item item = Item.getItem(Stat.of(type));
 					
 					for (long player : valid.keySet()) {
 						if (valid.get(player) <= 0) continue;
 						valid.put(player, valid.get(player) - 1);
-						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward) values(%d, '%s', %d, %d, %d, '%s');", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward));
+						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward, special) values(%d, '%s', %d, %d, %d, '%s', %d);", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward), special);
 					}
 					
 					questnames.add("\"" + name + "\"");
@@ -95,13 +98,13 @@ public class Daily {
 			sb.append("\n");
 			sb.append(Constants.BULLET_POINT);
 			sb.append(" Today's Quest");
-			if (Constants.QUESTS_PER_DAY > 1) sb.append("s");
+			if (quests > 1) sb.append("s");
 			sb.append(": ");
 			sb.append(Util.join(questnames, ", ", 0, questnames.size()));
 			sb.append(". All players with space in their ");
 			sb.append(Item.getItem(ItemID.QuestBook).toString());
 			sb.append(" have received ");
-			if (Constants.QUESTS_PER_DAY > 1) sb.append("these quests.");
+			if (quests > 1) sb.append("these quests.");
 			else sb.append("this quest.");
 		}
 		

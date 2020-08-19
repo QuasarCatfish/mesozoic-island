@@ -31,8 +31,8 @@ public class Constants {
 	// Multipliers
 	public static final float XP_MULTIPLIER = 1f; // default 1f
 	public static final float DUNGEON_XP_MULTIPLIER = 1f; // default 1f
-	public static final float XP_FRAGRANCE_BONUS = 1f; // default 1f
-	public static final float MONEY_FRAGRANCE_BONUS = 0.5f; // default 0.5f
+	public static final float XP_FRAGRANCE_BONUS = 0.5f; // default 0.5f
+	public static final float MONEY_FRAGRANCE_BONUS = 1f; // default 1f
 	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f; // default 0.2f
 	
 	// Battle
@@ -85,8 +85,8 @@ public class Constants {
 	
 	// Quests
 	public static final int DAYS_BETWEEN_SAME_QUEST = 14;
-	public static final int MAX_QUESTS = 3;
-	public static int QUESTS_PER_DAY = 1;
+	public static final int MAX_QUESTS = 5;
+	public static final int MAX_QUESTS_PER_DAY = 2;
 
 	// Limits
 	public static final int DINOS_PER_TEAM = 3;
@@ -102,6 +102,7 @@ public class Constants {
 	// Misc
 	public static final String ZERO_WIDTH_SPACE = "\u200B";
 	public static final String BULLET_POINT = "\u2022";
+	public static final String NOTE = "\u203B";
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {
 		ArrayList<Pair<Dinosaur, String>> pairs = new ArrayList<Pair<Dinosaur, String>>();

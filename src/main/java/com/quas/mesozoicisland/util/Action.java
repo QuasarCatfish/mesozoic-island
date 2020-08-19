@@ -102,6 +102,14 @@ public class Action {
 				case Redeem:
 					JDBC.redeem(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()), res.getLong("recipient"), res.getString("msg"));
 					break;
+				case AddWinToDinosaur:
+					String windino = res.getString("msg");
+					JDBC.addWin(res.getLong("recipient"), Util.getDexForm(windino));
+					break;
+				case AddLossToDinosaur:
+					String lossdino = res.getString("msg");
+					JDBC.addLoss(res.getLong("recipient"), Util.getDexForm(lossdino));
+					break;
 				}
 				
 				JDBC.deleteAction(res.getInt("actionid"));
@@ -205,5 +213,13 @@ public class Action {
 	
 	public static void addRedeemDelayed(long from, long to, long after, String redeem) {
 		JDBC.addAction(ActionType.Redeem, from, to, redeem, System.currentTimeMillis() + after);
+	}
+
+	public static void addDinosaurWinDelayed(long to, long after, String dino) {
+		JDBC.addAction(ActionType.AddWinToDinosaur, 0, to, dino, System.currentTimeMillis() + after);
+	}
+
+	public static void addDinosaurLossDelayed(long to, long after, String dino) {
+		JDBC.addAction(ActionType.AddLossToDinosaur, 0, to, dino, System.currentTimeMillis() + after);
 	}
 }

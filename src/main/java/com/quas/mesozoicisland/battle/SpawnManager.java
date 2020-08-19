@@ -358,6 +358,7 @@ public class SpawnManager {
 			} else {
 				eb.addField(tier.toString(), "None", true);
 				locations.get(tier).setInUse(false);
+				setSpawnTime();
 			}
 		}
 		

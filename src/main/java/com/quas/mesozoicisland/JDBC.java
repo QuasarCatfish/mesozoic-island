@@ -500,6 +500,8 @@ public class JDBC {
 	}
 	
 	public static synchronized String getDungeonTickets(int tier) {
+		if (tier <= 0) return "";
+		
 		try (ResultSet res = JDBC.executeQuery("select * from dungeontickets where date = '%s';", MesozoicDate.getToday())) {
 			if (res.next()) {
 				return res.getString("dino" + tier);

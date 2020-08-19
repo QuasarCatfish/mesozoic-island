@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.DinosaurLicense;
 import com.quas.mesozoicisland.util.Pair;
@@ -167,6 +168,26 @@ public class Player {
 		return muted;
 	}
 	
+	public long getItemCount(Item item) {
+		return getItemCount(item.getIdDmg());
+	}
+
+	public long getItemCount(ItemID item) {
+		return getItemCount(item.getId());
+	}
+
+	private long getItemCount(Pair<Integer, Long> item) {
+		try (ResultSet res = JDBC.executeQuery("select * from bags where player = %d and item = %d and dmg = %d and count > 0;", pid, item.getFirstValue(), item.getSecondValue())) {
+			if (res.next()) {
+				return res.getLong("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0L;
+	}
+
 	public TreeMap<Item, Long> getBag() {
 		TreeMap<Item, Long> map = new TreeMap<Item, Long>();
 		

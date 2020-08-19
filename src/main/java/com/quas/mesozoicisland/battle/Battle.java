@@ -149,11 +149,11 @@ public class Battle {
 				
 				// Add Win and Loss
 				if (attack.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
-					JDBC.addWin(attack.getPlayer().getIdLong(), attack.getDinosaur().getIdPair());
-					JDBC.addItem(attack.getPlayer().getIdLong(), Stat.DinosaursDefeated.getId());
+					Action.addDinosaurWinDelayed(attack.getPlayer().getIdLong(), time, attack.getDinosaur().getId());
+					Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DinosaursDefeated.getId(), 1);
 				}
 				if (defend.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
-					JDBC.addLoss(defend.getPlayer().getIdLong(), defend.getDinosaur().getIdPair());
+					Action.addDinosaurLossDelayed(attack.getPlayer().getIdLong(), time, attack.getDinosaur().getId());
 				}
 				
 				// Pick Up Dinosaur
@@ -275,12 +275,11 @@ public class Battle {
 				
 				// Add Win and Loss
 				if (attack.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
-					JDBC.addWin(attack.getPlayer().getIdLong(), attack.getDinosaur().getIdPair());
-					JDBC.addItem(attack.getPlayer().getIdLong(), Stat.DinosaursDefeated.getId());
-
+					Action.addDinosaurWinDelayed(attack.getPlayer().getIdLong(), time, attack.getDinosaur().getId());
+					Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DinosaursDefeated.getId(), 1);
 				}
 				if (defend.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
-					JDBC.addLoss(defend.getPlayer().getIdLong(), defend.getDinosaur().getIdPair());
+					Action.addDinosaurLossDelayed(attack.getPlayer().getIdLong(), time, attack.getDinosaur().getId());
 				}
 				
 				// Dinosaur gains XP

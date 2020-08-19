@@ -106,7 +106,7 @@ public class TestCommand implements ICommand {
 				}
 			} break;
 
-			case "quests": {
+			case "givequest": {
 				int questid = Integer.parseInt(args[2]);
 
 				TreeMap<Long, Integer> valid = new TreeMap<Long, Integer>();
@@ -126,15 +126,21 @@ public class TestCommand implements ICommand {
 						long type = res.getLong("questtype");
 						long goal = res.getLong("goal");
 						String reward = res.getString("reward");
+						int special = res.getInt("special");
 						Item item = Item.getItem(Stat.of(type));
 						
 						for (long player : valid.keySet()) {
-							if (valid.get(player) <= 0) continue;
-							valid.put(player, valid.get(player) - 1);
-							JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward) values(%d, '%s', %d, %d, %d, '%s');", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward));
+							if (special != 0 || valid.get(player) > 0) {
+								valid.put(player, valid.get(player) - 1);
+								JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward, special) values(%d, '%s', %d, %d, %d, '%s', %d);", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward), special);
+							}
 						}
 
-						event.getChannel().sendMessageFormat("%s, all players with space in their quest book have been given the '%s' Quest.", event.getAuthor().getAsMention(), name).complete();
+						if (special != 0) {
+							event.getChannel().sendMessageFormat("%s, all players have been given the '%s' Quest.", event.getAuthor().getAsMention(), name).complete();
+						} else {
+							event.getChannel().sendMessageFormat("%s, all players with space in their quest book have been given the '%s' Quest.", event.getAuthor().getAsMention(), name).complete();
+						}
 					} else {
 						event.getChannel().sendMessageFormat("%s, there is no quest with ID %d.", event.getAuthor().getAsMention(), questid).complete();
 					}

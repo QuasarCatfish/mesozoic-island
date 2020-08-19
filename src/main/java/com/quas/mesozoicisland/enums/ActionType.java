@@ -14,6 +14,8 @@ public enum ActionType {
 	AddXpToDinosaur(9),
 	NewDay(10),
 	Redeem(11),
+	AddWinToDinosaur(12),
+	AddLossToDinosaur(13),
 	;
 	
 	private int actiontype;

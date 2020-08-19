@@ -15,7 +15,7 @@ public enum DinoID {
 	Gnathosaurus(9),
 	Thecodontosaurus(10),
 	Plateosaurus(11),
-	Poekliopleuron(12),
+	Poekilopleuron(12),
 	Ischyrodon(13),
 	Cardiodon(14),
 	Suchosaurus(15),

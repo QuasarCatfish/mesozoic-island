@@ -72,6 +72,7 @@ public enum DiscordChannel {
 	SuggestionFeedback(650482450237227020L),
 	PreviousSuggestions(650484317180395521L),
 	BugReports(650522213942034463L),
+	Feedback(744439646645256203L),
 	
 	// Welcome
 	Readme(681425620777041930L),

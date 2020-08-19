@@ -86,8 +86,8 @@ public class DataCommand implements ICommand {
 				if (d.getEpoch() != null) eb.addField("Geological Period", d.getEpoch(), true);
 				if (d.getLocation() != null) eb.addField("Location", d.getLocation(), true);
 				if (d.getDiet() != null) eb.addField("Diet", d.getDiet(), true);
-				if (d.getAuthors() != null) eb.addField("Author(s)", d.getAuthors(), false);
 				if (d.getDiscoveryYear() > 0) eb.addField("Discovery Year", Integer.toString(d.getDiscoveryYear()), true);
+				if (d.getAuthors() != null) eb.addField("Author(s)", d.getAuthors(), false);
 				eb.addField("Wikipedia Link", d.getWikiLink(), false);
 				
 				event.getChannel().sendMessage(eb.build()).complete();

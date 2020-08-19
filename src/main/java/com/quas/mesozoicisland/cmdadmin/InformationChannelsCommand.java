@@ -14,6 +14,7 @@ import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message.MentionType;
+import net.dv8tion.jda.api.entities.IMentionable;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -21,7 +22,7 @@ public class InformationChannelsCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("admin information");
+		return pattern("admin information( ", CHANNEL, ")+");
 	}
 
 	@Override
@@ -61,9 +62,14 @@ public class InformationChannelsCommand implements ICommand {
 
 	@Override
 	public void run(MessageReceivedEvent event, String... args) {
+		ArrayList<Long> c = new ArrayList<Long>();
+		for (IMentionable tc : event.getMessage().getMentions(MentionType.CHANNEL)) {
+			c.add(tc.getIdLong());
+		}
+
 		final String bullet = "\u25AB";
 		
-		{ // RULES
+		if (c.contains(DiscordChannel.Rules.getIdLong())) {
 			ArrayList<String> rules = new ArrayList<String>();
 			rules.add("__**Rules**__");
 			rules.add(bullet + "**Follow Discord's Terms of Service and Community Guidelines**\nAbide by Discord's terms of service (https://discordapp.com/terms) and community guidelines (https://discordapp.com/guidelines).");
@@ -96,7 +102,7 @@ public class InformationChannelsCommand implements ICommand {
 			}
 		}
 
-		{ // INTRODUCTION
+		if (c.contains(DiscordChannel.Introduction.getIdLong())) {
 			ArrayList<String> introduction = new ArrayList<String>();
 			introduction.add("Welcome, trainers, to **Mesozoic Island**, an island inhabited by hundreds of dinosaur species! I am the resident researcher on this island, Professor Megan Lowe, and it is my dream to discover all the secrets and mysteries that this island holds.");
 			introduction.add("My assistant is <@644300007259897856>, but most people just call her Elise. She's a robot that helps me and all of you a whole bunch, even if you don't realize it.");
@@ -172,7 +178,7 @@ public class InformationChannelsCommand implements ICommand {
 			}
 		}
 
-		{ // CHANNELS
+		if (c.contains(DiscordChannel.Channels.getIdLong())) {
 			ArrayList<String> channels = new ArrayList<String>();
 			channels.add("__**Introduction**__");
 			channels.add(DiscordChannel.Rules.toString() + " - A list of the rules that everyone must follow.");
@@ -211,6 +217,7 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordChannel.SuggestionFeedback.toString() + " - Where you can discuss other peoples' suggestions.");
 			channels.add(DiscordChannel.PreviousSuggestions.toString() + " - Where you can see what suggestions have been previously made.");
 			channels.add(DiscordChannel.BugReports.toString() + " - Where you can report bugs that you find.");
+			channels.add(DiscordChannel.Feedback.toString() + " - Where you leave feedback you have on the game.");
 			channels.add(DiscordEmote.Blank.toString());
 
 			TextChannel channel = DiscordChannel.Channels.getChannel(MesozoicIsland.getProfessor());

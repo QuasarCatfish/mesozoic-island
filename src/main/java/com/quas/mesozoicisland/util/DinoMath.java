@@ -1,5 +1,8 @@
 package com.quas.mesozoicisland.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.quas.mesozoicisland.battle.BattleTier;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.objects.Dinosaur;
@@ -41,17 +44,30 @@ public class DinoMath {
 	}
 	
 	public static BattleTier getBattleTier(Dinosaur[] team) {
+		if (team.length == 0) return BattleTier.Tier1;
+
+		List<BattleTier> tiers = Arrays.asList(BattleTier.getBattleTiers());
+		
+		// Get stats
 		long xp = 0;
+		long bst = 0;
 		boolean contest = true;
 		for (Dinosaur d : team) {
 			xp += d.getXp();
+			long stats = d.getHealth() + d.getAttack() + d.getDefense();
+			if (stats > bst) bst = stats;
 			if (d.getDinosaurForm() != DinosaurForm.Contest) contest = false;
 		}
 		
-		if (contest && Constants.CONTEST) return BattleTier.Contest;
+		// Contest running
+		if (contest && tiers.contains(BattleTier.Contest)) return BattleTier.Contest;
+
+		// Calculate Level
 		int level = getLevel(xp);
-		if (level > 30) return BattleTier.Tier3;
-		if (level > 10) return BattleTier.Tier2;
+
+		// Calculate Tier
+		if ((level >= 30 || bst >= 8_000) && tiers.contains(BattleTier.Tier3)) return BattleTier.Tier3;
+		if ((level >= 10 || bst >= 5_000) && tiers.contains(BattleTier.Tier2)) return BattleTier.Tier2;
 		return BattleTier.Tier1;
 	}
 }

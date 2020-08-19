@@ -1,5 +1,7 @@
 package com.quas.mesozoicisland.cmdplayer;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -29,6 +31,7 @@ import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.MesozoicDate;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Util;
 
@@ -270,8 +273,18 @@ public class UseCommand implements ICommand {
 						for (String dino : dinos) if (dino.equalsIgnoreCase(d2.getId())) contained = true;
 						
 						if (contained) {
-							event.getChannel().sendMessageFormat("%s, you have redeemed %s %s with your %s.", p.getAsMention(), Util.getArticle(d2.getDinosaurName()), d2.getDinosaurName(), i.toString()).complete();
-							JDBC.addDinosaur(event.getChannel(), p.getIdLong(), d2.getIdPair());
+							try (ResultSet res = JDBC.executeQuery("select * from dungeonpurchase where date = '%s' and player = %d and dino = '%s';", MesozoicDate.getToday(), p.getIdLong(), d2.getId())) {
+								if (res.next()) {
+									event.getChannel().sendMessageFormat("%s, you cannot purcahse a second %s today.", p.getAsMention(), d2.getDinosaurName()).complete();
+									SUCCESS = false;
+								} else {
+									event.getChannel().sendMessageFormat("%s, you have redeemed %s %s with your %s.", p.getAsMention(), Util.getArticle(d2.getDinosaurName()), d2.getDinosaurName(), i.toString()).complete();
+									JDBC.addDinosaur(event.getChannel(), p.getIdLong(), d2.getIdPair());
+									JDBC.executeUpdate("insert into dungeonpurchase values('%s', %d, '%s');", MesozoicDate.getToday(), p.getIdLong(), d2.getId());
+								}
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
 						} else {
 							event.getChannel().sendMessageFormat("%s, the %s is not offered in today's selection of dungeon dinosaurs.", p.getAsMention(), d2.getDinosaurName()).complete();
 							SUCCESS = false;
@@ -289,9 +302,15 @@ public class UseCommand implements ICommand {
 						for (String s : lowtier) if (s.equals(dino)) lower = true;
 
 						Dinosaur d2 = Dinosaur.getDinosaur(Util.getDexForm(dino));
-						sb.append(String.format("\n• %s%s [%s] [%s]", d2.toString(), lower ? "\u2020" : "", d2.getElement().getName(), d2.getRarity().getName()));
+						sb.append(String.format("\n%s %s [%s] [%s]", lower ? Constants.NOTE : Constants.BULLET_POINT, d2.toString(), d2.getElement().getName(), d2.getRarity().getName()));
 					}
-					sb.append("\n\n\u2020This dinosaur appears in a lower tier of Dungeon Ticket.\nTo redeem one of these dinosaurs, use the command `use ");
+
+					if (tier > 1) {
+						sb.append("\n");
+						sb.append(Constants.NOTE);
+						sb.append(" These dinosaurs appear in a lower tier of Dungeon Ticket.");
+					}
+					sb.append("\n\nTo redeem one of these dinosaurs, use the command `use ");
 					sb.append(i.getId());
 					sb.append(" <dino id>`.\nThis selection will reset in ");
 					sb.append(Util.formatTime(Util.getTimeLeftInDay()));
