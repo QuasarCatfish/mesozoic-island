@@ -96,9 +96,11 @@ public class StatsPlayerCommand implements ICommand {
 			eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
 		}
 		
-		if (p.getFragranceXpTimer() > System.currentTimeMillis()) eb.addField("Experience Fragrance", Util.formatTime(p.getFragranceXpTimer() - System.currentTimeMillis()), true);
-		if (p.getFragranceBattleTimer() > System.currentTimeMillis()) eb.addField("Battle Fragrance", Util.formatTime(p.getFragranceBattleTimer() - System.currentTimeMillis()), true);
-		if (p.getFragranceMoneyTimer() > System.currentTimeMillis()) eb.addField("Money Fragrance", Util.formatTime(p.getFragranceMoneyTimer() - System.currentTimeMillis()), true);
+		long time = System.currentTimeMillis();
+		if (p.getFragranceXpTimer() > time) eb.addField("Experience Fragrance", Util.formatTime(p.getFragranceXpTimer() - time), true);
+		if (p.getFragranceBattleTimer() > time) eb.addField("Battle Fragrance", Util.formatTime(p.getFragranceBattleTimer() - time), true);
+		if (p.getFragranceMoneyTimer() > time) eb.addField("Money Fragrance", Util.formatTime(p.getFragranceMoneyTimer() - time), true);
+		if (p.getFragranceEggTimer() > time) eb.addField("Egg Fragrance", Util.formatTime(p.getFragranceEggTimer() - time), true);
 		
 		event.getChannel().sendMessage(eb.build()).complete();
 	}
