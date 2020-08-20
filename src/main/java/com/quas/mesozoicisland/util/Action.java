@@ -92,7 +92,7 @@ public class Action {
 					break;
 				case AddXpToDinosaur:
 					String[] xpsplit = res.getString("msg").split("\\s+");
-					JDBC.addXp(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getBot(self)), res.getLong("recipient"), Util.getDexForm(xpsplit[0]), Long.parseLong(xpsplit[1]));
+					JDBC.addXp(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getBot(self)), res.getLong("recipient"), Util.getDexForm(xpsplit[0]), Long.parseLong(xpsplit[1]), true);
 					break;
 				case NewDay:
 					long time = res.getLong("time");

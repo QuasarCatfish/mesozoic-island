@@ -209,7 +209,7 @@ public class JDBC {
 	}
 	
 	public static synchronized boolean setItem(long pid, Pair<Integer, Integer> dexform, Pair<Integer, Long> item) {
-		return executeUpdate("update captures set item = %d and itemdmg = %d where player = %d and dex = %d and item = %d;", item.getFirstValue(), item.getSecondValue(), pid, dexform.getFirstValue(), dexform.getSecondValue());
+		return executeUpdate("update captures set item = %d, itemdmg = %d where player = %d and dex = %d and item = %d;", item.getFirstValue(), item.getSecondValue(), pid, dexform.getFirstValue(), dexform.getSecondValue());
 	}
 	
 	public static synchronized boolean setSelected(long pid, Dinosaur[] dinos) {
@@ -398,7 +398,7 @@ public class JDBC {
 		}
 	}
 	
-	public static synchronized boolean addXp(MessageChannel channel, long pid, Pair<Integer, Integer> dino, long xp) {
+	public static synchronized boolean addXp(MessageChannel channel, long pid, Pair<Integer, Integer> dino, long xp, boolean player) {
 		Dinosaur d = Dinosaur.getDinosaur(pid, dino);
 		if (d == null) return false;
 		boolean b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
@@ -407,13 +407,14 @@ public class JDBC {
 			JDBC.addItem(pid, Stat.DinosaursLeveledUp.getId(), d2.getLevel() - d.getLevel());
 			channel.sendMessageFormat("%s, your %s is now **Level %,d**.", d.getPlayer().getAsMention(), d.getEffectiveName(), d2.getLevel()).complete();
 		}
-		updatePlayerXp(pid);
+		
+		if (player) b &= addPlayerXp(pid, xp);
 		return b;
 	}
 	
-	public static synchronized boolean updatePlayerXp(long playerid) {
+	public static synchronized boolean addPlayerXp(long playerid, long xp) {
 		Player p = Player.getPlayer(playerid);
-		boolean b = executeUpdate("update players set xp = %d where playerid = %d;", calculatePlayerXp(playerid), playerid);
+		boolean b = executeUpdate("update players set xp = xp + %d where playerid = %d;", xp, playerid);
 		Player p2 = Player.getPlayer(playerid);
 		if (p2.getLevel() <= 2) return b;
 		
@@ -422,17 +423,6 @@ public class JDBC {
 			Constants.addLevelUpMail(p, level);
 		}
 		return b;
-	}
-	
-	private static synchronized long calculatePlayerXp(long playerid) {
-		try (ResultSet res = executeQuery("select sum(xp) as xp from captures where player = %d;", playerid)) {
-			if (res.next()) {
-				return res.getLong("xp");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0L;
 	}
 	
 	public static synchronized boolean addRune(MessageChannel channel, long pid, int rune) {

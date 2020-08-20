@@ -396,7 +396,7 @@ public class UseCommand implements ICommand {
 						SUCCESS = false;
 					} else {
 						event.getChannel().sendMessageFormat("%s, your %s gained %s XP from the %s.", p.getAsMention(), d.getEffectiveName(), i.getId() == 210 ? "∞" : Util.formatNumber(xp), i.toString()).complete();
-						JDBC.addXp(event.getChannel(), p.getIdLong(), d.getIdPair(), xp);
+						JDBC.addXp(event.getChannel(), p.getIdLong(), d.getIdPair(), xp, false);
 					}
 				} else {
 					Dinosaur d2 = Dinosaur.getDinosaur(dex, form);
@@ -412,7 +412,7 @@ public class UseCommand implements ICommand {
 				} else {
 					long xp = Long.parseLong(i.getData());
 					event.getChannel().sendMessageFormat("%s, your %s gained %s XP from the %s.", p.getAsMention(), d.getEffectiveName(), i.getId() == 210 ? "∞" : Util.formatNumber(xp), i.toString()).complete();
-					JDBC.addXp(event.getChannel(), p.getIdLong(), d.getIdPair(), xp);
+					JDBC.addXp(event.getChannel(), p.getIdLong(), d.getIdPair(), xp, false);
 				}
 			}
 

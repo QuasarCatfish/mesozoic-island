@@ -34,7 +34,6 @@ import com.quas.mesozoicisland.cmdadmin.TestCommand;
 import com.quas.mesozoicisland.cmdadmin.ThreadsCommand;
 import com.quas.mesozoicisland.cmdadmin.ToggleCommand;
 import com.quas.mesozoicisland.cmdadmin.UnmuteCommand;
-import com.quas.mesozoicisland.cmdadmin.UpdatePlayerLevelsCommand;
 import com.quas.mesozoicisland.cmdbase.AdminHelpCommand;
 import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.HelpCommand;
@@ -293,7 +292,6 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new SpawnTimeResetCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new CheckBattlesCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new GenerateRedeemCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new UpdatePlayerLevelsCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new GuildPromoteCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new GuildDemoteCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ClearCacheCommand());
