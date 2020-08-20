@@ -193,6 +193,16 @@ public class UseCommand implements ICommand {
 				JDBC.executeUpdate("update players set fragrancemoney = %d where playerid = %d;", end, p.getIdLong());
 			}
 
+			else if (i.getId() == ItemID.ScentOfEgg.getItemId() || i.getId() == ItemID.FragranceOfEgg.getItemId() || i.getId() == ItemID.EauDeOeuf.getItemId()) {
+				long time = Long.parseLong(i.getData());
+				long curtime = p.getFragranceEggTimer();
+				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
+				long end = Math.max(curtime, System.currentTimeMillis()) + time;
+				
+				event.getChannel().sendMessageFormat("%s, the %s fills the air around you for %s %s.", p.getAsMention(), i.toString(), adj, Util.formatTime(time)).complete();
+				JDBC.executeUpdate("update players set fragranceegg = %d where playerid = %d;", end, p.getIdLong());
+			}
+
 			else if (i.getId() == ItemID.DinosaurLocator.getItemId()) {
 				if (!Constants.SPAWN) {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but dinosaur spawning is disabled.", p.getAsMention(), i.toString()).complete();

@@ -370,7 +370,9 @@ public class JDBC {
 	}
 	
 	public static synchronized boolean updateEggs() {
-		return executeUpdate("update eggs set hp = hp + floor(rand() * %d) + %d where player > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit());
+		boolean b = executeUpdate("update eggs set hp = hp + floor(rand() * %d) + %d where player > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit());
+		b &= executeUpdate("update eggs join players on eggs.player = players.playerid set hp = hp + floor(rand() * %d) + %d where eggs.player > %d and players.fragranceegg > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit(), System.currentTimeMillis());
+		return b;
 	}
 	
 	public static synchronized boolean addDinosaur(MessageChannel channel, long pid, Pair<Integer, Integer> dino) {

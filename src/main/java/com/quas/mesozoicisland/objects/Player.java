@@ -40,6 +40,7 @@ public class Player {
 	private long fragrancexp;
 	private long fragrancebattle;
 	private long fragrancemoney;
+	private long fragranceegg;
 	private boolean muted;
 	
 	private Player() {}
@@ -162,6 +163,10 @@ public class Player {
 	
 	public long getFragranceMoneyTimer() {
 		return fragrancemoney;
+	}
+
+	public long getFragranceEggTimer() {
+		return fragranceegg;
 	}
 	
 	public boolean isMuted() {
@@ -290,6 +295,7 @@ public class Player {
 				p.fragrancexp = res.getLong("fragrancexp");
 				p.fragrancebattle = res.getLong("fragrancebattle");
 				p.fragrancemoney = res.getLong("fragrancemoney");
+				p.fragranceegg = res.getLong("fragranceegg");
 				p.muted = res.getBoolean("muted");
 				return p;
 			}

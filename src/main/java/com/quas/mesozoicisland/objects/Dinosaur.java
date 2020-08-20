@@ -10,6 +10,7 @@ import java.util.List;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Pair;
@@ -363,6 +364,16 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		
 		return d;
 	}
+
+	private void applyHeldItem() {
+		if (item == null || item.getId() == 0) return;
+
+		if (item.getId() == ItemID.RubyPendant.getItemId() || item.getId() == ItemID.TopazPendant.getItemId() || item.getId() == ItemID.JadePendant.getItemId() || item.getId() == ItemID.GarnetPendant.getItemId() || item.getId() == ItemID.DiamondPendant.getItemId() || item.getId() == ItemID.CubanitePendant.getItemId() || item.getId() == ItemID.AquamarinePendant.getItemId() || item.getId() == ItemID.AmberPendant.getItemId()) {
+			if ((Integer.parseInt(item.getData()) & element.getId()) > 0) {
+				addBoost(Constants.PENDANT_BOOST);
+			}
+		}
+	}
 	
 	////////////////////////////////////////////////////////////////////////////
 	
@@ -398,6 +409,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				d.healthboost = d.healthmult + boost;
 				d.attackboost = d.attackmult + boost;
 				d.defenseboost = d.defensemult + boost;
+				d.applyHeldItem();
 				
 				return d;
 			}
