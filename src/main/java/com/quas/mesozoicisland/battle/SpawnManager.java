@@ -172,10 +172,6 @@ public class SpawnManager {
 		return false;
 	}
 	
-	public static int getSpawnCount() {
-		return 10 / MesozoicRandom.nextInt(3, 11);
-	}
-	
 	private static synchronized void spawnEgg() {
 		waiting = true;
 		
@@ -251,7 +247,7 @@ public class SpawnManager {
 		TreeMap<BattleTier, Dinosaur[]> wilds = new TreeMap<BattleTier, Dinosaur[]>();
 		TreeMap<BattleTier, Location> locations = new TreeMap<BattleTier, Location>();
 		for (BattleTier tier : BattleTier.getBattleTiers()) {
-			Dinosaur[] wild = new Dinosaur[getSpawnCount()];
+			Dinosaur[] wild = new Dinosaur[MesozoicRandom.nextSpawnCount()];
 			for (int q = 0; q < wild.length; q++) {
 				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
 			}

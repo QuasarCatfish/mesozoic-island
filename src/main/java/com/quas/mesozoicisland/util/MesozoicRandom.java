@@ -38,6 +38,14 @@ public class MesozoicRandom {
 			}
 		}
 	}
+
+	public static int nextSpawnCount() {
+		for (int q = Constants.MIN_SPAWN_COUNT;; q++) {
+			if (q == Constants.MAX_SPAWN_COUNT || nextInt(8) == 0) {
+				return q;
+			}
+		}
+	}
 	
 	public static Location nextUnusedLocation() {
 		ArrayList<Location> locations = new ArrayList<Location>();
