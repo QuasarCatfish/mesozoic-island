@@ -153,7 +153,7 @@ public class Battle {
 					Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DinosaursDefeated.getId(), 1);
 				}
 				if (defend.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
-					Action.addDinosaurLossDelayed(attack.getPlayer().getIdLong(), time, attack.getDinosaur().getId());
+					Action.addDinosaurLossDelayed(defend.getPlayer().getIdLong(), time, attack.getDinosaur().getId());
 				}
 				
 				// Pick Up Dinosaur
