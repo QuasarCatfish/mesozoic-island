@@ -41,7 +41,7 @@ public class MesozoicRandom {
 
 	public static int nextSpawnCount() {
 		for (int q = Constants.MIN_SPAWN_COUNT;; q++) {
-			if (q == Constants.MAX_SPAWN_COUNT || nextInt(8) == 0) {
+			if (q == Constants.MAX_SPAWN_COUNT || nextInt(2) > 0) {
 				return q;
 			}
 		}
