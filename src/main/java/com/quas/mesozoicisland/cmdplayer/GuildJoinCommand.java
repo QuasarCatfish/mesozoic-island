@@ -89,15 +89,15 @@ public class GuildJoinCommand implements ICommand {
 	}
 	
 	private Element getElement(String element) {
-		switch (element) {
-		case "elementa": return Element.of(2);
-		case "elementb": return Element.of(4);
-		case "elementc": return Element.of(8);
-		case "elementd": return Element.of(16);
-		case "elemente": return Element.of(32);
-		case "elementf": return Element.of(64);
-		case "elementg": return Element.of(128);
-		case "elementh": return Element.of(256);
+		switch (element.toLowerCase()) {
+		case "fire": return Element.of(2);
+		case "lightning": return Element.of(4);
+		case "leaf": return Element.of(8);
+		case "earth": return Element.of(16);
+		case "ice": return Element.of(32);
+		case "metal": return Element.of(64);
+		case "water": return Element.of(128);
+		case "air": return Element.of(256);
 		default: return null;
 		}
 	}

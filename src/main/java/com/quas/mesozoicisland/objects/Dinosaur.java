@@ -406,6 +406,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				
 				int boost = DinoMath.getLevelBoost(d.getLevel());
 				boost += DinoMath.getRankBoost(d.getRank());
+				boost += d.getPlayer().getElementBoost(d.getElement());
 				d.healthboost = d.healthmult + boost;
 				d.attackboost = d.attackmult + boost;
 				d.defenseboost = d.defensemult + boost;

@@ -11,6 +11,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.DinosaurLicense;
 import com.quas.mesozoicisland.util.Pair;
@@ -132,8 +133,8 @@ public class Player {
 	}
 	
 	public int getElementBoost(Element element) {
-		if (element.equals(elemain)) return 10;
-		if (element.equals(elesub)) return 5;
+		if ((element.getId() & elemain.getId()) > 0) return Constants.MAIN_ELEMENT_BOOST;
+		if ((element.getId() & elesub.getId()) > 0) return Constants.SUB_ELEMENT_BOOST;
 		return 0;
 	}
 	

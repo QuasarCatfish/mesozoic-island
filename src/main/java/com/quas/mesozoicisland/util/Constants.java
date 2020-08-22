@@ -35,6 +35,8 @@ public class Constants {
 	public static final float MONEY_FRAGRANCE_BONUS = 1f; // default 1f
 	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f; // default 0.2f
 	public static final int PENDANT_BOOST = 10;
+	public static final int MAIN_ELEMENT_BOOST = 10;
+	public static final int SUB_ELEMENT_BOOST = 5;
 	
 	// Battle
 	public static final float SPECIAL_DAMAGE_MODIFIER = 1.5f;
