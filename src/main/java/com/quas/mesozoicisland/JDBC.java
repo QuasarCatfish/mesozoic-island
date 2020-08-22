@@ -209,7 +209,7 @@ public class JDBC {
 	}
 	
 	public static synchronized boolean setItem(long pid, Pair<Integer, Integer> dexform, Pair<Integer, Long> item) {
-		return executeUpdate("update captures set item = %d, itemdmg = %d where player = %d and dex = %d and item = %d;", item.getFirstValue(), item.getSecondValue(), pid, dexform.getFirstValue(), dexform.getSecondValue());
+		return executeUpdate("update captures set item = %d, itemdmg = %d where player = %d and dex = %d and form = %d;", item.getFirstValue(), item.getSecondValue(), pid, dexform.getFirstValue(), dexform.getSecondValue());
 	}
 	
 	public static synchronized boolean setSelected(long pid, Dinosaur[] dinos) {
