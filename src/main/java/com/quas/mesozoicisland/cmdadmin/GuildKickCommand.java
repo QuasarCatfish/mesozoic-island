@@ -76,14 +76,17 @@ public class GuildKickCommand implements ICommand {
 		}
 		
 		Element pe = p.getMainElement();
-		if (pe == null || pe.getId() < 0) {
-			event.getChannel().sendMessageFormat("%s, you are not in a guild.", p.getAsMention()).complete();
-		}
-		
 		Element te = target.getMainElement();
-		if (te == null || pe.getId() != te.getId()) {
-			event.getChannel().sendMessageFormat("%s, %s is not in your guild.", p.getAsMention(), target.getName()).complete();
-			return;
+		
+		if (p.getAccessLevel().getLevel() < AccessLevel.Admin.getLevel()) {
+			if (pe == null || pe.getId() < 0) {
+				event.getChannel().sendMessageFormat("%s, you are not in a guild.", p.getAsMention()).complete();
+			}
+			
+			if (te == null || pe.getId() != te.getId()) {
+				event.getChannel().sendMessageFormat("%s, %s is not in your guild.", p.getAsMention(), target.getName()).complete();
+				return;
+			}
 		}
 		
 		Util.removeRoleFromMember(m, pe.getRole());
