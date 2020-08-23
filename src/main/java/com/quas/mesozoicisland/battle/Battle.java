@@ -404,7 +404,7 @@ public class Battle {
 		}
 		
 		// Crit
-		if (atkeff == BattleAttack.Critical) {
+		if (atkeff == BattleAttack.Critical && defeff != BattleAttack.Block && defeff != BattleAttack.Dodge) {
 			damage *= Constants.SPECIAL_DAMAGE_MODIFIER;
 			sb.append("It's a critical hit! ");
 		}
