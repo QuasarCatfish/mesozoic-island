@@ -226,6 +226,7 @@ public class TopCommand implements ICommand {
 		DinosaursCaught(Util.arr("dinosaurs caught", "dinos caught"), "Dinosaurs Caught", LeaderboardType.PlayerItem, null, Stat.DinosaursCaught),
 		QuestsCompleted(Util.arr("quests", "quests completed"), "Quests Completed", LeaderboardType.PlayerItem, null, Stat.QuestsCompleted),
 		EggsHatched(Util.arr("eggs", "eggs hatched"), "Eggs Hatched", LeaderboardType.PlayerItem, null, Stat.EggsHatched),
+		SnacksFed(Util.arr("snacks", "snacks fed"), "Snacks Fed", LeaderboardType.PlayerItem, null, Stat.SnacksFed),
 		
 		// Dinosaur Stats
 		WTL(Util.arr("wtl", "wintoloss", "winstolosses"), "Dinosaur Win-to-Loss Ratio", LeaderboardType.DinosaurTwoStat, null, Long.parseLong(TWOSTAT_WTL)),
