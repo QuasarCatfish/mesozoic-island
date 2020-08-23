@@ -89,7 +89,7 @@ public class BagCategoryCommand implements ICommand {
 
 				EmbedBuilder eb = new EmbedBuilder();
 				eb.setColor(Constants.COLOR);
-				eb.setTitle(p.getName() + "'s Bag - " + item.toString(2));
+				eb.setTitle(p.getName() + "'s Bag - " + Item.getItems(item.getId())[0].toString(2));
 				eb.setDescription(sb.length() == 0 ? "You do not have any of this item." : sb.toString());
 				event.getChannel().sendMessage(eb.build()).complete();
 				return;
