@@ -118,7 +118,7 @@ public class DinosaursCommand implements ICommand {
 				sb.append(String.format("**%s**", d.toString()));
 				sb.append(String.format(" [%s]", d.getElement().getName()));
 				sb.append(String.format(" [%s]", d.getRarity().getName()));
-				sb.append(String.format(" [%,d Health, %,d Attack, %,d Defense]", d.getHealth(), d.getAttack(), d.getDefense()));
+				sb.append(String.format(" [%,d Health, %,d Attack, %,d Defense, %,d Total]", d.getHealth(), d.getAttack(), d.getDefense(), d.getStatTotal()));
 				if (d.getItem() != null && d.getItem().getId() != 0) sb.append(String.format(" [Holding: %s]", d.getItem().toString()));
 				if (d.getRune() != null && d.getRune().getId() != 0) sb.append(String.format(" [Rune: #%03d %s]", d.getRune().getId(), d.getRune().getName()));
 				print.add(sb.toString());
@@ -189,6 +189,7 @@ public class DinosaursCommand implements ICommand {
 		// Other
 		Tradeable("Tradable", "trad(e|able)", "captures.rp > 0", false),
 		Rankable("Rankable", "rank(up|(up)?able)", "captures.rp > captures.rnk and captures.rnk < " + Constants.MAX_RANK, false),
+		Nickname("Has Nickname", "nick(name)?", "!isnull(nick)", false),
 		;
 		
 		private String name, regex, where;
@@ -243,9 +244,12 @@ public class DinosaursCommand implements ICommand {
 		AlphaReverse("Reverse Alphabetical", "reversealpha", "rev(erse)?alpha(bet(ic)?)?|alpha(bet(ic)?)?rev(erse)?", "dinosaurs.dinoname desc"),
 		
 		// Level
-		
+		Level("Level", "level", "level", "captures.xp desc"),
+		LevelReverse("Reverse Level", "reverselevel", "reverselevel|levelreverse", "captures.xp asc"),
+
 		// Rank
-		
+		Rank("Rank", "rank", "rank", "captures.rnk desc"),
+		RankReverse("Reverse Rank", "reverserank", "reverserank|rankreverse", "captures.rnk asc"),
 		;
 		
 		private String name, displayname, regex, order;

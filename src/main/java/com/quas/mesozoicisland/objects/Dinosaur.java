@@ -112,6 +112,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	public long getDefense() {
 		return Math.round(defense * (1 + defenseboost / 100d));
 	}
+
+	public long getStatTotal() {
+		return getHealth() + getAttack() + getDefense();
+	}
 	
 	public int getHealthMultiplier() {
 		return healthmult;
