@@ -192,9 +192,10 @@ public class InformationChannelsCommand implements ICommand {
 			
 			channels.add("__**Game**__");
 			channels.add(DiscordChannel.Game.toString() + " - Where all the action happens!");
-			channels.add(DiscordChannel.Events.toString() + " - Information about in-game events.");
+			channels.add(DiscordChannel.Trading.toString() + " - Where you can discuss and perform trades with other trainers.");
 			channels.add(DiscordChannel.BotCommands.toString() + " - A channel for users to use their spammy commands.");
 			channels.add(DiscordChannel.Wiki.toString() + " - A channel for the Mesozoic Island wiki.");
+			channels.add(DiscordChannel.Events.toString() + " - Information about in-game events.");
 			channels.add(DiscordEmote.Blank.toString());
 			
 			channels.add("__**Chatting**__");
