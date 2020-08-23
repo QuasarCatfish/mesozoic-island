@@ -347,7 +347,7 @@ public class Battle {
 		long damage = Math.round(1d * attack.getDinosaur().getAttack() * attack.getDinosaur().getAttack() / defend.getDinosaur().getDefense() / 4d);
 		double effectiveness = Element.getEffectiveness(attack.getDinosaur().getElement(), defend.getDinosaur().getElement());
 		damage *= effectiveness;
-		if (damage < 0) damage = 0;
+		if (damage < Constants.MIN_DAMAGE) damage = Constants.MIN_DAMAGE;
 		
 		StringBuilder sb = new StringBuilder();
 		BattleAttack atkeff = MesozoicRandom.nextAttackingBattleEffect(attack.getDinosaur().getDinosaurForm());

@@ -40,6 +40,7 @@ public class Constants {
 	
 	// Battle
 	public static final float SPECIAL_DAMAGE_MODIFIER = 1.5f;
+	public static final long MIN_DAMAGE = 25;
 	
 	// Spawn
 	public static boolean SPAWN = true;
