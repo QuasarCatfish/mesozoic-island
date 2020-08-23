@@ -28,10 +28,13 @@ public enum DiscordChannel {
 	
 	// Game
 	Game(650474865459068990L),
-	GameTesting(644340347090108436L),
-	Events(650477850469597212L),
+	Trading(747106027450925176L),
 	BotCommands(650477334801154062L),
 	Wiki(651587468503547920L),
+	Events(650477850469597212L),
+	GameTesting(644340347090108436L),
+	Supporters(744136913727783023L),
+	EventPlanning(653383425927151639L),
 	
 	// Guilds
 	GuildAnnouncements(716437696897220608L),
@@ -98,8 +101,9 @@ public enum DiscordChannel {
 	public static final DiscordChannel[] NONE = new DiscordChannel[0];
 	public static final DiscordChannel[] ALL_CHANNELS = Util.arr(All);
 	public static final DiscordChannel[] SUGGESTION_CHANNELS = Util.arr(GameSuggestions);
-	public static final DiscordChannel[] STANDARD_CHANNELS = Util.arr(Game, BotCommands, Admins, GameTesting);
-	public static final DiscordChannel[] STANDARD_CHANNELS_DMS = Util.arr(Game, BotCommands, Admins, GameTesting, DirectMessages);
+	public static final DiscordChannel[] STANDARD_CHANNELS = Util.arr(Game, BotCommands, Admins, GameTesting, FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
+	public static final DiscordChannel[] STANDARD_CHANNELS_DMS = Util.arr(Game, BotCommands, Admins, GameTesting, DirectMessages, FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
+	public static final DiscordChannel[] TRADE_CHANNELS = Util.arr(Game, Trading, GameTesting, Admins);
 	public static final DiscordChannel[] TESTING_CHANNELS = Util.arr(Admins, GameTesting);
 	public static final DiscordChannel[] TESTING_CHANNELS_DMS = Util.arr(Admins, GameTesting, DirectMessages);
 	public static final DiscordChannel[] GUILD_CHANNELS = Util.arr(FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
