@@ -99,6 +99,22 @@ public class Item implements Comparable<Item> {
 		map.clear();
 	}
 	
+	public static Item of(String string) {
+		while (string.charAt(0) == '0') string = string.substring(1);
+
+		for (Item item : values()) {
+			if (item.name.toLowerCase().equalsIgnoreCase(string)) {
+				return item;
+			} else if (item.plural.toLowerCase().equalsIgnoreCase(string)) {
+				return item;
+			} else if (Integer.toString(item.id).equals(string)) {
+				return item;
+			}
+		}
+
+		return null;
+	}
+
 	public static Item getItem(ItemID itemid) {
 		return getItem(itemid.getId());
 	}

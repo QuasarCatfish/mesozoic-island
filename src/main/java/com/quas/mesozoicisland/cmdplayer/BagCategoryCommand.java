@@ -65,6 +65,37 @@ public class BagCategoryCommand implements ICommand {
 		
 		ItemCategory cat = ItemCategory.of(Util.join(args, " ", 0, args.length));
 		TreeMap<Item, Long> bag = p.getBag();
+
+		if (cat == null) {
+			Item item = Item.of(Util.join(args, " ", 0, args.length));
+			if (!item.isDiscovered()) item = null;
+
+			if (item != null) {
+				StringBuilder sb = new StringBuilder();
+
+				for (Item i : Item.getItems(item.getId())) {
+					long count = bag.getOrDefault(i, 0L);
+					if (count <= 0) continue;
+
+					if (bag.get(i) != 1 || (cat != ItemCategory.KeyItems && cat != ItemCategory.Titles)) {
+						sb.append(Util.formatNumber(bag.get(i)));
+						sb.append(" ");
+					}
+					sb.append(i.toString(bag.get(i)));
+					sb.append(" (ID ");
+					sb.append(i.getId());
+					sb.append(")\n");
+				}
+
+				EmbedBuilder eb = new EmbedBuilder();
+				eb.setColor(Constants.COLOR);
+				eb.setTitle(p.getName() + "'s Bag - " + item.toString(2));
+				eb.setDescription(sb.length() == 0 ? "You do not have any of this item." : sb.toString());
+				event.getChannel().sendMessage(eb.build()).complete();
+				return;
+			}
+		}
+		
 		
 		StringBuilder sb = new StringBuilder();
 		for (Item i : bag.keySet()) {
