@@ -49,7 +49,6 @@ public class SpawnManager {
 		Util.sleep(100);
 		if (MesozoicIsland.isQuitting()) return false;
 		if (!Constants.SPAWN) return false;
-		if (waiting) return false;
 		if (!forcespawn && lastattempt + TimeUnit.SECONDS.toMillis(3) >= System.currentTimeMillis()) return false;
 		lastattempt = System.currentTimeMillis();
 		
@@ -69,7 +68,9 @@ public class SpawnManager {
 			spawntime = System.currentTimeMillis();
 			lastupdate = System.currentTimeMillis();
 		}
-
+		
+		if (waiting) return false;
+		
 		if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild) && isWildBattleHappening()) {
 			spawntime = Long.MAX_VALUE;
 			return false;
