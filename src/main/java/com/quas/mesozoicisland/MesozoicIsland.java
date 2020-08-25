@@ -313,7 +313,7 @@ public class MesozoicIsland {
 		Event.initialize();
 		
 		// Send Ready Message
-		Action.sendMessage(professor.getIdLong(), Constants.SPAWN_CHANNEL, "Ready.");
+		if (Constants.SHOW_READY) Action.sendMessage(professor.getIdLong(), Constants.SPAWN_CHANNEL, Util.getRandomElement(Constants.READY_MESSAGES));
 		Action.sendMessage(professor.getIdLong(), DiscordChannel.GameTesting, String.format(
 				"**DEBUG:**%n"
 				+ "UPDATE_ROLES = %b%n"

@@ -109,6 +109,20 @@ public class Constants {
 	public static final String ZERO_WIDTH_SPACE = "\u200B";
 	public static final String BULLET_POINT = "\u2022";
 	public static final String NOTE = "\u203B";
+
+	// Messages
+	public static final String[] GOODBYE_MESSAGES = new String[] {
+		"Goodbye.",
+		"Goodbye!",
+		"See you later.",
+		"Coffee break time!",
+		"I'll be back."
+	};
+	public static final String[] READY_MESSAGES = new String [] {
+		"Ready.",
+		"Ready!",
+		"I have returned!"
+	};
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {
 		ArrayList<Pair<Dinosaur, String>> pairs = new ArrayList<Pair<Dinosaur, String>>();

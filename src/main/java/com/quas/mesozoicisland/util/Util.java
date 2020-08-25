@@ -35,6 +35,11 @@ public class Util {
 		return arr;
 	}
 
+	@SafeVarargs
+	public static <T> T getRandomElement(T...arr) {
+		return arr[MesozoicRandom.nextInt(arr.length)];
+	}
+
 	public static <T> ArrayList<T> union(T[] a, T[] b) {
 		ArrayList<T> arr = new ArrayList<T>();
 		for (T t : a) arr.add(t);

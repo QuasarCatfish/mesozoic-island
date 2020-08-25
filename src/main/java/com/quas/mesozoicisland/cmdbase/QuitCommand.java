@@ -6,6 +6,8 @@ import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -54,7 +56,7 @@ public class QuitCommand implements ICommand {
 	@Override
 	public void run(MessageReceivedEvent event, String... args) {
 		MesozoicIsland.setQuit(true);
-		event.getChannel().sendMessage("Goodbye.").complete();
+		event.getChannel().sendMessage(Util.getRandomElement(Constants.GOODBYE_MESSAGES)).complete();
 		System.exit(0);
 	}
 }
