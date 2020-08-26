@@ -6,9 +6,10 @@ import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 
 public enum BattleTier {
-	Tier1("Novice Tier", BattleChannel.Battle1, 1, 10, 0, 25),
-	Tier2("Advanced Tier", BattleChannel.Battle2, 6, 30, 1, 50),
-	Tier3("Master Tier", BattleChannel.Battle3, 11, 50, 2, 100),
+	Tier1("Novice Tier", BattleChannel.Battle1, 1, 10, 0, 20),
+	Tier2("Advanced Tier", BattleChannel.Battle2, 11, 30, 1, 50),
+	Tier3("Master Tier", BattleChannel.Battle3, 21, 50, 2, 100),
+	Tier4("Fourth Tier", BattleChannel.Battle4, 31, 70, 3, 200),
 	Contest("Contest Tier", BattleChannel.Contest, 1, 50, 0, 0),
 	Test("Testing Tier", BattleChannel.Test, 1, 50, 0, 0);
 	

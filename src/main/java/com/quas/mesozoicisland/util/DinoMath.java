@@ -66,7 +66,8 @@ public class DinoMath {
 		int level = getLevel(xp);
 
 		// Calculate Tier
-		if ((level >= 30 || bst >= 7_000) && tiers.contains(BattleTier.Tier3)) return BattleTier.Tier3;
+		if ((level >= 40 || bst >= 10_000) && tiers.contains(BattleTier.Tier4)) return BattleTier.Tier4;
+		if ((level >= 25 || bst >= 7_500) && tiers.contains(BattleTier.Tier3)) return BattleTier.Tier3;
 		if ((level >= 10 || bst >= 5_000) && tiers.contains(BattleTier.Tier2)) return BattleTier.Tier2;
 		return BattleTier.Tier1;
 	}

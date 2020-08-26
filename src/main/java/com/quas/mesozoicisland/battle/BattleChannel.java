@@ -7,6 +7,7 @@ public enum BattleChannel {
 	Battle1(DiscordChannel.Battle1, DiscordChannel.BattleLog),
 	Battle2(DiscordChannel.Battle2, DiscordChannel.BattleLog),
 	Battle3(DiscordChannel.Battle3, DiscordChannel.BattleLog),
+	Battle4(DiscordChannel.Battle4, DiscordChannel.BattleLog),
 	PVP(DiscordChannel.BattlePVP, DiscordChannel.BattleLog),
 	Contest(DiscordChannel.BattleContest, DiscordChannel.BattleLog),
 	Dungeon(DiscordChannel.BattleDungeon, DiscordChannel.BattleDungeonLog),
