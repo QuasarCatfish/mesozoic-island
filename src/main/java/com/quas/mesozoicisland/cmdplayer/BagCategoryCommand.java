@@ -68,9 +68,7 @@ public class BagCategoryCommand implements ICommand {
 
 		if (cat == null) {
 			Item item = Item.of(Util.join(args, " ", 0, args.length));
-			if (!item.isDiscovered()) item = null;
-
-			if (item != null) {
+			if (item != null && item.isDiscovered()) {
 				StringBuilder sb = new StringBuilder();
 
 				for (Item i : Item.getItems(item.getId())) {
@@ -94,6 +92,8 @@ public class BagCategoryCommand implements ICommand {
 				event.getChannel().sendMessage(eb.build()).complete();
 				return;
 			}
+
+			cat = ItemCategory.Misc;
 		}
 		
 		
