@@ -135,6 +135,7 @@ public class Player {
 	public int getElementBoost(Element element) {
 		if (elemain.getId() < 0) return 0;
 		if ((element.getId() & elemain.getId()) > 0) return Constants.MAIN_ELEMENT_BOOST;
+		if (elesub.getId() < 0) return 0;
 		if ((element.getId() & elesub.getId()) > 0) return Constants.SUB_ELEMENT_BOOST;
 		return 0;
 	}
