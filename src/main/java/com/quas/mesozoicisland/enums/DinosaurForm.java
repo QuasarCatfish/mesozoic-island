@@ -17,7 +17,7 @@ public enum DinosaurForm {
 	Prismatic(10, "Prismatic", "P", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE),
 	Dungeon(11, "Dungeon", "D", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE),
 	Halloween(1031, "Halloween", "H", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE),
-	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_ATTACK_HEAL),
+	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACK_HEAL, BattleAttack.STANDARD_DEFENSE),
 	
 	AllForms(Integer.MIN_VALUE, "All", Util.mult(Constants.ZERO_WIDTH_SPACE, 3), null, null);
 	
