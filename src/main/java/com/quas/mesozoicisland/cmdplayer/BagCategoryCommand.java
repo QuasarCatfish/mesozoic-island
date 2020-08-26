@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.cmdplayer;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
+import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
@@ -93,27 +94,26 @@ public class BagCategoryCommand implements ICommand {
 				return;
 			}
 
-			cat = ItemCategory.Misc;
-		}
-		
-		
-		StringBuilder sb = new StringBuilder();
-		for (Item i : bag.keySet()) {
-			if (i.getItemCategory() != cat) continue;
-			if (bag.get(i) != 1 || (cat != ItemCategory.KeyItems && cat != ItemCategory.Titles)) {
-				sb.append(Util.formatNumber(bag.get(i)));
-				sb.append(" ");
+			CommandManager.handleCommand(event, "bag");
+		} else {
+			StringBuilder sb = new StringBuilder();
+			for (Item i : bag.keySet()) {
+				if (i.getItemCategory() != cat) continue;
+				if (bag.get(i) != 1 || (cat != ItemCategory.KeyItems && cat != ItemCategory.Titles)) {
+					sb.append(Util.formatNumber(bag.get(i)));
+					sb.append(" ");
+				}
+				sb.append(i.toString(bag.get(i)));
+				sb.append(" (ID ");
+				sb.append(i.getId());
+				sb.append(")\n");
 			}
-			sb.append(i.toString(bag.get(i)));
-			sb.append(" (ID ");
-			sb.append(i.getId());
-			sb.append(")\n");
+			
+			EmbedBuilder eb = new EmbedBuilder();
+			eb.setColor(Constants.COLOR);
+			eb.setTitle(p.getName() + "'s Bag - " + cat + " Compartment");
+			eb.setDescription(sb.length() == 0 ? "You have no items in this compartment." : sb.toString());
+			event.getChannel().sendMessage(eb.build()).complete();
 		}
-		
-		EmbedBuilder eb = new EmbedBuilder();
-		eb.setColor(Constants.COLOR);
-		eb.setTitle(p.getName() + "'s Bag - " + cat + " Compartment");
-		eb.setDescription(sb.length() == 0 ? "You have no items in this compartment." : sb.toString());
-		event.getChannel().sendMessage(eb.build()).complete();
 	}
 }
