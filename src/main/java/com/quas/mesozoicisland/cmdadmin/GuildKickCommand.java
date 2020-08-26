@@ -69,7 +69,7 @@ public class GuildKickCommand implements ICommand {
 			return;
 		}
 		
-		Member m = event.getGuild().getMemberById(p.getIdLong());
+		Member m = event.getGuild().getMemberById(target.getIdLong());
 		if (Util.doesMemberHaveRole(m, DiscordRole.Guildmaster.getIdLong())) {
 			event.getChannel().sendMessageFormat("%s, you cannot kick a guildmaster.", p.getAsMention()).complete();
 			return;
@@ -89,7 +89,7 @@ public class GuildKickCommand implements ICommand {
 			}
 		}
 		
-		Util.removeRoleFromMember(m, pe.getRole());
+		Util.removeRoleFromMember(m, te.getRole());
 		event.getChannel().sendMessageFormat("%s, you have kicked %s from your guild.", p.getAsMention(), target.getName()).complete();
 		JDBC.executeUpdate("update players set mainelement = -1 where playerid = %d;", target.getIdLong());
 		JDBC.addItem(target.getIdLong(), new Pair<Integer, Long>(ItemID.GuildBadge.getItemId(), (long)te.getId()), -1);
