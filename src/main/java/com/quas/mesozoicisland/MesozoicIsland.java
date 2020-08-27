@@ -5,6 +5,7 @@ import javax.security.auth.login.LoginException;
 import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdadmin.AnnounceCommand;
 import com.quas.mesozoicisland.cmdadmin.AnnouncementMarker;
+import com.quas.mesozoicisland.cmdadmin.AssistantSendDMCommand;
 import com.quas.mesozoicisland.cmdadmin.BirthdayMailCommand;
 import com.quas.mesozoicisland.cmdadmin.CheckBattlesCommand;
 import com.quas.mesozoicisland.cmdadmin.CheckBirthdaysCommand;
@@ -21,6 +22,7 @@ import com.quas.mesozoicisland.cmdadmin.GuildKickCommand;
 import com.quas.mesozoicisland.cmdadmin.GuildPromoteCommand;
 import com.quas.mesozoicisland.cmdadmin.InformationChannelsCommand;
 import com.quas.mesozoicisland.cmdadmin.MuteCommand;
+import com.quas.mesozoicisland.cmdadmin.ProfessorSendDMCommand;
 import com.quas.mesozoicisland.cmdadmin.RadioCommand;
 import com.quas.mesozoicisland.cmdadmin.RemindCommand;
 import com.quas.mesozoicisland.cmdadmin.RenamePlayerCommand;
@@ -160,6 +162,8 @@ public class MesozoicIsland {
 		professor.getJDA().addEventListener(new CheckNamesAndSpawn());
 		professor.getJDA().addEventListener(new CheckMassPings());
 		professor.getJDA().addEventListener(new CheckBattleMessage());
+		professor.getJDA().addEventListener(new MonitorDMs());
+		assistant.getJDA().addEventListener(new MonitorDMs());
 		
 		// Professor Bot
 		CommandManager.addCommand(professor.getIdLong(), new PingCommand());
@@ -169,8 +173,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(professor.getIdLong(), new AnnounceCommand());
 		CommandManager.addCommand(professor.getIdLong(), new ClearChannelCommand());
 		CommandManager.addCommand(professor.getIdLong(), new InformationChannelsCommand());
-//		CommandManager.addCommand(professor.getIdLong(), new Command());
-//		CommandManager.addCommand(professor.getIdLong(), new Command());
+		CommandManager.addCommand(professor.getIdLong(), new ProfessorSendDMCommand());
+		// CommandManager.addCommand(professor.getIdLong(), new Command());
 		
 		// Tutorial Commands
 		CommandManager.addCommand(professor.getIdLong(), new Tutorial00());
@@ -305,7 +309,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new SetColorCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new MuteCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new UnmuteCommand());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
+		CommandManager.addCommand(assistant.getIdLong(), new AssistantSendDMCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		

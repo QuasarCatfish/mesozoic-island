@@ -39,7 +39,7 @@ public class Action {
 					break;
 				case SendGuildMessage:
 					TextChannel tc = guild.getTextChannelById(res.getLong("recipient"));
-					if (tc == null) tc = DiscordChannel.BotLog.getChannel(MesozoicIsland.getBot(self));
+					if (tc == null) tc = DiscordChannel.Moderation.getChannel(MesozoicIsland.getBot(self));
 					if (tc.getParent().getIdLong() == DiscordChannel.CATEGORY_BATTLE) {
 						MessageBuilder mb = new MessageBuilder(res.getString("msg"));
 						mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.USER, MentionType.ROLE);
