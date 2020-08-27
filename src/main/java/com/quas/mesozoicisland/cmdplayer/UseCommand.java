@@ -406,7 +406,10 @@ public class UseCommand implements ICommand {
 			}
 			
 			else if (i.getId() == ItemID.FTierXPPotion.getItemId() || i.getId() == ItemID.ETierXPPotion.getItemId() || i.getId() == ItemID.DTierXPPotion.getItemId() || i.getId() == ItemID.CTierXPPotion.getItemId() || i.getId() == ItemID.BTierXPPotion.getItemId() || i.getId() == ItemID.ATierXPPotion.getItemId() || i.getId() == ItemID.STierXPPotion.getItemId() || i.getId() == ItemID.SSTierXPPotion.getItemId() || i.getId() == ItemID.SSSTierXPPotion.getItemId() || i.getId() == ItemID.StarTierXPPotion.getItemId()) {
-				if (d.getLevel() == Constants.MAX_LEVEL) {
+				if (d.getDinosaurForm() == DinosaurForm.Contest) {
+					event.getChannel().sendMessageFormat("%s, your %s refuses to drink the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
+					SUCCESS = false;
+				} else if (d.getLevel() == Constants.MAX_LEVEL) {
 					event.getChannel().sendMessageFormat("%s, your %s is at the max level. You cannot use the %s on it.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
 				} else {
@@ -432,7 +435,12 @@ public class UseCommand implements ICommand {
 			}
 
 			else if (i.getId() == ItemID.DinosaurTreat.getItemId()) {
-				SUCCESS = useTreat(event.getChannel(), d, i);
+				if (d.getDinosaurForm() == DinosaurForm.Contest) {
+					event.getChannel().sendMessageFormat("%s, your %s refuses to eat the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
+					SUCCESS = false;
+				} else {
+					SUCCESS = useTreat(event.getChannel(), d, i);
+				}
 			}
 
 			else {
