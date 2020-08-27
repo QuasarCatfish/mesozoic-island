@@ -14,6 +14,7 @@ import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.Stat;
+import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
@@ -104,6 +105,24 @@ public class TestCommand implements ICommand {
 				while (x --> 0) {
 					JDBC.updateEggs();
 				}
+			} break;
+
+			case "checktier": {
+				long player = Long.parseLong(args[2]);
+				Player p = Player.getPlayer(player);
+				Dinosaur[] team = p.getSelectedDinosaurs();
+				
+				long xp = 0;
+				long bst = 0;
+				for (Dinosaur d : team) {
+					xp += d.getXp();
+					long stats = d.getHealth() + d.getAttack() + d.getDefense();
+					if (stats > bst) bst = stats;
+				}
+				
+				// Calculate Level
+				int level = DinoMath.getLevel(xp);
+				event.getChannel().sendMessageFormat("%s's team has the following stats: [%,d %,d %,d].", p.getRawName(), level, bst, xp).complete();
 			} break;
 
 			case "givequest": {
