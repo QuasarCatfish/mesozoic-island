@@ -7,7 +7,7 @@ public enum ItemCategory {
 	KeyItems(1, "Key Items", "Key Item", "Key", "KI"),
 	Money(2, "Money", "$"),
 	Consumable(3, "Consumables", "Consumable", "Consume"),
-	HeldItems(4, "Held Items", "Held Item", "Held", "Hold Items", "Hold Item", "Hold", "HI"),
+	HeldItems(4, "Held Items", "Held Item", "Held", "Hold Items", "Hold Item", "Hold", "HI", "Equip", "Equipable"),
 	Tickets(5, "Tickets", "Ticket", "Tix"),
 	Event(6, "Event Items", "Event", "Events", "EI"),
 	

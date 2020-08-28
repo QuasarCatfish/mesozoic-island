@@ -1,6 +1,7 @@
 package com.quas.mesozoicisland.battle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -212,6 +213,7 @@ public class SpawnManager {
 		// Get Battle Teams
 		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.Fossil.getEmote()));
 		List<Player> players = new ArrayList<Player>();
+		HashMap<Player, Long> slotsCount = new HashMap<Player, Long>();
 		Util.complete(m.delete());
 		
 		Item incubator = Item.getItem(ItemID.EggIncubator);
@@ -222,6 +224,7 @@ public class SpawnManager {
 			if (p == null) continue;
 			long inc = p.getBag().getOrDefault(incubator, 0L);
 			if (inc <= p.getEggCount()) continue;
+			slotsCount.put(p, inc - p.getEggCount());
 			players.add(p);
 		}
 		
@@ -230,9 +233,23 @@ public class SpawnManager {
 		eb.setTitle(eggs.length == 1 ? "Egg Recipient" : "Egg Recipients");
 		eb.setColor(Constants.COLOR);
 		for (Egg egg : eggs) {
-			Player p = players.isEmpty() ? Player.getPlayer(CustomPlayer.EggSalesman.getIdLong()) : players.get(MesozoicRandom.nextInt(players.size()));
-			eb.addField(egg.getEggName(), p.getName(), true);
-			JDBC.addEgg(p.getIdLong(), egg);
+			if (players.isEmpty()) {
+				Player p = Player.getPlayer(CustomPlayer.EggSalesman.getIdLong());
+				eb.addField(egg.getEggName(), p.getName(), true);
+				JDBC.addEgg(p.getIdLong(), egg);
+			} else {
+				Player p = players.get(MesozoicRandom.nextInt(players.size()));
+				eb.addField(egg.getEggName(), p.getName(), true);
+				JDBC.addEgg(p.getIdLong(), egg);
+
+				long count = slotsCount.getOrDefault(p, 0L) - 1;
+				if (count <= 0) {
+					players.remove(p);
+					slotsCount.remove(p);
+				} else {
+					slotsCount.put(p, count);
+				}
+			}
 		}
 		
 		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessage(eb.build()));

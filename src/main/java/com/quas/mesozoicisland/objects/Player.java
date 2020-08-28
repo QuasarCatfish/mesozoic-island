@@ -269,6 +269,13 @@ public class Player {
 	}
 	
 	////////////////////////////////////////////
+
+	@Override
+	public int hashCode() {
+		return Long.hashCode(pid);
+	}
+
+	////////////////////////////////////////////
 	
 	public static Player getPlayer(long pid) {
 		try (ResultSet res = JDBC.executeQuery("select * from players where playerid = " + pid + ";")) {
