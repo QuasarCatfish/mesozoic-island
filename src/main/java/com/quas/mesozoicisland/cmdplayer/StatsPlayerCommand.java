@@ -82,20 +82,22 @@ public class StatsPlayerCommand implements ICommand {
 		eb.setColor(p.getColor());
 		eb.setTitle(p.getName() + "'s Stats");
 		
-		{
-			eb.addField("Join Date", p.getJoinDate(), true);
-			eb.addField("Trainer Level and XP", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
+		eb.addField("Join Date", p.getJoinDate(), true);
+		eb.addField("Trainer Level and XP", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
+		
+		if (event.getChannel().getIdLong() != DiscordChannel.Game.getIdLong()) {
+			{
+				Item i = Item.getItem(Stat.DailiesClaimed.getId());
+				eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
+				eb.addField("Daily Streak", String.format("%,d Day%s", p.getDailyStreak(), p.getDailyStreak() == 1 ? "" : "s"), true);
+			}
+			
+			for (Item i : items) {
+				if (Integer.parseInt(i.getData()) < 0) continue;
+				eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
+			}
+		}
 
-			Item i = Item.getItem(Stat.DailiesClaimed.getId());
-			eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
-			eb.addField("Daily Streak", String.format("%,d Day%s", p.getDailyStreak(), p.getDailyStreak() == 1 ? "" : "s"), true);
-		}
-		
-		for (Item i : items) {
-			if (Integer.parseInt(i.getData()) < 0) continue;
-			eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
-		}
-		
 		long time = System.currentTimeMillis();
 		if (p.getFragranceXpTimer() > time) eb.addField("Experience Fragrance", Util.formatTime(p.getFragranceXpTimer() - time), true);
 		if (p.getFragranceBattleTimer() > time) eb.addField("Battle Fragrance", Util.formatTime(p.getFragranceBattleTimer() - time), true);

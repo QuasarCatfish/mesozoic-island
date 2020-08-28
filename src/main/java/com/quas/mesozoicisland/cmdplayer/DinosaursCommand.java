@@ -189,7 +189,7 @@ public class DinosaursCommand implements ICommand {
 		// Other
 		Tradeable("Tradable", "trad(e|able)", "captures.rp > 0", false),
 		Rankable("Rankable", "rank(up|(up)?able)", "captures.rp > captures.rnk and captures.rnk < " + Constants.MAX_RANK, false),
-		Nickname("Has Nickname", "nick(name)?", "!isnull(nick)", false),
+		Nickname("Has Nickname", "(has)?nick(name)?", "!isnull(nick)", false),
 		;
 		
 		private String name, regex, where;
