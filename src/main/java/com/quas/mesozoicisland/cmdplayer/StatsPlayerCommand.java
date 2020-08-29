@@ -85,7 +85,9 @@ public class StatsPlayerCommand implements ICommand {
 		eb.addField("Join Date", p.getJoinDate(), true);
 		eb.addField("Trainer Level and XP", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
 		
-		if (event.getChannel().getIdLong() != DiscordChannel.Game.getIdLong()) {
+		if (event.getChannel().getIdLong() == DiscordChannel.Game.getIdLong()) {
+			eb.setFooter("For a full list of stats, please use the command in " + DiscordChannel.BotCommands.toString() + " or Direct Messages.");
+		} else {
 			{
 				Item i = Item.getItem(Stat.DailiesClaimed.getId());
 				eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);

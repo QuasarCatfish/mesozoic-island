@@ -491,7 +491,7 @@ public class UseCommand implements ICommand {
 		case 1:
 			max = Constants.MAX_STAT_BOOST - d.getAttackMultiplier();
 			if (max > 0) {
-				name = "ATK";
+				name = "Attack";
 				column = "modattack";
 				break;
 			}
@@ -500,7 +500,7 @@ public class UseCommand implements ICommand {
 		case 2:
 			max = Constants.MAX_STAT_BOOST - d.getDefenseMultiplier();
 			if (max > 0) {
-				name = "DEF";
+				name = "Defense";
 				column = "moddefense";
 				break;
 			}
@@ -530,7 +530,7 @@ public class UseCommand implements ICommand {
 		}
 		
 		if (max > 0) {
-			int value = MesozoicRandom.nextInt(Math.min(max, Constants.MAX_SNACK_GAIN)) + 1;
+			int value = MesozoicRandom.nextInt(Math.min(max, Integer.parseInt(item.getData()))) + 1;
 			channel.sendMessageFormat("%s, you feed the %s to your %s, and it gained +%d%% %s.", d.getPlayer().getAsMention(), item.toString(), d.getEffectiveName(), value, name).complete();
 			JDBC.executeUpdate("update captures set %s = %s + %d where player = %d and dex = %d and form = %d;", column, column, value, d.getPlayerId(), d.getDex(), d.getForm());
 			JDBC.addItem(d.getPlayerId(), Stat.SnacksFed.getId());

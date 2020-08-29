@@ -101,7 +101,6 @@ public class Constants {
 	public static final int MAX_RANK = 20;
 	public static final int MAX_RP = DinoMath.getRp(MAX_RANK);
 	public static final int MAX_STAT_BOOST = 25;
-	public static final int MAX_SNACK_GAIN = 2;
 	public static final int LOCATION_BOOST = 10;
 	public static final int PUBLIC_MAIL_DISPLAY = 5;
 	
