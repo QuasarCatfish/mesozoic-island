@@ -39,8 +39,10 @@ public class DinoMath {
 		return 5 * rank;
 	}
 	
-	public static long getXpDropped(int level) {
-		return (level + 5) * (level + 5) - 25;
+	public static long getXpDropped(int attack, int defend) {
+		long xp = (defend + 5) * (defend + 5) - 25;
+		if (attack > defend) xp *= Math.max(1 - (attack - defend) / 100f, 0f);
+		return xp;
 	}
 	
 	public static BattleTier getBattleTier(Dinosaur[] team) {
