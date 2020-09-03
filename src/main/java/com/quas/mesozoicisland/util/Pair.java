@@ -38,6 +38,11 @@ public class Pair<T extends Comparable<T>, V extends Comparable<V>> implements C
 	protected Object clone() throws CloneNotSupportedException {
 		return new Pair<T, V>(this.t, this.v);
 	}
+
+	@Override
+	public int hashCode() {
+		return Long.hashCode(((long)t.hashCode() << 32) + v.hashCode());
+	}
 	
 	@Override
 	public String toString() {
