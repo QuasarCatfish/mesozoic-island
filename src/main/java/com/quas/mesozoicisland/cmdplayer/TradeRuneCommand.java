@@ -152,7 +152,7 @@ public class TradeRuneCommand implements ICommand {
 			sb.append("\n\n");
 			sb.append(p2.getAsMention());
 			sb.append(" to complete the trade, type ");
-			sb.append(String.format("`trade @%s#%s R%d R%d`", event.getMember().getEffectiveName(), event.getAuthor().getDiscriminator(), r2.getId(), r1.getId()));
+			sb.append(String.format("`trade %d R%d R%d`", p1.getIdLong(), r2.getId(), r1.getId()));
 			sb.append(".");
 			
 			event.getChannel().sendMessage(sb.toString()).complete();

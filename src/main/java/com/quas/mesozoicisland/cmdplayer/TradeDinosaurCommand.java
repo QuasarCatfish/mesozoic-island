@@ -152,7 +152,7 @@ public class TradeDinosaurCommand implements ICommand {
 			sb.append("\n\n");
 			sb.append(p2.getName());
 			sb.append(", to complete the trade, type ");
-			sb.append(String.format("`trade @%s#%s %s %s`", event.getMember().getEffectiveName(), event.getAuthor().getDiscriminator(), d2.getId(), d1.getId()));
+			sb.append(String.format("`trade %d %s %s`", p1.getIdLong(), d2.getId(), d1.getId()));
 			sb.append(".");
 			
 			event.getChannel().sendMessage(sb.toString()).complete();

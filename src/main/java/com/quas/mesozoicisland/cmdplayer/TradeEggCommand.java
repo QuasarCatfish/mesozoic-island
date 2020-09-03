@@ -135,7 +135,7 @@ public class TradeEggCommand implements ICommand {
 			sb.append("\n\n");
 			sb.append(p2.getName());
 			sb.append(", to complete the trade, type ");
-			sb.append(String.format("`trade @%s#%s E%d E%d`", event.getMember().getEffectiveName(), event.getAuthor().getDiscriminator(), e2.getIncubatorSlot(), e1.getIncubatorSlot()));
+			sb.append(String.format("`trade %d E%d E%d`", p1.getIdLong(), e2.getIncubatorSlot(), e1.getIncubatorSlot()));
 			sb.append(".");
 			
 			event.getChannel().sendMessage(sb.toString()).complete();
