@@ -81,6 +81,7 @@ import com.quas.mesozoicisland.cmdplayer.QuestsCommand;
 import com.quas.mesozoicisland.cmdplayer.RankupDinosaurCommand;
 import com.quas.mesozoicisland.cmdplayer.RankupRuneCommand;
 import com.quas.mesozoicisland.cmdplayer.RedeemCommand;
+import com.quas.mesozoicisland.cmdplayer.RemoveItemCommand;
 import com.quas.mesozoicisland.cmdplayer.RunesCommand;
 import com.quas.mesozoicisland.cmdplayer.SaveTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.SelectDinosaursCommand;
@@ -140,6 +141,7 @@ import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.DummyCommand;
 import com.quas.mesozoicisland.util.Secrets;
 import com.quas.mesozoicisland.util.Util;
 
@@ -279,7 +281,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new LicenseCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ColorHexCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ColorCommand());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
+		CommandManager.addCommand(assistant.getIdLong(), new RemoveItemCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
@@ -313,6 +315,10 @@ public class MesozoicIsland {
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
+		// Add Dummy Commands
+		for (DummyCommand dc : DummyCommand.getProfessorDummyCommands()) CommandManager.addCommand(professor.getIdLong(), dc);
+		for (DummyCommand dc : DummyCommand.getAssistantDummyCommands()) CommandManager.addCommand(assistant.getIdLong(), dc);
+
 		// Other Initialization
 		Event.initialize();
 		

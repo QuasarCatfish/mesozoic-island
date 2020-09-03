@@ -27,6 +27,7 @@ public class Constants {
 	public static boolean DEBUG_BATTLE = false;
 	public static int MAX_DEX_DIGITS = 3;
 	public static boolean HIDE_ITEMS = true;
+	public static final long CODE_LINES = Util.getLineCount();
 	
 	// Multipliers
 	public static final float XP_MULTIPLIER = 1f; // default 1f

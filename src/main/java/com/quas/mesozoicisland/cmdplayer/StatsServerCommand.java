@@ -11,7 +11,6 @@ import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicCalendar;
 import com.quas.mesozoicisland.util.RomanNumeral;
-import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -66,7 +65,7 @@ public class StatsServerCommand implements ICommand {
 		eb.addField("Total Players", String.format("%,d Players", JDBC.getPlayerCount()), true);
 		eb.addField("Active Players", String.format("%,d Players", JDBC.getActivePlayerCount()), true);
 		eb.addField("Collectable Dinosaurs", String.format("%,d Dinosaurs", JDBC.getDexCount(DinosaurForm.AllForms.getId())), true);
-		eb.addField("Bot Line Count", String.format("%,d Lines", Util.getLineCount()), true);
+		eb.addField("Bot Line Count", String.format("%,d Lines", Constants.CODE_LINES), true);
 		eb.addField("Team Size", String.format("%,d Dinosaurs", Constants.DINOS_PER_TEAM), true);
 		eb.addField("Level Limit", String.format("Level %,d", Constants.MAX_LEVEL), true);
 		eb.addField("Rank Limit", String.format("Rank %s", RomanNumeral.of(Constants.MAX_RANK)), true);

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.NewPlayerStatus;
+import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
@@ -59,6 +61,9 @@ public class NewMember extends ListenerAdapter {
 				m.getUser().openPrivateChannel().complete().sendMessageFormat("Welcome back to Mesozoic Island, %s.", p.getName()).complete();
 			} catch (ErrorResponseException e) {}
 
+			if (p.getBag().getOrDefault(Item.getItem(ItemID.GuineaPigTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.GuineaPig.getIdLong());
+			if (p.getBag().getOrDefault(Item.getItem(ItemID.ModeratorTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.Moderator.getIdLong());
+			
 			// Add Roles
 			Util.addRoleToMember(m, DiscordRole.DinosaurTrainer.getIdLong());
 			if (p.getMainElement() != null && p.getMainElement().getId() > 0) Util.addRoleToMember(m, p.getMainElement().getRole());

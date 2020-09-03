@@ -43,7 +43,7 @@ public class InfoDinosaurCommand implements ICommand {
 
 	@Override
 	public DiscordChannel[] getUsableChannels() {
-		return DiscordChannel.STANDARD_CHANNELS_DMS;
+		return DiscordChannel.STANDARD_CHANNELS_TRADE_DMS;
 	}
 
 	@Override

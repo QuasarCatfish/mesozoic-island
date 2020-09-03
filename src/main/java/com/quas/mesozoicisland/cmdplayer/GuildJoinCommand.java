@@ -40,7 +40,7 @@ public class GuildJoinCommand implements ICommand {
 
 	@Override
 	public String getCommandDescription() {
-		return "Joins the given guild.";
+		return "Joins the given guild.\nGuilds: `Fire`, `Lightning`, `Leaf`, `Earth`, `Ice`, `Metal`, `Water`, `Air`.";
 	}
 
 	@Override

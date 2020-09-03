@@ -4,6 +4,7 @@ import com.quas.mesozoicisland.util.Pair;
 
 public enum ItemID {
 	
+	Nothing(0, 0),
 	MesozoicIslandTrainerLicense(1, 0),
 	GuildBadge(2, 0),
 	QuestBook(5, 0),
