@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.ItemCategory;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.ItemType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Pair;
@@ -23,6 +24,7 @@ public class Item implements Comparable<Item> {
 	private int type;
 	private int cat;
 	private String data;
+	private String tags;
 	
 	private Item() {}
 	
@@ -52,6 +54,11 @@ public class Item implements Comparable<Item> {
 	
 	public String getData() {
 		return data;
+	}
+
+	public boolean hasTag(ItemTag tag) {
+		if (tags == null) return false;
+		return tags.contains(tag.getTag());
 	}
 	
 	public String toString(long count) {
@@ -137,6 +144,7 @@ public class Item implements Comparable<Item> {
 				i.type = res.getInt("itemtype");
 				i.cat = res.getInt("itemcat");
 				i.data = res.getString("data");
+				i.tags = res.getString("tags");
 				map.put(itemid, i);
 				return i;
 			}

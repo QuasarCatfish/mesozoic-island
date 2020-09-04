@@ -11,6 +11,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Pair;
@@ -370,9 +371,9 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 
 	private void applyHeldItem() {
-		if (item == null || item.getId() == 0) return;
+		if (!hasItem()) return;
 
-		if (item.getId() == ItemID.RubyPendant.getItemId() || item.getId() == ItemID.TopazPendant.getItemId() || item.getId() == ItemID.JadePendant.getItemId() || item.getId() == ItemID.GarnetPendant.getItemId() || item.getId() == ItemID.DiamondPendant.getItemId() || item.getId() == ItemID.CubanitePendant.getItemId() || item.getId() == ItemID.AquamarinePendant.getItemId() || item.getId() == ItemID.AmberPendant.getItemId()) {
+		if (item.hasTag(ItemTag.Pendant)) {
 			if ((Integer.parseInt(item.getData()) & element.getId()) > 0) {
 				addBoost(Constants.PENDANT_BOOST);
 			}

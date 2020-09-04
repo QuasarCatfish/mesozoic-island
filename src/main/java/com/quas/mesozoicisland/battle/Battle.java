@@ -9,6 +9,7 @@ import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
@@ -346,8 +347,24 @@ public class Battle {
 	
 	private String doAttack(BattleTeam attack, BattleTeam defend, long time) {
 		long damage = Math.round(1d * attack.getDinosaur().getAttack() * attack.getDinosaur().getAttack() / defend.getDinosaur().getDefense() / 4d);
-		double effectiveness = Element.getEffectiveness(attack.getDinosaur().getElement(), defend.getDinosaur().getElement());
-		damage *= effectiveness;
+
+		// Element Effectiveness
+		damage *= Element.getEffectiveness(attack.getDinosaur().getElement(), defend.getDinosaur().getElement());
+
+		// Bracer
+		if (defend.getDinosaur().hasItem() && defend.getDinosaur().getItem().hasTag(ItemTag.Bracer)) {
+			if ((attack.getDinosaur().getElement().getId() & Integer.parseInt(defend.getDinosaur().getItem().getData())) > 0) {
+				damage *= Constants.BRACER_MULT;
+			}
+		}
+
+		// Gauntlet
+		if (attack.getDinosaur().hasItem() && attack.getDinosaur().getItem().hasTag(ItemTag.Gauntlet)) {
+			if ((defend.getDinosaur().getElement().getId() & Integer.parseInt(attack.getDinosaur().getItem().getData())) > 0) {
+				damage *= Constants.GAUNTLET_MULT;
+			}
+		}
+
 		if (damage < Constants.MIN_DAMAGE) damage = Constants.MIN_DAMAGE;
 		
 		StringBuilder sb = new StringBuilder();
