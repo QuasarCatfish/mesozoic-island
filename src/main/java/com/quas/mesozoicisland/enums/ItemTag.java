@@ -1,7 +1,20 @@
 package com.quas.mesozoicisland.enums;
 
 public enum ItemTag {
-	Pendant("#pendant"), Bracer("#bracer"), Gauntlet("#gauntlet");
+
+	XpPotion("#xppotion"),
+	
+	BattleFragrance("#battlefragrance"),
+	ExperienceFragrance("#experiencefragrance"),
+	MoneyFragrance("#moneyfragrance"),
+	EggFragrance("#eggfragrance"),
+	
+	Pendant("#pendant"),
+	Bracer("#bracer"),
+	Gauntlet("#gauntlet"),
+
+	DungeonTicket("#dungeonticket"),
+	;
 
 	private String tag;
 	private ItemTag(String tag) {

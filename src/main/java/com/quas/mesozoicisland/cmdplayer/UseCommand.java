@@ -22,6 +22,7 @@ import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EggColor;
 import com.quas.mesozoicisland.enums.ItemCategory;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.ItemType;
 import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
@@ -163,7 +164,7 @@ public class UseCommand implements ICommand {
 			
 		case Consume:
 
-			if (i.getId() == ItemID.ScentOfBattle.getItemId() || i.getId() == ItemID.FragranceOfBattle.getItemId() || i.getId() == ItemID.EauDeBataille.getItemId()) {
+			if (i.hasTag(ItemTag.BattleFragrance)) {
 				long time = Long.parseLong(i.getData());
 				long curtime = p.getFragranceBattleTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
@@ -173,7 +174,7 @@ public class UseCommand implements ICommand {
 				JDBC.executeUpdate("update players set fragrancebattle = %d where playerid = %d;", end, p.getIdLong());
 			}
 
-			else if (i.getId() == ItemID.ScentOfExperience.getItemId() || i.getId() == ItemID.FragranceOfExperience.getItemId() || i.getId() == ItemID.EauDeExperience.getItemId()) {
+			else if (i.hasTag(ItemTag.ExperienceFragrance)) {
 				long time = Long.parseLong(i.getData());
 				long curtime = p.getFragranceXpTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
@@ -183,7 +184,7 @@ public class UseCommand implements ICommand {
 				JDBC.executeUpdate("update players set fragrancexp = %d where playerid = %d;", end, p.getIdLong());
 			}
 
-			else if (i.getId() == ItemID.ScentOfMoney.getItemId() || i.getId() == ItemID.FragranceOfMoney.getItemId() || i.getId() == ItemID.EauDeArgent.getItemId()) {
+			else if (i.hasTag(ItemTag.MoneyFragrance)) {
 				long time = Long.parseLong(i.getData());
 				long curtime = p.getFragranceMoneyTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
@@ -193,7 +194,7 @@ public class UseCommand implements ICommand {
 				JDBC.executeUpdate("update players set fragrancemoney = %d where playerid = %d;", end, p.getIdLong());
 			}
 
-			else if (i.getId() == ItemID.ScentOfEgg.getItemId() || i.getId() == ItemID.FragranceOfEgg.getItemId() || i.getId() == ItemID.EauDeOeuf.getItemId()) {
+			else if (i.hasTag(ItemTag.EggFragrance)) {
 				long time = Long.parseLong(i.getData());
 				long curtime = p.getFragranceEggTimer();
 				String adj = curtime < System.currentTimeMillis() ? "the next" : "an additional";
@@ -290,7 +291,7 @@ public class UseCommand implements ICommand {
 				SUCCESS = false;
 			}
 
-			else if (i.getId() == ItemID.DungeonTicket.getItemId() || i.getId() == ItemID.PremiumDungeonTicket.getItemId()) {
+			else if (i.hasTag(ItemTag.DungeonTicket)) {
 				int tier = Integer.parseInt(i.getData());
 				JDBC.generateDungeonTickets();
 				if (args.length > 1) {
@@ -426,7 +427,7 @@ public class UseCommand implements ICommand {
 				}
 			}
 			
-			else if (i.getId() == ItemID.FTierXPPotion.getItemId() || i.getId() == ItemID.ETierXPPotion.getItemId() || i.getId() == ItemID.DTierXPPotion.getItemId() || i.getId() == ItemID.CTierXPPotion.getItemId() || i.getId() == ItemID.BTierXPPotion.getItemId() || i.getId() == ItemID.ATierXPPotion.getItemId() || i.getId() == ItemID.STierXPPotion.getItemId() || i.getId() == ItemID.SSTierXPPotion.getItemId() || i.getId() == ItemID.SSSTierXPPotion.getItemId() || i.getId() == ItemID.StarTierXPPotion.getItemId()) {
+			else if (i.hasTag(ItemTag.XpPotion)) {
 				if (d.getDinosaurForm() == DinosaurForm.Contest) {
 					event.getChannel().sendMessageFormat("%s, your %s refuses to drink the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
