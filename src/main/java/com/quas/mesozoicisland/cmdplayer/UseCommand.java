@@ -251,6 +251,27 @@ public class UseCommand implements ICommand {
 				}
 			}
 
+			else if (i.getId() == ItemID.MysteryPendantBox.getItemId()) {
+				ItemID[] pendants = new ItemID[] {ItemID.RubyPendant, ItemID.TopazPendant, ItemID.JadePendant, ItemID.GarnetPendant, ItemID.DiamondPendant, ItemID.CubanitePendant, ItemID.AquamarinePendant, ItemID.AmberPendant};
+				Item pendant = Item.getItem(Util.getRandomElement(pendants));
+				event.getChannel().sendMessageFormat("%s, you open the box and find %s %s!", p.getAsMention(), Util.getArticle(pendant.toString()), pendant.toString()).complete();
+				JDBC.addItem(p.getIdLong(), pendant.getIdDmg());
+			}
+
+			else if (i.getId() == ItemID.MysteryBracerBox.getItemId()) {
+				ItemID[] bracers = new ItemID[] {ItemID.RubyBracer, ItemID.TopazBracer, ItemID.JadeBracer, ItemID.GarnetBracer, ItemID.DiamondBracer, ItemID.CubaniteBracer, ItemID.AquamarineBracer, ItemID.AmberBracer};
+				Item bracer = Item.getItem(Util.getRandomElement(bracers));
+				event.getChannel().sendMessageFormat("%s, you open the box and find %s %s!", p.getAsMention(), Util.getArticle(bracer.toString()), bracer.toString()).complete();
+				JDBC.addItem(p.getIdLong(), bracer.getIdDmg());
+			}
+
+			else if (i.getId() == ItemID.MysteryGauntletBox.getItemId()) {
+				ItemID[] gauntlets = new ItemID[] {ItemID.RubyGauntlet, ItemID.TopazGauntlet, ItemID.JadeGauntlet, ItemID.GarnetGauntlet, ItemID.DiamondGauntlet, ItemID.CubaniteGauntlet, ItemID.AquamarineGauntlet, ItemID.AmberGauntlet};
+				Item gauntlet = Item.getItem(Util.getRandomElement(gauntlets));
+				event.getChannel().sendMessageFormat("%s, you open the box and find %s %s!", p.getAsMention(), Util.getArticle(gauntlet.toString()), gauntlet.toString()).complete();
+				JDBC.addItem(p.getIdLong(), gauntlet.getIdDmg());
+			}
+
 			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
 				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getEggCount()) {
 					event.getChannel().sendMessageFormat("%s, you have redeemed a Chocolate Egg!", p.getAsMention()).complete();
