@@ -179,7 +179,7 @@ public class JDBC {
 	}
 
 	public static synchronized boolean setContest(long pid, Dinosaur contest) {
-		return executeUpdate("update players set contest = '%s' where playerid = %d;", starter.getId(), pid);
+		return executeUpdate("update players set contest = '%s' where playerid = %d;", contest.getId(), pid);
 	}
 	
 	public static synchronized boolean setState(long pid, String state) {
