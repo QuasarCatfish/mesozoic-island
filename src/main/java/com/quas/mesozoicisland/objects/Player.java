@@ -30,6 +30,7 @@ public class Player {
 	private Color color;
 	private String starter;
 	private String latest;
+	private String contest;
 	private String selected;
 	private String state;
 	private String join;
@@ -96,6 +97,10 @@ public class Player {
 	
 	public String getLatest() {
 		return latest;
+	}
+
+	public String getContest() {
+		return contest;
 	}
 	
 	public long getXp() {
@@ -294,6 +299,7 @@ public class Player {
 				p.color = new Color(res.getInt("color"));
 				p.starter = res.getString("starter");
 				p.latest = res.getString("latest");
+				p.contest = res.getString("contest");
 				p.selected = res.getString("selected");
 				p.state = res.getString("gamestate");
 				p.join = res.getString("joindate");

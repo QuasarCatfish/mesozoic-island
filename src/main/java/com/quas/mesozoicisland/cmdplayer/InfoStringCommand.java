@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.cmdplayer;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.objects.Player;
+import com.quas.mesozoicisland.util.Constants;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -46,6 +47,15 @@ public class InfoStringCommand extends InfoDinosaurCommand {
 				event.getChannel().sendMessageFormat("%s, you do not have a starter dinosaur.", p.getAsMention()).complete();
 			} else {
 				super.run(event, p.getStarter());
+			}
+			break;
+		case "contest":
+			if (!Constants.CONTEST) {
+				event.getChannel().sendMessageFormat("%s, there not a contest in progress.", p.getAsMention()).complete();
+			} else if (p.getContest() == null) {
+				event.getChannel().sendMessageFormat("%s, you are not a participant of the contest.", p.getAsMention()).complete();
+			} else {
+				super.run(event, p.getContest());
 			}
 			break;
 		default:

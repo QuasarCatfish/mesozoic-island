@@ -177,6 +177,10 @@ public class JDBC {
 	public static synchronized boolean setLatest(long pid, Dinosaur latest) {
 		return executeUpdate("update players set latest = '%s' where playerid = %d;", latest.getId(), pid);
 	}
+
+	public static synchronized boolean setContest(long pid, Dinosaur contest) {
+		return executeUpdate("update players set contest = '%s' where playerid = %d;", starter.getId(), pid);
+	}
 	
 	public static synchronized boolean setState(long pid, String state) {
 		return executeUpdate("update players set gamestate = '%s' where playerid = %d;", Util.cleanQuotes(state), pid);

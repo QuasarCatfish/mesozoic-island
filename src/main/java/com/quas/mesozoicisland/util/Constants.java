@@ -77,6 +77,7 @@ public class Constants {
 	public static final int REQUIRED_RAID_LEVEL = 50;
 	
 	// Contest
+	public static boolean CONTEST_ENTRY = true;
 	public static boolean CONTEST = false;
 	
 	// Daily
