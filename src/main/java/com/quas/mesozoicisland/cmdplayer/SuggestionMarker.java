@@ -17,7 +17,7 @@ public class SuggestionMarker implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("(.|\r|\n)+");
+		return pattern("(.|\r|\n)*");
 	}
 
 	@Override

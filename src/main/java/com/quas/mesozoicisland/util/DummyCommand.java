@@ -6,7 +6,9 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.cmdplayer.BagCommand;
 import com.quas.mesozoicisland.cmdplayer.NicknameCommand;
+import com.quas.mesozoicisland.cmdplayer.QuestsCommand;
 import com.quas.mesozoicisland.cmdplayer.RemoveItemCommand;
+import com.quas.mesozoicisland.cmdplayer.UnnicknameCommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
@@ -96,7 +98,9 @@ public class DummyCommand implements ICommand {
 
 		dummy.add(new DummyCommand(new BagCommand()).setSyntax("bag <item>", "Checks the items with the given name or ID."));
 		dummy.add(new DummyCommand(new NicknameCommand()).setName("nick"));
+		dummy.add(new DummyCommand(new UnnicknameCommand()).setName("unnick"));
 		dummy.add(new DummyCommand(new RemoveItemCommand()).setName("ri"));
+		dummy.add(new DummyCommand(new QuestsCommand()).setName("quest"));
 
 		return dummy;
 	}
