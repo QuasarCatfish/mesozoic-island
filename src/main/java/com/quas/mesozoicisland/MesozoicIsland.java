@@ -48,6 +48,7 @@ import com.quas.mesozoicisland.cmdplayer.BirthdayCommand;
 import com.quas.mesozoicisland.cmdplayer.BuyCommand;
 import com.quas.mesozoicisland.cmdplayer.ColorCommand;
 import com.quas.mesozoicisland.cmdplayer.ColorHexCommand;
+import com.quas.mesozoicisland.cmdplayer.ContestEnterCommand;
 import com.quas.mesozoicisland.cmdplayer.CreateTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.CreditsCommand;
 import com.quas.mesozoicisland.cmdplayer.DailyCommand;
@@ -282,6 +283,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new ColorHexCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ColorCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new RemoveItemCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new ContestEnterCommand());
+//		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
