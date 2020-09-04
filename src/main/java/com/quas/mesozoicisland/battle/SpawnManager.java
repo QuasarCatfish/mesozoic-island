@@ -474,8 +474,8 @@ public class SpawnManager {
 				else if (q == d.getFloorCount() - 1) {
 					Item token = Item.getItem(ItemID.DungeonToken);
 					String winmsg = "";
-					if (teams.size() == 1) winmsg = String.format("The player has defeated **all floors** of the dungeon! A crate of %,d %s were left as the dungeon disappeared.", d.getTokenCount(), token.toString(d.getTokenCount()));
-					else winmsg = String.format("The players have defeated **all floors** of the dungeon! A crate of %,d %s were left as the dungeon disappeared. The players each get %,d %s.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getTokenCount(), token.toString(d.getTokenCount()));
+					if (teams.size() == 1) winmsg = String.format("The player has defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared.", d.getTokenCount(), token.toString(d.getTokenCount()));
+					else winmsg = String.format("The players have defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared. The players each get %,d %s.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getTokenCount(), token.toString(d.getTokenCount()));
 					
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), winmsg);
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, winmsg);
