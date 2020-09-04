@@ -538,14 +538,14 @@ public class UseCommand implements ICommand {
 			
 			max = Constants.MAX_STAT_BOOST - d.getAttackMultiplier();
 			if (max > 0) {
-				name = "ATK";
+				name = "Attack";
 				column = "modattack";
 				break;
 			}
 			
 			max = Constants.MAX_STAT_BOOST - d.getDefenseMultiplier();
 			if (max > 0) {
-				name = "DEF";
+				name = "Defense";
 				column = "moddefense";
 				break;
 			}
