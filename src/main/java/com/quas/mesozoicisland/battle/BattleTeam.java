@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.battle;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.DinoMath;
+import com.quas.mesozoicisland.util.Util;
 
 public class BattleTeam {
 
@@ -39,7 +40,7 @@ public class BattleTeam {
 	}
 	
 	public boolean isInvalid() {
-		return dinosaurs == null;
+		return dinosaurs == null || !Util.contains(BattleTier.getBattleTiers(), tier);
 	}
 	
 	public boolean hasDinosaur() {

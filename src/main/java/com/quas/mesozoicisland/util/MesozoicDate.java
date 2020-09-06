@@ -67,7 +67,7 @@ public class MesozoicDate implements Comparable<MesozoicDate> {
 		if (showYear) return year + month + day;
 		return month + day;
 	}
-	
+
 	@Override
 	public int compareTo(MesozoicDate that) {
 		if (this.iyear == that.iyear) {

@@ -2,12 +2,14 @@ package com.quas.mesozoicisland.enums;
 
 public enum PingType {
 	Announcement(DiscordRole.AnnouncementPing, "an announcement is made"),
+	Event(DiscordRole.EventPing, "event information is announced"),
 	Daily(DiscordRole.DailyPing, "a new day begins"),
 	Spawn(DiscordRole.SpawnPing, "a dinosaur spawns"),
 	Dungeon(DiscordRole.DungeonPing, "a dungeon has been found"),
+	Egg(DiscordRole.EggPing, "an egg is found"),
 //	Rune(DiscordRole.RunePing, "a dinosaur with a rune appears"),
 	Suggestion(DiscordRole.SuggestionPing, "a new suggestion is made"),
-	Egg(DiscordRole.EggPing, "an egg is found");
+	;
 	
 	private DiscordRole role;
 	private String message;

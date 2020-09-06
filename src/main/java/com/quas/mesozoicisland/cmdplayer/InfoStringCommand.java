@@ -2,8 +2,9 @@ package com.quas.mesozoicisland.cmdplayer;
 
 import java.util.regex.Pattern;
 
+import com.quas.mesozoicisland.enums.EventType;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Player;
-import com.quas.mesozoicisland.util.Constants;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -50,7 +51,7 @@ public class InfoStringCommand extends InfoDinosaurCommand {
 			}
 			break;
 		case "contest":
-			if (!Constants.CONTEST) {
+			if (!Event.isEventActive(EventType.Contest)) {
 				event.getChannel().sendMessageFormat("%s, there not a contest in progress.", p.getAsMention()).complete();
 			} else if (p.getContest() == null) {
 				event.getChannel().sendMessageFormat("%s, you are not a participant of the contest.", p.getAsMention()).complete();

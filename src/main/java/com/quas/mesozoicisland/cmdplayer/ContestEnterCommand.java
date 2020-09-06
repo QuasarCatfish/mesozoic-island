@@ -8,9 +8,10 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Player;
-import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
@@ -63,8 +64,8 @@ public class ContestEnterCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		if (!Constants.CONTEST_ENTRY) {
-			event.getChannel().sendMessageFormat("%s, the entry period for the contest has closed.", event.getAuthor().getAsMention()).complete();
+		if (!Event.isEventActive(EventType.ContestEntry)) {
+			event.getChannel().sendMessageFormat("%s, the entry period for the contest is closed.", event.getAuthor().getAsMention()).complete();
 			return;
 		}
 

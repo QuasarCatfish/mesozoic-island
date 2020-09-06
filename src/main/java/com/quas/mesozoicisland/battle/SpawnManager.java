@@ -506,6 +506,7 @@ public class SpawnManager {
 		waiting = false;
 	}
 	
+	/** Future Methods
 	private static synchronized void spawnPVP() {
 		waiting = true;
 		
@@ -517,4 +518,5 @@ public class SpawnManager {
 		
 		waiting = false;
 	}
+	*/
 }

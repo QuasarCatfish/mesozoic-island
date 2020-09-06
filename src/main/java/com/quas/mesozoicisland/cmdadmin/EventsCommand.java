@@ -1,5 +1,6 @@
 package com.quas.mesozoicisland.cmdadmin;
 
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.cmdbase.ICommand;
@@ -59,12 +60,17 @@ public class EventsCommand implements ICommand {
 		sb.append("**Events:**\n");
 		
 		for (Event e : Event.values()) {
+			// Skip any events that are more than 14 days past
+			if (e.hasEnded() && System.currentTimeMillis() - e.getEndTime() >= TimeUnit.DAYS.toMillis(14)) continue;
+
+			sb.append(String.format("[%s] %s ", e.getEventType().toString(), e.getName()));
+
 			if (e.hasEnded()) {
-				sb.append(String.format("\"%s\" Event - Ended %s ago.\n", e.getName(), Util.formatTime(System.currentTimeMillis() - e.getEndTime())));
+				sb.append(String.format("ended %s ago.\n", Util.formatTime(System.currentTimeMillis() - e.getEndTime())));
 			} else if (e.isRunning()) {
-				sb.append(String.format("\"%s\" Event - Ends in %s.\n", e.getName(), Util.formatTime(e.getEndTime() - System.currentTimeMillis())));
+				sb.append(String.format("ends in %s.\n", Util.formatTime(e.getEndTime() - System.currentTimeMillis())));
 			} else {
-				sb.append(String.format("\"%s\" Event - Starts in %s.\n", e.getName(), Util.formatTime(e.getStartTime() - System.currentTimeMillis())));
+				sb.append(String.format("starts in %s.\n", Util.formatTime(e.getStartTime() - System.currentTimeMillis())));
 			}
 		}
 		

@@ -76,10 +76,6 @@ public class Constants {
 	// Raids
 	public static final int REQUIRED_RAID_LEVEL = 50;
 	
-	// Contest
-	public static boolean CONTEST_ENTRY = true;
-	public static boolean CONTEST = false;
-	
 	// Daily
 	public static final long DAILY_MONEY = 1_000;
 	public static final long BONUS_DAILY_PER_DAY = 25;

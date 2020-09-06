@@ -46,6 +46,15 @@ public class Util {
 		for (T t : b) if (!arr.contains(t)) arr.add(t);
 		return arr;
 	}
+
+	public static <T extends Comparable<T>> boolean contains(T[] arr, T obj) {
+		for (T t : arr) {
+			if (t.compareTo(obj) == 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	@SafeVarargs
 	public static <T> List<T> list(T...arr) {
@@ -268,6 +277,12 @@ public class Util {
 		}
 		
 		return sb.toString().trim();
+	}
+
+	public static String formatDateTime(long millis) {
+		MesozoicCalendar mc = new MesozoicCalendar();
+		mc.setTimeInMillis(millis);
+		return String.format("%1$tB %1$td, %1$tY at %1$tR UTC", mc);
 	}
 	
 	public static String getBirthday(int birthday) {

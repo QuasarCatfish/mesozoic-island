@@ -289,7 +289,7 @@ public class Battle {
 					for (BattleTeam team : getAliveTeams()) {
 						if (attack.getPlayer().getIdLong() < CustomPlayer.getUpperLimit()) continue;
 						double mult = Constants.XP_MULTIPLIER * Constants.DUNGEON_XP_MULTIPLIER;
-						if (attack.getDinosaur().getLevel() > defend.getDinosaur().getLevel()) mult *= Math.max(1 - (attack.getDinosaur().getLevel() - defend.getDinosaur().getLevel()) / 100f, 0f);
+						if (team.getDinosaur().getLevel() > defend.getDinosaur().getLevel()) mult *= Math.max(1 - (attack.getDinosaur().getLevel() - defend.getDinosaur().getLevel()) / 100f, 0f);
 						if (team.getPlayer().getFragranceXpTimer() > System.currentTimeMillis()) mult += Constants.XP_FRAGRANCE_BONUS;
 						Action.addXpDelayed(team.getPlayer().getIdLong(), time, team.getDinosaur().getId(), Math.round(mult * xp));
 					}

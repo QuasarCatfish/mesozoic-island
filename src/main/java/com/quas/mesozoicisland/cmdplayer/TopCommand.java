@@ -234,6 +234,9 @@ public class TopCommand implements ICommand {
 
 		// Player Level
 		PlayerLevel(Util.arr("trainer level", "trainer lvl", "trainer lv", "trainer", "tlvl", "tlv"), "Trainer Level", LeaderboardType.PlayerLevel, null),
+
+		// Contest
+		Contest(Util.arr("contest"), "Contest", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Contest.getId()),
 		;
 		
 		private String[] names;
