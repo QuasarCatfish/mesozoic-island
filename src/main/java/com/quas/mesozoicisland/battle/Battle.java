@@ -211,7 +211,7 @@ public class Battle {
 			
 
 			// Money - 20% Chance
-			if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis() || MesozoicRandom.nextInt(5) == 0) {
+			if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis() ? MesozoicRandom.nextInt(2) == 0 : MesozoicRandom.nextInt(5) == 0) {
 				int amount = MesozoicRandom.nextInt(20, 51);
 				Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
 				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s on the battlefield.", winner.getPlayer().getAsMention(), amount, Item.getItem(money).toString(amount)));
