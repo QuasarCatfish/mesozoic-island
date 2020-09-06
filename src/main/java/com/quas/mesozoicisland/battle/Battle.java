@@ -209,22 +209,16 @@ public class Battle {
 			// Stat - Battles Won
 			Action.addItemDelayed(winner.getPlayer().getIdLong(), time, Stat.BattlesWon.getId(), 1);
 			
-			// Random Item Dropped at the end of the battle.
-			switch (MesozoicRandom.nextInt(5)) {
-			
+
 			// Money - 20% Chance
-			case 0: {
+			if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis() || MesozoicRandom.nextInt(5) == 0) {
 				int amount = MesozoicRandom.nextInt(20, 51);
-				if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis())
-					amount *= 1 + Constants.MONEY_FRAGRANCE_BONUS;
 				Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
 				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s on the battlefield.", winner.getPlayer().getAsMention(), amount, Item.getItem(money).toString(amount)));
 				Action.addItemDelayed(winner.getPlayer().getIdLong(), time, money, amount);
-			} break;
-			
-			
-			
 			}
+			
+			
 		}
 		
 		Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), channel.getBattleChannel().getIdLong(), time + 20_000);

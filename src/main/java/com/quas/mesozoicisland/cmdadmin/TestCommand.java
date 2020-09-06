@@ -13,8 +13,10 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
@@ -123,6 +125,14 @@ public class TestCommand implements ICommand {
 				// Calculate Level
 				int level = DinoMath.getLevel(xp);
 				event.getChannel().sendMessageFormat("%s's team has the following stats: [%,d %,d %,d].", p.getRawName(), level, bst, xp).complete();
+			} break;
+
+			case "eventtype": {
+				StringBuilder sb = new StringBuilder("Event Type List:");
+				for (EventType et : EventType.values()) {
+					sb.append(String.format("\n%s - %b", et, Event.isEventActive(et)));
+				}
+				event.getChannel().sendMessage(sb.toString()).complete();
 			} break;
 
 			case "givequest": {
