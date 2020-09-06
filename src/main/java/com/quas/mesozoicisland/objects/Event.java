@@ -59,6 +59,7 @@ public class Event {
 	private EventType et;
 	private long start, end;
 	private String name, desc, startstring, endstring;
+	private boolean announce;
 	
 	private Event(int id, String name, String desc, EventType et, long start, long end, String startstring, String endstring, boolean announce) {
 		this.name = name;
@@ -68,6 +69,7 @@ public class Event {
 		this.end = end;
 		this.startstring = startstring;
 		this.endstring = endstring;
+		this.announce = announce;
 		
 		DiscordChannel dc = et == EventType.TestEvent ? DiscordChannel.GameTesting : DiscordChannel.Game;
 		TextChannel tc = MesozoicIsland.getProfessor().getGuild().getTextChannelById(dc.getId());
@@ -208,5 +210,9 @@ public class Event {
 	
 	public long getEndTime() {
 		return end;
+	}
+
+	public boolean isAnnounce() {
+		return announce;
 	}
 }

@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
@@ -14,6 +15,7 @@ import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 
@@ -106,6 +108,25 @@ public class Daily {
 			sb.append(" have received ");
 			if (quests > 1) sb.append("these quests.");
 			else sb.append("this quest.");
+		}
+
+		// Events
+		{
+			// Event started within past day
+			for (Event e : Event.values()) {
+				if (!e.isAnnounce()) continue;
+				if (millis >= e.getStartTime() && e.getStartTime() + TimeUnit.DAYS.toMillis(1) > millis) {
+					sb.append("Event Start: " + e.getName());
+				}
+			}
+
+			// Event end within past day
+			for (Event e : Event.values()) {
+				if (!e.isAnnounce()) continue;
+				if (millis >= e.getEndTime() && e.getEndTime() + TimeUnit.DAYS.toMillis(1) > millis) {
+					sb.append("Event End: " + e.getName());
+				}
+			}
 		}
 		
 		// Get Birthdays
