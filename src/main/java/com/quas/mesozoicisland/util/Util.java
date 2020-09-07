@@ -35,8 +35,11 @@ public class Util {
 		return arr;
 	}
 
-	@SafeVarargs
-	public static <T> T getRandomElement(T...arr) {
+	public static char getRandomElement(char[] arr) {
+		return arr[MesozoicRandom.nextInt(arr.length)];
+	}
+
+	public static <T> T getRandomElement(T[] arr) {
 		return arr[MesozoicRandom.nextInt(arr.length)];
 	}
 
