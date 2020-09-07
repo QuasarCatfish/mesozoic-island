@@ -74,13 +74,14 @@ public class SelectDinosaursCommand implements ICommand {
 		
 		int olen = dinos.length;
 		dinos = Util.removeDuplciates(dinos);
-		if (dinos.length > 0) JDBC.setSelected(p.getIdLong(), dinos);
 		BattleTier bt = DinoMath.getBattleTier(dinos);
 		
 		if (dinos.length == 0) {
 			event.getChannel().sendMessageFormat("%s, none of these dinosaurs are valid to select.", event.getAuthor().getAsMention()).complete();
+			return;
 		} else if (0 < contest && contest < dinos.length) {
 			event.getChannel().sendMessageFormat("%s, you must select only contest dinosaurs or no contest dinosaurs.", event.getAuthor().getAsMention()).complete();
+			return;
 		} else if (olen - dinos.length == 0) {
 			event.getChannel().sendMessageFormat("%s, your selected dinosaur%s been updated. Your team is in the %s.", event.getAuthor().getAsMention(), dinos.length == 1 ? " has" : "s have", bt.toString()).complete();
 		} else if (olen - dinos.length == 1) {
@@ -88,5 +89,7 @@ public class SelectDinosaursCommand implements ICommand {
 		} else {
 			event.getChannel().sendMessageFormat("%s, your selected dinosaur%s been updated. Your team is in the %s. %d were not selected due to being duplicates or non-existent.", event.getAuthor().getAsMention(), dinos.length == 1 ? " has" : "s have", bt.toString(), olen - dinos.length).complete();
 		}
+
+		JDBC.setSelected(p.getIdLong(), dinos);
 	}
 }

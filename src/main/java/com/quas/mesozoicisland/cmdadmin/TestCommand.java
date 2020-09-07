@@ -2,6 +2,8 @@ package com.quas.mesozoicisland.cmdadmin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -11,16 +13,20 @@ import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
+import com.quas.mesozoicisland.objects.Rarity;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
+import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -133,6 +139,44 @@ public class TestCommand implements ICommand {
 					sb.append(String.format("\n%s - %b", et, Event.isEventActive(et)));
 				}
 				event.getChannel().sendMessage(sb.toString()).complete();
+			} break;
+
+			case "lost": {
+				long sum = 0;
+				Dinosaur[] values = Dinosaur.values();
+				
+				HashMap<Pair<Element, Rarity>, Long> chance = new HashMap<Pair<Element, Rarity>, Long>();
+				HashMap<Pair<Element, Rarity>, Integer> count = new HashMap<Pair<Element, Rarity>, Integer>();
+				HashMap<Element, Long> elements = new HashMap<Element, Long>();
+
+				for (Dinosaur d : values) {
+					if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
+					
+					sum += d.getRarity().getDinoCount();
+					Pair<Element, Rarity> pair = new Pair<Element, Rarity>(d.getElement(), d.getRarity());
+					
+					long val = chance.getOrDefault(pair, 0L);
+					chance.put(pair, val + d.getRarity().getDinoCount());
+					int c = count.getOrDefault(pair, 0);
+					count.put(pair, c + 1);
+
+					long val2 = elements.getOrDefault(d.getElement(), 0L);
+					elements.put(d.getElement(), val2 + d.getRarity().getDinoCount());
+				}
+
+				ArrayList<String> print = new ArrayList<String>();
+				for (Element element : elements.keySet()) {
+					print.add(String.format("%s - %,d / %,d (%1.4f%%)", element, elements.get(element), sum, 100d * elements.get(element) / sum));
+				}
+
+				print.add("");
+				for (Pair<Element, Rarity> pair : chance.keySet()) {
+					print.add(String.format("%s - %,d | %,d / %,d (%1.4f%% | %1.4f%%)", pair, chance.get(pair) / count.get(pair), chance.get(pair), sum, 100d * chance.get(pair) / count.get(pair) / sum, 100d * chance.get(pair) / sum));
+				}
+
+				for (String s : Util.bulkify(print)) {
+					event.getChannel().sendMessage(s).complete();
+				}
 			} break;
 
 			case "givequest": {
