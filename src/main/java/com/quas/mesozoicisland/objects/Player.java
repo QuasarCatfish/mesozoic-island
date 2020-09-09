@@ -44,6 +44,7 @@ public class Player {
 	private long fragrancemoney;
 	private long fragranceegg;
 	private boolean muted;
+	private boolean cursed;
 	
 	private Player() {}
 	
@@ -180,6 +181,10 @@ public class Player {
 	public boolean isMuted() {
 		return muted;
 	}
+
+	public boolean isCursed() {
+		return cursed;
+	}
 	
 	public long getItemCount(Item item) {
 		return getItemCount(item.getIdDmg());
@@ -313,6 +318,7 @@ public class Player {
 				p.fragrancemoney = res.getLong("fragrancemoney");
 				p.fragranceegg = res.getLong("fragranceegg");
 				p.muted = res.getBoolean("muted");
+				p.cursed = res.getBoolean("cursed");
 				return p;
 			}
 		} catch (SQLException e) {

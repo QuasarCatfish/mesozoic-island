@@ -93,7 +93,7 @@ public class Rune implements Comparable<Rune> {
 		return getRpToRankup() <= 0;
 	}
 	
-	public boolean isTradeable() {
+	public boolean isTradable() {
 		return rp > 0;
 	}
 	

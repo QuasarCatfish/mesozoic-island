@@ -4,12 +4,14 @@ import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -71,20 +73,31 @@ public class InfoDinosaurCommand implements ICommand {
 		eb.setTitle(d.getEffectiveName());
 		eb.setColor(Constants.COLOR);
 		
-		eb.addField("Dex Number", d.getDex() < 0 ? "#" + Util.mult("?", Constants.MAX_DEX_DIGITS) : String.format("#%0" + Constants.MAX_DEX_DIGITS + "d", d.getDex()), true);
-		if (d.getForm() != 0) eb.addField("Form", d.getFormName(), true);
-		eb.addField("Owner", p.getName(), true);
-		eb.addField("Element", d.getElement().getName(), true);
-		eb.addField("Rarity", d.getRarity().getName(), true);
-		eb.addField("Level and XP", String.format("Level %,d + %,d XP", d.getLevel(), d.getXpMinusLevel()), true);
-		eb.addField("Rank and RP", String.format("Rank %s + %,d RP", d.getRankString(), d.getRp()), true);
-		eb.addField("Health", String.format("%,d (+%d%%)", d.getHealth(), d.getHealthMultiplier()), true);
-		eb.addField("Attack", String.format("%,d (+%d%%)", d.getAttack(), d.getAttackMultiplier()), true);
-		eb.addField("Defense", String.format("%,d (+%d%%)", d.getDefense(), d.getDefenseMultiplier()), true);
-		eb.addField("Dinosaurs Defeated", Util.formatNumber(d.getWins()), true);
-		eb.addField("Times Defeated", Util.formatNumber(d.getLosses()), true);
-		if (d.getItem() != null && d.getItem().getId() != 0) eb.addField("Held Item", d.getItem().toString(), true);
-		if (d.getRune() != null && d.getRune().getId() != 0) eb.addField("Rune", d.getRune().getName(), true);
+		if (d.getDinosaurForm() == DinosaurForm.Accursed) {
+			eb.addField(Zalgo.title("Dex Number"), Zalgo.field(d.getDex() < 0 ? "#" + Util.mult("?", Constants.MAX_DEX_DIGITS) : String.format("#%0" + Constants.MAX_DEX_DIGITS + "d", d.getDex())), true);
+			if (d.getForm() != 0) eb.addField(Zalgo.title("Form"), Zalgo.field(d.getFormName()), true);
+			eb.addField(Zalgo.title("Owner"), Zalgo.field(p.getName()), true);
+			eb.addField(Zalgo.title("Element"), Zalgo.field(d.getElement().getName()), true);
+			eb.addField(Zalgo.title("Dinosaurs Defeated"), Zalgo.field(Util.formatNumber(d.getWins())), true);
+			eb.addField(Zalgo.title("Times Defeated"), Zalgo.field(Util.formatNumber(d.getLosses())), true);
+			if (d.getItem() != null && d.getItem().getId() != 0) eb.addField(Zalgo.title("Held Item"), Zalgo.field(d.getItem().toString()), true);
+			if (d.getRune() != null && d.getRune().getId() != 0) eb.addField(Zalgo.title("Rune"), Zalgo.field(d.getRune().getName()), true);
+		} else {
+			eb.addField("Dex Number", d.getDex() < 0 ? "#" + Util.mult("?", Constants.MAX_DEX_DIGITS) : String.format("#%0" + Constants.MAX_DEX_DIGITS + "d", d.getDex()), true);
+			if (d.getForm() != 0) eb.addField("Form", d.getFormName(), true);
+			eb.addField("Owner", p.getName(), true);
+			eb.addField("Element", d.getElement().getName(), true);
+			eb.addField("Rarity", d.getRarity().getName(), true);
+			eb.addField("Level and XP", String.format("Level %,d + %,d XP", d.getLevel(), d.getXpMinusLevel()), true);
+			eb.addField("Rank and RP", String.format("Rank %s + %,d RP", d.getRankString(), d.getRp()), true);
+			eb.addField("Health", String.format("%,d (+%d%%)", d.getHealth(), d.getHealthMultiplier()), true);
+			eb.addField("Attack", String.format("%,d (+%d%%)", d.getAttack(), d.getAttackMultiplier()), true);
+			eb.addField("Defense", String.format("%,d (+%d%%)", d.getDefense(), d.getDefenseMultiplier()), true);
+			eb.addField("Dinosaurs Defeated", Util.formatNumber(d.getWins()), true);
+			eb.addField("Times Defeated", Util.formatNumber(d.getLosses()), true);
+			if (d.getItem() != null && d.getItem().getId() != 0) eb.addField("Held Item", d.getItem().toString(), true);
+			if (d.getRune() != null && d.getRune().getId() != 0) eb.addField("Rune", d.getRune().getName(), true);
+		}
 		
 		event.getChannel().sendMessage(eb.build()).complete();
 	}

@@ -88,7 +88,7 @@ public class Event {
 						// Make embed in #events
 						EmbedBuilder eb = new EmbedBuilder();
 						eb.setColor(Color.GREEN);
-						eb.setTitle(name + " Event");
+						eb.setTitle(name);
 						eb.setDescription(desc);
 						eb.addField("Start Time", Util.formatDateTime(start), true);
 						eb.addField("End Time", Util.formatDateTime(end), true);

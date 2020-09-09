@@ -83,8 +83,8 @@ public class TradeRuneCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, you do not own this rune.", p1.getAsMention()).complete();
 			}
 			return;
-		} else if (!r1.isTradeable()) {
-			event.getChannel().sendMessageFormat("%s, your %s is not tradeable.", p1.getAsMention(), r1.getName()).complete();
+		} else if (!r1.isTradable()) {
+			event.getChannel().sendMessageFormat("%s, your %s is not tradable.", p1.getAsMention(), r1.getName()).complete();
 			return;
 		}
 		
@@ -96,8 +96,8 @@ public class TradeRuneCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, %s does not own this rune.", p1.getAsMention(), p2.getName()).complete();
 			}
 			return;
-		} else if (!r2.isTradeable()) {
-			event.getChannel().sendMessageFormat("%s, %s's %s is not tradeable.", p1.getAsMention(), p2.getName(), r2.getName()).complete();
+		} else if (!r2.isTradable()) {
+			event.getChannel().sendMessageFormat("%s, %s's %s is not tradable.", p1.getAsMention(), p2.getName(), r2.getName()).complete();
 			return;
 		}
 		

@@ -428,7 +428,7 @@ public class UseCommand implements ICommand {
 			}
 			
 			else if (i.hasTag(ItemTag.XpPotion)) {
-				if (d.getDinosaurForm() == DinosaurForm.Contest) {
+				if (d.getDinosaurForm() == DinosaurForm.Contest || d.getDinosaurForm() == DinosaurForm.Accursed) {
 					event.getChannel().sendMessageFormat("%s, your %s refuses to drink the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (d.getLevel() == Constants.MAX_LEVEL) {
@@ -445,7 +445,7 @@ public class UseCommand implements ICommand {
 				if (d.getDinosaurForm() != DinosaurForm.Standard) {
 					event.getChannel().sendMessageFormat("%s, you can only convert a Standard form dinosaur into its Prismatic form.", p.getAsMention()).complete();
 					SUCCESS = false;
-				} else if (d.isTradeable()) {
+				} else if (d.isTradable()) {
 					Dinosaur prismatic = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Prismatic.getId());
 					event.getChannel().sendMessageFormat("%s, 1 RP from your %s was converted into a %s.", p.getAsMention(), d.getEffectiveName(), prismatic.getDinosaurName()).complete();
 					JDBC.addDinosaur(null, p.getIdLong(), d.getIdPair(), -1);
@@ -457,7 +457,7 @@ public class UseCommand implements ICommand {
 			}
 
 			else if (i.getId() == ItemID.DinosaurTreat.getItemId()) {
-				if (d.getDinosaurForm() == DinosaurForm.Contest) {
+				if (d.getDinosaurForm() == DinosaurForm.Contest || d.getDinosaurForm() == DinosaurForm.Accursed) {
 					event.getChannel().sendMessageFormat("%s, your %s refuses to eat the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
 				} else {

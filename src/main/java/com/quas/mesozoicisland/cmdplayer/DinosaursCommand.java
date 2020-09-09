@@ -16,6 +16,7 @@ import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -116,11 +117,17 @@ public class DinosaursCommand implements ICommand {
 				Dinosaur d = Dinosaur.getDinosaur(p.getIdLong(), res.getInt("dex"), res.getInt("form"));
 				sb = new StringBuilder();
 				sb.append(String.format("**%s**", d.toString()));
-				sb.append(String.format(" [%s]", d.getElement().getName()));
-				sb.append(String.format(" [%s]", d.getRarity().getName()));
-				sb.append(String.format(" [%,d Health, %,d Attack, %,d Defense, %,d Total]", d.getHealth(), d.getAttack(), d.getDefense(), d.getStatTotal()));
-				if (d.getItem() != null && d.getItem().getId() != 0) sb.append(String.format(" [Holding: %s]", d.getItem().toString()));
-				if (d.getRune() != null && d.getRune().getId() != 0) sb.append(String.format(" [Rune: #%03d %s]", d.getRune().getId(), d.getRune().getName()));
+				if (d.getDinosaurForm() == DinosaurForm.Accursed) {
+					sb.append(Zalgo.field(String.format(" [%s]", d.getElement().getName())));
+					if (d.getItem() != null && d.getItem().getId() != 0) sb.append(Zalgo.field(String.format(" [Holding: %s]", d.getItem().toString())));
+					if (d.getRune() != null && d.getRune().getId() != 0) sb.append(Zalgo.field(String.format(" [Rune: #%03d %s]", d.getRune().getId(), d.getRune().getName())));
+				} else {
+					sb.append(String.format(" [%s]", d.getElement().getName()));
+					sb.append(String.format(" [%s]", d.getRarity().getName()));
+					sb.append(String.format(" [%,d Health, %,d Attack, %,d Defense, %,d Total]", d.getHealth(), d.getAttack(), d.getDefense(), d.getStatTotal()));
+					if (d.getItem() != null && d.getItem().getId() != 0) sb.append(String.format(" [Holding: %s]", d.getItem().toString()));
+					if (d.getRune() != null && d.getRune().getId() != 0) sb.append(String.format(" [Rune: #%03d %s]", d.getRune().getId(), d.getRune().getName()));
+				}
 				print.add(sb.toString());
 				rescount++;
 			}

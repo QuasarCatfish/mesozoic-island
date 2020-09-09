@@ -5,11 +5,13 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -67,6 +69,10 @@ public class UnnicknameCommand implements ICommand {
 		}
 		
 		JDBC.setNickname(p.getIdLong(), d.getDex(), d.getForm(), null);
-		event.getChannel().sendMessageFormat("%s, your %s's nickname has been removed.", event.getAuthor().getAsMention(), d.getDinosaurName()).complete();
+		if (d.getDinosaurForm() == DinosaurForm.Accursed) {
+			event.getChannel().sendMessageFormat("%s, your %s's nickname has been removed.", event.getAuthor().getAsMention(), Zalgo.field(d.getDinosaurName())).complete();
+		} else {
+			event.getChannel().sendMessageFormat("%s, your %s's nickname has been removed.", event.getAuthor().getAsMention(), d.getDinosaurName()).complete();
+		}
 	}
 }

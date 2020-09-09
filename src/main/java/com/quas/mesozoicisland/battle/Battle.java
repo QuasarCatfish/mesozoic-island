@@ -167,6 +167,12 @@ public class Battle {
 					
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
+
+					// Dinosaur dropped a lost page
+					if (Event.isEventActive(EventType.LostPages)) {
+						
+					}
+
 					Action.addDinosaurDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getId());
 					if (defend.getDinosaur().hasRune()) Action.addRuneDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getRune().getId());
 					if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getItem().getIdDmg(), 1);
@@ -413,7 +419,7 @@ public class Battle {
 		if (defeff == BattleAttack.Block) {
 			damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
 			sb.append(" but it blocked the attack. ");
-		} else if (defeff == BattleAttack.Dodge) {
+		} else if (defeff == BattleAttack.Dodge || atkeff == BattleAttack.Miss) {
 			damage = 0;
 			sb.append(" but it dodged the attack. ");
 		} else {

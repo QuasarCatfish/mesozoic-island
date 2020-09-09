@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.NewPlayerStatus;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
@@ -26,7 +27,10 @@ import com.quas.mesozoicisland.util.MesozoicDate;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
+import net.dv8tion.jda.api.entities.ChannelType;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageChannel;
 
 public class JDBC {
@@ -195,6 +199,10 @@ public class JDBC {
 		return executeUpdate("update players set muted = %b where playerid = %d;", muted, pid);
 	}
 	
+	public static synchronized boolean setCursed(long pid, boolean cursed) {
+		return executeUpdate("update players set cursed = %b where playerid = %d;", cursed, pid);
+	}
+	
 	public static synchronized boolean addAction(ActionType action, long from, long recipient, String msg, long time) {
 		msg = msg.replaceAll("\\?\'", "\\\'");
 		return executeUpdate("insert into actions(actiontype, bot, recipient, msg, time) values(%d, %d, %d, '%s', %d);", action.getActionType(), from, recipient, msg, time);
@@ -238,7 +246,11 @@ public class JDBC {
 				int dinoid = in.nextInt();
 				int dinoform = in.nextInt();
 				int dinorp = in.hasNextInt() ? in.nextInt() : 1;
-				ret.append(String.format("%s %,d %s Crystal%s%n", Constants.BULLET_POINT, dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
+				if (dinoform == DinosaurForm.Accursed.getId()) {
+					ret.append(Constants.BULLET_POINT + " " + Zalgo.field(String.format("%,d %s Crystal%s", dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s")) + "\n");
+				} else {
+					ret.append(String.format("%s %,d %s Crystal%s%n", Constants.BULLET_POINT, dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
+				}
 				break;
 			case "r": case "rune":
 				int runeid = in.nextInt();
@@ -250,6 +262,9 @@ public class JDBC {
 				int eggform = in.nextInt();
 				Egg egg = Egg.getRandomEgg(new Pair<Integer, Integer>(eggdex, eggform));
 				ret.append(String.format("%s %s %s%n", Constants.BULLET_POINT, Util.getArticle(egg.getEggName()), egg.getEggName()));
+				break;
+			case "curse":
+				ret.append(Constants.BULLET_POINT + " " + Zalgo.field("but great power comes with a price...") + "\n");
 				break;
 			}
 		}
@@ -286,6 +301,9 @@ public class JDBC {
 				int eggform = in.nextInt();
 				Egg egg = Egg.getRandomEgg(new Pair<Integer, Integer>(eggdex, eggform));
 				addEgg(pid, egg);
+				break;
+			case "curse":
+				setCursed(pid, true);
 				break;
 			}
 		}
@@ -386,7 +404,12 @@ public class JDBC {
 	public static synchronized boolean addDinosaur(MessageChannel channel, long pid, Pair<Integer, Integer> dino, int rp) {
 		Dinosaur d = Dinosaur.getDinosaur(pid, dino);
 		if (d == null) {
-			boolean b = executeUpdate("insert into captures(player, dex, form) values(%d, %d, %d);", pid, dino.getFirstValue(), dino.getSecondValue());
+			boolean b = true;
+			if (dino.getSecondValue() == DinosaurForm.Accursed.getId()) {
+				b = executeUpdate("insert into captures(player, dex, form, xp, rp, rnk) values(%d, %d, %d, -1, -1, -1);", pid, dino.getFirstValue(), dino.getSecondValue());
+			} else {
+				b = executeUpdate("insert into captures(player, dex, form) values(%d, %d, %d);", pid, dino.getFirstValue(), dino.getSecondValue());
+			}
 			JDBC.addItem(pid, Stat.DinosaursCaught.getId());
 			if (rp > 1) return b && addDinosaur(channel, pid, dino, rp - 1);
 			setLatest(pid, Dinosaur.getDinosaur(dino));
@@ -395,6 +418,10 @@ public class JDBC {
 			boolean b = executeUpdate("update captures set rp = rp + %d where player = %d and dex = %d and form = %d;", rp, pid, dino.getFirstValue(), dino.getSecondValue());
 			JDBC.addItem(pid, Stat.DinosaursCaught.getId(), rp);
 			if (!d.canRankup() && Dinosaur.getDinosaur(pid, dino).canRankup()) {
+				if (channel.getType() == ChannelType.PRIVATE) {
+					Guild g = channel.getJDA().getGuildById(Constants.GUILD_ID);
+					channel = g.getTextChannelById(DiscordChannel.Game.getId());
+				}
 				channel.sendMessageFormat("%s, your %s can now rankup to **Rank %s**. Use `rankup %s` to rankup this dinosaur.", d.getPlayer().getAsMention(), d.getEffectiveName(), d.getNextRankString(), d.getId()).complete();
 			}
 			setLatest(pid, Dinosaur.getDinosaur(dino));
@@ -405,6 +432,7 @@ public class JDBC {
 	public static synchronized boolean addXp(MessageChannel channel, long pid, Pair<Integer, Integer> dino, long xp, boolean player) {
 		Dinosaur d = Dinosaur.getDinosaur(pid, dino);
 		if (d == null) return false;
+		if (d.getDinosaurForm() == DinosaurForm.Accursed) return false;
 		boolean b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
 		Dinosaur d2 = Dinosaur.getDinosaur(pid, dino);
 		if (d.getLevel() < d2.getLevel()) {

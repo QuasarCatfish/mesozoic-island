@@ -6,6 +6,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.Stat;
@@ -14,6 +15,7 @@ import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.TradeManager;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -83,8 +85,12 @@ public class TradeDinosaurCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, you do not own this dinosaur.", p1.getAsMention()).complete();
 			}
 			return;
-		} else if (!d1.isTradeable()) {
-			event.getChannel().sendMessageFormat("%s, your %s is not tradeable.", p1.getAsMention(), d1.getDinosaurName()).complete();
+		} else if (!d1.isTradable()) {
+			if (d1.getDinosaurForm() == DinosaurForm.Accursed) {
+				event.getChannel().sendMessageFormat("%s, your %s is not tradable.", p1.getAsMention(), Zalgo.field(d1.getDinosaurName())).complete();
+			} else {
+				event.getChannel().sendMessageFormat("%s, your %s is not tradable.", p1.getAsMention(), d1.getDinosaurName()).complete();
+			}
 			return;
 		}
 		
@@ -96,8 +102,12 @@ public class TradeDinosaurCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, %s does not own this dinosaur.", p1.getAsMention(), p2.getName()).complete();
 			}
 			return;
-		} else if (!d2.isTradeable()) {
-			event.getChannel().sendMessageFormat("%s, %s's %s is not tradeable.", p1.getAsMention(), p2.getName(), d2.getDinosaurName()).complete();
+		} else if (!d2.isTradable()) {
+			if (d2.getDinosaurForm() == DinosaurForm.Accursed) {
+				event.getChannel().sendMessageFormat("%s, %s's %s is not tradable.", p1.getAsMention(), p2.getName(), Zalgo.field(d2.getDinosaurName())).complete();
+			} else {
+				event.getChannel().sendMessageFormat("%s, %s's %s is not tradable.", p1.getAsMention(), p2.getName(), d2.getDinosaurName()).complete();
+			}
 			return;
 		}
 		

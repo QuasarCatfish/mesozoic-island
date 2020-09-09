@@ -16,6 +16,7 @@ import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.RomanNumeral;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
 public class Dinosaur implements Comparable<Dinosaur> {
 
@@ -267,8 +268,17 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 	
 	public String getEffectiveName() {
-		if (nick == null) return dinoname;
-		return String.format("\"%s\" the %s", nick, dinoname);
+		return getEffectiveName(true);
+	}
+
+	public String getEffectiveName(boolean zalgo) {
+		if (getDinosaurForm() == DinosaurForm.Accursed && zalgo) {
+			if (nick == null) return Zalgo.title(dinoname);
+			return Zalgo.title(String.format("\"%s\" the %s", nick, dinoname));
+		} else {
+			if (nick == null) return dinoname;
+			return String.format("\"%s\" the %s", nick, dinoname);
+		}
 	}
 	
 	public boolean isAlive() {
@@ -287,7 +297,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		this.damage += dmg;
 	}
 	
-	public boolean isTradeable() {
+	public boolean isTradable() {
 		return getRp() != 0;
 	}
 	
@@ -313,8 +323,9 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		
 		// Dino Name
 		sb.append(" ");
-		sb.append(getEffectiveName());
+		sb.append(getEffectiveName(false));
 		
+		if (getDinosaurForm() == DinosaurForm.Accursed) return Zalgo.field(sb.toString());
 		return sb.toString();
 	}
 	
@@ -410,7 +421,14 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				
 				int boost = DinoMath.getLevelBoost(d.getLevel());
 				boost += DinoMath.getRankBoost(d.getRank());
-				if (d.getDinosaurForm() != DinosaurForm.Contest) boost += d.getPlayer().getElementBoost(d.getElement());
+				// Contest Dinos do not get element boost
+				if (d.getDinosaurForm() != DinosaurForm.Contest) {
+					boost += d.getPlayer().getElementBoost(d.getElement());
+					// Contest dinosaurs and Accursed dinosaurs do not get curse boost
+					if (d.getDinosaurForm() != DinosaurForm.Accursed && d.getPlayer().isCursed()) {
+						boost -= 50;
+					}
+				}
 				d.healthboost = d.healthmult + boost;
 				d.attackboost = d.attackmult + boost;
 				d.defenseboost = d.defensemult + boost;

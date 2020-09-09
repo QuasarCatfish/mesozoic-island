@@ -28,9 +28,9 @@ public class Zalgo {
 		for (char c : input.toCharArray()) {
 			sb.append(c);
 			
-			int up = 1, mid = 0, down = 1;
-			int maxchar = MesozoicRandom.nextInt(2);
-			for (int q = 0; q < Math.min(maxchar, maxperchar - 2); q++) {
+			int up = 0, mid = 0, down = 0;
+			int maxchar = MesozoicRandom.nextInt(3) + 1;
+			for (int q = 0; q < Math.min(maxchar, maxperchar); q++) {
 				switch (MesozoicRandom.nextInt(5)) {
 				case 0: case 1:
 					up++;

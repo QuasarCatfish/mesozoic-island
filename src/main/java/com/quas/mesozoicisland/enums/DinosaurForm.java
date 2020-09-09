@@ -13,6 +13,7 @@ public enum DinosaurForm {
 	UncapturableDungeonBoss(-3, "Dungeon Boss", Util.mult(Constants.ZERO_WIDTH_SPACE, 2), BattleAttack.DUNGEON_BOSS_ATTACKS, BattleAttack.STANDARD_DEFENSE),
 	Contest(-4, "Contest", "C", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE),
 	RaidBoss(-5, "Raid Boss", Util.mult(Constants.ZERO_WIDTH_SPACE, 4), BattleAttack.RAID_BOSS_ATTACKS, BattleAttack.RAID_BOSS_DEFENSE),
+	Accursed(-6, "Accursed", "A", BattleAttack.STANDARD_ATTACKS_LOW_ACCURACY, BattleAttack.STANDARD_DEFENSE),
 	
 	Prismatic(10, "Prismatic", "P", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE),
 	Dungeon(11, "Dungeon", "D", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE),

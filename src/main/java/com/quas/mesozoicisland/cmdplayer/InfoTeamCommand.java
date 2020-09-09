@@ -8,12 +8,14 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.BattleTier;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -87,7 +89,11 @@ public class InfoTeamCommand implements ICommand {
 					Dinosaur[] team = new Dinosaur[split.length];
 					for (int q = 0; q < split.length; q++) {
 						team[q] = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(split[q]));
-						sb.append(String.format("%d) %s [%s]\n", q + 1, team[q], team[q].getElement()));
+						if (team[q].getDinosaurForm() == DinosaurForm.Accursed) {
+							sb.append((q + 1) + ") " + team[q] + " " + Zalgo.field("[" + team[q].getElement() + "]") + "\n");
+						} else {
+							sb.append(String.format("%d) %s [%s]\n", q + 1, team[q], team[q].getElement()));
+						}
 					}
 					
 					BattleTier bt = DinoMath.getBattleTier(team);

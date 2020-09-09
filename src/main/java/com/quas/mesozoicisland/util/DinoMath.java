@@ -47,17 +47,22 @@ public class DinoMath {
 	
 	public static BattleTier getBattleTier(Dinosaur[] team) {
 		if (team.length == 0) return BattleTier.Tier1;
-
+		
 		List<BattleTier> tiers = Arrays.asList(BattleTier.getBattleTiers());
+		if (team[0].getPlayerId() == Constants.QUAS_ID && tiers.contains(BattleTier.Test)) return BattleTier.Test;
 		
 		// Get stats
 		long xp = 0;
 		long bst = 0;
 		boolean contest = true;
 		for (Dinosaur d : team) {
-			xp += d.getXp();
-			long stats = d.getHealth() + d.getAttack() + d.getDefense();
-			if (stats > bst) bst = stats;
+			if (d.getDinosaurForm() == DinosaurForm.Accursed) {
+				xp += d.getPlayer().getXp();
+			} else {
+				xp += d.getXp();
+				long stats = d.getHealth() + d.getAttack() + d.getDefense();
+				if (stats > bst) bst = stats;
+			}
 			if (d.getDinosaurForm() != DinosaurForm.Contest) contest = false;
 		}
 		

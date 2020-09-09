@@ -111,7 +111,16 @@ public class Element implements Comparable<Element> {
 			readElements();
 		}
 		
-		return effectiveness.getOrDefault(new Pair<Element, Element>(attack, defend), 1f);
+		double mult = 1d;
+		for (int amask = 1; amask <= attack.getId(); amask <<= 1) {
+			if ((amask & attack.getId()) == 0) continue;
+			for (int dmask = 1; dmask <= defend.getId(); dmask <<= 1) {
+				if ((dmask & defend.getId()) == 0) continue;
+				mult *= effectiveness.getOrDefault(new Pair<Element, Element>(attack, defend), 1f);
+			}
+		}
+		
+		return mult;
 	}
 	
 	private static void readElements() {

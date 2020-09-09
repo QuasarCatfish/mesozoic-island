@@ -14,6 +14,8 @@ public enum ItemTag {
 	Gauntlet("#gauntlet"),
 
 	DungeonTicket("#dungeonticket"),
+
+	LostPage("#lostpage"),
 	;
 
 	private String tag;

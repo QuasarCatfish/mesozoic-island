@@ -2,6 +2,7 @@ package com.quas.mesozoicisland.battle;
 
 import java.util.ArrayList;
 
+import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.util.MesozoicRandom;
@@ -69,6 +70,7 @@ public enum BattleTier {
 		tiers.add(Tier2);
 		tiers.add(Tier3);
 		if (Event.isEventActive(EventType.Contest)) tiers.add(Contest);
+		if (Boolean.parseBoolean(JDBC.getVariable("testing"))) tiers.add(Test);
 		return tiers.toArray(new BattleTier[0]);
 	}
 }

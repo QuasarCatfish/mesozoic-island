@@ -5,11 +5,13 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Util;
+import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -69,7 +71,11 @@ public class NicknameCommand implements ICommand {
 		String nick = Util.join(args, " ", 1, args.length);
 		if (nick.toLowerCase().matches(NICKNAME)) {
 			JDBC.setNickname(p.getIdLong(), d.getDex(), d.getForm(), nick);
-			event.getChannel().sendMessageFormat("%s, your %s shall now be known as \"%s\".", event.getAuthor().getAsMention(), d.getDinosaurName(), nick).complete();
+			if (d.getDinosaurForm() == DinosaurForm.Accursed) {
+				event.getChannel().sendMessageFormat("%s, your %s shall now be known as \"%s\".", event.getAuthor().getAsMention(), Zalgo.field(d.getDinosaurName()), Zalgo.field(nick)).complete();
+			} else {
+				event.getChannel().sendMessageFormat("%s, your %s shall now be known as \"%s\".", event.getAuthor().getAsMention(), d.getDinosaurName(), nick).complete();
+			}
 		} else {
 			event.getChannel().sendMessageFormat("%s, that is an invalid nickname for a dinosaur.", event.getAuthor().getAsMention()).complete();
 		}

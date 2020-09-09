@@ -86,7 +86,7 @@ public class Constants {
 	// Leaderboard
 	public static final int MAX_LEADERBOARD_LENGTH = 10;
 	public static final int MAX_LEADERBOARD_CHECK = 25;
-	public static final int LEADERBOARD_REQUIRED_BATTLES = 5;
+	public static final int LEADERBOARD_REQUIRED_BATTLES = 25;
 	
 	// Quests
 	public static final int DAYS_BETWEEN_SAME_QUEST = 14;

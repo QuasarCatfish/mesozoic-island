@@ -116,7 +116,7 @@ public class Daily {
 			for (Event e : Event.values()) {
 				if (!e.isAnnounce()) continue;
 				if (millis >= e.getStartTime() && e.getStartTime() + TimeUnit.DAYS.toMillis(1) > millis) {
-					sb.append("Event Start: " + e.getName());
+					sb.append("\n" + Constants.BULLET_POINT + " Event Start: " + e.getName());
 				}
 			}
 
@@ -124,7 +124,7 @@ public class Daily {
 			for (Event e : Event.values()) {
 				if (!e.isAnnounce()) continue;
 				if (millis >= e.getEndTime() && e.getEndTime() + TimeUnit.DAYS.toMillis(1) > millis) {
-					sb.append("Event End: " + e.getName());
+					sb.append("\n" + Constants.BULLET_POINT + " Event End: " + e.getName());
 				}
 			}
 		}
