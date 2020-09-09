@@ -81,18 +81,18 @@ public class DinosaursCommand implements ICommand {
 			}
 		}
 		
-		sb.append("You'll find a full list of your dinosaurs in your DMs.");
-		event.getChannel().sendMessage(sb.toString()).complete();
-		
-		
+		// Calculate filters
 		ArrayList<String> where = new ArrayList<String>();
 		where.add("player = " + p.getId());
 		ArrayList<String> order = new ArrayList<String>();
 		ArrayList<String> filter = new ArrayList<String>();
+		boolean silent = false;
+
 		for (int q = 0; q < args.length; q++) {
 			DinosaurFilter df = DinosaurFilter.of(args[q]);
 			DinosaurOrder dor = DinosaurOrder.of(args[q]);
 			if (df == null && dor == null) continue;
+			if (df == DinosaurFilter.Silent) silent = true;
 			if (df == null) {
 				filter.add(dor.getName());
 				order.add(dor.getOrderClause());
@@ -106,6 +106,15 @@ public class DinosaursCommand implements ICommand {
 			}
 		}
 		order.add("dinosaurs.dex asc");
+
+		// Send message in channel
+		if (silent) {
+			event.getChannel().sendMessage(sb.toString()).complete();
+			return;
+		} else {
+			sb.append("You'll find a full list of your dinosaurs in your DMs.");
+			event.getChannel().sendMessage(sb.toString()).complete();
+		}
 		
 		List<String> print = new ArrayList<String>();
 		if (filter.isEmpty()) print.add("**Your Dinosaurs:**");
@@ -197,6 +206,9 @@ public class DinosaursCommand implements ICommand {
 		Tradeable("Tradable", "trad(e|able)|dupes?", "captures.rp > 0", false),
 		Rankable("Rankable", "rank(up|(up)?able)", "captures.rp > captures.rnk and captures.rnk < " + Constants.MAX_RANK, false),
 		Nickname("Has Nickname", "(has)?nick(name)?", "!isnull(nick)", false),
+
+		// Silent
+		Silent("Silent", "silent|nodm|count", "captures.form = 0", false),
 		;
 		
 		private String name, regex, where;
