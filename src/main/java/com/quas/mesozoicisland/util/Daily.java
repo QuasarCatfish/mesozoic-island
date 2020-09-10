@@ -88,7 +88,7 @@ public class Daily {
 					for (long player : valid.keySet()) {
 						if (valid.get(player) <= 0) continue;
 						valid.put(player, valid.get(player) - 1);
-						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward, special) values(%d, '%s', %d, %d, %d, '%s', %d);", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getBag().getOrDefault(item, 0L), goal, Util.cleanQuotes(reward), special);
+						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward, special) values(%d, '%s', %d, %d, %d, '%s', %d);", player, Util.cleanQuotes(name), type, Player.getPlayer(player).getItemCount(item), goal, Util.cleanQuotes(reward), special);
 					}
 					
 					questnames.add("\"" + name + "\"");

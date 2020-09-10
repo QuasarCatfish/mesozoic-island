@@ -266,6 +266,15 @@ public class JDBC {
 			case "curse":
 				ret.append(Constants.BULLET_POINT + " " + Zalgo.field("but great power comes with a price...") + "\n");
 				break;
+			case "q": case "quest":
+				try (ResultSet res = JDBC.executeQuery("select * from questlist where questid = %d;", in.nextInt())) {
+					if (res.next()) {
+						ret.append(String.format("%s \"%s\" Quest%n", Constants.BULLET_POINT, res.getString("questname")));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
 			}
 		}
 		
@@ -304,6 +313,21 @@ public class JDBC {
 				break;
 			case "curse":
 				setCursed(pid, true);
+				break;
+			case "q": case "quest":
+				try (ResultSet res = JDBC.executeQuery("select * from questlist where questid = %d;", in.nextInt())) {
+					if (res.next()) {
+						String name = res.getString("questname");
+						long type = res.getLong("questtype");
+						long goal = res.getLong("goal");
+						String reward = res.getString("reward");
+						int special = res.getInt("special");
+						Item item = Item.getItem(Stat.of(type));
+						JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward, special) values(%d, '%s', %d, %d, %d, '%s', %d);", pid, Util.cleanQuotes(name), type, Player.getPlayer(pid).getItemCount(item), goal, Util.cleanQuotes(reward), special);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				break;
 			}
 		}
