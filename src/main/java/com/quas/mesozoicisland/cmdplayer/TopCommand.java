@@ -190,7 +190,7 @@ public class TopCommand implements ICommand {
 		// Dex
 		Dex(Util.arr("dex"), "Dex Completion", LeaderboardType.PlayerDexCount, null, DinosaurForm.AllForms.getId()),
 		DexStandard(Util.arr("dex standard", "dex std"), "Dex Completion (Standard)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Standard.getId()),
-		DexPrismatic(Util.arr("dex prismatic"), "Dex Completion (Prismatic)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Prismatic.getId()),
+		DexPrismatic(Util.arr("dex prismatic", "dex prism", "dex pris"), "Dex Completion (Prismatic)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Prismatic.getId()),
 		DexDungeon(Util.arr("dex dungeon"), "Dex Completion (Dungeon)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Dungeon.getId()),
 		DexHalloween(Util.arr("dex halloween"), "Dex Completion (Halloween)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Halloween.getId()),
 		DexThanksgiving(Util.arr("dex thanksgiving"), "Dex Completion (Thanksgiving)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Thanksgiving.getId()),
@@ -201,7 +201,7 @@ public class TopCommand implements ICommand {
 		// Level
 		Level(Util.arr("level", "lvl", "lv"), "Dinosaur Level", LeaderboardType.DinosaurLevel, null),
 		LevelStandard(Util.arr("level standard", "level std", "lvl standard", "lvl std", "lv standard", "lv std"), "Dinosaur Level (Standard)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Standard.getId()),
-		LevelPrismatic(Util.arr("level prismatic", "lvl prismatic", "lv prismatic"), "Dinosaur Level (Prismatic)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Prismatic.getId()),
+		LevelPrismatic(Util.arr("level prismatic", "lvl prismatic", "lv prismatic", "level prism", "lvl prism", "lv prism", "level pris", "lvl pris", "lv pris"), "Dinosaur Level (Prismatic)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Prismatic.getId()),
 		LevelDungeon(Util.arr("level dungeon", "lvl dungeon", "lv dungeon"), "Dinosaur Level (Dungeon)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Dungeon.getId()),
 		LevelHalloween(Util.arr("level halloween", "lvl halloween", "lv halloween"), "Dinosaur Level (Halloween)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Halloween.getId()),
 		LevelThanksgiving(Util.arr("level thanksgiving", "lvl thanksgiving", "lv thanksgiving"), "Dinosaur Level (Thanksgiving)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Thanksgiving.getId()),
@@ -209,7 +209,7 @@ public class TopCommand implements ICommand {
 		// Rank
 		Rank(Util.arr("rank"), "Dinosaur Rank", LeaderboardType.DinosaurRank, null),
 		RankStandard(Util.arr("rank standard", "rank std"), "Dinosaur Rank (Standard)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Standard.getId()),
-		RankPrismatic(Util.arr("rank prismatic"), "Dinosaur Rank (Prismatic)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Prismatic.getId()),
+		RankPrismatic(Util.arr("rank prismatic", "rank prism", "rank pris"), "Dinosaur Rank (Prismatic)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Prismatic.getId()),
 		RankDungeon(Util.arr("rank dungeon"), "Dinosaur Rank (Dungeon)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Dungeon.getId()),
 		RankHalloween(Util.arr("rank halloween"), "Dinosaur Rank (Halloween)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Halloween.getId()),
 		RankThanksgiving(Util.arr("rank thanksgiving"), "Dinosaur Rank (Thanksgiving)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Thanksgiving.getId()),

@@ -96,6 +96,7 @@ public class QuestsCommand implements ICommand {
 				
 				sb.append("\n• ");
 				if (res.getInt("special") == 1) sb.append("[EVENT] ");
+				if (res.getInt("special") == -1) sb.append("[TEST] ");
 				sb.append("**");
 				sb.append(name);
 				sb.append("** - ");

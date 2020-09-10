@@ -78,4 +78,42 @@ public class DinoMath {
 		if ((level >= 10 || bst >= 5_000) && tiers.contains(BattleTier.Tier2)) return BattleTier.Tier2;
 		return BattleTier.Tier1;
 	}
+
+	public static int getNextBattleTierPercent(Dinosaur[] team) {
+		if (team.length == 0) return -1;
+		
+		List<BattleTier> tiers = Arrays.asList(BattleTier.getBattleTiers());
+		if (team[0].getPlayerId() == Constants.QUAS_ID && tiers.contains(BattleTier.Test)) return -1;
+		
+		// Get stats
+		long xp = 0;
+		long bst = 0;
+		boolean contest = true;
+		for (Dinosaur d : team) {
+			if (d.getDinosaurForm() == DinosaurForm.Accursed) {
+				xp += d.getPlayer().getXp();
+			} else {
+				xp += d.getXp();
+				long stats = d.getHealth() + d.getAttack() + d.getDefense();
+				if (stats > bst) bst = stats;
+			}
+			if (d.getDinosaurForm() != DinosaurForm.Contest) contest = false;
+		}
+		
+		// Contest running
+		if (contest) return -1;
+
+		// Calculate Level
+		int level = getLevel(xp);
+
+		// Calculate Percent
+		if (level < 10 && bst < 5_000 && tiers.contains(BattleTier.Tier2)) return floor(Math.max(100f * xp / getXp(10), 100f * bst / 5_000));
+		if (level < 30 && bst < 7_500 && tiers.contains(BattleTier.Tier3)) return floor(Math.max(100f * (xp - getXp(10)) / (getXp(30) - getXp(10)), 100f * (bst - 5_000) / 2_500));
+		if (level < 50 && bst < 10_000 && tiers.contains(BattleTier.Tier4)) return floor(Math.max(100f * (xp - getXp(30)) / (getXp(50) - getXp(30)), 100f * (bst - 7_500) / 2_500));
+		return -1;
+	}
+
+	private static int floor(float f) {
+		return (int)f;
+	}
 }

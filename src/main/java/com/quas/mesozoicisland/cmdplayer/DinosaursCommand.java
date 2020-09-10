@@ -87,12 +87,21 @@ public class DinosaursCommand implements ICommand {
 		ArrayList<String> order = new ArrayList<String>();
 		ArrayList<String> filter = new ArrayList<String>();
 		boolean silent = false;
+		boolean fail = false;
 
 		for (int q = 0; q < args.length; q++) {
 			DinosaurFilter df = DinosaurFilter.of(args[q]);
 			DinosaurOrder dor = DinosaurOrder.of(args[q]);
-			if (df == null && dor == null) continue;
-			if (df == DinosaurFilter.Silent) silent = true;
+			if (df == DinosaurFilter.Dummy) continue;
+			if (df == null && dor == null) {
+				fail = true;
+				break;
+			}
+			if (df == DinosaurFilter.Silent) {
+				silent = true;
+				continue;
+			}
+
 			if (df == null) {
 				filter.add(dor.getName());
 				order.add(dor.getOrderClause());
@@ -106,6 +115,8 @@ public class DinosaursCommand implements ICommand {
 			}
 		}
 		order.add("dinosaurs.dex asc");
+
+		if (fail) return;
 
 		// Send message in channel
 		if (silent) {
@@ -157,7 +168,7 @@ public class DinosaursCommand implements ICommand {
 	
 	private enum DinosaurFilter {
 		// Dinosaur Form
-		Prismatic("Prismatic", "prismatic", "captures.form = " + DinosaurForm.Prismatic.getId(), false),
+		Prismatic("Prismatic", "prismatic|prism|pris", "captures.form = " + DinosaurForm.Prismatic.getId(), false),
 		Dungeon("Dungeon", "dungeon", "captures.form = " + DinosaurForm.Dungeon.getId(), false),
 		Halloween("Halloween", "halloween", "captures.form = " + DinosaurForm.Halloween.getId(), false),
 		Thanksgiving("Thanksgiving", "thanksgiving", "captures.form = " + DinosaurForm.Thanksgiving.getId(), false),
@@ -207,8 +218,9 @@ public class DinosaursCommand implements ICommand {
 		Rankable("Rankable", "rank(up|(up)?able)", "captures.rp > captures.rnk and captures.rnk < " + Constants.MAX_RANK, false),
 		Nickname("Has Nickname", "(has)?nick(name)?", "!isnull(nick)", false),
 
-		// Silent
+		// Non-Filters
 		Silent("Silent", "silent|nodm|count", "captures.form = 0", false),
+		Dummy(null, "rare|can|has|type", "captures.form = 0", false);
 		;
 		
 		private String name, regex, where;
@@ -235,10 +247,12 @@ public class DinosaursCommand implements ICommand {
 		////////////////////////
 		
 		public static String listValues() {
-			String[] vals = new String[values().length];
-			for (int q = 0; q < values().length; q++) {
-				vals[q] = String.format("`%s`", values()[q].name.toLowerCase());
+			ArrayList<String> vals = new ArrayList<String>();
+			for (DinosaurFilter df : values()) {
+				if (df.name == null) continue;
+				vals.add(String.format("`%s`", df.name.toLowerCase()));
 			}
+			
 			return String.join(", ", vals);
 		}
 		
