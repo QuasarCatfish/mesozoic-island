@@ -57,7 +57,7 @@ public class GenerateRedeemCommand implements ICommand {
 	public void run(MessageReceivedEvent event, String... args) {
 		String prize = Util.join(args, " ", 1, args.length) + " ";
 		
-		if (prize.length() <= 100 && prize.matches(String.format("((item %s %s( %s)? )|(dino %s %s( %s)? )|(rune %s( %s)? )|(egg %s %s ))+", INTEGER, LONG, LONG, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER))) {
+		if (prize.length() <= 100 && prize.matches(String.format("((item %s %s( %s)? )|(dino %s %s( %s)? )|(rune %s( %s)? )|(egg %s %s )|(curse )|(quest %s ))+", INTEGER, LONG, LONG, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER))) {
 			String code = Util.generateRandomString(16);
 			JDBC.executeUpdate("insert into redeems(redeem, reward) values('%s', '%s');", Util.cleanQuotes(code), Util.cleanQuotes(prize));
 			event.getChannel().sendMessageFormat("%s, the redeem code was generated successfully.", event.getAuthor().getAsMention()).complete();
