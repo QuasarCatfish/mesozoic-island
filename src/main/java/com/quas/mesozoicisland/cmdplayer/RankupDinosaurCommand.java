@@ -66,7 +66,7 @@ public class RankupDinosaurCommand implements ICommand {
 		if (d == null) {
 			event.getChannel().sendMessageFormat("%s, this dinosaur does not exist.", event.getAuthor().getAsMention()).complete();
 		} else if (!d.canRankup()) {
-			event.getChannel().sendMessageFormat("%s, your %s needs %,d RP to rankup.", event.getAuthor().getAsMention(), d.getEffectiveName(), d.getRpToRankup()).complete();
+			event.getChannel().sendMessageFormat("%s, your %s needs an additional %,d RP to rankup.", event.getAuthor().getAsMention(), d.getEffectiveName(), d.getRpToRankup()).complete();
 		} else if (d.getRank() == Constants.MAX_RANK) {
 			event.getChannel().sendMessageFormat("%s, your %s is at the max rank and cannot rankup any further.", event.getAuthor().getAsMention(), d.getEffectiveName()).complete();
 		} else {
