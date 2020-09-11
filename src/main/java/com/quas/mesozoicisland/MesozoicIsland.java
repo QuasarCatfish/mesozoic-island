@@ -56,6 +56,7 @@ import com.quas.mesozoicisland.cmdplayer.DataCommand;
 import com.quas.mesozoicisland.cmdplayer.DeleteTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.DinodexCommand;
 import com.quas.mesozoicisland.cmdplayer.DinosaursCommand;
+import com.quas.mesozoicisland.cmdplayer.EchoCaveOfLostHope;
 import com.quas.mesozoicisland.cmdplayer.EggsCommand;
 import com.quas.mesozoicisland.cmdplayer.ElementsCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipCommand;
@@ -284,7 +285,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new ColorCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new RemoveItemCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ContestEnterCommand());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
+		CommandManager.addCommand(assistant.getIdLong(), new EchoCaveOfLostHope());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands

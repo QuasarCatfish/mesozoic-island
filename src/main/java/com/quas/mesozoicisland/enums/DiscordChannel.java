@@ -49,6 +49,10 @@ public enum DiscordChannel {
 	MetalGuild(650508960054640662L),
 	WaterGuild(650508992392724530L),
 	AirGuild(650509034700668969L),
+
+	// World
+	CaveOfLostHope(752724608955973662L),
+	DebugCaveOfLostHope(753933646125203547L),
 	
 	// Chatting
 	Chatting(-1L),
