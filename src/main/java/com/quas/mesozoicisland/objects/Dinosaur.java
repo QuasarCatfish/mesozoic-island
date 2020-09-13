@@ -421,11 +421,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				
 				int boost = DinoMath.getLevelBoost(d.getLevel());
 				boost += DinoMath.getRankBoost(d.getRank());
-				// Contest Dinos do not get element boost
-				if (d.getDinosaurForm() != DinosaurForm.Contest) {
+				// Contest Dinos and Accursed Dinos do not get element boost or cursed
+				if (d.getDinosaurForm() != DinosaurForm.Contest && d.getDinosaurForm() != DinosaurForm.Accursed) {
 					boost += d.getPlayer().getElementBoost(d.getElement());
-					// Contest dinosaurs and Accursed dinosaurs do not get curse boost
-					if (d.getDinosaurForm() != DinosaurForm.Accursed && d.getPlayer().isCursed()) {
+					if (d.getPlayer().isCursed()) {
 						boost -= 50;
 					}
 				}
