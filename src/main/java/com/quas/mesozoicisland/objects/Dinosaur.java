@@ -272,7 +272,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 
 	public String getEffectiveName(boolean zalgo) {
-		if (getDinosaurForm() == DinosaurForm.Accursed && zalgo) {
+		if (getForm() == DinosaurForm.Accursed.getId() && zalgo) {
 			if (nick == null) return Zalgo.title(dinoname);
 			return Zalgo.title(String.format("\"%s\" the %s", nick, dinoname));
 		} else {

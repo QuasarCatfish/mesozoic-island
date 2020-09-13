@@ -163,6 +163,18 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessage(eb.build()).complete();
 			} break;
 
+			case "zalgo2": {
+				for (char[] ch : new char[][] {Zalgo.UP, Zalgo.MID, Zalgo.DOWN}) {
+					StringBuilder sb = new StringBuilder();
+					for (char c : ch) {
+						sb.append("a");
+						sb.append(c);
+					}
+
+					event.getChannel().sendMessage(sb.toString()).complete();
+				}
+			} break;
+
 			case "lost": {
 				long sum = 0;
 				Dinosaur[] values = Dinosaur.values();

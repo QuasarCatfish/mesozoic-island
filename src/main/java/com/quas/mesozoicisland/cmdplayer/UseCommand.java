@@ -412,18 +412,28 @@ public class UseCommand implements ICommand {
 				int form = Integer.parseInt(split[1]);
 				long xp = Long.parseLong(split[2]);
 				
-				if (d.getDex() == dex && d.getForm() == form) {
+				if (d.getDex() == dex && (d.getForm() == form || form == -1)) {
 					if (d.getLevel() == Constants.MAX_LEVEL) {
 						event.getChannel().sendMessageFormat("%s, your %s is at the max level. You cannot use the %s on it.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 						SUCCESS = false;
 					} else {
-						event.getChannel().sendMessageFormat("%s, your %s gained %s XP from the %s.", p.getAsMention(), d.getEffectiveName(), i.getId() == 210 ? "∞" : Util.formatNumber(xp), i.toString()).complete();
+						event.getChannel().sendMessageFormat("%s, your %s gained %,d XP from the %s.", p.getAsMention(), d.getEffectiveName(), xp, i.toString()).complete();
 						JDBC.addXp(event.getChannel(), p.getIdLong(), d.getIdPair(), xp, false);
 					}
 				} else {
-					Dinosaur d2 = Dinosaur.getDinosaur(dex, form);
-					event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on a %s.", p.getAsMention(), d2.getDinosaurName()).complete();
-					SUCCESS = false;
+					if (form == -1) {
+						Dinosaur d2 = Dinosaur.getDinosaur(dex, DinosaurForm.Standard.getId());
+						event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on a %s.", p.getAsMention(), d2.getDinosaurName()).complete();
+						SUCCESS = false;
+					} else if (form == DinosaurForm.Standard.getId()) {
+						Dinosaur d2 = Dinosaur.getDinosaur(dex, form);
+						event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on a Standard %s.", p.getAsMention(), d2.getDinosaurName()).complete();
+						SUCCESS = false;
+					} else {
+						Dinosaur d2 = Dinosaur.getDinosaur(dex, form);
+						event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on a %s.", p.getAsMention(), d2.getDinosaurName()).complete();
+						SUCCESS = false;
+					}
 				}
 			}
 			
