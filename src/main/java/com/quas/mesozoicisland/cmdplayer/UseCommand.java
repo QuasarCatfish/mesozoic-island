@@ -413,7 +413,10 @@ public class UseCommand implements ICommand {
 				long xp = Long.parseLong(split[2]);
 				
 				if (d.getDex() == dex && (d.getForm() == form || form == -1)) {
-					if (d.getLevel() == Constants.MAX_LEVEL) {
+					if (d.getDinosaurForm() == DinosaurForm.Contest || d.getDinosaurForm() == DinosaurForm.Accursed) {
+						event.getChannel().sendMessageFormat("%s, your %s refuses to drink the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
+					SUCCESS = false;
+					} else if (d.getLevel() == Constants.MAX_LEVEL) {
 						event.getChannel().sendMessageFormat("%s, your %s is at the max level. You cannot use the %s on it.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 						SUCCESS = false;
 					} else {
