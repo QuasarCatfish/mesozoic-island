@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.Scanner;
 import java.util.TreeSet;
 
@@ -31,7 +30,9 @@ import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
 
 public class JDBC {
 
@@ -275,6 +276,10 @@ public class JDBC {
 					e.printStackTrace();
 				}
 				break;
+			case "discordrole":
+				Role role = MesozoicIsland.getProfessor().getGuild().getRoleById(in.next());
+				ret.append(Constants.BULLET_POINT + " The @" + role.getName() + " role\n");
+				break;
 			}
 		}
 		
@@ -328,6 +333,12 @@ public class JDBC {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+				break;
+			case "discordrole":
+				Member m = MesozoicIsland.getProfessor().getGuild().getMemberById(pid);
+				long role = in.nextLong();
+				if (m == null) break;
+				Util.addRoleToMember(m, role);
 				break;
 			}
 		}
@@ -388,22 +399,7 @@ public class JDBC {
 	}
 	
 	public static synchronized boolean addEgg(long pid, Egg egg) {
-		HashSet<Integer> used = new HashSet<Integer>();
-		try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d;", pid)) {
-			while (res.next()) {
-				used.add(res.getInt("incubator"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		int slot = -1;
-		for (int q = 1;; q++) {
-			if (used.contains(q)) continue;
-			slot = q;
-			break;
-		}
-		
+		int slot = Util.getFirstOpenIncubator(pid);
 		JDBC.addItem(pid, Stat.EggsReceived.getId());
 		
 		if (egg.hasCustomName()) {

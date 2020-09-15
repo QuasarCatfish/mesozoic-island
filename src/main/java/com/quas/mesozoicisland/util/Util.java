@@ -2,16 +2,20 @@ package com.quas.mesozoicisland.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
+import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordRole;
@@ -504,5 +508,23 @@ public class Util {
 	
 	public static boolean isChannelInCategory(TextChannel tc, long category) {
 		return MesozoicIsland.getProfessor().getGuild().getCategoryById(category).getTextChannels().contains(tc);
+	}
+
+	/////////////////////////////////////////////////////////
+
+	public static int getFirstOpenIncubator(long player) {
+		HashSet<Integer> used = new HashSet<Integer>();
+		try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d;", player)) {
+			while (res.next()) {
+				used.add(res.getInt("incubator"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		for (int q = 1;; q++) {
+			if (used.contains(q)) continue;
+			return q;
+		}
 	}
 }

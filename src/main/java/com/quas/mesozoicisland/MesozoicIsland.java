@@ -44,6 +44,8 @@ import com.quas.mesozoicisland.cmdbase.PingCommand;
 import com.quas.mesozoicisland.cmdbase.QuitCommand;
 import com.quas.mesozoicisland.cmdplayer.BagCategoryCommand;
 import com.quas.mesozoicisland.cmdplayer.BagCommand;
+import com.quas.mesozoicisland.cmdplayer.BenedictBuyCommand;
+import com.quas.mesozoicisland.cmdplayer.BenedictStockCommand;
 import com.quas.mesozoicisland.cmdplayer.BirthdayCommand;
 import com.quas.mesozoicisland.cmdplayer.BuyCommand;
 import com.quas.mesozoicisland.cmdplayer.ColorCommand;
@@ -286,6 +288,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new RemoveItemCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ContestEnterCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new EchoCaveOfLostHope());
+		CommandManager.addCommand(assistant.getIdLong(), new BenedictStockCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new BenedictBuyCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands

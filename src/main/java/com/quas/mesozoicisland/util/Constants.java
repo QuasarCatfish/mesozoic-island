@@ -62,6 +62,7 @@ public class Constants {
 	public static final long EGG_WAIT = TimeUnit.SECONDS.toMillis(90);
 	public static final int MIN_HP_PER_MINUTE = 1;
 	public static final int MAX_HP_PER_MINUTE = 3;
+	public static final int EGG_PRICE = 500;
 	
 	// Dungeons
 	public static boolean SPAWN_DUNGEONS = true;

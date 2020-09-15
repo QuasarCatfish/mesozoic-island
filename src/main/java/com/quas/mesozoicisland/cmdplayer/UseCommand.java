@@ -307,7 +307,7 @@ public class UseCommand implements ICommand {
 						if (contained) {
 							try (ResultSet res = JDBC.executeQuery("select * from dungeonpurchase where date = '%s' and player = %d and dino = '%s';", MesozoicDate.getToday(), p.getIdLong(), d2.getId())) {
 								if (res.next()) {
-									event.getChannel().sendMessageFormat("%s, you cannot purcahse a second %s today.", p.getAsMention(), d2.getDinosaurName()).complete();
+									event.getChannel().sendMessageFormat("%s, you cannot purchase a second %s today.", p.getAsMention(), d2.getDinosaurName()).complete();
 									SUCCESS = false;
 								} else {
 									event.getChannel().sendMessageFormat("%s, you have redeemed %s %s with your %s.", p.getAsMention(), Util.getArticle(d2.getDinosaurName()), d2.getDinosaurName(), i.toString()).complete();
