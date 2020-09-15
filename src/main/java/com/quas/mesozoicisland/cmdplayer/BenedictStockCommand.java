@@ -23,7 +23,7 @@ public class BenedictStockCommand implements ICommand {
 
 	@Override
 	public AccessLevel getAccessLevel() {
-		return AccessLevel.GuineaPig;
+		return AccessLevel.Trainer;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class BenedictStockCommand implements ICommand {
 
 		try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", CustomPlayer.EggSalesman.getIdLong())) {
 			if (res.next()) {
-				event.getChannel().sendMessageFormat("%s, %s has %,d eggs in stock.", p.getAsMention(), CustomPlayer.EggSalesman.getPlayer().getName(), res.getInt("count")).complete();
+				event.getChannel().sendMessageFormat("%s, %s has %,d egg%s in stock.", p.getAsMention(), CustomPlayer.EggSalesman.getPlayer().getName(), res.getInt("count"), res.getInt("count") == 1 ? "" : "s").complete();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

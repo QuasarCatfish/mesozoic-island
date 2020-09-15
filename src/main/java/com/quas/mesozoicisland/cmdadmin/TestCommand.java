@@ -19,6 +19,7 @@ import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
@@ -26,6 +27,7 @@ import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.Rarity;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
+import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 import com.quas.mesozoicisland.util.Zalgo;
@@ -172,6 +174,35 @@ public class TestCommand implements ICommand {
 					}
 
 					event.getChannel().sendMessage(sb.toString()).complete();
+				}
+			} break;
+
+			case "benedict": {
+				int count = -1;
+				try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", CustomPlayer.EggSalesman.getIdLong())) {
+					if (res.next()) {
+						count = res.getInt("count");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				if (count > -1) {
+					int max = Integer.parseInt(JDBC.getVariable("benedict"));
+					if (count == 0) {
+						max += 1;
+						JDBC.setVariable("benedict", Integer.toString(max));
+					}
+
+					for (int q = count; q < max; q++) {
+						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextDinosaur().getIdPair());
+						JDBC.addEgg(CustomPlayer.EggSalesman.getIdLong(), egg);
+						event.getChannel().sendMessage("Generated " + egg.getEggName()).complete();
+					}
+
+					event.getChannel().sendMessageFormat("\n%s %s has received more eggs. There are %,d eggs in stock today.", Constants.BULLET_POINT, CustomPlayer.EggSalesman.getPlayer().getName(), Math.max(count, max)).complete();
+				} else {
+					event.getChannel().sendMessage("There was an error in giving eggs.").complete();
 				}
 			} break;
 

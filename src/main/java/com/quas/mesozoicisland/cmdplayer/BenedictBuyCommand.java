@@ -29,7 +29,7 @@ public class BenedictBuyCommand implements ICommand {
 
 	@Override
 	public AccessLevel getAccessLevel() {
-		return AccessLevel.GuineaPig;
+		return AccessLevel.Trainer;
 	}
 
 	@Override

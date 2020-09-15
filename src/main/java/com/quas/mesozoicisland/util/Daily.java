@@ -15,6 +15,7 @@ import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
@@ -108,6 +109,32 @@ public class Daily {
 			sb.append(" have received ");
 			if (quests > 1) sb.append("these quests.");
 			else sb.append("this quest.");
+		}
+
+		// Egg Salesman Benedict
+		{
+			int count = -1;
+			try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", CustomPlayer.EggSalesman.getIdLong())) {
+				if (res.next()) {
+					count = res.getInt("count");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			if (count > -1) {
+				int max = Integer.parseInt(JDBC.getVariable("benedict"));
+				if (count == 0) {
+					max += 1;
+					JDBC.setVariable("benedict", Integer.toString(max));
+				}
+
+				for (int q = count; q < max; q++) {
+					JDBC.addEgg(CustomPlayer.EggSalesman.getIdLong(), Egg.getRandomEgg(MesozoicRandom.nextDinosaur().getIdPair()));
+				}
+
+				sb.append(String.format("\n%s %s has received more eggs. There are %,d eggs in stock today.", Constants.BULLET_POINT, CustomPlayer.EggSalesman.getPlayer().getName(), Math.max(count, max)));
+			}
 		}
 
 		// Events

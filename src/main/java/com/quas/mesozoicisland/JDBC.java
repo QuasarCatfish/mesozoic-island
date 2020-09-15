@@ -565,6 +565,10 @@ public class JDBC {
 		
 		return null;
 	}
+
+	public static synchronized boolean setVariable(String name, String value) {
+		return executeUpdate("update vars set value = '%s' where var = '%s';", Util.cleanQuotes(value), Util.cleanQuotes(name));
+	}
 	
 	public static synchronized String getReward(String name) {
 		try (ResultSet res = JDBC.executeQuery("select * from rewards where rewardname = '%s';", Util.cleanQuotes(name))) {
