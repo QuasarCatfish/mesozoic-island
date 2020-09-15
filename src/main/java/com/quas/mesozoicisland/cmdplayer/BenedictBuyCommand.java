@@ -67,14 +67,25 @@ public class BenedictBuyCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 
+		int forsale = 0;
+		try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", CustomPlayer.EggSalesman.getIdLong())) {
+			if (res.next()) {
+				forsale = res.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		long money = p.getItemCount(ItemID.DinosaurCoin);
 		long incubator = p.getItemCount(ItemID.EggIncubator);
 		int eggs = p.getEggCount();
 
-		if (money < Constants.EGG_PRICE) {
-			event.getChannel().sendMessageFormat("%s, you don't have enough %s to buy an egg.", p.getAsMention(), Item.getItem(ItemID.DinosaurCoin).toString(2)).complete();
+		if (forsale <= 0) {
+			event.getChannel().sendMessageFormat("%s, there are no eggs left in stock.", p.getAsMention()).complete();
 		} else if (eggs >= incubator) {
 			event.getChannel().sendMessageFormat("%s, you don't have any open incubator slots.", p.getAsMention()).complete();
+		} else if (money < Constants.EGG_PRICE) {
+			event.getChannel().sendMessageFormat("%s, you don't have enough %s to buy an egg.", p.getAsMention(), Item.getItem(ItemID.DinosaurCoin).toString(2)).complete();
 		} else {
 			try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d limit 1;", CustomPlayer.EggSalesman.getIdLong())) {
 				if (res.next()) {
@@ -82,6 +93,7 @@ public class BenedictBuyCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s, you have bought %s %s for %,d %s.", p.getAsMention(), Util.getArticle(egg.getEggName()), egg.getEggName(), Constants.EGG_PRICE, Item.getItem(ItemID.DinosaurCoin).toString(Constants.EGG_PRICE)).complete();
 					JDBC.executeUpdate("update eggs set player = %d, original = %d, incubator = %d where eggid = %d;", p.getIdLong(), p.getIdLong(), Util.getFirstOpenIncubator(p.getIdLong()), res.getInt("eggid"));
 					JDBC.addItem(p.getIdLong(), Stat.EggsReceived.getId());
+					JDBC.addItem(p.getIdLong(), ItemID.DinosaurCoin.getId(), -Constants.EGG_PRICE);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
