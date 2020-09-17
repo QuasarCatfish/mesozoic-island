@@ -73,6 +73,7 @@ public class DinosaursCommand implements ICommand {
 		sb.append(event.getAuthor().getAsMention());
 		sb.append("'s Dinosaurs:**\n");
 		
+		sb.append(String.format("**Species:** %,d/%,d\n", p.getDexCount(DinosaurForm.AnyForms.getId()), JDBC.getDexCount(DinosaurForm.AnyForms.getId())));
 		sb.append(String.format("**Total:** %,d/%,d\n", p.getDexCount(DinosaurForm.AllForms.getId()), JDBC.getDexCount(DinosaurForm.AllForms.getId())));
 		for (DinosaurForm form : DinosaurForm.values()) {
 			if (form.getId() < 0) continue;

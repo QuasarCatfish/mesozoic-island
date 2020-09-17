@@ -20,7 +20,9 @@ public enum DinosaurForm {
 	Halloween(1031, "Halloween", "H", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE),
 	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACK_HEAL, BattleAttack.STANDARD_DEFENSE),
 	
-	AllForms(Integer.MIN_VALUE, "All", Util.mult(Constants.ZERO_WIDTH_SPACE, 3), null, null);
+	AllForms(Integer.MIN_VALUE, "All", Util.mult(Constants.ZERO_WIDTH_SPACE, 3), null, null),
+	AnyForms(Integer.MIN_VALUE + 1, "Any", Util.mult(Constants.ZERO_WIDTH_SPACE, 5), null, null);
+	
 	
 	private int id;
 	private String name, symbol;

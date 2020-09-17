@@ -369,7 +369,13 @@ public class JDBC {
 	
 	public static synchronized int getDexCount(int form) {
 		if (form == DinosaurForm.AllForms.getId()) {
-			try (ResultSet res = JDBC.executeQuery("select count(*) as count from dinosaurs where dex > 0 and form >= 0 and form != %d and rarity >= 0;", DinosaurForm.Prismatic.getId())) {
+			try (ResultSet res = JDBC.executeQuery("select count(*) as count from dinosaurs where dex > 0 and form >= 0 and rarity >= 0;")) {
+				if (res.next()) return res.getInt("count");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (form == DinosaurForm.AnyForms.getId()) {
+			try (ResultSet res = JDBC.executeQuery("select count(distinct dex) as count from dinosaurs where dex > 0 and form >= 0 and rarity >= 0;")) {
 				if (res.next()) return res.getInt("count");
 			} catch (SQLException e) {
 				e.printStackTrace();

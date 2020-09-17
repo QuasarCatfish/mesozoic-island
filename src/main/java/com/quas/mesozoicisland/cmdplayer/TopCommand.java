@@ -199,7 +199,8 @@ public class TopCommand implements ICommand {
 	
 	private enum LeaderboardCategory {
 		// Dex
-		Dex(Util.arr("dex"), "Dex Completion", LeaderboardType.PlayerDexCount, null, DinosaurForm.AllForms.getId()),
+		Dex(Util.arr("dex"), "Dex Completion", LeaderboardType.PlayerDexCount, null, DinosaurForm.AnyForms.getId()),
+		DexAll(Util.arr("dex all"), "Dex Completion (All)", LeaderboardType.PlayerDexCount, null, DinosaurForm.AllForms.getId()),
 		DexStandard(Util.arr("dex standard", "dex std"), "Dex Completion (Standard)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Standard.getId()),
 		DexPrismatic(Util.arr("dex prismatic", "dex prism", "dex pris"), "Dex Completion (Prismatic)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Prismatic.getId()),
 		DexDungeon(Util.arr("dex dungeon"), "Dex Completion (Dungeon)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Dungeon.getId()),
