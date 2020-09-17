@@ -190,7 +190,7 @@ public class Daily {
 
 	public static void doHourly(long millis) {
 
-		TextChannel channel = DiscordChannel.GameTesting.getChannel(MesozoicIsland.getAssistant());
+		TextChannel channel = Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant());
 
 		// Check for achievement titles
 		for (Player p : Player.values()) {
