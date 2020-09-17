@@ -31,7 +31,7 @@ public class WhoHasCommand implements ICommand {
 
 	@Override
 	public String getCommandName() {
-		return null;
+		return "who has";
 	}
 
 	@Override

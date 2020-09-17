@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -13,7 +14,7 @@ public class HelpCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("help " + ALPHA);
+		return pattern("help( ", ALPHA, ")+");
 	}
 
 	@Override
@@ -56,6 +57,8 @@ public class HelpCommand implements ICommand {
 		StringBuilder sb = new StringBuilder();
 		ArrayList<ICommand> help = new ArrayList<ICommand>();
 		
+		String name = Util.join(args, " ", 0, args.length);
+
 		loop:
 		for (ICommand command : CommandManager.values()) {
 			// Skip commands with no help
@@ -70,7 +73,7 @@ public class HelpCommand implements ICommand {
 			}
 			
 			// Add command to the list
-			if (command.getCommandName().equalsIgnoreCase(args[0]) && command.canBeUsed(event)) {
+			if (command.getCommandName().equalsIgnoreCase(name) && command.canBeUsed(event)) {
 				help.add(command);
 				sb.append("• `");
 				sb.append(command.getCommandSyntax());
@@ -81,7 +84,7 @@ public class HelpCommand implements ICommand {
 		}
 		
 		if (sb.length() == 0) {
-			event.getChannel().sendMessageFormat("%s, I could not find the \"%s\" command.", event.getAuthor().getAsMention(), args[0]).complete();
+			event.getChannel().sendMessageFormat("%s, I could not find the \"%s\" command.", event.getAuthor().getAsMention(), name).complete();
 		} else {
 			event.getChannel().sendMessageFormat("__Command Information:__\n%s", sb.toString()).complete();
 		}
