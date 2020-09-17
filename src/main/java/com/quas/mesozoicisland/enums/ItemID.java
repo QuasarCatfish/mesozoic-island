@@ -136,7 +136,13 @@ public enum ItemID {
 	Level300Title(10019, 0),
 	Level500Title(10020, 0),
 	GenerousTitle(10021, 0),
-	ChickenHunterTitle(10022, 0);
+	ChickenHunterTitle(10022, 0),
+	ContestWinnerTitle(10023, 0),
+	ContestRunnerUpTitle(10024, 0),
+	ContestParticipantTitle(10025, 0),
+	
+	NoviceDamagerTitle(11001, 0),
+	;
 
 	private int id;
 	private long dmg;

@@ -11,6 +11,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.DinosaurLicense;
@@ -192,6 +193,10 @@ public class Player {
 
 	public long getItemCount(ItemID item) {
 		return getItemCount(item.getId());
+	}
+
+	public long getItemCount(Stat stat) {
+		return getItemCount(stat.getId());
 	}
 
 	private long getItemCount(Pair<Integer, Long> item) {

@@ -168,6 +168,7 @@ public class DinosaursCommand implements ICommand {
 	
 	private enum DinosaurFilter {
 		// Dinosaur Form
+		Standard("Standard", "standard", "captures.form = " + DinosaurForm.Standard.getId(), false),
 		Prismatic("Prismatic", "prismatic|prism|pris", "captures.form = " + DinosaurForm.Prismatic.getId(), false),
 		Dungeon("Dungeon", "dungeon", "captures.form = " + DinosaurForm.Dungeon.getId(), false),
 		Halloween("Halloween", "halloween", "captures.form = " + DinosaurForm.Halloween.getId(), false),

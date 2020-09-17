@@ -12,7 +12,6 @@ import java.util.TreeSet;
 import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
-import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.NewPlayerStatus;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
@@ -28,8 +27,6 @@ import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 import com.quas.mesozoicisland.util.Zalgo;
 
-import net.dv8tion.jda.api.entities.ChannelType;
-import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.Role;
@@ -438,10 +435,6 @@ public class JDBC {
 			boolean b = executeUpdate("update captures set rp = rp + %d where player = %d and dex = %d and form = %d;", rp, pid, dino.getFirstValue(), dino.getSecondValue());
 			JDBC.addItem(pid, Stat.DinosaursCaught.getId(), rp);
 			if (!d.canRankup() && Dinosaur.getDinosaur(pid, dino).canRankup()) {
-				if (channel.getType() == ChannelType.PRIVATE) {
-					Guild g = channel.getJDA().getGuildById(Constants.GUILD_ID);
-					channel = g.getTextChannelById(DiscordChannel.Game.getId());
-				}
 				channel.sendMessageFormat("%s, your %s can now rankup to **Rank %s**. Use `rankup %s` to rankup this dinosaur.", d.getPlayer().getAsMention(), d.getEffectiveName(), d.getNextRankString(), d.getId()).complete();
 			}
 			setLatest(pid, Dinosaur.getDinosaur(dino));

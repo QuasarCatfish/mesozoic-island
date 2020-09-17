@@ -95,9 +95,9 @@ public class Action {
 					JDBC.addXp(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getBot(self)), res.getLong("recipient"), Util.getDexForm(xpsplit[0]), Long.parseLong(xpsplit[1]), true);
 					break;
 				case NewDay:
-					long time = res.getLong("time");
-					Daily.doUpdate(time);
-					JDBC.addAction(ActionType.NewDay, self, 0, "Daily Message.", time + TimeUnit.DAYS.toMillis(1));
+					long dtime = res.getLong("time");
+					Daily.doUpdate(dtime);
+					JDBC.addAction(ActionType.NewDay, self, 0, "Daily Message.", dtime + TimeUnit.DAYS.toMillis(1));
 					break;
 				case Redeem:
 					JDBC.redeem(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()), res.getLong("recipient"), res.getString("msg"));
@@ -109,6 +109,11 @@ public class Action {
 				case AddLossToDinosaur:
 					String lossdino = res.getString("msg");
 					JDBC.addLoss(res.getLong("recipient"), Util.getDexForm(lossdino));
+					break;
+				case NewHour:
+					long htime = res.getLong("time");
+					Daily.doHourly(htime);
+					JDBC.addAction(ActionType.NewHour, self, 0, "Hourly Message.", htime + TimeUnit.HOURS.toMillis(1));
 					break;
 				}
 				
@@ -180,19 +185,19 @@ public class Action {
 	}
 	
 	public static void addDinosaur(long to, String dino) {
-		JDBC.addAction(ActionType.GiveDinosaur, 0, to, dino, 0);
+		JDBC.addAction(ActionType.GiveDinosaur, MesozoicIsland.getAssistant().getIdLong(), to, dino, 0);
 	}
 	
 	public static void addDinosaurDelayed(long to, long after, String dino) {
-		JDBC.addAction(ActionType.GiveDinosaur, 0, to, dino, System.currentTimeMillis() + after);
+		JDBC.addAction(ActionType.GiveDinosaur, MesozoicIsland.getAssistant().getIdLong(), to, dino, System.currentTimeMillis() + after);
 	}
 	
 	public static void addRune(long to, int rune) {
-		JDBC.addAction(ActionType.GiveRune, 0, to, Integer.toString(rune), 0);
+		JDBC.addAction(ActionType.GiveRune, MesozoicIsland.getAssistant().getIdLong(), to, Integer.toString(rune), 0);
 	}
 	
 	public static void addRuneDelayed(long to, long after, int rune) {
-		JDBC.addAction(ActionType.GiveRune, 0, to, Integer.toString(rune), System.currentTimeMillis() + after);
+		JDBC.addAction(ActionType.GiveRune, MesozoicIsland.getAssistant().getIdLong(), to, Integer.toString(rune), System.currentTimeMillis() + after);
 	}
 	
 	public static void addItem(long to, Pair<Integer, Long> item, long count) {
@@ -204,11 +209,11 @@ public class Action {
 	}
 	
 	public static void addXp(long to, String dino, long xp) {
-		JDBC.addAction(ActionType.AddXpToDinosaur, 0, to, dino + " " + xp, 0);
+		JDBC.addAction(ActionType.AddXpToDinosaur, MesozoicIsland.getAssistant().getIdLong(), to, dino + " " + xp, 0);
 	}
 	
 	public static void addXpDelayed(long to, long after, String dino, long xp) {
-		JDBC.addAction(ActionType.AddXpToDinosaur, 0, to, dino + " " + xp, System.currentTimeMillis() + after);
+		JDBC.addAction(ActionType.AddXpToDinosaur, MesozoicIsland.getAssistant().getIdLong(), to, dino + " " + xp, System.currentTimeMillis() + after);
 	}
 	
 	public static void addRedeemDelayed(long from, long to, long after, String redeem) {

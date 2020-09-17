@@ -20,6 +20,8 @@ import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 
+import net.dv8tion.jda.api.entities.TextChannel;
+
 public class Daily {
 
 	public static void doUpdate(long millis) {
@@ -125,7 +127,7 @@ public class Daily {
 			if (count > -1) {
 				int max = Integer.parseInt(JDBC.getVariable("benedict"));
 				if (count == 0) {
-					max += 1;
+					max += 5;
 					JDBC.setVariable("benedict", Integer.toString(max));
 				}
 
@@ -184,5 +186,21 @@ public class Daily {
 		DiscordChannel.DailyAnnouncements.getChannel(MesozoicIsland.getAssistant()).sendMessage(sb.toString()).complete();
 		Util.setRolesMentionable(false, DiscordRole.DailyPing);
 		JDBC.executeUpdate("update vars set value = value + 1 where var = 'day';");
+	}
+
+	public static void doHourly(long millis) {
+
+		TextChannel channel = DiscordChannel.GameTesting.getChannel(MesozoicIsland.getAssistant());
+
+		// Check for achievement titles
+		for (Player p : Player.values()) {
+			if (p.getIdLong() < CustomPlayer.getUpperLimit()) continue;
+
+			if (p.getItemCount(ItemID.NoviceDamagerTitle) <= 0 && p.getItemCount(Stat.DamageDealt) >= 1_000_000) {
+				Item item = Item.getItem(ItemID.NoviceDamagerTitle);
+				// add title item
+				channel.sendMessageFormat("%s, for dealing 1,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+		}
 	}
 }

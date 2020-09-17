@@ -182,4 +182,15 @@ public class Item implements Comparable<Item> {
 		
 		return items.toArray(new Item[0]);
 	}
+
+	public static Item[] getItemsWithTag(ItemTag tag) {
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (Item item : values()) {
+			if (item.hasTag(tag)) {
+				items.add(item);
+			}
+		}
+		
+		return items.toArray(new Item[0]);
+	}
 }

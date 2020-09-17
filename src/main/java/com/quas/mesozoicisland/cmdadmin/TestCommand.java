@@ -12,6 +12,7 @@ import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
@@ -119,22 +120,9 @@ public class TestCommand implements ICommand {
 				}
 			} break;
 
-			case "checktier": {
-				long player = Long.parseLong(args[2]);
-				Player p = Player.getPlayer(player);
-				Dinosaur[] team = p.getSelectedDinosaurs();
-				
-				long xp = 0;
-				long bst = 0;
-				for (Dinosaur d : team) {
-					xp += d.getXp();
-					long stats = d.getHealth() + d.getAttack() + d.getDefense();
-					if (stats > bst) bst = stats;
-				}
-				
-				// Calculate Level
-				int level = DinoMath.getLevel(xp);
-				event.getChannel().sendMessageFormat("%s's team has the following stats: [%,d %,d %,d].", p.getRawName(), level, bst, xp).complete();
+			case "burrito": {
+				JDBC.addAction(ActionType.NewHour, 0, 0, "Daily Message.", System.currentTimeMillis() + 30_000);
+				event.getChannel().sendMessage("Burrito!").complete();
 			} break;
 
 			case "eventtype": {
