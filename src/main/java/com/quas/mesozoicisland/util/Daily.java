@@ -201,6 +201,270 @@ public class Daily {
 				JDBC.addItem(p.getIdLong(), item.getIdDmg());
 				channel.sendMessageFormat("%s, for dealing 1,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
 			}
+				
+			if (p.getItemCount(ItemID.AdvancedDamagerTitle) <= 0 && p.getItemCount(Stat.DamageDealt) >= 3_000_000) {
+				Item item = Item.getItem(ItemID.AdvancedDamagerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for dealing 3,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.EliteDamagerTitle) <= 0 && p.getItemCount(Stat.DamageDealt) >= 10_000_000) {
+				Item item = Item.getItem(ItemID.EliteDamagerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for dealing 10,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.MasterDamagerTitle) <= 0 && p.getItemCount(Stat.DamageDealt) >= 40_000_000) {
+				Item item = Item.getItem(ItemID.MasterDamagerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for dealing 40,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.LegendaryDamagerTitle) <= 0 && p.getItemCount(Stat.DamageDealt) >= 100_000_000) {
+				Item item = Item.getItem(ItemID.LegendaryDamagerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for dealing 100,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.NoviceSurvivorTitle) <= 0 && p.getItemCount(Stat.DamageReceived) >= 1_000_000) {
+				Item item = Item.getItem(ItemID.NoviceSurvivorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for taking 1,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.AdvancedSurvivorTitle) <= 0 && p.getItemCount(Stat.DamageReceived) >= 3_000_000) {
+				Item item = Item.getItem(ItemID.AdvancedSurvivorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for taking 3,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.EliteSurvivorTitle) <= 0 && p.getItemCount(Stat.DamageReceived) >= 10_000_000) {
+				Item item = Item.getItem(ItemID.EliteSurvivorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for taking 10,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.MasterSurvivorTitle) <= 0 && p.getItemCount(Stat.DamageReceived) >= 40_000_000) {
+				Item item = Item.getItem(ItemID.MasterSurvivorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for taking 40,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.LegendarySurvivorTitle) <= 0 && p.getItemCount(Stat.DamageReceived) >= 100_000_000) {
+				Item item = Item.getItem(ItemID.LegendarySurvivorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for taking 100,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.NoviceBattlerTitle) <= 0 && p.getItemCount(Stat.BattlesEntered) >= 1_000) {
+				Item item = Item.getItem(ItemID.NoviceBattlerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for entering 1,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.AdvancedBattlerTitle) <= 0 && p.getItemCount(Stat.BattlesEntered) >= 3_000) {
+				Item item = Item.getItem(ItemID.AdvancedBattlerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for entering 3,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.EliteBattlerTitle) <= 0 && p.getItemCount(Stat.BattlesEntered) >= 10_000) {
+				Item item = Item.getItem(ItemID.EliteBattlerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for entering 10,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.MasterBattlerTitle) <= 0 && p.getItemCount(Stat.BattlesEntered) >= 40_000) {
+				Item item = Item.getItem(ItemID.MasterBattlerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for entering 40,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.LegendaryBattlerTitle) <= 0 && p.getItemCount(Stat.BattlesEntered) >= 100_000) {
+				Item item = Item.getItem(ItemID.LegendaryBattlerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for entering 100,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.NoviceVictorTitle) <= 0 && p.getItemCount(Stat.BattlesWon) >= 1_000) {
+				Item item = Item.getItem(ItemID.NoviceVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for winning 1,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.AdvancedVictorTitle) <= 0 && p.getItemCount(Stat.BattlesWon) >= 3_000) {
+				Item item = Item.getItem(ItemID.AdvancedVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for winning 3,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.EliteVictorTitle) <= 0 && p.getItemCount(Stat.BattlesWon) >= 10_000) {
+				Item item = Item.getItem(ItemID.EliteVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for winning 10,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.MasterVictorTitle) <= 0 && p.getItemCount(Stat.BattlesWon) >= 40_000) {
+				Item item = Item.getItem(ItemID.MasterVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for winning 40,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.LegendaryVictorTitle) <= 0 && p.getItemCount(Stat.BattlesWon) >= 100_000) {
+				Item item = Item.getItem(ItemID.LegendaryVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for winning 100,000 battles, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.NoviceShopperTitle) <= 0 && p.getItemCount(Stat.DinosaurCoinsSpent) >= 50_000) {
+				Item item = Item.getItem(ItemID.NoviceShopperTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for spending 50,000 Dinosaur Coins, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.AdvancedShopperTitle) <= 0 && p.getItemCount(Stat.DinosaurCoinsSpent) >= 200_000) {
+				Item item = Item.getItem(ItemID.AdvancedShopperTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for spending 200,000 Dinosaur Coins, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.EliteShopperTitle) <= 0 && p.getItemCount(Stat.DinosaurCoinsSpent) >= 1_000_000) {
+				Item item = Item.getItem(ItemID.EliteShopperTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for spending 1,000,000 Dinosaur Coins, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.MasterShopperTitle) <= 0 && p.getItemCount(Stat.DinosaurCoinsSpent) >= 5_000_000) {
+				Item item = Item.getItem(ItemID.MasterShopperTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for spending 5,000,000 Dinosaur Coins, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.LegendaryShopperTitle) <= 0 && p.getItemCount(Stat.DinosaurCoinsSpent) >= 10_000_000) {
+				Item item = Item.getItem(ItemID.LegendaryShopperTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for spending 10,000,000 Dinosaur Coins, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+				
+			if (p.getItemCount(ItemID.NoviceSnackerTitle) <= 0 && p.getItemCount(Stat.SnacksFed) >= 500) {
+				Item item = Item.getItem(ItemID.NoviceSnackerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for feeding 500 snacks, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.AdvancedSnackerTitle) <= 0 && p.getItemCount(Stat.SnacksFed) >= 2_000) {
+				Item item = Item.getItem(ItemID.AdvancedSnackerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for feeding 2,000 snacks, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.EliteSnackerTitle) <= 0 && p.getItemCount(Stat.SnacksFed) >= 10_000) {
+				Item item = Item.getItem(ItemID.EliteSnackerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for feeding 10,000 snacks, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.MasterSnackerTitle) <= 0 && p.getItemCount(Stat.SnacksFed) >= 50_000) {
+				Item item = Item.getItem(ItemID.MasterSnackerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for feeding 50,000 snacks, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.LegendarySnackerTitle) <= 0 && p.getItemCount(Stat.SnacksFed) >= 200_000) {
+				Item item = Item.getItem(ItemID.LegendarySnackerTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for feeding 200,000 snacks, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.NoviceHatcherTitle) <= 0 && p.getItemCount(Stat.EggsHatched) >= 100) {
+				Item item = Item.getItem(ItemID.NoviceHatcherTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for hatching 100 eggs, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.AdvancedHatcherTitle) <= 0 && p.getItemCount(Stat.EggsHatched) >= 250) {
+				Item item = Item.getItem(ItemID.AdvancedHatcherTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for hatching 250 eggs, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.EliteHatcherTitle) <= 0 && p.getItemCount(Stat.EggsHatched) >= 1_000) {
+				Item item = Item.getItem(ItemID.EliteHatcherTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for hatching 1,000 eggs, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.MasterHatcherTitle) <= 0 && p.getItemCount(Stat.EggsHatched) >= 3_000) {
+				Item item = Item.getItem(ItemID.MasterHatcherTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for hatching 3,000 eggs, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.LegendaryHatcherTitle) <= 0 && p.getItemCount(Stat.EggsHatched) >= 10_000) {
+				Item item = Item.getItem(ItemID.LegendaryHatcherTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for hatching 10,000 eggs, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.NoviceRaiderTitle) <= 0 && p.getItemCount(Stat.RaidsAttempted) >= 10) {
+				Item item = Item.getItem(ItemID.NoviceRaiderTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for attempting 10 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.AdvancedRaiderTitle) <= 0 && p.getItemCount(Stat.RaidsAttempted) >= 50) {
+				Item item = Item.getItem(ItemID.AdvancedRaiderTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for attempting 50 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.EliteRaiderTitle) <= 0 && p.getItemCount(Stat.RaidsAttempted) >= 200) {
+				Item item = Item.getItem(ItemID.EliteRaiderTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for attempting 200 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.MasterRaiderTitle) <= 0 && p.getItemCount(Stat.RaidsAttempted) >= 1_000) {
+				Item item = Item.getItem(ItemID.MasterRaiderTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for attempting 1,000 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.LegendaryRaiderTitle) <= 0 && p.getItemCount(Stat.RaidsAttempted) >= 5_000) {
+				Item item = Item.getItem(ItemID.LegendaryRaiderTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for attempting 5,000 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.NoviceRaidVictorTitle) <= 0 && p.getItemCount(Stat.RaidsDefeated) >= 10) {
+				Item item = Item.getItem(ItemID.NoviceRaidVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for defeating 10 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.AdvancedRaidVictorTitle) <= 0 && p.getItemCount(Stat.RaidsDefeated) >= 50) {
+				Item item = Item.getItem(ItemID.AdvancedRaidVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for defeating 50 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.EliteRaidVictorTitle) <= 0 && p.getItemCount(Stat.RaidsDefeated) >= 200) {
+				Item item = Item.getItem(ItemID.EliteRaidVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for defeating 200 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.MasterRaidVictorTitle) <= 0 && p.getItemCount(Stat.RaidsDefeated) >= 1_000) {
+				Item item = Item.getItem(ItemID.MasterRaidVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for defeating 1,000 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
+			
+			if (p.getItemCount(ItemID.LegendaryRaidVictorTitle) <= 0 && p.getItemCount(Stat.RaidsDefeated) >= 5_000) {
+				Item item = Item.getItem(ItemID.LegendaryRaidVictorTitle);
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				channel.sendMessageFormat("%s, for defeating 5,000 raids, you have earned the %s.", p.getAsMention(), item.toString()).complete();
+			}
 		}
 	}
 }
