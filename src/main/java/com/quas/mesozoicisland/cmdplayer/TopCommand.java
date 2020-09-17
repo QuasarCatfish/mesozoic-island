@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.cmdplayer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
@@ -76,11 +77,15 @@ public class TopCommand implements ICommand {
 		}
 		
 		Leaderboard lb = new Leaderboard(lbc.getLeaderboardType().getRegex());
+		TreeSet<Long> players = new TreeSet<Long>();
+
 		switch (lbc.getLeaderboardType()) {
 		case DinosaurLevel:
 			try (ResultSet res = JDBC.executeQuery("select * from captures where %s order by xp desc limit %d;", lbc.getWhereClause(), Constants.MAX_LEADERBOARD_CHECK)) {
 				while (res.next()) {
 					if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
+					if (players.contains(res.getLong("player"))) continue;
+					players.add(res.getLong("player"));
 					Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 					lb.addEntry(d.getXp() + 1, d.getPlayer().getName(), d.getEffectiveName(), d.getLevel(), d.getXpMinusLevel());
 				}
@@ -92,6 +97,8 @@ public class TopCommand implements ICommand {
 			try (ResultSet res = JDBC.executeQuery("select *, (1000000000000 * rnk + rp) as effrp from captures where %s order by effrp desc limit %d;", lbc.getWhereClause(), Constants.MAX_LEADERBOARD_CHECK)) {
 				while (res.next()) {
 					if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
+					if (players.contains(res.getLong("player"))) continue;
+					players.add(res.getLong("player"));
 					Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 					lb.addEntry(res.getLong("effrp"), d.getPlayer().getName(), d.getEffectiveName(), d.getRankString(), d.getRp());
 				}
@@ -105,6 +112,8 @@ public class TopCommand implements ICommand {
 				try (ResultSet res = JDBC.executeQuery("select * from captures where wins + losses >= %d order by wins desc limit %d;", Constants.LEADERBOARD_REQUIRED_BATTLES, Constants.MAX_LEADERBOARD_CHECK)) {
 					while (res.next()) {
 						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
+						if (players.contains(res.getLong("player"))) continue;
+						players.add(res.getLong("player"));
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 						lb.addEntry(d.getWins(), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Dinosaur Defeated" : "Dinosaurs Defeated");
 					}
@@ -121,6 +130,8 @@ public class TopCommand implements ICommand {
 				try (ResultSet res = JDBC.executeQuery("select *, (case when losses = 0 then 999999999 else wins / losses end) as wtl from captures where wins + losses >= %d order by wtl desc, wins desc limit %d;", Constants.LEADERBOARD_REQUIRED_BATTLES, Constants.MAX_LEADERBOARD_CHECK)) {
 					while (res.next()) {
 						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
+						if (players.contains(res.getLong("player"))) continue;
+						players.add(res.getLong("player"));
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
 						lb.addEntry((long)(1_000_000L * res.getDouble("wtl")), d.getPlayer().getName(), d.getEffectiveName(), d.getWins(), d.getWins() == 1 ? "Win" : "Wins", d.getLosses(), d.getLosses() == 1 ? "Loss" : "Losses");
 					}
