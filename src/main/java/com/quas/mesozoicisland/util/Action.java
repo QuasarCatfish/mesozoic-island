@@ -113,7 +113,7 @@ public class Action {
 				case NewHour:
 					long htime = res.getLong("time");
 					Daily.doHourly(htime);
-					JDBC.addAction(ActionType.NewHour, self, 0, "Hourly Message.", htime + TimeUnit.HOURS.toMillis(1));
+					JDBC.addAction(ActionType.NewHour, self, 0, "2-Hourly Message.", htime + TimeUnit.HOURS.toMillis(2));
 					break;
 				}
 				
