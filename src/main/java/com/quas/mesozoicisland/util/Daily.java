@@ -198,7 +198,7 @@ public class Daily {
 
 			if (p.getItemCount(ItemID.NoviceDamagerTitle) <= 0 && p.getItemCount(Stat.DamageDealt) >= 1_000_000) {
 				Item item = Item.getItem(ItemID.NoviceDamagerTitle);
-				// add title item
+				JDBC.addItem(p.getIdLong(), item.getIdDmg());
 				channel.sendMessageFormat("%s, for dealing 1,000,000 damage, you have earned the %s.", p.getAsMention(), item.toString()).complete();
 			}
 		}

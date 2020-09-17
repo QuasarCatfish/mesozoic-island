@@ -11,6 +11,10 @@ public enum EggPattern {
 	TwoTone2("Two-Tone", "twotone2.png", EggPatternTag.TwoTone, false),
 	TwoTone3("Two-Tone", "twotone3.png", EggPatternTag.TwoTone, false),
 	TwoTone4("Two-Tone", "twotone4.png", EggPatternTag.TwoTone, false),
+	Lace1("Lace", "lace1.png", EggPatternTag.None),
+	Lace2("Lace", "lace2.png", EggPatternTag.None),
+	Stripes1("Stripes", "stripes1.png", EggPatternTag.None),
+	Stripes2("Stripes", "stripes2.png", EggPatternTag.None),
 	;
 	
 	private static EggPattern[] choosablePatterns;

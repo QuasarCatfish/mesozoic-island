@@ -106,6 +106,7 @@ import com.quas.mesozoicisland.cmdplayer.UnequipRuneCommand;
 import com.quas.mesozoicisland.cmdplayer.UnnicknameCommand;
 import com.quas.mesozoicisland.cmdplayer.UptimeCommand;
 import com.quas.mesozoicisland.cmdplayer.UseCommand;
+import com.quas.mesozoicisland.cmdplayer.WhoHasCommand;
 import com.quas.mesozoicisland.cmdplayer.WikiCommand;
 import com.quas.mesozoicisland.cmdtutorial.Tutorial00;
 import com.quas.mesozoicisland.cmdtutorial.Tutorial01;
@@ -290,6 +291,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new EchoCaveOfLostHope());
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictStockCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictBuyCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new WhoHasCommand());
+//		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
