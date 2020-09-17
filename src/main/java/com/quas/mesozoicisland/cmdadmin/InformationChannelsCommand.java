@@ -196,6 +196,7 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordChannel.BotCommands.toString() + " - A channel for users to use their spammy commands.");
 			channels.add(DiscordChannel.Wiki.toString() + " - A channel for the Mesozoic Island wiki.");
 			channels.add(DiscordChannel.Events.toString() + " - Information about in-game events.");
+			channels.add(DiscordChannel.Contest.toString() + " - Information about the current contest.");
 			channels.add(DiscordEmote.Blank.toString());
 			
 			channels.add("__**Chatting**__");
@@ -205,7 +206,8 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add("__**Battle**__");
 			channels.add(DiscordChannel.Battle1.toString() + " - Novice Tier wild battles.");
 			channels.add(DiscordChannel.Battle2.toString() + " - Advanced Tier wild battles.");
-			channels.add(DiscordChannel.Battle3.toString() + " - Master Tier wild battles.");
+			channels.add(DiscordChannel.Battle3.toString() + " - Elite Tier wild battles.");
+			channels.add(DiscordChannel.BattleContest.toString() + " - Contest Tier wild battles.");
 			channels.add(DiscordChannel.BattleLog.toString() + " - Logs battles from wild battles.");
 			channels.add(DiscordChannel.BattleDungeon.toString() + " - Dungeon battles.");
 			channels.add(DiscordChannel.BattleDungeonLog.toString() + " - Logs battles from dungeons.");

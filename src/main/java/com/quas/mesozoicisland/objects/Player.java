@@ -263,7 +263,7 @@ public class Player {
 				e.printStackTrace();
 			}
 		} else if (form == DinosaurForm.AnyForms.getId()) {
-			try (ResultSet res = JDBC.executeQuery("select count(distinct dex) as count from captures join dinosaurs on captures.dex = dinosaurs.dex and captures.form = dinosaurs.form where player = %d and captures.form >= 0 and rarity >= 0;", pid)) {
+			try (ResultSet res = JDBC.executeQuery("select count(distinct dinosaurs.dex) as count from captures join dinosaurs on captures.dex = dinosaurs.dex and captures.form = dinosaurs.form where player = %d and captures.form >= 0 and rarity >= 0;", pid)) {
 				if (res.next()) return res.getInt("count");
 			} catch (SQLException e) {
 				e.printStackTrace();
