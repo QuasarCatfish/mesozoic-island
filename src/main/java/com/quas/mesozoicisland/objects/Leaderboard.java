@@ -31,6 +31,7 @@ public class Leaderboard {
 			if (key <= 0L) break;
 			if (key < last) disp = real + 1;
 			if (disp > Constants.MAX_LEADERBOARD_LENGTH) break;
+			if (real > Constants.MAX_LEADERBOARD_LIST) break;
 			
 			final int tdisp = disp;
 			real += entries.get(key).size();

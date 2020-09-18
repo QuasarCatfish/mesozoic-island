@@ -46,7 +46,7 @@ public class WhoHasCommand implements ICommand {
 
 	@Override
 	public DiscordChannel[] getUsableChannels() {
-		return DiscordChannel.TRADE_CHANNELS;
+		return DiscordChannel.TRADE_CHANNELS_BOT_DMS;
 	}
 
 	@Override
