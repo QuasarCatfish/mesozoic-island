@@ -1,7 +1,7 @@
 package com.quas.mesozoicisland.enums;
 
 public enum EventType {
-	TestEvent(0), Contest(1), ContestEntry(2),
+	TestEvent(0), Contest(1), ContestEntry(2), DoubleContestXP(3),
 	
 	LostPages(101);
 

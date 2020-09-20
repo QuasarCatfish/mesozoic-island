@@ -12,10 +12,12 @@ import java.util.TreeSet;
 import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.NewPlayerStatus;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.Rune;
@@ -452,7 +454,13 @@ public class JDBC {
 		Dinosaur d = Dinosaur.getDinosaur(pid, dino);
 		if (d == null) return false;
 		if (d.getDinosaurForm() == DinosaurForm.Accursed) return false;
-		boolean b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
+		boolean b = false;
+		if (Event.isEventActive(EventType.DoubleContestXP) && d.getDinosaurForm() == DinosaurForm.Contest) {
+			b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + 2 * xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
+		} else {
+			b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
+		}
+
 		Dinosaur d2 = Dinosaur.getDinosaur(pid, dino);
 		if (d.getLevel() < d2.getLevel()) {
 			JDBC.addItem(pid, Stat.DinosaursLeveledUp.getId(), d2.getLevel() - d.getLevel());
