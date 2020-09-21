@@ -11,6 +11,8 @@ public class Leaderboard {
 
 	private TreeMap<Long, List<String>> entries;
 	private String regex;
+	private boolean displayAll = false;
+
 	public Leaderboard(String regex) {
 		this.entries = new TreeMap<Long, List<String>>((a, b) -> -Long.compare(a, b));
 		this.regex = regex;
@@ -19,6 +21,10 @@ public class Leaderboard {
 	public void addEntry(long value, Object...objects) {
 		if (!entries.containsKey(value)) entries.put(value, new ArrayList<String>());
 		entries.get(value).add(String.format(regex, objects));
+	}
+
+	public void setUnlimited(boolean displayAll) {
+		this.displayAll = displayAll;
 	}
 	
 	public List<String> getLeaderboard() {
@@ -30,8 +36,10 @@ public class Leaderboard {
 		for (long key : entries.keySet()) {
 			if (key <= 0L) break;
 			if (key < last) disp = real + 1;
-			if (disp > Constants.MAX_LEADERBOARD_LENGTH) break;
-			if (real > Constants.MAX_LEADERBOARD_LIST) break;
+			if (!displayAll) {
+				if (disp > Constants.MAX_LEADERBOARD_LENGTH) break;
+				if (real > Constants.MAX_LEADERBOARD_LIST) break;
+			}
 			
 			final int tdisp = disp;
 			real += entries.get(key).size();

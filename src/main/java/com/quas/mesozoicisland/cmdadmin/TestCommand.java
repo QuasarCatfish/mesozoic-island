@@ -24,6 +24,7 @@ import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
+import com.quas.mesozoicisland.objects.Leaderboard;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.Rarity;
 import com.quas.mesozoicisland.util.Constants;
@@ -120,10 +121,25 @@ public class TestCommand implements ICommand {
 				}
 			} break;
 
-			case "burrito": {
-				JDBC.addAction(ActionType.NewHour, 0, 0, "Daily Message.", System.currentTimeMillis() + 30_000);
-				event.getChannel().sendMessage("Burrito!").complete();
+			case "contest": {
+				Leaderboard lb = new Leaderboard("%s's %s - Level %,d + %,d XP");
+				lb.setUnlimited(true);
+
+				try (ResultSet res = JDBC.executeQuery("select * from captures where form = %d order by xp desc limit %d;", DinosaurForm.Contest.getId(), Constants.MAX_LEADERBOARD_CHECK)) {
+					while (res.next()) {
+						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
+						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
+						lb.addEntry(d.getXp() + 1, d.getPlayer().getName(), d.getEffectiveName(), d.getLevel(), d.getXpMinusLevel());
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				for (String s : Util.bulkify(lb.getLeaderboard())) {
+					event.getChannel().sendMessage(s).complete();
+				}
 			} break;
+
 
 			case "eventtype": {
 				StringBuilder sb = new StringBuilder("Event Type List:");
