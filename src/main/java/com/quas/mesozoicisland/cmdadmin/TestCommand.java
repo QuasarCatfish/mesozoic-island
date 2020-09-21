@@ -12,7 +12,6 @@ import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
-import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
@@ -125,7 +124,7 @@ public class TestCommand implements ICommand {
 				Leaderboard lb = new Leaderboard("%s's %s - Level %,d + %,d XP");
 				lb.setUnlimited(true);
 
-				try (ResultSet res = JDBC.executeQuery("select * from captures where form = %d order by xp desc limit %d;", DinosaurForm.Contest.getId(), Constants.MAX_LEADERBOARD_CHECK)) {
+				try (ResultSet res = JDBC.executeQuery("select * from captures where form = %d order by xp desc limit %d;", DinosaurForm.Contest.getId())) {
 					while (res.next()) {
 						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
 						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
