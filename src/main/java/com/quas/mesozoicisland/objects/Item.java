@@ -107,7 +107,7 @@ public class Item implements Comparable<Item> {
 	}
 	
 	public static Item of(String string) {
-		while (string.charAt(0) == '0') string = string.substring(1);
+		while (string.charAt(0) == '0' && string.length() > 1) string = string.substring(1);
 
 		for (Item item : values()) {
 			if (item.name.toLowerCase().equalsIgnoreCase(string)) {
