@@ -69,7 +69,7 @@ public class BagCategoryCommand implements ICommand {
 
 		if (cat == null) {
 			Item item = Item.of(Util.join(args, " ", 0, args.length));
-			if (item != null && item.isDiscovered()) {
+			if (item != null && item.isDiscovered() && item.getId() > 0) {
 				StringBuilder sb = new StringBuilder();
 
 				for (Item i : Item.getItems(item.getId())) {
