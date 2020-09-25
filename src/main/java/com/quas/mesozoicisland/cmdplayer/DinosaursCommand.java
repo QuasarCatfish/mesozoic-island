@@ -218,8 +218,9 @@ public class DinosaursCommand implements ICommand {
 		// Other
 		Tradeable("Tradable", "trad(e|able)|dupes?", "captures.rp > 0", false),
 		Rankable("Rankable", "rank(up|(up)?able)", "captures.rp > captures.rnk and captures.rnk < " + Constants.MAX_RANK, false),
-		Nickname("Has Nickname", "(has)?nick(name)?", "!isnull(nick)", false),
-		Item("Has Item", "(has)?item", "captures.item > 0", false),
+		Nickname("HasNickname", "(has)?nick(name)?", "!isnull(nick)", false),
+		NoNickname("NoNickname", "(no|un)nick(name)?", "isnull(nick)", false),
+		Item("HasItem", "(has)?item", "captures.item > 0", false),
 
 		// Non-Filters
 		Silent("Silent", "silent|nodm|count", "captures.form = 0", false),
