@@ -337,6 +337,7 @@ public class SpawnManager {
 			if (!teams.containsKey(bt.getBattleTier())) teams.put(bt.getBattleTier(), new ArrayList<BattleTeam>());
 			teams.get(bt.getBattleTier()).add(bt.setMax(wilds.get(bt.getBattleTier()).length));
 			JDBC.addItem(bt.getPlayer().getIdLong(), Stat.BattlesEntered.getId());
+			if (bt.hasAccursed()) JDBC.addItem(bt.getPlayer().getIdLong(), Stat.BattlesEnteredWithAccursed.getId());
 		}
 		
 		// Create Joined Players Embed
@@ -438,6 +439,7 @@ public class SpawnManager {
 			if (bt.isInvalid()) continue;
 			teams.add(bt);
 			JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DungeonsEntered.getId());
+			if (bt.hasAccursed()) JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DungeonsEnteredWithAccursed.getId());
 			players++;
 		}
 		

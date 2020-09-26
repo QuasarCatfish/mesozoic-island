@@ -13,6 +13,7 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.QuestType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
@@ -93,13 +94,11 @@ public class QuestsCommand implements ICommand {
 				if (end <= 0) continue;
 				
 				long progress = bag.getOrDefault(item, 0L) - start;
-				
+				QuestType qt = QuestType.of(res.getInt("special"));
+
 				sb.append("\n• ");
-				if (res.getInt("special") == 1) sb.append("[EVENT] ");
-				if (res.getInt("special") == -1) sb.append("[TEST] ");
-				sb.append("**");
-				sb.append(name);
-				sb.append("** - ");
+				if (qt != QuestType.Standard) sb.append("[" + qt + "]");
+				sb.append("**" + name + "** - ");
 				
 				if (progress >= end) {
 					sb.append("COMPLETED");

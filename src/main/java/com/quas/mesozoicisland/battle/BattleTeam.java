@@ -1,5 +1,6 @@
 package com.quas.mesozoicisland.battle;
 
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.DinoMath;
@@ -78,5 +79,14 @@ public class BattleTeam {
 	public void heal() {
 		cur = 0;
 		for (Dinosaur d : dinosaurs) d.heal();
+	}
+
+	public boolean hasAccursed() {
+		for (Dinosaur d : getDinosaursInBattle()) {
+			if (d.getDinosaurForm() == DinosaurForm.Accursed) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

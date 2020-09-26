@@ -51,7 +51,15 @@ public enum Stat {
 	RaidsDefeated(22),
 
 	// Quests
-	QuestsCompleted(23);
+	QuestsCompleted(23),
+
+	// Accursed Dinosaurs
+	DamageDealtWithAccursed(25),
+	BattlesEnteredWithAccursed(26),
+	BattlesWonWithAccursed(27),
+	DungeonsEnteredWithAccursed(28),
+	DinosaursDefeatedWithAccursed(29),
+	;
 
 	private long id;
 	private Stat(long id) {
