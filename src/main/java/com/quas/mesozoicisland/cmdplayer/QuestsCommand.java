@@ -97,7 +97,7 @@ public class QuestsCommand implements ICommand {
 				QuestType qt = QuestType.of(res.getInt("special"));
 
 				sb.append("\n• ");
-				if (qt != QuestType.Standard) sb.append("[" + qt + "]");
+				if (qt != QuestType.Standard) sb.append("[" + qt + "] ");
 				sb.append("**" + name + "** - ");
 				
 				if (progress >= end) {

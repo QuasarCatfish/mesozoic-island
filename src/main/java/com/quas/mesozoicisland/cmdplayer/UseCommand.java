@@ -123,20 +123,20 @@ public class UseCommand implements ICommand {
 		}
 		
 		switch (i.getItemType()) {
-		case Title:
+		case Title: {
 			boolean invert = Util.isInvertedTitle(i);
 			if (invert) event.getChannel().sendMessageFormat("%s, you will now be recognized as \"%s\".", p.getAsMention(), i.getData()).complete();
 			else event.getChannel().sendMessageFormat("%s, you will now be recognized as %s \"%s\".", p.getAsMention(), Util.getArticle(i.getData()), i.getData()).complete();
 			JDBC.setTitle(event.getAuthor().getIdLong(), i.getData(), invert);
-			break;
+		} break;
 			
-		case PersistCount:
+		case PersistCount: {
 			long count = bag.getOrDefault(i, 0L);
 			if (count == 1L) event.getChannel().sendMessageFormat("%s shows off their %s.", p.getAsMention(), i.toString()).complete();
 			else event.getChannel().sendMessageFormat("%s shows off their %,d %s.", p.getAsMention(), bag.getOrDefault(i, 0L), i.toString(bag.getOrDefault(i, 0L))).complete();
-			break;
+		} break;
 			
-		case PersistWithCustomUse:
+		case PersistWithCustomUse: {
 
 			if (i.getId() == ItemID.MesozoicIslandTrainerLicense.getItemId()) {
 				CommandManager.handleCommand(event, "license");
@@ -156,11 +156,22 @@ public class UseCommand implements ICommand {
 				JDBC.setTitle(p.getIdLong(), null, false);
 			}
 
+			else if (i.getId() == ItemID.JasonToken.getItemId()) {
+				long count = bag.getOrDefault(i, 0L);
+				if (count >= Constants.ACCURSED_REMOVAL_QUESTS) {
+					// TODO : Add the removal of the curse
+					event.getChannel().sendMessageFormat("%s, congratulations on collecting all %,d %s.", p.getAsMention(), Constants.ACCURSED_REMOVAL_QUESTS, i.toString(Constants.ACCURSED_REMOVAL_QUESTS)).complete();
+				} else {
+					event.getChannel().sendMessageFormat("%s, you need %,d more %s.", p.getAsMention(), Constants.ACCURSED_REMOVAL_QUESTS - count, i.toString(Constants.ACCURSED_REMOVAL_QUESTS - count)).complete();
+				}
+			}
+
 			else {
 				sendUnimplemented(event);
 				SUCCESS = false;
 			}
-			break;
+
+		} break;
 			
 		case Consume:
 

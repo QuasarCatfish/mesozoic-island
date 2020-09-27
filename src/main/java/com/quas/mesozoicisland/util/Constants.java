@@ -97,6 +97,7 @@ public class Constants {
 	public static final int DAYS_BETWEEN_SAME_QUEST = 14;
 	public static final int MAX_QUESTS = 5;
 	public static final int MAX_QUESTS_PER_DAY = 2;
+	public static final int ACCURSED_REMOVAL_QUESTS = 5;
 
 	// Limits
 	public static final int DINOS_PER_TEAM = 3;
