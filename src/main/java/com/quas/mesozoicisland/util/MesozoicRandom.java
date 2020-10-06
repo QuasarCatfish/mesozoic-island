@@ -5,8 +5,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Rarity;
 
 public class MesozoicRandom {
@@ -70,13 +72,24 @@ public class MesozoicRandom {
 	public static Dinosaur nextDinosaur(int rerolls) {
 		Dinosaur[] values = Dinosaur.values();
 		long sum = 0;
-		for (Dinosaur d : values) sum += d.getRarity().getDinoCount();
+		for (Dinosaur d : values) {
+			if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.DoublePrismatic)) {
+				sum += 2 * d.getRarity().getDinoCount();
+			} else {
+				sum += d.getRarity().getDinoCount();
+			}
+		}
 
 		Dinosaur[] select = new Dinosaur[rerolls + 1];
 		for (int q = 0; q < select.length; q++) {
 			long rand = nextLong(sum);
 			for (Dinosaur d : values) {
-				rand -= d.getRarity().getDinoCount();
+				if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.DoublePrismatic)) {
+					rand -= 2 * d.getRarity().getDinoCount();
+				} else {
+					rand -= d.getRarity().getDinoCount();
+				}
+
 				if (rand < 0) {
 					select[q] = d;
 					break;
