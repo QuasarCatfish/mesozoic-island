@@ -73,8 +73,8 @@ public class MesozoicRandom {
 		Dinosaur[] values = Dinosaur.values();
 		long sum = 0;
 		for (Dinosaur d : values) {
-			if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.DoublePrismatic)) {
-				sum += 2 * d.getRarity().getDinoCount();
+			if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.TriplePrismatic)) {
+				sum += 3 * d.getRarity().getDinoCount();
 			} else {
 				sum += d.getRarity().getDinoCount();
 			}
@@ -84,8 +84,8 @@ public class MesozoicRandom {
 		for (int q = 0; q < select.length; q++) {
 			long rand = nextLong(sum);
 			for (Dinosaur d : values) {
-				if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.DoublePrismatic)) {
-					rand -= 2 * d.getRarity().getDinoCount();
+				if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.TriplePrismatic)) {
+					rand -= 3 * d.getRarity().getDinoCount();
 				} else {
 					rand -= d.getRarity().getDinoCount();
 				}
