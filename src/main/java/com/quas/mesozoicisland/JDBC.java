@@ -473,7 +473,7 @@ public class JDBC {
 	
 	public static synchronized boolean addPlayerXp(long playerid, long xp) {
 		Player p = Player.getPlayer(playerid);
-		boolean b = executeUpdate("update players set xp = xp + %d where playerid = %d;", xp, playerid);
+		boolean b = executeUpdate("update players set xp = %d where playerid = %d;", Math.min(p.getXp() + xp, Constants.MAX_XP), playerid);
 		Player p2 = Player.getPlayer(playerid);
 		if (p2.getLevel() <= 2) return b;
 		
