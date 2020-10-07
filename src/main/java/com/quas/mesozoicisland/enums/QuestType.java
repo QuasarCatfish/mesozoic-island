@@ -4,7 +4,8 @@ public enum QuestType {
 	Test("Test", -1),
 	Standard("", 0),
 	Event("Event", 1),
-	Curse("Jason", 2);
+	Curse("Jason", 2),
+	SecondaryElement("Midnight", 3);
 
 	private String name;
 	private int id;

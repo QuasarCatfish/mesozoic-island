@@ -398,7 +398,7 @@ public class UseCommand implements ICommand {
 					
 					// Prizes
 					if (!b.didBossWin()) {
-						String prize = "item 100 0 1000";
+						String prize = Util.getRandomElement(Constants.RAID_REWARDS);
 						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1_000, Constants.SPAWN_CHANNEL, String.format("%s, you find these rewards from the %s:\n%s", p.getAsMention(), raid.getEffectiveName(), JDBC.getRedeemMessage(prize)));
 						Action.addRedeemDelayed(MesozoicIsland.getAssistant().getIdLong(), p.getIdLong(), time + 1_000, prize);
 						Action.addItemDelayed(p.getIdLong(), time + 1_000, Stat.RaidsAttempted.getId(), 1);

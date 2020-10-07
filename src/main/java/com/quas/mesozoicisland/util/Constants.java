@@ -51,12 +51,12 @@ public class Constants {
 	// Spawn
 	public static boolean SPAWN = true;
 	public static final long MIN_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(2); // default 2
-	public static final long MAX_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(4); // default 8
+	public static final long MAX_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(8); // default 8
 	public static final long BATTLE_WAIT = TimeUnit.SECONDS.toMillis(90); // default 90
 	public static final DiscordChannel SPAWN_CHANNEL = DiscordChannel.Game;
 	public static final long MIN_TIME_FOR_NEW_SPAWN = TimeUnit.SECONDS.toMillis(30); // default 30
-	public static final int MIN_SPAWN_COUNT = 2; // default 1
-	public static final int MAX_SPAWN_COUNT = 5; // default 3
+	public static final int MIN_SPAWN_COUNT = 1; // default 1
+	public static final int MAX_SPAWN_COUNT = 3; // default 3
 	
 	// Eggs
 	public static boolean SPAWN_EGGS = true;
@@ -127,6 +127,15 @@ public class Constants {
 		"Ready.",
 		"Ready!",
 		"I have returned!"
+	};
+	public static final String[] RAID_REWARDS = new String[] {
+		"item 100 0 500",
+		"item 100 0 500",
+		"item 100 0 500",
+		"item 100 0 500",
+		"item 100 0 500",
+		"item 100 0 500",
+		"item 100 0 500"
 	};
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {
