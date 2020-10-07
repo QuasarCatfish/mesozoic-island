@@ -71,10 +71,12 @@ public class MesozoicRandom {
 
 	public static Dinosaur nextDinosaur(int rerolls) {
 		Dinosaur[] values = Dinosaur.values();
+		boolean prismaticEvent = Event.isEventActive(EventType.BoostedPrismatic);
+
 		long sum = 0;
 		for (Dinosaur d : values) {
-			if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.TriplePrismatic)) {
-				sum += 3 * d.getRarity().getDinoCount();
+			if (d.getDinosaurForm() == DinosaurForm.Prismatic && prismaticEvent) {
+				sum += Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
 			} else {
 				sum += d.getRarity().getDinoCount();
 			}
@@ -84,8 +86,8 @@ public class MesozoicRandom {
 		for (int q = 0; q < select.length; q++) {
 			long rand = nextLong(sum);
 			for (Dinosaur d : values) {
-				if (d.getDinosaurForm() == DinosaurForm.Prismatic && Event.isEventActive(EventType.TriplePrismatic)) {
-					rand -= 3 * d.getRarity().getDinoCount();
+				if (d.getDinosaurForm() == DinosaurForm.Prismatic && prismaticEvent) {
+					rand -= Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
 				} else {
 					rand -= d.getRarity().getDinoCount();
 				}

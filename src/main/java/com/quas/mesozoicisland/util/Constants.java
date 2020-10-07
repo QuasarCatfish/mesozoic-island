@@ -36,6 +36,7 @@ public class Constants {
 	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f; // default 0.2f
 	public static final int MAIN_ELEMENT_BOOST = 10; // +10%
 	public static final int SUB_ELEMENT_BOOST = 5; // +5%
+	public static final int PRISMATIC_EVENT_MULTIPLIER = 5;
 
 	// Item Multipliers
 	public static final int PENDANT_BOOST = 10; // +10%
@@ -49,13 +50,13 @@ public class Constants {
 	
 	// Spawn
 	public static boolean SPAWN = true;
-	public static final long MIN_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(2);
-	public static final long MAX_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(8);
-	public static final long BATTLE_WAIT = TimeUnit.SECONDS.toMillis(90);
+	public static final long MIN_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(2); // default 2
+	public static final long MAX_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(4); // default 8
+	public static final long BATTLE_WAIT = TimeUnit.SECONDS.toMillis(90); // default 90
 	public static final DiscordChannel SPAWN_CHANNEL = DiscordChannel.Game;
-	public static final long MIN_TIME_FOR_NEW_SPAWN = TimeUnit.SECONDS.toMillis(45);
-	public static final int MIN_SPAWN_COUNT = 1;
-	public static final int MAX_SPAWN_COUNT = 3;
+	public static final long MIN_TIME_FOR_NEW_SPAWN = TimeUnit.SECONDS.toMillis(30); // default 30
+	public static final int MIN_SPAWN_COUNT = 2; // default 1
+	public static final int MAX_SPAWN_COUNT = 5; // default 3
 	
 	// Eggs
 	public static boolean SPAWN_EGGS = true;
