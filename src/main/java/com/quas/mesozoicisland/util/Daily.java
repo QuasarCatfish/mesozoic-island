@@ -182,10 +182,18 @@ public class Daily {
 			}
 		}
 		
+		// Do Daily Ping
 		Util.setRolesMentionable(true, DiscordRole.DailyPing);
 		DiscordChannel.DailyAnnouncements.getChannel(MesozoicIsland.getAssistant()).sendMessage(sb.toString()).complete();
 		Util.setRolesMentionable(false, DiscordRole.DailyPing);
+
+		// Update Day Count
 		JDBC.executeUpdate("update vars set value = value + 1 where var = 'day';");
+
+		// Update Raid Pass
+		if (Integer.parseInt(JDBC.getVariable("day")) % 7 == 0) {
+			JDBC.setNextRaidPass(MesozoicRandom.nextRaidPass());
+		}
 	}
 
 	public static void doHourly(long millis) {

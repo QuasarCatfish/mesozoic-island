@@ -562,6 +562,10 @@ public class JDBC {
 		}
 		return "";
 	}
+
+	public static synchronized boolean setNextRaidPass(int item) {
+		return setVariable("raidpassnext", Integer.toString(item));
+	}
 	
 	public static synchronized String getVariable(String name) {
 		try (ResultSet res = JDBC.executeQuery("select * from vars where var = '%s';", Util.cleanQuotes(name))) {

@@ -1,8 +1,11 @@
 package com.quas.mesozoicisland.util;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.EventType;
@@ -132,6 +135,27 @@ public class MesozoicRandom {
 		return Dinosaur.getDinosaur(nextDinosaur().getDex(), DinosaurForm.UncapturableDungeonBoss.getId());
 	}
 	
+	public static int nextRaidPass() {
+		try (ResultSet res = JDBC.executeQuery("select * from items where itemid = 701 and itemdmg > 0;")) {
+			int count = 0;
+			while (res.next()) count++;
+			res.beforeFirst();
+			
+			int rand = ThreadLocalRandom.current().nextInt(count);
+			
+			while (res.next()) {
+				if (rand <= 0) break;
+				rand--;
+			}
+			
+			return res.getInt("itemdmg");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
 	public static BattleAttack nextAttackingBattleEffect(DinosaurForm form) {
 		return form.getAttacks()[nextInt(form.getAttacks().length)];
 	}

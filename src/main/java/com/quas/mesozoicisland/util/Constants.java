@@ -129,13 +129,37 @@ public class Constants {
 		"I have returned!"
 	};
 	public static final String[] RAID_REWARDS = new String[] {
-		"item 100 0 500",
-		"item 100 0 500",
-		"item 100 0 500",
-		"item 100 0 500",
-		"item 100 0 500",
-		"item 100 0 500",
-		"item 100 0 500"
+		// Dungeon Ticket
+		"item 100 0 500 item 502 0 1",
+
+		// "item 100 0 500 item 502 0 2",
+
+		// "item 100 0 500 item 502 0 3",
+
+		// Premium Dungeon Ticket
+		// "item 100 0 500 item 503 0 1",
+
+		// A-Tier XP Potion
+		// "item 100 0 500 item 206 0 1",
+
+		// "item 100 0 500 item 206 0 2",
+
+		// "item 100 0 500 item 206 0 3",
+		
+		// S-Tier XP Potion
+		// "item 100 0 500 item 207 0 1",
+
+		// Dinosaur Locator
+
+		// Egg Locator
+
+		// Dungeon Locator
+
+		// Fragrance of Battle
+
+
+		// Prismatic Converter
+		// "item 100 0 500 item 211 0 1",
 	};
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {
