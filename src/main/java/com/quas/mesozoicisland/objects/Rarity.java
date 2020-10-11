@@ -15,6 +15,7 @@ public class Rarity implements Comparable<Rarity> {
 	private String symbol;
 	private int dinocount;
 	private int eggcount;
+	private int specialcount;
 	
 	public int getId() {
 		return id;
@@ -39,6 +40,10 @@ public class Rarity implements Comparable<Rarity> {
 	
 	public int getEggCount() {
 		return eggcount;
+	}
+
+	public int getSpecialcount() {
+		return specialcount;
 	}
 	
 	@Override
@@ -74,6 +79,7 @@ public class Rarity implements Comparable<Rarity> {
 				r.symbol = res.getString("rarityshort");
 				r.dinocount = res.getInt("spawndino");
 				r.eggcount = res.getInt("spawnegg");
+				r.specialcount = res.getInt("spawnspecial");
 				
 				rarities.put(id, r);
 				return r;

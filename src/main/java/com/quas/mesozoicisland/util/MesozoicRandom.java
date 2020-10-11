@@ -75,12 +75,15 @@ public class MesozoicRandom {
 	public static Dinosaur nextDinosaur(int rerolls) {
 		Dinosaur[] values = Dinosaur.values();
 		boolean prismaticEvent = Event.isEventActive(EventType.BoostedPrismatic);
+		boolean halloweenEvent = Event.isEventActive(EventType.Halloween);
 
 		long sum = 0;
 		for (Dinosaur d : values) {
-			if (d.getDinosaurForm() == DinosaurForm.Prismatic && prismaticEvent) {
+			if (prismaticEvent && d.getDinosaurForm() == DinosaurForm.Prismatic) {
 				sum += Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
-			} else {
+			} else if (halloweenEvent && d.getDinosaurForm() == DinosaurForm.Halloween) {
+				sum += d.getRarity().getSpecialcount();
+			} else{
 				sum += d.getRarity().getDinoCount();
 			}
 		}
@@ -89,8 +92,10 @@ public class MesozoicRandom {
 		for (int q = 0; q < select.length; q++) {
 			long rand = nextLong(sum);
 			for (Dinosaur d : values) {
-				if (d.getDinosaurForm() == DinosaurForm.Prismatic && prismaticEvent) {
+				if (prismaticEvent && d.getDinosaurForm() == DinosaurForm.Prismatic) {
 					rand -= Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
+				} else if (halloweenEvent && d.getDinosaurForm() == DinosaurForm.Halloween) {
+					rand -= d.getRarity().getSpecialcount();
 				} else {
 					rand -= d.getRarity().getDinoCount();
 				}
@@ -135,20 +140,14 @@ public class MesozoicRandom {
 		return Dinosaur.getDinosaur(nextDinosaur().getDex(), DinosaurForm.UncapturableDungeonBoss.getId());
 	}
 	
-	public static int nextRaidPass() {
+	public static long nextRaidPass() {
 		try (ResultSet res = JDBC.executeQuery("select * from items where itemid = 701 and itemdmg > 0;")) {
-			int count = 0;
-			while (res.next()) count++;
-			res.beforeFirst();
-			
-			int rand = ThreadLocalRandom.current().nextInt(count);
-			
+			ArrayList<Long> values = new ArrayList<Long>();
 			while (res.next()) {
-				if (rand <= 0) break;
-				rand--;
+				if (res.getString("data") == null) continue;
+				values.add(res.getLong("itemdmg"));
 			}
-			
-			return res.getInt("itemdmg");
+			return Util.getRandomElement(values.toArray(new Long[0]));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

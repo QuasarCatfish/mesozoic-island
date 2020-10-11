@@ -242,6 +242,16 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		defenseboost += boost;
 		return this;
 	}
+
+	public Dinosaur lowerAttack(int boost) {
+		attackboost = Math.max(Constants.MIN_BOOST, attackboost - boost);
+		return this;
+	}
+
+	public Dinosaur lowerDefense(int boost) {
+		defenseboost = Math.max(Constants.MIN_BOOST, defenseboost - boost);
+		return this;
+	}
 	
 	public boolean hasItem() {
 		return item != null && item.getId() != 0;

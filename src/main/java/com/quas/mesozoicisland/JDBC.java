@@ -563,8 +563,8 @@ public class JDBC {
 		return "";
 	}
 
-	public static synchronized boolean setNextRaidPass(int item) {
-		return setVariable("raidpassnext", Integer.toString(item));
+	public static synchronized boolean setNextRaidPass(long item) {
+		return setVariable("raidpassnext", Long.toString(item));
 	}
 	
 	public static synchronized String getVariable(String name) {

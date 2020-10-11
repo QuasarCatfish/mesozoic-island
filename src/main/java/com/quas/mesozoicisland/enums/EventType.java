@@ -4,6 +4,8 @@ public enum EventType {
 	TestEvent(0), Contest(1), ContestEntry(2), DoubleContestXP(3),
 	BoostedPrismatic(10),
 	
+	Halloween(20), Thanksgiving(21),
+
 	LostPages(101);
 
 	private int type;

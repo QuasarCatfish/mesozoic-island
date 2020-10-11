@@ -418,6 +418,19 @@ public class Battle {
 			attack.getDinosaur().damage(-heal);
 			sb.append(String.format("%s's %s heals %,d damage and has %,d health remaining.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), heal, attack.getDinosaur().getCurrentHealth()));
 			return sb.toString();
+		} else if (atkeff == BattleAttack.Scare) {
+			if (MesozoicRandom.nextBoolean()) {
+				long atk = defend.getDinosaur().getAttack();
+				defend.getDinosaur().lowerAttack(Constants.SCARE_BOOST);
+				atk -= defend.getDinosaur().getAttack();
+				sb.append(String.format("%s's %s scares %s's %s, lowering its attack by %,d.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), atk));
+			} else {
+				long def = defend.getDinosaur().getDefense();
+				defend.getDinosaur().lowerDefense(Constants.SCARE_BOOST);
+				def -= defend.getDinosaur().getDefense();
+				sb.append(String.format("%s's %s scares %s's %s, lowering its defense by %,d.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), def));
+			}
+			return sb.toString();
 		}
 		
 		// No Special
