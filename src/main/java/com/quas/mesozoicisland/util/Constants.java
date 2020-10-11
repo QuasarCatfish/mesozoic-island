@@ -8,6 +8,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 
@@ -116,6 +117,28 @@ public class Constants {
 	public static final String ZERO_WIDTH_SPACE = "\u200B";
 	public static final String BULLET_POINT = "\u2022";
 	public static final String NOTE = "\u203B";
+
+	// Item Groups
+	public static final ItemID[] HALLOWEEN_CANDY = new ItemID[] {
+		ItemID.DinoGalaxyBar,
+		ItemID.DinoGalaxyBar,
+		ItemID.DinoGalaxyBar,
+		ItemID.DinoGalaxyBar,
+		ItemID.DinoFruitChew,
+		ItemID.DinoFruitChew,
+		ItemID.DinoFruitChew,
+		ItemID.DinoFruitChew,
+		ItemID.PeanutButterDinoCup,
+		ItemID.PeanutButterDinoCup,
+		ItemID.PeanutButterDinoCup,
+		ItemID.ChocolateDinoWafer,
+		ItemID.ChocolateDinoWafer,
+		ItemID.ChocolateDinoWafer,
+		ItemID.CaramelDinoLog,
+		ItemID.CaramelDinoLog,
+		ItemID.ChocolateDinoBar,
+		ItemID.ChocolateDinoBar
+	};
 
 	// Messages
 	public static final String[] GOODBYE_MESSAGES = new String[] {

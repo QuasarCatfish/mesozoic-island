@@ -169,17 +169,27 @@ public class Battle {
 					if (defend.getDinosaur().hasRune()) get += String.format(" and the %s rune", defend.getDinosaur().getRune().getName());
 					if (defend.getDinosaur().hasItem()) get += String.format(" and %s %s", Util.getArticle(defend.getDinosaur().getItem().toString()), defend.getDinosaur().getItem().toString());
 					
+					// Send pickup message
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
+					
+					// Give dinosaur, rune, and item
+					Action.addDinosaurDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getId());
+					if (defend.getDinosaur().hasRune()) Action.addRuneDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getRune().getId());
+					if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getItem().getIdDmg(), 1);
+
 
 					// Dinosaur dropped a lost page
 					if (Event.isEventActive(EventType.LostPages)) {
 						
 					}
 
-					Action.addDinosaurDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getId());
-					if (defend.getDinosaur().hasRune()) Action.addRuneDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getRune().getId());
-					if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getItem().getIdDmg(), 1);
+					// Dinosaur dopped halloween candy
+					if (Event.isEventActive(EventType.Halloween) && MesozoicRandom.nextInt(3) == 0) {
+						Item item = Item.getItem(Util.getRandomElement(Constants.HALLOWEEN_CANDY));
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("**%s:** %s, you found %s %s.", tier.toString(), Util.getArticle(item.toString()), item.toString()));
+						Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, item.getIdDmg(), 1);
+					}
 				}
 				
 				// Dinosaur gains XP

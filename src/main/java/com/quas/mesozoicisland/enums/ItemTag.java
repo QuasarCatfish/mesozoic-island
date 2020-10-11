@@ -13,6 +13,8 @@ public enum ItemTag {
 	Bracer("#bracer"),
 	Gauntlet("#gauntlet"),
 
+	HalloweenCandy("#halloweencandy"),
+
 	DungeonTicket("#dungeonticket"),
 
 	LostPage("#lostpage"),
