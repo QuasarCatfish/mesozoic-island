@@ -220,7 +220,7 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but dinosaur spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
-					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occurring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.trySpawn(SpawnType.Wild, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for dinosaurs to battle.", p.getAsMention(), i.toString()).complete();
@@ -235,7 +235,7 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but egg spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
-					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occurring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.trySpawn(SpawnType.Egg, true)) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for some eggs.", p.getAsMention(), i.toString()).complete();
@@ -250,7 +250,7 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but dungeon spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.getSpawnTime() <= System.currentTimeMillis()) {
-					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occuring.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but a spawn is occurring.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				} else if (SpawnManager.isDungeonSpawned()) {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
