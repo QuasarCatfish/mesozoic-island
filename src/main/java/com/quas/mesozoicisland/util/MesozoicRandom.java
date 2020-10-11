@@ -152,7 +152,7 @@ public class MesozoicRandom {
 			e.printStackTrace();
 		}
 
-		return 0;
+		return 1;
 	}
 
 	public static BattleAttack nextAttackingBattleEffect(DinosaurForm form) {
