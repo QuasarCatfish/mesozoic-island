@@ -451,6 +451,8 @@ public class JDBC {
 	}
 	
 	public static synchronized boolean addXp(MessageChannel channel, long pid, Pair<Integer, Integer> dino, long xp, boolean player) {
+		if (xp <= 0) return false;
+
 		Dinosaur d = Dinosaur.getDinosaur(pid, dino);
 		if (d == null) return false;
 		if (d.getDinosaurForm() == DinosaurForm.Accursed) return false;
@@ -472,6 +474,8 @@ public class JDBC {
 	}
 	
 	public static synchronized boolean addPlayerXp(long playerid, long xp) {
+		if (xp <= 0) return false;
+
 		Player p = Player.getPlayer(playerid);
 		boolean b = executeUpdate("update players set xp = %d where playerid = %d;", Math.min(p.getXp() + xp, Constants.MAX_XP), playerid);
 		Player p2 = Player.getPlayer(playerid);
