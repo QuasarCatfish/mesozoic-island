@@ -187,7 +187,7 @@ public class Battle {
 					// Dinosaur dopped halloween candy
 					if (Event.isEventActive(EventType.Halloween) && MesozoicRandom.nextInt(20) == 0) {
 						Item item = Item.getItem(Util.getRandomElement(Constants.HALLOWEEN_CANDY));
-						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("**%s:** %s, you found %s %s.", tier.toString(), Util.getArticle(item.toString()), item.toString()));
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("**%s:** %s, you found %s %s.", tier.toString(), attack.getPlayer().getAsMention(), Util.getArticle(item.toString()), item.toString()));
 						Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, item.getIdDmg(), 1);
 					}
 				}
