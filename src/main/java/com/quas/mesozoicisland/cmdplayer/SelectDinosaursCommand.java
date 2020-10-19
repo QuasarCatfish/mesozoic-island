@@ -66,10 +66,12 @@ public class SelectDinosaursCommand implements ICommand {
 		
 		Dinosaur[] dinos = new Dinosaur[args.length];
 		int contest = 0;
+		int accursed = 0;
 		for (int q = 0; q < args.length; q++) {
 			dinos[q] = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(args[q]));
 			if (dinos[q] == null) continue;
 			if (dinos[q].getDinosaurForm() == DinosaurForm.Contest) contest++;
+			if (dinos[q].getDinosaurForm() == DinosaurForm.Accursed) accursed++;
 		}
 		
 		int olen = dinos.length;
@@ -79,8 +81,11 @@ public class SelectDinosaursCommand implements ICommand {
 		if (dinos.length == 0) {
 			event.getChannel().sendMessageFormat("%s, none of these dinosaurs are valid to select.", event.getAuthor().getAsMention()).complete();
 			return;
-		} else if (0 < contest && contest < dinos.length) {
-			event.getChannel().sendMessageFormat("%s, you must select only contest dinosaurs or no contest dinosaurs.", event.getAuthor().getAsMention()).complete();
+		} else if (contest > 0 && contest < dinos.length) {
+			event.getChannel().sendMessageFormat("%s, you cannot select a Contest dinosaur and a non-Contest dinosaur.", event.getAuthor().getAsMention()).complete();
+			return;
+		} else if (accursed > 0 && accursed < dinos.length) {
+			event.getChannel().sendMessageFormat("%s, you cannot select an Accursed dinosaur and a non-Accursed dinosaur.", event.getAuthor().getAsMention()).complete();
 			return;
 		} else if (olen - dinos.length == 0) {
 			event.getChannel().sendMessageFormat("%s, your selected dinosaur%s been updated. Your team is in the %s.", event.getAuthor().getAsMention(), dinos.length == 1 ? " has" : "s have", bt.toString()).complete();

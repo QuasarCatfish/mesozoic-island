@@ -157,31 +157,29 @@ public class Constants {
 		// Dungeon Ticket
 		"item 100 0 500 item 502 0 1",
 
-		// "item 100 0 500 item 502 0 2",
-
-		// "item 100 0 500 item 502 0 3",
-
 		// Premium Dungeon Ticket
 		// "item 100 0 500 item 503 0 1",
 
 		// A-Tier XP Potion
-		// "item 100 0 500 item 206 0 1",
+		"item 100 0 500 item 206 0 1",
 
-		// "item 100 0 500 item 206 0 2",
-
-		// "item 100 0 500 item 206 0 3",
-		
 		// S-Tier XP Potion
 		// "item 100 0 500 item 207 0 1",
 
 		// Dinosaur Locator
+		"item 100 0 500 item 221 0 1",
 
 		// Egg Locator
+		"item 100 0 500 item 222 0 1",
 
 		// Dungeon Locator
+		// "item 100 0 500 item 223 0 1",
 
-		// Fragrance of Battle
-
+		// Fragrance
+		"item 100 0 500 item 213 0 1",
+		"item 100 0 500 item 216 0 1",
+		"item 100 0 500 item 219 0 1",
+		"item 100 0 500 item 225 0 1",
 
 		// Prismatic Converter
 		// "item 100 0 500 item 211 0 1",

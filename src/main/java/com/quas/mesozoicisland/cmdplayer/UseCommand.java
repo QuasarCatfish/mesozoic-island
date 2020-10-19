@@ -265,21 +265,21 @@ public class UseCommand implements ICommand {
 
 			else if (i.getId() == ItemID.MysteryPendantBox.getItemId()) {
 				ItemID[] pendants = new ItemID[] {ItemID.RubyPendant, ItemID.TopazPendant, ItemID.JadePendant, ItemID.GarnetPendant, ItemID.DiamondPendant, ItemID.CubanitePendant, ItemID.AquamarinePendant, ItemID.AmberPendant};
-				Item pendant = Item.getItem(Util.getRandomElement(pendants));
+				Item pendant = Util.getWeightedItem(p, pendants);
 				event.getChannel().sendMessageFormat("%s, you open the box and find %s %s!", p.getAsMention(), Util.getArticle(pendant.toString()), pendant.toString()).complete();
 				JDBC.addItem(p.getIdLong(), pendant.getIdDmg());
 			}
 
 			else if (i.getId() == ItemID.MysteryBracerBox.getItemId()) {
 				ItemID[] bracers = new ItemID[] {ItemID.RubyBracer, ItemID.TopazBracer, ItemID.JadeBracer, ItemID.GarnetBracer, ItemID.DiamondBracer, ItemID.CubaniteBracer, ItemID.AquamarineBracer, ItemID.AmberBracer};
-				Item bracer = Item.getItem(Util.getRandomElement(bracers));
+				Item bracer = Util.getWeightedItem(p, bracers);
 				event.getChannel().sendMessageFormat("%s, you open the box and find %s %s!", p.getAsMention(), Util.getArticle(bracer.toString()), bracer.toString()).complete();
 				JDBC.addItem(p.getIdLong(), bracer.getIdDmg());
 			}
 
 			else if (i.getId() == ItemID.MysteryGauntletBox.getItemId()) {
 				ItemID[] gauntlets = new ItemID[] {ItemID.RubyGauntlet, ItemID.TopazGauntlet, ItemID.JadeGauntlet, ItemID.GarnetGauntlet, ItemID.DiamondGauntlet, ItemID.CubaniteGauntlet, ItemID.AquamarineGauntlet, ItemID.AmberGauntlet};
-				Item gauntlet = Item.getItem(Util.getRandomElement(gauntlets));
+				Item gauntlet = Util.getWeightedItem(p, gauntlets);
 				event.getChannel().sendMessageFormat("%s, you open the box and find %s %s!", p.getAsMention(), Util.getArticle(gauntlet.toString()), gauntlet.toString()).complete();
 				JDBC.addItem(p.getIdLong(), gauntlet.getIdDmg());
 			}
@@ -377,7 +377,7 @@ public class UseCommand implements ICommand {
 					Dinosaur raid = Dinosaur.getDinosaur(Integer.parseInt(data[0]), DinosaurForm.RaidBoss.getId());
 					raid.setLevel(Integer.parseInt(data[1]));
 					raid.setRank(0);
-					raid.addBoost(-raid.getLevel() / 2);
+					raid.addBoost(-raid.getLevel() / 3);
 
 					// Set up Battle
 					Battle b = new Battle(BattleChannel.Special, BattleType.Boss, MesozoicRandom.nextUnusedLocation());

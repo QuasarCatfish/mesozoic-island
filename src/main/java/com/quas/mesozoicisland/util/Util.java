@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 
@@ -19,8 +20,10 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
+import com.quas.mesozoicisland.objects.Player;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -130,6 +133,28 @@ public class Util {
 			sb.append(mult(str, count - 1));
 			return sb.toString();
 		}
+	}
+
+	public static Item getWeightedItem(Player p, ItemID[] items) {
+		TreeMap<Item, Long> bag = p.getBag();
+		long max = 0;
+		TreeMap<ItemID, Item> itemid = new TreeMap<ItemID, Item>();
+
+		for (ItemID item : items) {
+			itemid.put(item, Item.getItem(item));
+			long count = bag.getOrDefault(itemid.get(item), 0L);
+			if (count > max) max = count;
+		}
+
+		ArrayList<Item> choice = new ArrayList<Item>();
+		for (ItemID item : items) {
+			long count = bag.getOrDefault(itemid.get(item), 0L);
+			for (int q = 0; q < max - count + 1; q++) {
+				choice.add(itemid.get(item));
+			}
+		}
+
+		return Util.getRandomElement(choice.toArray(new Item[0]));
 	}
 	
 	public static <T> T complete(RestAction<T> action) {

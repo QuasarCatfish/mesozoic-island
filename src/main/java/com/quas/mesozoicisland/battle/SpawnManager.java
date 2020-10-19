@@ -72,7 +72,7 @@ public class SpawnManager {
 		
 		if (waiting) return false;
 		
-		if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild) && isWildBattleHappening()) {
+		if ((spawntype == SpawnType.Random || spawntype == SpawnType.Wild || spawntype == SpawnType.Egg) && isWildBattleHappening()) {
 			spawntime = Long.MAX_VALUE;
 			return false;
 		} else if (spawntype == SpawnType.Dungeon && (isDungeonSpawned() || isWildBattleHappening())) {

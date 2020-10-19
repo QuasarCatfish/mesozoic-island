@@ -10,7 +10,6 @@ import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
-import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Util;
@@ -82,29 +81,44 @@ public class StatsPlayerCommand implements ICommand {
 		eb.setColor(p.getColor());
 		eb.setTitle(p.getName() + "'s Stats");
 		
-		eb.addField("Join Date", p.getJoinDate(), true);
-		eb.addField("Trainer Level and XP", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
+		eb.addField("__Join Date__", p.getJoinDate(), true);
+		eb.addField("__Trainer Level and XP__", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
 		
 		if (event.getChannel().getIdLong() == DiscordChannel.Game.getIdLong()) {
 			eb.setDescription("Use this command in " + DiscordChannel.BotCommands.toString() + " or DMs for a full list of stats.");
 		} else {
-			{
-				Item i = Item.getItem(Stat.DailiesClaimed.getId());
-				eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
-				eb.addField("Daily Streak", String.format("%,d Day%s", p.getDailyStreak(), p.getDailyStreak() == 1 ? "" : "s"), true);
-			}
-			
+			TreeMap<String, String> map = new TreeMap<String, String>();
+			String[] keys = new String[] {"Dailies", "Battles", "Damage", "Dungeons", "Raids", "Dinosaurs", "Dinosaur Coins", "Eggs", "Miscellaneous"};
+			for (String key : keys) map.put(key, "");
+
 			for (Item i : items) {
 				if (Integer.parseInt(i.getData()) < 0) continue;
-				eb.addField(i.toString(2), String.format("%,d", bag.getOrDefault(i, 0L)), true);
+
+				for (String key : keys) {
+					if (i.toString(2).contains(key)) {
+						map.put(key, map.get(key) + String.format("%,d %s\n", bag.getOrDefault(i, 0L), i.toString(2).replace(key + " ", "")));
+						break;
+					} else if (key.equals(keys[keys.length - 1])) {
+						map.put(key, map.get(key) + String.format("%,d %s\n", bag.getOrDefault(i, 0L), i.toString(2)));
+						break;
+					}
+				}
+			}
+
+			map.put(keys[0], map.get(keys[0]) + String.format("%,d-Day Streak", p.getDailyStreak()));
+
+			for (String key : keys) {
+				eb.addField("__" + key + "__", map.get(key), true);
 			}
 		}
 
 		long time = System.currentTimeMillis();
-		if (p.getFragranceXpTimer() > time) eb.addField("Experience Fragrance", Util.formatTime(p.getFragranceXpTimer() - time), true);
-		if (p.getFragranceBattleTimer() > time) eb.addField("Battle Fragrance", Util.formatTime(p.getFragranceBattleTimer() - time), true);
-		if (p.getFragranceMoneyTimer() > time) eb.addField("Money Fragrance", Util.formatTime(p.getFragranceMoneyTimer() - time), true);
-		if (p.getFragranceEggTimer() > time) eb.addField("Egg Fragrance", Util.formatTime(p.getFragranceEggTimer() - time), true);
+		StringBuilder sb = new StringBuilder();
+		if (p.getFragranceXpTimer() > time) sb.append("Experience - " + Util.formatTime(p.getFragranceXpTimer() - time) + "\n");
+		if (p.getFragranceBattleTimer() > time) sb.append("Battle - " + Util.formatTime(p.getFragranceBattleTimer() - time) + "\n");
+		if (p.getFragranceMoneyTimer() > time) sb.append("Money - " + Util.formatTime(p.getFragranceMoneyTimer() - time) + "\n");
+		if (p.getFragranceEggTimer() > time) sb.append("Egg - " + Util.formatTime(p.getFragranceEggTimer() - time) + "\n");
+		if (sb.length() > 0) eb.addField("__Fragrance__", sb.toString(), true);
 		
 		event.getChannel().sendMessage(eb.build()).complete();
 	}
