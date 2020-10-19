@@ -227,7 +227,11 @@ public class JDBC {
 	public static synchronized boolean setSelected(long pid, Dinosaur[] dinos) {
 		String[] dinostr = new String[dinos.length];
 		for (int q = 0; q < dinos.length; q++) dinostr[q] = dinos[q].getId();
-		return executeUpdate("update players set selected = '%s' where playerid = %d;", Util.cleanQuotes(Util.join(dinostr, " ", 0, dinostr.length)), pid);
+		return setSelected(pid, Util.join(dinostr, " ", 0, dinostr.length));
+	}
+	
+	public static synchronized boolean setSelected(long pid, String dinos) {
+		return executeUpdate("update players set selected = '%s' where playerid = %d;", Util.cleanQuotes(dinos), pid);
 	}
 	
 	public static String getRedeemMessage(String redeem) {
@@ -448,6 +452,38 @@ public class JDBC {
 			setLatest(pid, Dinosaur.getDinosaur(dino));
 			return b;
 		}
+	}
+
+	public static synchronized boolean deleteDinosaur(long pid, Pair<Integer, Integer> dino) {
+		Player p = Player.getPlayer(pid);
+		Dinosaur d = Dinosaur.getDinosaur(pid, dino);
+
+		// Fix selected dinosaur
+		if (p.getSelected().contains(d.getId())) {
+			String selected = p.getSelected().replace(d.getId(), "").replaceAll("\\s+", " ");
+			if (selected.length() == 0) {
+				setSelected(pid, p.getStarter());
+			} else {
+				setSelected(pid, selected);
+			}
+		}
+
+		// Fix teams
+		try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d;", pid)) {
+			while (res.next()) {
+				String selected = res.getString("selected").replace(d.getId(), "").replaceAll("\\s+", " ");
+				if (selected.length() == 0) {
+					executeUpdate("update teams set selected = null where playerid = %d and teamname = '%s';", pid, res.getString("teamname"));
+				} else {
+					executeUpdate("update teams set selected = '%s' where playerid = %d and teamname = '%s';", selected, pid, res.getString("teamname"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		// Delete dinosaur
+		return executeUpdate("delete from captures where player = %d and dex = %d and form = %d limit 1;", pid, d.getDex(), d.getForm());
 	}
 	
 	public static synchronized boolean addXp(MessageChannel channel, long pid, Pair<Integer, Integer> dino, long xp, boolean player) {
