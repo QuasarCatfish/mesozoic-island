@@ -159,8 +159,18 @@ public class UseCommand implements ICommand {
 			else if (i.getId() == ItemID.JasonToken.getItemId()) {
 				long count = bag.getOrDefault(i, 0L);
 				if (count >= Constants.ACCURSED_REMOVAL_QUESTS) {
-					// TODO : Add the removal of the curse
-					event.getChannel().sendMessageFormat("%s, congratulations on collecting all %,d %s.", p.getAsMention(), Constants.ACCURSED_REMOVAL_QUESTS, i.toString(Constants.ACCURSED_REMOVAL_QUESTS)).complete();
+					try (ResultSet res = JDBC.executeQuery("select * from captures where player = %d and form = %d;", p.getIdLong(), DinosaurForm.Accursed.getId())) {
+						if (res.next()) {
+							Dinosaur dino = Dinosaur.getDinosaur(p.getIdLong(), res.getInt("dex"), res.getInt("form"));
+							event.getChannel().sendMessageFormat("%s, you have successfully destroyed your %s.", p.getAsMention(), dino.getEffectiveName()).complete();
+							JDBC.deleteDinosaur(p.getIdLong(), dino.getIdPair());
+							JDBC.setCursed(p.getIdLong(), false);
+						} else {
+							event.getChannel().sendMessageFormat("%s, you do not have an Accursed dinosaur.", p.getAsMention()).complete();
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				} else {
 					event.getChannel().sendMessageFormat("%s, you need %,d more %s.", p.getAsMention(), Constants.ACCURSED_REMOVAL_QUESTS - count, i.toString(Constants.ACCURSED_REMOVAL_QUESTS - count)).complete();
 				}

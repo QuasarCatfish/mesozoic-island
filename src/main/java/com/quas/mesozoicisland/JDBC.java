@@ -482,6 +482,10 @@ public class JDBC {
 			e.printStackTrace();
 		}
 
+		// item and rune
+		if (d.hasItem()) addItem(pid, d.getItem().getIdDmg());
+		if (d.hasRune()) unequipRune(pid, d.getIdPair(), d.getRune().getId());
+
 		// Delete dinosaur
 		return executeUpdate("delete from captures where player = %d and dex = %d and form = %d limit 1;", pid, d.getDex(), d.getForm());
 	}
@@ -569,6 +573,30 @@ public class JDBC {
 		boolean a = executeUpdate("update captures set rune = 0 where player = %d and dex = %d and form = %d;", pid, dino.getFirstValue(), dino.getSecondValue());
 		boolean b = executeUpdate("update runepouches set equipped = null where player = %d and rune = %d;", pid, rune);
 		return a && b;
+	}
+
+	public static synchronized int getNextSuggestionId() {
+		try (ResultSet res = JDBC.executeQuery("select * from suggestions order by suggestionid desc limit 1;")) {
+			if (res.next()) {
+				return res.getInt("suggestionid") + 1;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return 1;
+	}
+
+	public static synchronized boolean addSuggestion(long player, int id, String suggestion, String image, long messageid) {
+		if (suggestion == null && image == null) {
+			return false;
+		} else if (suggestion == null) {
+			return executeUpdate("insert into suggestions(suggestionid, player, image, messageid) values(%d, '%s', %d);", id, player, Util.cleanQuotes(image), messageid);
+		} else if (image == null) {
+			return executeUpdate("insert into suggestions(suggestionid, player, suggestion, messageid) values(%d, '%s', %d);", id, player, Util.cleanQuotes(suggestion), messageid);
+		} else {
+			return executeUpdate("insert into suggestions(suggestionid, player, suggestion, image, messageid) values(%d, '%s', '%s', %d);", id, player, Util.cleanQuotes(suggestion), Util.cleanQuotes(image), messageid);
+		}
 	}
 	
 	public static synchronized boolean hasDungeonTickets() {
