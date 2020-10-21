@@ -421,8 +421,12 @@ public class JDBC {
 	}
 	
 	public static synchronized boolean updateEggs() {
+		return updateEggs(true);
+	}
+
+	public static synchronized boolean updateEggs(boolean fragrance) {
 		boolean b = executeUpdate("update eggs set hp = hp + floor(rand() * %d) + %d where player > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit());
-		b &= executeUpdate("update eggs join players on eggs.player = players.playerid set hp = hp + floor(rand() * %d) + %d where eggs.player > %d and players.fragranceegg > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit(), System.currentTimeMillis());
+		if (fragrance) b &= executeUpdate("update eggs join players on eggs.player = players.playerid set hp = hp + floor(rand() * %d) + %d where eggs.player > %d and players.fragranceegg > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit(), System.currentTimeMillis());
 		return b;
 	}
 	
@@ -471,8 +475,8 @@ public class JDBC {
 		// Fix teams
 		try (ResultSet res = JDBC.executeQuery("select * from teams where playerid = %d;", pid)) {
 			while (res.next()) {
-				String selected = res.getString("selected").replace(d.getId(), "").replaceAll("\\s+", " ");
-				if (selected.length() == 0) {
+				String selected = res.getString("selected") == null ? null : res.getString("selected").replace(d.getId(), "").replaceAll("\\s+", " ");
+				if (selected == null || selected.length() == 0) {
 					executeUpdate("update teams set selected = null where playerid = %d and teamname = '%s';", pid, res.getString("teamname"));
 				} else {
 					executeUpdate("update teams set selected = '%s' where playerid = %d and teamname = '%s';", selected, pid, res.getString("teamname"));
@@ -591,11 +595,11 @@ public class JDBC {
 		if (suggestion == null && image == null) {
 			return false;
 		} else if (suggestion == null) {
-			return executeUpdate("insert into suggestions(suggestionid, player, image, messageid) values(%d, '%s', %d);", id, player, Util.cleanQuotes(image), messageid);
+			return executeUpdate("insert into suggestions(suggestionid, player, image, messageid) values(%d, %d, '%s', %d);", id, player, Util.cleanQuotes(image), messageid);
 		} else if (image == null) {
-			return executeUpdate("insert into suggestions(suggestionid, player, suggestion, messageid) values(%d, '%s', %d);", id, player, Util.cleanQuotes(suggestion), messageid);
+			return executeUpdate("insert into suggestions(suggestionid, player, suggestion, messageid) values(%d, %d, '%s', %d);", id, player, Util.cleanQuotes(suggestion), messageid);
 		} else {
-			return executeUpdate("insert into suggestions(suggestionid, player, suggestion, image, messageid) values(%d, '%s', '%s', %d);", id, player, Util.cleanQuotes(suggestion), Util.cleanQuotes(image), messageid);
+			return executeUpdate("insert into suggestions(suggestionid, player, suggestion, image, messageid) values(%d, %d, '%s', '%s', %d);", id, player, Util.cleanQuotes(suggestion), Util.cleanQuotes(image), messageid);
 		}
 	}
 	

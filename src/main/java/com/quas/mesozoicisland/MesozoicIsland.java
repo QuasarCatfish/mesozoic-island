@@ -96,6 +96,7 @@ import com.quas.mesozoicisland.cmdplayer.ShopListCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsPlayerCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsSelfCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsServerCommand;
+import com.quas.mesozoicisland.cmdplayer.SuggestionCheckCommand;
 import com.quas.mesozoicisland.cmdplayer.SuggestionMarker;
 import com.quas.mesozoicisland.cmdplayer.TopCommand;
 import com.quas.mesozoicisland.cmdplayer.TradeDinosaurCommand;
@@ -171,6 +172,7 @@ public class MesozoicIsland {
 		professor.getJDA().addEventListener(new CheckBattleMessage());
 		professor.getJDA().addEventListener(new MonitorDMs());
 		assistant.getJDA().addEventListener(new MonitorDMs());
+		professor.getJDA().addEventListener(new SuggestionVoter());
 		
 		// Professor Bot
 		CommandManager.addCommand(professor.getIdLong(), new PingCommand());
@@ -292,7 +294,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictStockCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictBuyCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new WhoHasCommand());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
+		CommandManager.addCommand(assistant.getIdLong(), new SuggestionCheckCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands

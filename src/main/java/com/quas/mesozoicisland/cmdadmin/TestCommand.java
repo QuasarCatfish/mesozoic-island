@@ -116,7 +116,7 @@ public class TestCommand implements ICommand {
 			case "givehp": {
 				int x = Integer.parseInt(args[2]);
 				while (x --> 0) {
-					JDBC.updateEggs();
+					JDBC.updateEggs(false);
 				}
 			} break;
 
@@ -139,6 +139,33 @@ public class TestCommand implements ICommand {
 				}
 			} break;
 
+			case "suggestion": {
+				int x = Integer.parseInt(args[2]);
+
+				StringBuilder sb = new StringBuilder("__Suggestion " + x + ":__\n");
+				try (ResultSet res = JDBC.executeQuery("select * from suggestions where suggestionid = %d;", x)) {
+					if (res.next()) {
+						sb.append("Author: ");
+						sb.append("<@" + res.getLong("player") + ">\n");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				sb.append("\nVotes:\n");
+				try (ResultSet res = JDBC.executeQuery("select * from suggestionvotes where suggestionid = %d;", x)) {
+					while (res.next()) {
+						sb.append("-- ");
+						sb.append("<@" + res.getLong("player") + "> voted ");
+						sb.append(res.getInt("vote"));
+						sb.append("\n");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				event.getChannel().sendMessage(sb.toString()).complete();
+			} break;
 
 			case "eventtype": {
 				StringBuilder sb = new StringBuilder("Event Type List:");

@@ -162,9 +162,10 @@ public class UseCommand implements ICommand {
 					try (ResultSet res = JDBC.executeQuery("select * from captures where player = %d and form = %d;", p.getIdLong(), DinosaurForm.Accursed.getId())) {
 						if (res.next()) {
 							Dinosaur dino = Dinosaur.getDinosaur(p.getIdLong(), res.getInt("dex"), res.getInt("form"));
-							event.getChannel().sendMessageFormat("%s, you have successfully destroyed your %s.", p.getAsMention(), dino.getEffectiveName()).complete();
+							event.getChannel().sendMessageFormat("%s, the tokens spin around your %s bathing it in a blinding light. When the light disappears, the dinosaur is nowhere to be found.", p.getAsMention(), dino.getEffectiveName()).complete();
 							JDBC.deleteDinosaur(p.getIdLong(), dino.getIdPair());
 							JDBC.setCursed(p.getIdLong(), false);
+							JDBC.addItem(p.getIdLong(), ItemID.JasonToken.getId(), -Constants.ACCURSED_REMOVAL_QUESTS);
 						} else {
 							event.getChannel().sendMessageFormat("%s, you do not have an Accursed dinosaur.", p.getAsMention()).complete();
 						}

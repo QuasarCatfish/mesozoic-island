@@ -108,6 +108,7 @@ public enum DiscordChannel {
 	public static final DiscordChannel[] NONE = new DiscordChannel[0];
 	public static final DiscordChannel[] ALL_CHANNELS = Util.arr(All);
 	public static final DiscordChannel[] SUGGESTION_CHANNELS = Util.arr(GameSuggestions);
+	public static final DiscordChannel[] SUGGESTION_FEEDBACK_CHANNELS = Util.arr(Admins, GameTesting, BotCommands, SuggestionFeedback, DirectMessages);
 	public static final DiscordChannel[] STANDARD_CHANNELS = Util.arr(Game, BotCommands, Admins, GameTesting, FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
 	public static final DiscordChannel[] STANDARD_CHANNELS_DMS = Util.arr(Game, BotCommands, Admins, GameTesting, DirectMessages, FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
 	public static final DiscordChannel[] STANDARD_CHANNELS_TRADE_DMS = Util.arr(Game, Trading, BotCommands, Admins, GameTesting, DirectMessages, FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);

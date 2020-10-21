@@ -93,6 +93,7 @@ public class BenedictBuyCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s, you have bought %s %s for %,d %s.", p.getAsMention(), Util.getArticle(egg.getEggName()), egg.getEggName(), Constants.EGG_PRICE, Item.getItem(ItemID.DinosaurCoin).toString(Constants.EGG_PRICE)).complete();
 					JDBC.executeUpdate("update eggs set player = %d, original = %d, incubator = %d where eggid = %d;", p.getIdLong(), p.getIdLong(), Util.getFirstOpenIncubator(p.getIdLong()), res.getInt("eggid"));
 					JDBC.addItem(p.getIdLong(), Stat.EggsReceived.getId());
+					JDBC.addItem(p.getIdLong(), Stat.TransactionsMade.getId());
 					JDBC.addItem(p.getIdLong(), ItemID.DinosaurCoin.getId(), -Constants.EGG_PRICE);
 				}
 			} catch (SQLException e) {
