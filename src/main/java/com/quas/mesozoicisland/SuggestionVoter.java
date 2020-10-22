@@ -57,7 +57,8 @@ public class SuggestionVoter extends ListenerAdapter {
 			Message m = event.getChannel().retrieveMessageById(event.getMessageId()).complete();
 			if (!m.getEmbeds().isEmpty()) {
 				EmbedBuilder eb = new EmbedBuilder(m.getEmbeds().get(0));
-				eb.setFooter(String.format("%,d players have voted.", count));
+				if (count == 1) eb.setFooter("1 player has voted.");
+				else eb.setFooter(String.format("%,d players have voted.", count));
 				m.editMessage(m.getContentRaw()).embed(eb.build()).complete();
 			}
 		}

@@ -34,6 +34,7 @@ import com.quas.mesozoicisland.util.Util;
 import com.quas.mesozoicisland.util.Zalgo;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class TestCommand implements ICommand {
@@ -165,6 +166,12 @@ public class TestCommand implements ICommand {
 				}
 
 				event.getChannel().sendMessage(sb.toString()).complete();
+			} break;
+
+			case "pfp": {
+				long id = Long.parseLong(args[2].replaceAll("\\D", ""));
+				User u = event.getGuild().getMemberById(id).getUser();
+				event.getChannel().sendMessage(u.getAvatarUrl()).complete();
 			} break;
 
 			case "eventtype": {
