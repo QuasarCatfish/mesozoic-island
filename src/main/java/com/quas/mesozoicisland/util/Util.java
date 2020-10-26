@@ -143,6 +143,15 @@ public class Util {
 		for (ItemID item : items) {
 			itemid.put(item, Item.getItem(item));
 			long count = bag.getOrDefault(itemid.get(item), 0L);
+
+			try (ResultSet res = JDBC.executeQuery("select count(*) as count from captures where player = %d and item = %d and itemdmg = %d;", p.getIdLong(), item.getItemId(), item.getItemDamage())) {
+				if (res.next()) {
+					count += res.getInt("count");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 			if (count > max) max = count;
 		}
 

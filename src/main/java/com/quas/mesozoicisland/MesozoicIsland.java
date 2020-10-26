@@ -32,6 +32,8 @@ import com.quas.mesozoicisland.cmdadmin.SpawnEggCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnTimeCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnTimeResetCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnWildCommand;
+import com.quas.mesozoicisland.cmdadmin.SuggestionAcceptCommand;
+import com.quas.mesozoicisland.cmdadmin.SuggestionRejectCommand;
 import com.quas.mesozoicisland.cmdadmin.TestCommand;
 import com.quas.mesozoicisland.cmdadmin.ThreadsCommand;
 import com.quas.mesozoicisland.cmdadmin.ToggleCommand;
@@ -325,6 +327,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new MuteCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new UnmuteCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new AssistantSendDMCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new SuggestionAcceptCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new SuggestionRejectCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		

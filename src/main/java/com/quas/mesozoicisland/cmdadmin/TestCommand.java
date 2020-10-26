@@ -31,9 +31,7 @@ import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
-import com.quas.mesozoicisland.util.Zalgo;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -180,38 +178,6 @@ public class TestCommand implements ICommand {
 					sb.append(String.format("\n%s - %b", et, Event.isEventActive(et)));
 				}
 				event.getChannel().sendMessage(sb.toString()).complete();
-			} break;
-
-			case "zalgo": {
-				EmbedBuilder eb = new EmbedBuilder();
-				eb.setColor(Constants.COLOR);
-				eb.setTitle(Zalgo.of("Tormented Apatosaurus", 256));
-				eb.addField(Zalgo.of("Dex Number", 256), Zalgo.of("#090T", 1024), true);
-				eb.addField(Zalgo.of("Element", 256), Zalgo.of("Ice", 1024), true);
-				eb.addField(Zalgo.of("Rarity", 256), Zalgo.of("Gold Rare", 1024), true);
-				eb.addField(Zalgo.of("Base Health", 256), Zalgo.of("2,000", 1024), true);
-				eb.addField(Zalgo.of("Base Attack", 256), Zalgo.of("1,100", 1024), true);
-				eb.addField(Zalgo.of("Base Defense", 256), Zalgo.of("900", 1024), true);
-				eb.addField(Zalgo.of("Classification", 256), Zalgo.of("Dinosaur", 1024), true);
-				eb.addField(Zalgo.of("Geological Period", 256), Zalgo.of("Late Jurassic", 1024), true);
-				eb.addField(Zalgo.of("Location", 256), Zalgo.of("North America", 1024), true);
-				eb.addField(Zalgo.of("Diet", 256), Zalgo.of("Herbivore", 1024), true);
-				eb.addField(Zalgo.of("Discovery Year", 256), Zalgo.of("1877", 1024), true);
-				eb.addField(Zalgo.of("Author(s)", 256), Zalgo.of("Marsh", 1024), true);
-				eb.addField(Zalgo.of("Wikipedia Link", 256), String.format("[%s](%s)", Zalgo.of("https://en.wikipedia.org/wiki/Apatosaurus", 512), "https://en.wikipedia.org/wiki/Apatosaurus"), true);
-				event.getChannel().sendMessage(eb.build()).complete();
-			} break;
-
-			case "zalgo2": {
-				for (char[] ch : new char[][] {Zalgo.UP, Zalgo.MID, Zalgo.DOWN}) {
-					StringBuilder sb = new StringBuilder();
-					for (char c : ch) {
-						sb.append("a");
-						sb.append(c);
-					}
-
-					event.getChannel().sendMessage(sb.toString()).complete();
-				}
 			} break;
 
 			case "benedict": {
