@@ -1,6 +1,7 @@
 package com.quas.mesozoicisland.cmdplayer;
 
 import java.util.ArrayList;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
@@ -11,6 +12,7 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
+import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.entities.PrivateChannel;
@@ -68,12 +70,28 @@ public class DinodexCommand implements ICommand {
 		ArrayList<String> print = new ArrayList<String>();
 		print.add("__**DINODEX**__");
 		
+		TreeMap<Integer, ArrayList<Pair<Dinosaur, Boolean>>> dinos = new TreeMap<Integer, ArrayList<Pair<Dinosaur, Boolean>>>();
 		for (Dinosaur d : Dinosaur.values()) {
 			if (d.getForm() < 0) continue;
+			if (!dinos.containsKey(d.getDex())) dinos.put(d.getDex(), new ArrayList<Pair<Dinosaur, Boolean>>());
+			
 			Dinosaur pd = Dinosaur.getDinosaur(p.getIdLong(), d.getIdPair());
-			if (pd == null && d.getDinosaurForm() == DinosaurForm.Prismatic) continue;
-			else if (pd == null) print.add(String.format("#%s UNKNOWN DINOSAUR", d.getId()));
-			else print.add(String.format("%s [%s] [%s]", d, d.getElement(), d.getRarity()));
+			dinos.get(d.getDex()).add(new Pair<Dinosaur, Boolean>(d, pd != null));
+		}
+
+		for (int key : dinos.keySet()) {
+			Dinosaur base = Dinosaur.getDinosaur(key, DinosaurForm.Standard.getId());
+			ArrayList<String> forms = new ArrayList<String>();
+
+			for (Pair<Dinosaur, Boolean> pair : dinos.get(key)) {
+				if (pair.getSecondValue()) {
+					forms.add(pair.getFirstValue().getDinosaurForm().getOwnedEmote().toString());
+				} else if (pair.getFirstValue().getDinosaurForm() != DinosaurForm.Prismatic) {
+					forms.add(pair.getFirstValue().getDinosaurForm().getUnownedEmote().toString());
+				}
+			}
+			
+			print.add(String.format("%s [%s] [%s] %s", base, base.getElement(), base.getRarity(), String.join(" ", forms)));
 		}
 		
 		PrivateChannel pc = event.getAuthor().openPrivateChannel().complete();
