@@ -88,6 +88,7 @@ public class DinoMath {
 		// Get stats
 		long xp = 0;
 		long bst = 0;
+		long maxbst = 0;
 		boolean contest = true;
 		for (Dinosaur d : team) {
 			if (d.getDinosaurForm() == DinosaurForm.Accursed) {
@@ -95,7 +96,12 @@ public class DinoMath {
 			} else {
 				xp += d.getXp();
 				long stats = d.getHealth() + d.getAttack() + d.getDefense();
-				if (stats > bst) bst = stats;
+				if (stats > bst) {
+					bst = stats;
+					Dinosaur base = Dinosaur.getDinosaur(d.getIdPair());
+					base.setLevel(1).setRank(1);
+					maxbst = base.getHealth() + base.getAttack() + base.getDefense();
+				}
 			}
 			if (d.getDinosaurForm() != DinosaurForm.Contest) contest = false;
 		}
@@ -107,7 +113,7 @@ public class DinoMath {
 		int level = getLevel(xp);
 
 		// Calculate Percent
-		if (level < 10 && bst < 5_000 && tiers.contains(BattleTier.Tier2)) return floor(Math.max(100f * xp / getXp(10), 100f * bst / 5_000));
+		if (level < 10 && bst < 5_000 && tiers.contains(BattleTier.Tier2)) return floor(Math.max(100f * xp / getXp(10), 100f * (bst - maxbst) / (5_000 - maxbst)));
 		if (level < 30 && bst < 7_500 && tiers.contains(BattleTier.Tier3)) return floor(Math.max(100f * (xp - getXp(10)) / (getXp(30) - getXp(10)), 100f * (bst - 5_000) / 2_500));
 		if (level < 50 && bst < 10_000 && tiers.contains(BattleTier.Tier4)) return floor(Math.max(100f * (xp - getXp(30)) / (getXp(50) - getXp(30)), 100f * (bst - 7_500) / 2_500));
 		return -1;

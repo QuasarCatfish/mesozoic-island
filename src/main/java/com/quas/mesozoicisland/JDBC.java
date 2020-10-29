@@ -450,7 +450,7 @@ public class JDBC {
 		} else {
 			boolean b = executeUpdate("update captures set rp = rp + %d where player = %d and dex = %d and form = %d;", rp, pid, dino.getFirstValue(), dino.getSecondValue());
 			JDBC.addItem(pid, Stat.DinosaursCaught.getId(), rp);
-			if (!d.canRankup() && Dinosaur.getDinosaur(pid, dino).canRankup()) {
+			if (!d.canRankup() && d.getRank() < Constants.MAX_RANK && Dinosaur.getDinosaur(pid, dino).canRankup()) {
 				channel.sendMessageFormat("%s, your %s can now rankup to **Rank %s**. Use `rankup %s` to rankup this dinosaur.", d.getPlayer().getAsMention(), d.getEffectiveName(), d.getNextRankString(), d.getId()).complete();
 			}
 			setLatest(pid, Dinosaur.getDinosaur(dino));

@@ -114,6 +114,19 @@ public class DailyCommand implements ICommand {
 				sb.append(String.format("\nDaily Raid Pass: %s %s!", Util.getArticle(item.toString()), item.toString()));
 				JDBC.addItem(p.getIdLong(), item.getIdDmg());
 			}
+
+			// Special Day
+			switch (MesozoicDate.getToday().toString(false)) {
+
+				// Halloween
+				case "1031": {
+					for (ItemID itemid : new ItemID[] {ItemID.DinoGalaxyBar, ItemID.DinoFruitChew, ItemID.PeanutButterDinoCup, ItemID.ChocolateDinoWafer, ItemID.CaramelDinoLog, ItemID.ChocolateDinoBar}) {
+						Item item = Item.getItem(itemid);
+						sb.append(String.format("\nHalloween Bonus Reward: %s %s!", Util.getArticle(item.toString()), item.toString()));
+						JDBC.addItem(p.getIdLong(), item.getIdDmg());
+					}
+				} break;
+			}
 			
 			// Send Message
 			event.getChannel().sendMessage(sb.toString()).complete();
