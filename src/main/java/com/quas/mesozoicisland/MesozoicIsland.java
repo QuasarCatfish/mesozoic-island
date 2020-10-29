@@ -62,6 +62,7 @@ import com.quas.mesozoicisland.cmdplayer.DinodexCommand;
 import com.quas.mesozoicisland.cmdplayer.DinosaursCommand;
 import com.quas.mesozoicisland.cmdplayer.EchoCaveOfLostHope;
 import com.quas.mesozoicisland.cmdplayer.EggsCommand;
+import com.quas.mesozoicisland.cmdplayer.EggsSilentCommand;
 import com.quas.mesozoicisland.cmdplayer.ElementsCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipReverseCommand;
@@ -279,6 +280,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new StatsPlayerCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new StatsServerCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new EggsCommand()); // EGG RELATED
+		CommandManager.addCommand(assistant.getIdLong(), new EggsSilentCommand()); // EGG RELATED
 		CommandManager.addCommand(assistant.getIdLong(), new HatchCommand()); // EGG RELATED
 		CommandManager.addCommand(assistant.getIdLong(), new InfoEggCommand()); // EGG RELATED
 		CommandManager.addCommand(assistant.getIdLong(), new ListEventsCommand());
@@ -297,6 +299,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictBuyCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new WhoHasCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new SuggestionCheckCommand());
+//		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
@@ -335,7 +338,7 @@ public class MesozoicIsland {
 		// Add Dummy Commands
 		for (DummyCommand dc : DummyCommand.getProfessorDummyCommands()) CommandManager.addCommand(professor.getIdLong(), dc);
 		for (DummyCommand dc : DummyCommand.getAssistantDummyCommands()) CommandManager.addCommand(assistant.getIdLong(), dc);
-
+		
 		// Other Initialization
 		Event.initialize();
 		
