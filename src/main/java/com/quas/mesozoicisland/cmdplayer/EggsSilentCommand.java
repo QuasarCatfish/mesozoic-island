@@ -69,9 +69,12 @@ public class EggsSilentCommand implements ICommand {
 		long incubators = p.getBag().getOrDefault(inc, 0L);
 		
 		ArrayList<String> eggs = new ArrayList<String>();
+		int eggcount = 0;
+
 		try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d order by incubator;", p.getIdLong())) {
 			while (res.next()) {
 				Egg egg = Egg.getEgg(res.getInt("eggid"));
+				eggcount++;
 				if (egg.isHatchable()) eggs.add("E" + egg.getIncubatorSlot());
 			}
 		} catch (SQLException e) {
@@ -86,7 +89,7 @@ public class EggsSilentCommand implements ICommand {
 		sb.append(":**");
 		
 		sb.append("\nIn Use: ");
-		sb.append(Util.formatNumber(eggs.size()));
+		sb.append(Util.formatNumber(eggcount));
 		sb.append("/");
 		sb.append(Util.formatNumber(incubators));
 		
