@@ -90,9 +90,15 @@ public class InfoTeamCommand implements ICommand {
 					for (int q = 0; q < split.length; q++) {
 						team[q] = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(split[q]));
 						if (team[q].getDinosaurForm() == DinosaurForm.Accursed) {
-							sb.append((q + 1) + ") " + team[q] + " " + Zalgo.field("[" + team[q].getElement() + "]") + "\n");
+							sb.append((q + 1) + ") " + team[q] + " " + Zalgo.field("[" + team[q].getElement() + "]"));
+							if (team[q].hasItem()) sb.append(Zalgo.field(String.format(" [Holding: %s]", team[q].getItem().toString())));
+							if (team[q].hasRune()) sb.append(Zalgo.field(String.format(" [Rune: %s]", team[q].getRune().toString())));
+							sb.append("\n");
 						} else {
-							sb.append(String.format("%d) %s [%s]\n", q + 1, team[q], team[q].getElement()));
+							sb.append(String.format("%d) %s [%s]", q + 1, team[q], team[q].getElement()));
+							if (team[q].hasItem()) sb.append(String.format(" [Holding: %s]", team[q].getItem().toString()));
+							if (team[q].hasRune()) sb.append(String.format(" [Rune: %s]", team[q].getRune().toString()));
+							sb.append("\n");
 						}
 					}
 					
