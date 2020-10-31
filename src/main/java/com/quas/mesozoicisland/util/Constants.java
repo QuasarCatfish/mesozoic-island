@@ -37,7 +37,10 @@ public class Constants {
 	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f; // default 0.2f
 	public static final int MAIN_ELEMENT_BOOST = 10; // +10%
 	public static final int SUB_ELEMENT_BOOST = 5; // +5%
+
+	// Spawn Multipliers
 	public static final int PRISMATIC_EVENT_MULTIPLIER = 5;
+	public static final float HALLOWEEN_DINOSAUR_MULTIPLIER = 5f;
 
 	// Item Multipliers
 	public static final int PENDANT_BOOST = 10; // +10%

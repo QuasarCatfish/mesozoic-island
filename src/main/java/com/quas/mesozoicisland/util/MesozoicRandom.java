@@ -82,7 +82,7 @@ public class MesozoicRandom {
 			if (prismaticEvent && d.getDinosaurForm() == DinosaurForm.Prismatic) {
 				sum += Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
 			} else if (halloweenEvent && d.getDinosaurForm() == DinosaurForm.Halloween) {
-				sum += d.getRarity().getSpecialcount();
+				sum += Constants.HALLOWEEN_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialcount();
 			} else{
 				sum += d.getRarity().getDinoCount();
 			}
@@ -95,7 +95,7 @@ public class MesozoicRandom {
 				if (prismaticEvent && d.getDinosaurForm() == DinosaurForm.Prismatic) {
 					rand -= Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
 				} else if (halloweenEvent && d.getDinosaurForm() == DinosaurForm.Halloween) {
-					rand -= d.getRarity().getSpecialcount();
+					rand -= Constants.HALLOWEEN_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialcount();
 				} else {
 					rand -= d.getRarity().getDinoCount();
 				}
