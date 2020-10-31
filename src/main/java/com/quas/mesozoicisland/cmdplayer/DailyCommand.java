@@ -125,6 +125,12 @@ public class DailyCommand implements ICommand {
 						sb.append(String.format("\nHalloween Bonus Reward: %s %s!", Util.getArticle(item.toString()), item.toString()));
 						JDBC.addItem(p.getIdLong(), item.getIdDmg());
 					}
+
+					for (ItemID id : new ItemID[] {ItemID.FragranceOfBattle, ItemID.FragranceOfExperience, ItemID.FragranceOfMoney}) {
+						Item item = Item.getItem(id);
+						sb.append(String.format("\nMaintenance Compensation: %s %s!", Util.getArticle(item.toString()), item.toString()));
+						JDBC.addItem(p.getIdLong(), item.getIdDmg());
+					}
 				} break;
 			}
 			
