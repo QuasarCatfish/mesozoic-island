@@ -265,17 +265,20 @@ public class Egg implements Comparable<Egg> {
 		e.basepattern = EggPattern.None;
 		e.basepatterncolor = EggColor.Black;
 		e.patterncolor = e.color;
-		while (e.patterncolor == e.color) e.patterncolor = nextRandomPatternColor(DinosaurForm.AllForms);
+		while (e.patterncolor == e.color) e.patterncolor = nextRandomPatternColor(dinosaur.getDinosaurForm());
 		
 		if (MesozoicRandom.nextInt(4) == 0) {
-			e.basepatterncolor = nextRandomColor(DinosaurForm.AllForms);
-			while (e.basepatterncolor == e.color || e.basepatterncolor == e.patterncolor) e.basepatterncolor = nextRandomPatternColor(DinosaurForm.AllForms);
+			e.basepatterncolor = nextRandomColor(dinosaur.getDinosaurForm());
+			while (e.basepatterncolor == e.color || e.basepatterncolor == e.patterncolor) e.basepatterncolor = nextRandomPatternColor(dinosaur.getDinosaurForm());
 			e.basepattern = nextRandomPattern(EggPatternTag.TwoTone);
 		}
 		
 		e.pattern = nextRandomPattern(dinosaur.getDinosaurForm());
+		if (e.pattern == EggPattern.None) {
+			e.patterncolor = EggColor.Black;
+		}
+
 		e.eggname = e.getColorString() + " Egg" + (e.pattern == EggPattern.None ? "" : " with " + e.getPatternString());
-		
 		return e;
 	}
 	

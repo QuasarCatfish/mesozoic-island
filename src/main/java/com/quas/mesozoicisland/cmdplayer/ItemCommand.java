@@ -67,16 +67,15 @@ public class ItemCommand implements ICommand {
 			String[] arr = Util.arr(Integer.toString(i.getId()), i.toString(1), i.toString(2));
 			for (String s : arr) {
 				if (s.equalsIgnoreCase(itemname)) {
-					EmbedBuilder eb = new EmbedBuilder();
-					eb.setColor(Constants.COLOR);
 					if (!Constants.HIDE_ITEMS || i.isDiscovered()) {
+						EmbedBuilder eb = new EmbedBuilder();
+						eb.setColor(Constants.COLOR);
 						eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
 						eb.setDescription(i.getDescription());
+						event.getChannel().sendMessage(eb.build()).complete();
 					} else {
-						eb.setTitle("**Unknown Item** (ID ???)");
-						eb.setDescription("This item has not been discovered yet.");
+						event.getChannel().sendMessageFormat("%s, this item does not exist.", event.getAuthor().getAsMention()).complete();
 					}
-					event.getChannel().sendMessage(eb.build()).complete();
 					return;
 				}
 			}
