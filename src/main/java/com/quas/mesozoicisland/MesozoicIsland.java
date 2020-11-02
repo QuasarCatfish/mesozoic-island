@@ -60,7 +60,6 @@ import com.quas.mesozoicisland.cmdplayer.DataCommand;
 import com.quas.mesozoicisland.cmdplayer.DeleteTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.DinodexCommand;
 import com.quas.mesozoicisland.cmdplayer.DinosaursCommand;
-import com.quas.mesozoicisland.cmdplayer.EchoCaveOfLostHope;
 import com.quas.mesozoicisland.cmdplayer.EggsCommand;
 import com.quas.mesozoicisland.cmdplayer.EggsSilentCommand;
 import com.quas.mesozoicisland.cmdplayer.ElementsCommand;
@@ -176,6 +175,7 @@ public class MesozoicIsland {
 		professor.getJDA().addEventListener(new MonitorDMs());
 		assistant.getJDA().addEventListener(new MonitorDMs());
 		professor.getJDA().addEventListener(new SuggestionVoter());
+		assistant.getJDA().addEventListener(new CopyMessages());
 		
 		// Professor Bot
 		CommandManager.addCommand(professor.getIdLong(), new PingCommand());
@@ -294,7 +294,6 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new ColorCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new RemoveItemCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ContestEnterCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new EchoCaveOfLostHope());
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictStockCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictBuyCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new WhoHasCommand());
