@@ -12,6 +12,8 @@ public class CopyMessages extends ListenerAdapter {
 		if (event.getAuthor().isBot()) return;
 		if (event.getAuthor().isFake()) return;
 
-		DiscordChannel.DebugCaveOfLostHope.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("**Message from %s:**\n> %s", event.getMember().getEffectiveName(), event.getMessage().getContentRaw()).complete();
+		if (event.getChannel().getIdLong() == DiscordChannel.CaveOfLostHope.getIdLong()) {
+			DiscordChannel.DebugCaveOfLostHope.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("**Message from %s:**\n> %s", event.getMember().getEffectiveName(), event.getMessage().getContentRaw()).complete();
+		}
 	}
 }
