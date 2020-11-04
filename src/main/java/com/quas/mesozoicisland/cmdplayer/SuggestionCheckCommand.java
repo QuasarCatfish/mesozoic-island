@@ -1,5 +1,6 @@
 package com.quas.mesozoicisland.cmdplayer;
 
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
@@ -95,7 +96,19 @@ public class SuggestionCheckCommand implements ICommand {
 
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("Suggestion " + id);
-		eb.setColor(Constants.COLOR);
+
+		switch (SuggestionStatus.of(status)) {
+			case Accepted:
+				eb.setColor(Color.GREEN);
+				break;
+			case Rejected:
+				eb.setColor(Color.RED);
+				break;
+			default:
+				eb.setColor(Constants.COLOR);
+				break;
+		}
+
 		if (suggestion != null) eb.setDescription(suggestion.length() < 200 ? suggestion : suggestion.substring(0, 200) + "...");
 		if (image != null) eb.setThumbnail(image);
 		eb.addField("Votes", String.format("%s - %,d\n%s - %,d\n%s - %,d\n%s - %,d\n%s - %,d",
