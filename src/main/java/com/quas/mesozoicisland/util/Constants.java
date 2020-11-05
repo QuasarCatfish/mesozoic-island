@@ -85,6 +85,7 @@ public class Constants {
 	
 	// Raids
 	public static final int REQUIRED_RAID_LEVEL = 50;
+	public static final int RAID_CYCLE_DAYS = 3;
 	
 	// Daily
 	public static final long DAILY_MONEY = 1_000;

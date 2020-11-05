@@ -191,7 +191,7 @@ public class Daily {
 		JDBC.executeUpdate("update vars set value = value + 1 where var = 'day';");
 
 		// Update Raid Pass
-		if (Integer.parseInt(JDBC.getVariable("day")) % 7 == 0) {
+		if (Integer.parseInt(JDBC.getVariable("day")) % Constants.RAID_CYCLE_DAYS == 0) {
 			JDBC.setNextRaidPass(MesozoicRandom.nextRaidPass());
 		}
 	}
