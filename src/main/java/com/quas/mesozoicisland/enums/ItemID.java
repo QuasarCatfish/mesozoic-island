@@ -48,6 +48,9 @@ public enum ItemID {
 	MysteryPendantBox(227, 0),
 	MysteryBracerBox(228, 0),
 	MysteryGauntletBox(229, 0),
+	MysteryScentPouch(230, 0),
+	MysteryFragrancePouch(231, 0),
+	MysteryEauPouch(232, 0),
 
 	RubyPendant(301, 0),
 	TopazPendant(302, 0),

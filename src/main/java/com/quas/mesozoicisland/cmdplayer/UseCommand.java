@@ -229,6 +229,27 @@ public class UseCommand implements ICommand {
 				JDBC.executeUpdate("update players set fragranceegg = %d where playerid = %d;", end, p.getIdLong());
 			}
 
+			else if (i.getId() == ItemID.MysteryScentPouch.getItemId()) {
+				Item[] scents = Item.getItemsWithTag(ItemTag.Scent);
+				Item scent = Util.getRandomElement(scents);
+				event.getChannel().sendMessageFormat("%s, you open the %s and find %s %s.", p.getAsMention(), i.toString(), Util.getArticle(scent.toString()), scent.toString()).complete();
+				JDBC.addItem(p.getIdLong(), scent.getIdDmg());
+			}
+
+			else if (i.getId() == ItemID.MysteryFragrancePouch.getItemId()) {
+				Item[] fragrances = Item.getItemsWithTag(ItemTag.Fragrance);
+				Item fragrance = Util.getRandomElement(fragrances);
+				event.getChannel().sendMessageFormat("%s, you open the %s and find %s %s.", p.getAsMention(), i.toString(), Util.getArticle(fragrance.toString()), fragrance.toString()).complete();
+				JDBC.addItem(p.getIdLong(), fragrance.getIdDmg());
+			}
+
+			else if (i.getId() == ItemID.MysteryEauPouch.getItemId()) {
+				Item[] eaux = Item.getItemsWithTag(ItemTag.Eau);
+				Item eau = Util.getRandomElement(eaux);
+				event.getChannel().sendMessageFormat("%s, you open the %s and find %s %s.", p.getAsMention(), i.toString(), Util.getArticle(eau.toString()), eau.toString()).complete();
+				JDBC.addItem(p.getIdLong(), eau.getIdDmg());
+			}
+
 			else if (i.getId() == ItemID.DinosaurLocator.getItemId()) {
 				if (!Constants.SPAWN) {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but dinosaur spawning is disabled.", p.getAsMention(), i.toString()).complete();

@@ -9,6 +9,10 @@ public enum ItemTag {
 	MoneyFragrance("#moneyfragrance"),
 	EggFragrance("#eggfragrance"),
 	
+	Scent("#scent"),
+	Fragrance("#fragrance"),
+	Eau("#eau"),
+
 	Pendant("#pendant"),
 	Bracer("#bracer"),
 	Gauntlet("#gauntlet"),
