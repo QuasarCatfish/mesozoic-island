@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.EventType;
@@ -189,6 +190,27 @@ public class Battle {
 						Item item = Item.getItem(Util.getRandomElement(Constants.HALLOWEEN_CANDY));
 						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %s %s.", attack.getPlayer().getAsMention(), Util.getArticle(item.toString()), item.toString()));
 						Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, item.getIdDmg(), 1);
+					}
+
+					// thanksgiving
+					if (Event.isEventActive(EventType.Thanksgiving)) {
+						if (defend.getDinosaur().getDex() == DinoID.Turkey.getDex()) {
+							Item itemtoken = Item.getItem(ItemID.ThanksgivingToken);
+							int tokens = MesozoicRandom.nextInt(2, 5); // 2-4 tokens
+
+							Item itemturkey = Item.getItem(ItemID.TurkeyLeg);
+							int turkeylegs = 2; // 2 turkey legs
+
+							Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s and %,d %s.", attack.getPlayer().getAsMention(), tokens, itemtoken.toString(tokens), turkeylegs, itemturkey.toString(turkeylegs)));
+							Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, itemtoken.getIdDmg(), tokens);
+							Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, itemturkey.getIdDmg(), turkeylegs);
+						} else {
+							Item itemtoken = Item.getItem(ItemID.ThanksgivingToken);
+							int tokens = 1; // 1 token
+
+							Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s.", attack.getPlayer().getAsMention(), tokens, itemtoken.toString(tokens)));
+							Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, itemtoken.getIdDmg(), tokens);
+						}
 					}
 				}
 				

@@ -4,6 +4,8 @@ import com.quas.mesozoicisland.util.Pair;
 
 public enum DinoID {
 
+	Turkey(-10),
+	
 	Pterodactylus(1),
 	Ichthyosaurus(2),
 	Plesiosaurus(3),
@@ -108,6 +110,10 @@ public enum DinoID {
 	private int dex;
 	private DinoID(int dex) {
 		this.dex = dex;
+	}
+
+	public int getDex() {
+		return dex;
 	}
 
 	public Pair<Integer, Integer> getId() {
