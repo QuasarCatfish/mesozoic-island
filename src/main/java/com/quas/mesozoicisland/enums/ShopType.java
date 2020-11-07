@@ -9,7 +9,7 @@ public enum ShopType {
 	Title(1, Util.arr("Titles", "Title"), "A shop containing Title-related items.", true),
 	Eggs(2, Util.arr("Eggs", "Egg"), "A shop containing Egg-related items.", true),
 	Fragrances(3, Util.arr("Fragrances", "Fragrance", "Scents", "Scent"), "A shop containing various scents and fragrances.", true),
-	Events(4, Util.arr("Events", "Event"), "A shop containing items for the current event.", false),
+	Events(4, Util.arr("Events", "Event"), "A shop containing items for the current event.", true),
 	Quests(5, Util.arr("Quests", "Quest"), "A shop to spend your Quest Tokens at.", true),
 	
 	Tutorial(-1, Util.arr(Util.generateRandomString(100)), "Tutorial shop!", false),
