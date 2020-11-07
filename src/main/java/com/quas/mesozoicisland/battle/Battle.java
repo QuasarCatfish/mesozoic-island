@@ -164,20 +164,24 @@ public class Battle {
 					Action.addDinosaurLossDelayed(defend.getPlayer().getIdLong(), time, defend.getDinosaur().getId());
 				}
 				
-				// Pick Up Dinosaur
+				// Defeat Wild Dinosaur
 				if (defend.getPlayer().getIdLong() == CustomPlayer.Wild.getIdLong()) {
-					String get = String.format("%s picks up the %s crystal", attack.getPlayer().getName(), defend.getDinosaur().getDinosaurName());
-					if (defend.getDinosaur().hasRune()) get += String.format(" and the %s rune", defend.getDinosaur().getRune().getName());
-					if (defend.getDinosaur().hasItem()) get += String.format(" and %s %s", Util.getArticle(defend.getDinosaur().getItem().toString()), defend.getDinosaur().getItem().toString());
-					
-					// Send pickup message
-					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
-					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
-					
-					// Give dinosaur, rune, and item
-					Action.addDinosaurDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getId());
-					if (defend.getDinosaur().hasRune()) Action.addRuneDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getRune().getId());
-					if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getItem().getIdDmg(), 1);
+
+					// Pick up dinosaur
+					if (defend.getDinosaur().getDex() > 0) {
+						String get = String.format("%s picks up the %s crystal", attack.getPlayer().getName(), defend.getDinosaur().getDinosaurName());
+						if (defend.getDinosaur().hasRune()) get += String.format(" and the %s rune", defend.getDinosaur().getRune().getName());
+						if (defend.getDinosaur().hasItem()) get += String.format(" and %s %s", Util.getArticle(defend.getDinosaur().getItem().toString()), defend.getDinosaur().getItem().toString());
+						
+						// Send pickup message
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
+						
+						// Give dinosaur, rune, and item
+						Action.addDinosaurDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getId());
+						if (defend.getDinosaur().hasRune()) Action.addRuneDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getRune().getId());
+						if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getItem().getIdDmg(), 1);
+					}
 
 
 					// Dinosaur dropped a lost page
