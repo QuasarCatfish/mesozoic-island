@@ -183,7 +183,6 @@ public class Battle {
 						if (defend.getDinosaur().hasItem()) Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, defend.getDinosaur().getItem().getIdDmg(), 1);
 					}
 
-
 					// Dinosaur dropped a lost page
 					if (Event.isEventActive(EventType.LostPages)) {
 						
