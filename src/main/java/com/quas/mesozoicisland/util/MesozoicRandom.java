@@ -7,11 +7,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.BattleAttack;
+import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.objects.Dinosaur;
-import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Rarity;
 
 public class MesozoicRandom {
@@ -74,31 +74,18 @@ public class MesozoicRandom {
 
 	public static Dinosaur nextDinosaur(int rerolls) {
 		Dinosaur[] values = Dinosaur.values();
-		boolean prismaticEvent = Event.isEventActive(EventType.BoostedPrismatic);
-		boolean halloweenEvent = Event.isEventActive(EventType.Halloween);
+		EventWrapper wrapper = new EventWrapper();
 
 		long sum = 0;
 		for (Dinosaur d : values) {
-			if (prismaticEvent && d.getDinosaurForm() == DinosaurForm.Prismatic) {
-				sum += Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
-			} else if (halloweenEvent && d.getDinosaurForm() == DinosaurForm.Halloween) {
-				sum += Constants.HALLOWEEN_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialcount();
-			} else{
-				sum += d.getRarity().getDinoCount();
-			}
+			sum += getDinosaurSpawnValue(d, wrapper);
 		}
 
 		Dinosaur[] select = new Dinosaur[rerolls + 1];
 		for (int q = 0; q < select.length; q++) {
 			long rand = nextLong(sum);
 			for (Dinosaur d : values) {
-				if (prismaticEvent && d.getDinosaurForm() == DinosaurForm.Prismatic) {
-					rand -= Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount();
-				} else if (halloweenEvent && d.getDinosaurForm() == DinosaurForm.Halloween) {
-					rand -= Constants.HALLOWEEN_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialcount();
-				} else {
-					rand -= d.getRarity().getDinoCount();
-				}
+				rand -= getDinosaurSpawnValue(d, wrapper);
 
 				if (rand < 0) {
 					select[q] = d;
@@ -122,6 +109,20 @@ public class MesozoicRandom {
 		}
 
 		return select[0];
+	}
+
+	private static long getDinosaurSpawnValue(Dinosaur d, EventWrapper e) {
+		if (e.isEventActive(EventType.BoostedPrismatic) && d.getDinosaurForm() == DinosaurForm.Prismatic) {
+			return (long)(Constants.PRISMATIC_EVENT_MULTIPLIER * d.getRarity().getDinoCount());
+		} else if (e.isEventActive(EventType.Halloween) && d.getDinosaurForm() == DinosaurForm.Halloween) {
+			return (long)(Constants.HALLOWEEN_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
+		} else if (e.isEventActive(EventType.Thanksgiving) && d.getDinosaurForm() == DinosaurForm.Thanksgiving) {
+			return (long)(Constants.THANKSGIVING_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
+		} else if (e.isEventActive(EventType.Thanksgiving) && d.getDex() == DinoID.Turkey.getDex()) {
+			return d.getRarity().getSpecialCount();
+		} else{
+			return d.getRarity().getDinoCount();
+		}
 	}
 	
 	public static Dinosaur nextDinosaur(Rarity r) {

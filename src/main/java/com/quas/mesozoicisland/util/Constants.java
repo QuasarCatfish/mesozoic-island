@@ -39,8 +39,9 @@ public class Constants {
 	public static final int SUB_ELEMENT_BOOST = 5; // +5%
 
 	// Spawn Multipliers
-	public static final int PRISMATIC_EVENT_MULTIPLIER = 5;
-	public static final float HALLOWEEN_DINOSAUR_MULTIPLIER = 5f;
+	public static final double PRISMATIC_EVENT_MULTIPLIER = 5;
+	public static final double HALLOWEEN_DINOSAUR_MULTIPLIER = 5;
+	public static final double THANKSGIVING_DINOSAUR_MULTIPLIER = 0.2;
 
 	// Item Multipliers
 	public static final int PENDANT_BOOST = 10; // +10%

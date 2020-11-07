@@ -37,7 +37,7 @@ public class Rarity implements Comparable<Rarity> {
 		return dinocount;
 	}
 	
-	public int getSpecialcount() {
+	public int getSpecialCount() {
 		return specialcount;
 	}
 	
