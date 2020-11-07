@@ -117,6 +117,13 @@ public enum ItemID {
 	GoldRareGachaToken(605, 0),
 	PlatinumRareGachaToken(606, 0),
 
+	CopperRareThanksgivingGachaToken(611, 0),
+	BronzeRareThanksgivingGachaToken(612, 0),
+	IronRareThanksgivingGachaToken(613, 0),
+	SilverRareThanksgivingGachaToken(614, 0),
+	GoldRareThanksgivingGachaToken(615, 0),
+	PlatinumRareThanksgivingGachaToken(616, 0),
+
 	RaidPass(701, 0),
 
 	TitleRemover(10000, 0),

@@ -16,6 +16,7 @@ public enum ItemTag {
 	HalloweenCandy("#halloweencandy"),
 
 	DungeonTicket("#dungeonticket"),
+	DinosaurGacha("#dinosaurgacha"),
 
 	LostPage("#lostpage"),
 

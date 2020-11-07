@@ -2,6 +2,7 @@ package com.quas.mesozoicisland.cmdplayer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -30,10 +31,12 @@ import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
+import com.quas.mesozoicisland.objects.Rarity;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicDate;
 import com.quas.mesozoicisland.util.MesozoicRandom;
+import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.entities.MessageChannel;
@@ -372,6 +375,32 @@ public class UseCommand implements ICommand {
 					
 					event.getChannel().sendMessage(sb.toString()).complete();
 					SUCCESS = false;
+				}
+			}
+
+			else if (i.hasTag(ItemTag.DinosaurGacha)) {
+				String[] data = i.getData().split("\\s+");
+				DinosaurForm form = DinosaurForm.of(Integer.parseInt(data[0]));
+				Rarity rarity = Rarity.getRarity(Integer.parseInt(data[1]));
+
+				ArrayList<Pair<Integer, Integer>> list = new ArrayList<Pair<Integer, Integer>>();
+				try (ResultSet res = JDBC.executeQuery("select * from dinosaurs where form = %d and rarity = %d;", form.getId(), rarity.getId())) {
+					while (res.next()) {
+						list.add(new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				if (list.isEmpty()) {
+					event.getChannel().sendMessageFormat("%s, there are no dinosaurs this gacha token can be used on.", p.getAsMention()).complete();
+					SUCCESS = false;
+				} else {
+					int index = MesozoicRandom.nextInt(list.size());
+					Pair<Integer, Integer> select = list.get(index);
+					Dinosaur dino = Dinosaur.getDinosaur(select);
+					event.getChannel().sendMessageFormat("%s, you insert the %s into the Gacha Machine, and out pops out %s %s crystal.", p.getAsMention(), i.toString(), Util.getArticle(dino.getDinosaurName()), dino.getDinosaurName()).complete();
+					JDBC.addDinosaur(event.getChannel(), p.getIdLong(), select);
 				}
 			}
 
