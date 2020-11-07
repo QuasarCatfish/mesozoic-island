@@ -72,6 +72,7 @@ public class DinodexCommand implements ICommand {
 		
 		TreeMap<Integer, ArrayList<Pair<Dinosaur, Boolean>>> dinos = new TreeMap<Integer, ArrayList<Pair<Dinosaur, Boolean>>>();
 		for (Dinosaur d : Dinosaur.values()) {
+			if (d.getDex() < 0) continue;
 			if (d.getForm() < 0) continue;
 			if (!dinos.containsKey(d.getDex())) dinos.put(d.getDex(), new ArrayList<Pair<Dinosaur, Boolean>>());
 			
