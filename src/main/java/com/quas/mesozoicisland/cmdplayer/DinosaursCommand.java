@@ -146,7 +146,13 @@ public class DinosaursCommand implements ICommand {
 					sb.append(String.format(" [%s]", d.getElement().getName()));
 					sb.append(String.format(" [%s]", d.getRarity().getName()));
 					sb.append(String.format(" [%,d Health, %,d Attack, %,d Defense, %,d Total]", d.getHealth(), d.getAttack(), d.getDefense(), d.getStatTotal()));
-					if (d.getItem() != null && d.getItem().getId() != 0) sb.append(String.format(" [Holding: %s]", d.getItem().toString()));
+					if (d.getItem() != null && d.getItem().getId() != 0) {
+						if (d.getItem().hasIcon()) {
+							sb.append(" " + d.getItem().getIcon().toString());
+						} else {
+							sb.append(String.format(" [Holding: %s]", d.getItem().toString()));
+						}
+					}
 					if (d.getRune() != null && d.getRune().getId() != 0) sb.append(String.format(" [Rune: #%03d %s]", d.getRune().getId(), d.getRune().getName()));
 				}
 				print.add(sb.toString());

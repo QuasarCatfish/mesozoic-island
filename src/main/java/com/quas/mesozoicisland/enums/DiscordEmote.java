@@ -46,4 +46,13 @@ public enum DiscordEmote {
 	public String toString() {
 		return getEmote().getAsMention();
 	}
+
+	public static DiscordEmote getEmote(long id) {
+		for (DiscordEmote emote : values()) {
+			if (emote.getIdLong() == id) {
+				return emote;
+			}
+		}
+		return null;
+	}
 }

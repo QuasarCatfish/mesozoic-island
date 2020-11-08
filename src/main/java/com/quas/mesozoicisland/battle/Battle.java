@@ -129,9 +129,14 @@ public class Battle {
 				sb.append(d.toString());
 				
 				if (d.hasItem()) {
-					sb.append(" [Holding: ");
-					sb.append(d.getItem().toString());
-					sb.append("]");
+					if (d.getItem().hasIcon()) {
+						sb.append(" ");
+						sb.append(d.getItem().getIcon().toString());
+					} else {
+						sb.append(" [Holding: ");
+						sb.append(d.getItem().toString());
+						sb.append("]");
+					}
 				}
 
 				if (d.hasRune()) {

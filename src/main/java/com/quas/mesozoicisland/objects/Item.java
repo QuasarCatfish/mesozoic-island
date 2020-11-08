@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import com.quas.mesozoicisland.JDBC;
+import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.ItemCategory;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
@@ -23,6 +24,7 @@ public class Item implements Comparable<Item> {
 	private String desc;
 	private int type;
 	private int cat;
+	private DiscordEmote icon;
 	private String data;
 	private String tags;
 	
@@ -50,6 +52,14 @@ public class Item implements Comparable<Item> {
 	
 	public ItemCategory getItemCategory() {
 		return ItemCategory.of(cat);
+	}
+
+	public boolean hasIcon() {
+		return icon != null;
+	}
+
+	public DiscordEmote getIcon() {
+		return icon;
 	}
 	
 	public String getData() {
@@ -143,6 +153,7 @@ public class Item implements Comparable<Item> {
 				i.desc = res.getString("itemdesc");
 				i.type = res.getInt("itemtype");
 				i.cat = res.getInt("itemcat");
+				i.icon = DiscordEmote.getEmote(res.getLong("icon"));
 				i.data = res.getString("data");
 				i.tags = res.getString("tags");
 				map.put(itemid, i);
