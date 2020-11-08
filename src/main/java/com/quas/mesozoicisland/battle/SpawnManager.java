@@ -10,9 +10,11 @@ import java.util.concurrent.TimeUnit;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.SpawnType;
@@ -20,6 +22,7 @@ import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Dungeon;
 import com.quas.mesozoicisland.objects.Egg;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Action;
@@ -268,6 +271,10 @@ public class SpawnManager {
 			Dinosaur[] wild = new Dinosaur[MesozoicRandom.nextSpawnCount()];
 			for (int q = 0; q < wild.length; q++) {
 				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
+
+				if (Event.isEventActive(EventType.Thanksgiving) && wild[q].getDex() != DinoID.Turkey.getDex()) {
+					wild[q].setItem(Item.getItem(ItemID.ThanksgivingToken));
+				}
 			}
 			wilds.put(tier, wild);
 			locations.put(tier, MesozoicRandom.nextUnusedLocation());
@@ -294,6 +301,18 @@ public class SpawnManager {
 				sb.append(" [");
 				sb.append(d.getRarity().toString());
 				sb.append("]");
+
+				if (d.hasItem()) {
+					sb.append(" [Holding: ");
+					sb.append(d.getItem().toString());
+					sb.append("]");
+				}
+
+				if (d.hasRune()) {
+					sb.append(" [Rune: ");
+					sb.append(d.getRune().toString());
+					sb.append("]");
+				}
 			}
 			
 			eb.addField(tier.toString(), sb.toString(), false);
