@@ -72,6 +72,7 @@ public class ItemCommand implements ICommand {
 						eb.setColor(Constants.COLOR);
 						eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
 						eb.setDescription(i.getDescription());
+						if (i.hasIcon()) eb.setThumbnail(i.getIcon().getEmote().getImageUrl());
 						event.getChannel().sendMessage(eb.build()).complete();
 					} else {
 						event.getChannel().sendMessageFormat("%s, this item does not exist.", event.getAuthor().getAsMention()).complete();
