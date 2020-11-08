@@ -15,6 +15,7 @@ public enum EggPattern {
 	Lace2("Lace", "lace2.png", EggPatternTag.None),
 	Stripes1("Stripes", "stripes1.png", EggPatternTag.None),
 	Stripes2("Stripes", "stripes2.png", EggPatternTag.None),
+	Thanksgiving("Drumstick", "thanksgiving.png", EggPatternTag.None, false),
 	;
 	
 	private static EggPattern[] choosablePatterns;

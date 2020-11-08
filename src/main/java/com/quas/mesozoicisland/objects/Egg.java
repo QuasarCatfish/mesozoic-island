@@ -305,6 +305,9 @@ public class Egg implements Comparable<Egg> {
 	}
 	
 	public static EggPattern nextRandomPattern(DinosaurForm form) {
+		if (form == DinosaurForm.Thanksgiving) {
+			return EggPattern.Thanksgiving;
+		}
 		return EggPattern.getChoosablePatterns()[MesozoicRandom.nextInt(EggPattern.getChoosablePatterns().length)];
 	}
 	
