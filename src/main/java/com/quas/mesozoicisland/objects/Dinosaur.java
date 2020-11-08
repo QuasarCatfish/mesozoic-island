@@ -253,6 +253,11 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return this;
 	}
 	
+	public Dinosaur setItem(Item item) {
+		this.item = item;
+		return this;
+	}
+
 	public boolean hasItem() {
 		return item != null && item.getId() != 0;
 	}

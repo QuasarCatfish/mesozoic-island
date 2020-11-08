@@ -10,8 +10,11 @@ import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.EventType;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Event;
+import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Rarity;
 
 public class MesozoicRandom {
@@ -106,6 +109,10 @@ public class MesozoicRandom {
 			if (select[q].getRarity().getId() == maxrarity) {
 				return select[q];
 			}
+		}
+
+		if (Event.isEventActive(EventType.Thanksgiving) && select[0].getDex() != DinoID.Turkey.getDex()) {
+			select[0].setItem(Item.getItem(ItemID.ThanksgivingToken));
 		}
 
 		return select[0];

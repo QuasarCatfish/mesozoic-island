@@ -207,12 +207,6 @@ public class Battle {
 							Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s and %,d %s.", attack.getPlayer().getAsMention(), tokens, itemtoken.toString(tokens), turkeylegs, itemturkey.toString(turkeylegs)));
 							Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, itemtoken.getIdDmg(), tokens);
 							Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, itemturkey.getIdDmg(), turkeylegs);
-						} else {
-							Item itemtoken = Item.getItem(ItemID.ThanksgivingToken);
-							int tokens = 1; // 1 token
-
-							Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s.", attack.getPlayer().getAsMention(), tokens, itemtoken.toString(tokens)));
-							Action.addItemDelayed(attack.getPlayer().getIdLong(), time + 1500, itemtoken.getIdDmg(), tokens);
 						}
 					}
 				}
