@@ -38,6 +38,7 @@ public class Daily {
 
 		// Raid Passes
 		{
+			System.out.println("[DAILY] Processing raid passes");
 			JDBC.executeUpdate("update bags set count = 0 where item = 701;");
 			String old = JDBC.getVariable("raidpass");
 			String var = JDBC.getVariable("raidpassnext");
@@ -65,6 +66,7 @@ public class Daily {
 		
 		// Daily Quest
 		{
+			System.out.println("[DAILY] Processing quests.");
 			TreeMap<Long, Integer> valid = new TreeMap<Long, Integer>();
 			try (ResultSet res = JDBC.executeQuery("select players.playerid, x.quests, y.books from players left join (select playerid, count(*) as quests from quests where special = 0 and completed = false group by playerid) as x on players.playerid = x.playerid left join (select player, count as books from bags where item = 5 and dmg = 0) as y on players.playerid = y.player where players.playerid > %d;", CustomPlayer.getUpperLimit())) {
 				while (res.next()) {
@@ -116,6 +118,7 @@ public class Daily {
 
 		// Egg Salesman Benedict
 		{
+			System.out.println("[DAILY] Processing Egg Salesman Benedict.");
 			int count = -1;
 			try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", CustomPlayer.EggSalesman.getIdLong())) {
 				if (res.next()) {
@@ -142,6 +145,8 @@ public class Daily {
 
 		// Events
 		{
+			System.out.println("[DAILY] Processing events");
+
 			// Event started within past day
 			for (Event e : Event.values()) {
 				if (!e.isAnnounce()) continue;
@@ -161,6 +166,8 @@ public class Daily {
 		
 		// Get Birthdays
 		{
+			System.out.println("[DAILY] Processing birthdays.");
+
 			ArrayList<Long> birthdays = new ArrayList<Long>();
 			try (ResultSet res = JDBC.executeQuery("select playerid from players where birthday = '%s' order by playerid;", today.toString(false))) {
 				while (res.next()) birthdays.add(res.getLong("playerid"));

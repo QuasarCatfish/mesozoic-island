@@ -32,7 +32,7 @@ public class Action {
 				if (System.currentTimeMillis() < res.getLong("time")) continue;
 				if (res.getLong("bot") != 0 && res.getLong("bot") != self) continue;
 				
-				
+				System.out.println("Processing action with type " + ActionType.getActionType(res.getInt("actiontype")));
 				switch (ActionType.getActionType(res.getInt("actiontype"))) {
 				case Error:
 					System.out.println("Error executing the action: " + res.getString("msg"));
