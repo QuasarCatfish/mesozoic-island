@@ -615,9 +615,19 @@ public class JDBC {
 	public static synchronized boolean generateDungeonTickets() {
 		if (hasDungeonTickets()) return false;
 		TreeSet<String> set = new TreeSet<String>();
-		while (set.size() < 3) set.add(Dinosaur.getDinosaur(MesozoicRandom.nextDinosaur().getDex(), DinosaurForm.Dungeon.getId()).getId());
+		while (set.size() < 3) {
+			Dinosaur d = MesozoicRandom.nextDinosaur();
+			if (d.getDex() < 0) continue;
+			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
+			set.add(Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Dungeon.getId()).getId());
+		}
 		String tier1 = Util.join(set, " ", 0, set.size());
-		while (set.size() < 7) set.add(Dinosaur.getDinosaur(MesozoicRandom.nextDinosaur().getDex(), DinosaurForm.Dungeon.getId()).getId());
+		while (set.size() < 7) {
+			Dinosaur d = MesozoicRandom.nextDinosaur();
+			if (d.getDex() < 0) continue;
+			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
+			set.add(Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Dungeon.getId()).getId());
+		}
 		String tier2 = Util.join(set, " ", 0, set.size());
 		return executeUpdate("insert into dungeontickets(date, dino1, dino2) values('%s', '%s', '%s');", MesozoicDate.getToday(), tier1, tier2);
 	}

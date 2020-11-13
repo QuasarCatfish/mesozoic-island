@@ -259,10 +259,8 @@ public class Egg implements Comparable<Egg> {
 
 		e.dex = -1;
 		e.form = 0;
-		do {
-			e.dex = dino.getFirstValue();
-			e.form = dino.getSecondValue();
-		} while (e.dex <= 0 || e.form < 0);
+		e.dex = dino.getFirstValue();
+		e.form = dino.getSecondValue();
 		
 		Dinosaur dinosaur = Dinosaur.getDinosaur(e.dex, e.form);
 		e.maxhp = MesozoicRandom.nextHatchPoints(dinosaur.getRarity(), dinosaur.getDinosaurForm());

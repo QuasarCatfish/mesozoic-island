@@ -57,7 +57,7 @@ public class SpawnManager {
 		lastattempt = System.currentTimeMillis();
 		
 		// No progress in battle in the last few minutes
-		if (spawntime == Long.MAX_VALUE && lastupdate + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) {
+		if ((spawntime == Long.MAX_VALUE || (waiting && spawntime + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis())) && lastupdate + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) {
 			DiscordChannel.Game.getChannel(MesozoicIsland.getAssistant()).sendMessage("Battle error detected. Please wait while the issue is automatically being fixed.").complete();
 			ArrayList<Message> delete = new ArrayList<Message>();
 			for (DiscordChannel dc : DiscordChannel.BATTLE_CHANNELS) {
@@ -71,6 +71,7 @@ public class SpawnManager {
 			JDBC.executeUpdate("update players set inbattle = false;");
 			spawntime = System.currentTimeMillis();
 			lastupdate = System.currentTimeMillis();
+			waiting = false;
 		}
 		
 		if (waiting) return false;
@@ -182,7 +183,7 @@ public class SpawnManager {
 		
 		// Generate Egg
 		Egg[] eggs = new Egg[MesozoicRandom.nextInt(Constants.MAX_EGG_SPAWN) + 1];
-		for (int q = 0; q < eggs.length; q++) eggs[q] = Egg.getRandomEgg(MesozoicRandom.nextDinosaur().getIdPair());
+		for (int q = 0; q < eggs.length; q++) eggs[q] = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
 		
 		// Build Spawn Message
 		EmbedBuilder eb = new EmbedBuilder();

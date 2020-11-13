@@ -322,7 +322,7 @@ public class UseCommand implements ICommand {
 			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
 				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getEggCount()) {
 					event.getChannel().sendMessageFormat("%s, you have redeemed a Chocolate Egg!", p.getAsMention()).complete();
-					Egg egg = Egg.getRandomEgg(MesozoicRandom.nextDinosaur().getIdPair());
+					Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
 					egg.setEggName("Chocolate Egg");
 					egg.setEggColor(EggColor.SaddleBrown);
 					JDBC.addEgg(p.getIdLong(), egg);

@@ -136,7 +136,7 @@ public class Daily {
 				}
 
 				for (int q = count; q < max; q++) {
-					JDBC.addEgg(CustomPlayer.EggSalesman.getIdLong(), Egg.getRandomEgg(MesozoicRandom.nextDinosaur().getIdPair()));
+					JDBC.addEgg(CustomPlayer.EggSalesman.getIdLong(), Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair()));
 				}
 
 				sb.append(String.format("\n%s %s has received more eggs. There are %,d eggs in stock today.", Constants.BULLET_POINT, CustomPlayer.EggSalesman.getPlayer().getName(), Math.max(count, max)));

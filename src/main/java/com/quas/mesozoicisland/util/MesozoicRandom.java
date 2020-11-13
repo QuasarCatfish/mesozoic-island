@@ -68,8 +68,20 @@ public class MesozoicRandom {
 		}
 	}
 	
+	public static Dinosaur nextOwnableDinosaur() {
+		return nextOwnableDinosaur(0);
+	}
+	
 	public static Dinosaur nextDinosaur() {
 		return nextDinosaur(0);
+	}
+
+	public static Dinosaur nextOwnableDinosaur(int rerolls) {
+		while (true) {
+			Dinosaur d = nextDinosaur(rerolls);
+			if (d.getDex() < 0) continue;
+			return d;
+		}
 	}
 
 	public static Dinosaur nextDinosaur(int rerolls) {

@@ -370,7 +370,6 @@ public class MesozoicIsland {
 					try {
 						// Do for 10 minute.
 						for (int q = 1; q <= 600; q++) {
-							System.out.println("Cycle " + q);
 							Action.doActions(professor.getGuild());
 							Action.doActions(assistant.getGuild());
 							if (Constants.UPDATE_EGG_HP && q % 60 == 0) JDBC.updateEggs();

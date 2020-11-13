@@ -198,7 +198,7 @@ public class TestCommand implements ICommand {
 					}
 
 					for (int q = count; q < max; q++) {
-						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextDinosaur().getIdPair());
+						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
 						JDBC.addEgg(CustomPlayer.EggSalesman.getIdLong(), egg);
 						event.getChannel().sendMessage("Generated " + egg.getEggName()).complete();
 					}
