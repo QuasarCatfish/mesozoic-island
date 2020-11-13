@@ -126,6 +126,22 @@ public class DailyCommand implements ICommand {
 						JDBC.addItem(p.getIdLong(), item.getIdDmg());
 					}
 				} break;
+
+				// Maintenance
+				case "1114": case "1115": case "1116": {
+					for (ItemID itemid : new ItemID[] {ItemID.FragranceOfBattle, ItemID.FragranceOfExperience, ItemID.FragranceOfMoney, ItemID.FragranceOfEgg}) {
+						Item item = Item.getItem(itemid);
+						sb.append(String.format("\nBug Compensation: %s %s!", Util.getArticle(item.toString()), item.toString()));
+						JDBC.addItem(p.getIdLong(), item.getIdDmg());
+					}
+
+					{
+						Item item = Item.getItem(ItemID.ThanksgivingToken);
+						int count = 20;
+						sb.append(String.format("\nBug Compensation: %d %s!", count, item.toString(count)));
+						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
+					}
+				}
 			}
 			
 			// Send Message
