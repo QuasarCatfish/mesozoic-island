@@ -13,6 +13,7 @@ import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
@@ -207,6 +208,17 @@ public class TestCommand implements ICommand {
 				} else {
 					event.getChannel().sendMessage("There was an error in giving eggs.").complete();
 				}
+			} break;
+
+			case "ihateturkey": {
+				int count = 0;
+
+				for (int q = 0; q < 10_000; q++) {
+					Dinosaur d = MesozoicRandom.nextOwnableDinosaur();
+					if (d.getDex() == DinoID.Turkey.getDex()) count++;
+				}
+
+				event.getChannel().sendMessageFormat("%s %d", event.getAuthor().getAsMention(), count).complete();
 			} break;
 
 			case "lost": {
