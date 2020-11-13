@@ -11,6 +11,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.battle.Battle;
 import com.quas.mesozoicisland.battle.BattleChannel;
+import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 
@@ -44,6 +45,7 @@ public class Action {
 						MessageBuilder mb = new MessageBuilder(res.getString("msg"));
 						mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.USER, MentionType.ROLE);
 						tc.sendMessage(mb.build()).complete();
+						SpawnManager.lastupdate = System.currentTimeMillis();
 					} else {
 						tc.sendMessage(res.getString("msg")).complete();
 					}

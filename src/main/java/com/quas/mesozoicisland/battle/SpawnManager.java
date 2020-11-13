@@ -57,7 +57,7 @@ public class SpawnManager {
 		lastattempt = System.currentTimeMillis();
 		
 		// No progress in battle in the last few minutes
-		if ((spawntime == Long.MAX_VALUE || (waiting && spawntime + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis())) && lastupdate + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) {
+		if ((spawntime == Long.MAX_VALUE || waiting) && lastupdate + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) {
 			DiscordChannel.Game.getChannel(MesozoicIsland.getAssistant()).sendMessage("Battle error detected. Please wait while the issue is automatically being fixed.").complete();
 			ArrayList<Message> delete = new ArrayList<Message>();
 			for (DiscordChannel dc : DiscordChannel.BATTLE_CHANNELS) {
