@@ -33,6 +33,7 @@ import com.quas.mesozoicisland.util.Util;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageHistory;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 
 public class SpawnManager {
@@ -58,20 +59,32 @@ public class SpawnManager {
 		
 		// No progress in battle in the last few minutes
 		if ((spawntime == Long.MAX_VALUE || waiting) && lastupdate + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) {
-			DiscordChannel.Game.getChannel(MesozoicIsland.getAssistant()).sendMessage("Battle error detected. Please wait while the issue is automatically being fixed.").complete();
-			ArrayList<Message> delete = new ArrayList<Message>();
-			for (DiscordChannel dc : DiscordChannel.BATTLE_CHANNELS) {
-				delete.addAll(Util.getMessages(dc.getChannel(MesozoicIsland.getAssistant())));
+			long latest = 0;
+			for (BattleChannel battle : BattleChannel.values()) {
+				TextChannel tc = battle.getBattleChannel().getChannel(MesozoicIsland.getAssistant());
+				if (tc.hasLatestMessage()) {
+					Message m = tc.retrieveMessageById(tc.getLatestMessageId()).complete();
+					long time = m.getTimeCreated().toEpochSecond() * 1000L;
+					if (time > latest) latest = time;
+				}
 			}
-			
-			for (Message m : delete) {
-				m.delete().complete();
+
+			if (latest + Constants.MAX_SPAWN_TIMER <= System.currentTimeMillis()) {
+				DiscordChannel.Game.getChannel(MesozoicIsland.getAssistant()).sendMessage("Battle error detected. Please wait while the issue is automatically being fixed.").complete();
+				ArrayList<Message> delete = new ArrayList<Message>();
+				for (DiscordChannel dc : DiscordChannel.BATTLE_CHANNELS) {
+					delete.addAll(Util.getMessages(dc.getChannel(MesozoicIsland.getAssistant())));
+				}
+				
+				for (Message m : delete) {
+					m.delete().complete();
+				}
+				
+				JDBC.executeUpdate("update players set inbattle = false;");
+				spawntime = System.currentTimeMillis();
+				lastupdate = System.currentTimeMillis();
+				waiting = false;
 			}
-			
-			JDBC.executeUpdate("update players set inbattle = false;");
-			spawntime = System.currentTimeMillis();
-			lastupdate = System.currentTimeMillis();
-			waiting = false;
 		}
 		
 		if (waiting) return false;
@@ -211,6 +224,7 @@ public class SpawnManager {
 			} catch (Exception e) {
 				System.out.println("Caught: " + e.toString());
 			}
+			lastupdate = System.currentTimeMillis();
 			Util.sleep(Math.min(q, 5_000));
 		}
 		
@@ -343,6 +357,7 @@ public class SpawnManager {
 			} catch (Exception e) {
 				System.out.println("Caught: " + e.toString());
 			}
+			lastupdate = System.currentTimeMillis();
 			Util.sleep(Math.min(q, 5_000));
 		}
 		
@@ -447,6 +462,7 @@ public class SpawnManager {
 			} catch (Exception e) {
 				System.out.println("Caught: " + e.toString());
 			}
+			lastupdate = System.currentTimeMillis();
 			Util.sleep(Math.min(q, 5_000));
 		}
 		

@@ -146,11 +146,21 @@ public class MesozoicRandom {
 	}
 	
 	public static Dinosaur nextDungeonDinosaur() {
-		return Dinosaur.getDinosaur(nextDinosaur().getDex(), DinosaurForm.UncapturableDungeon.getId());
+		while (true) {
+			Dinosaur d = MesozoicRandom.nextDinosaur();
+			if (d.getDex() < 0) continue;
+			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
+			return Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeon.getId());
+		}
 	}
 	
 	public static Dinosaur nextDungeonBossDinosaur() {
-		return Dinosaur.getDinosaur(nextDinosaur().getDex(), DinosaurForm.UncapturableDungeonBoss.getId());
+		while (true) {
+			Dinosaur d = MesozoicRandom.nextDinosaur();
+			if (d.getDex() < 0) continue;
+			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
+			return Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeonBoss.getId());
+		}
 	}
 	
 	public static long nextRaidPass() {
