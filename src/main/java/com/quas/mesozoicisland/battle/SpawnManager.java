@@ -63,9 +63,11 @@ public class SpawnManager {
 			for (BattleChannel battle : BattleChannel.values()) {
 				TextChannel tc = battle.getBattleChannel().getChannel(MesozoicIsland.getAssistant());
 				if (tc.hasLatestMessage()) {
-					Message m = tc.retrieveMessageById(tc.getLatestMessageId()).complete();
-					long time = m.getTimeCreated().toEpochSecond() * 1000L;
-					if (time > latest) latest = time;
+					try {
+						Message m = tc.retrieveMessageById(tc.getLatestMessageId()).complete();
+						long time = m.getTimeCreated().toEpochSecond() * 1000L;
+						if (time > latest) latest = time;
+					} catch (RuntimeException e) {}
 				}
 			}
 

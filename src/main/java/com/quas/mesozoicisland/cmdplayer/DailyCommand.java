@@ -127,21 +127,21 @@ public class DailyCommand implements ICommand {
 					}
 				} break;
 
-				// Maintenance
-				case "1114": case "1115": case "1116": {
-					for (ItemID itemid : new ItemID[] {ItemID.FragranceOfBattle, ItemID.FragranceOfExperience, ItemID.FragranceOfMoney, ItemID.FragranceOfEgg}) {
-						Item item = Item.getItem(itemid);
-						sb.append(String.format("\nBug Compensation: %s %s!", Util.getArticle(item.toString()), item.toString()));
-						JDBC.addItem(p.getIdLong(), item.getIdDmg());
-					}
+				// Thanksgiving Week
+				case "1122": case "1123": case "1124": case "1125": case "1127": case "1128": {
+					Item item = Item.getItem(ItemID.ThanksgivingToken);
+					int count = 25;
+					sb.append(String.format("\nHappy Thanksgiving: %d %s!", count, item.toString(count)));
+					JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
+				} break;
 
-					{
-						Item item = Item.getItem(ItemID.ThanksgivingToken);
-						int count = 20;
-						sb.append(String.format("\nBug Compensation: %d %s!", count, item.toString(count)));
-						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
-					}
-				}
+				// Thanksgiving Day
+				case "1126": {
+					Item item = Item.getItem(ItemID.ThanksgivingToken);
+					int count = 100;
+					sb.append(String.format("\nHappy Thanksgiving: %d %s!", count, item.toString(count)));
+					JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
+				} break;
 			}
 			
 			// Send Message
