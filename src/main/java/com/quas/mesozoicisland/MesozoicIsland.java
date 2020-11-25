@@ -90,6 +90,7 @@ import com.quas.mesozoicisland.cmdplayer.RedeemCommand;
 import com.quas.mesozoicisland.cmdplayer.RemoveItemCommand;
 import com.quas.mesozoicisland.cmdplayer.RunesCommand;
 import com.quas.mesozoicisland.cmdplayer.SaveTeamCommand;
+import com.quas.mesozoicisland.cmdplayer.SecretSantaEnterCommand;
 import com.quas.mesozoicisland.cmdplayer.SelectDinosaursCommand;
 import com.quas.mesozoicisland.cmdplayer.SelectTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.SelectedCommand;
@@ -298,7 +299,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictBuyCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new WhoHasCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new SuggestionCheckCommand());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
+		CommandManager.addCommand(assistant.getIdLong(), new SecretSantaEnterCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands

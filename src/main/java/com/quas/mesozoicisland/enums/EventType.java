@@ -6,6 +6,8 @@ public enum EventType {
 	
 	Halloween(20), Thanksgiving(21),
 
+	SecretSantaSignup(30), SecretSanta(31),
+
 	LostPages(101);
 
 	private int type;

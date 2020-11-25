@@ -8,6 +8,7 @@ public enum ItemID {
 	MesozoicIslandTrainerLicense(1, 0),
 	GuildBadge(2, 0),
 	QuestBook(5, 0),
+	DinosaurPhotograph(30, 0),
 	Cookie(90, 0),
 	GoldenCookie(90, 1),
 	EggIncubator(91, 0),

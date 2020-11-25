@@ -149,6 +149,10 @@ public class UseCommand implements ICommand {
 				CommandManager.handleCommand(event, "quests");
 			}
 			
+			else if (i.getId() == ItemID.DinosaurPhotograph.getItemId()) {
+				event.getChannel().sendMessageFormat("%s, you look at the photograph. %s", p.getAsMention(), i.getData()).complete();
+			}
+
 			else if (i.getId() == ItemID.EggIncubator.getItemId()) {
 				CommandManager.handleCommand(event, "eggs");
 			}
