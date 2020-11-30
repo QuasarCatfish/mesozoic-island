@@ -27,6 +27,7 @@ public class Item implements Comparable<Item> {
 	private DiscordEmote icon;
 	private String data;
 	private String tags;
+	private boolean tradable;
 	
 	private Item() {}
 	
@@ -69,6 +70,10 @@ public class Item implements Comparable<Item> {
 	public boolean hasTag(ItemTag tag) {
 		if (tags == null) return false;
 		return tags.contains(tag.getTag());
+	}
+
+	public boolean isTradable() {
+		return tradable;
 	}
 	
 	public String toString(long count) {
@@ -156,6 +161,7 @@ public class Item implements Comparable<Item> {
 				i.icon = DiscordEmote.getEmote(res.getLong("icon"));
 				i.data = res.getString("data");
 				i.tags = res.getString("tags");
+				i.tradable = res.getBoolean("tradable");
 				map.put(itemid, i);
 				return i;
 			}

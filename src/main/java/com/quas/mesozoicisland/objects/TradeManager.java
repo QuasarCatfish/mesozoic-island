@@ -9,6 +9,7 @@ public class TradeManager {
 	private static ArrayList<Pair<Dinosaur, Dinosaur>> dinosaurs = new ArrayList<Pair<Dinosaur, Dinosaur>>();
 	private static ArrayList<Pair<Rune, Rune>> runes = new ArrayList<Pair<Rune, Rune>>();
 	private static ArrayList<Pair<Egg, Egg>> eggs = new ArrayList<Pair<Egg, Egg>>();
+	private static ArrayList<Pair<Item, Item>> items = new ArrayList<Pair<Item, Item>>();
 	
 	// Dinosaur
 	public static boolean isDinosaurTradeDuplicate(Pair<Dinosaur, Dinosaur> trade) {
@@ -49,6 +50,20 @@ public class TradeManager {
 		addTrade(eggs, trade);
 	}
 	
+	// Item
+	public static boolean isItemTradeDuplicate(Pair<Item, Item> trade) {
+		return isTradeDuplicate(items, trade);
+	}
+
+	public static boolean doesItemTradeExist(Pair<Item, Item> trade) {
+		return doesTradeExist(items, trade);
+	}
+	
+	public static void addItemTrade(Pair<Item, Item> trade) {
+		addTrade(items, trade);
+	}
+
+	// General
 	private static <T extends Comparable<T>> boolean isTradeDuplicate(ArrayList<Pair<T, T>> list, Pair<T, T> trade) {
 		for (Pair<T, T> t : list) {
 			if (trade.getFirstValue().equals(t.getFirstValue()) && trade.getSecondValue().equals(t.getSecondValue())) {

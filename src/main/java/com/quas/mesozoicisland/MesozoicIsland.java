@@ -104,6 +104,7 @@ import com.quas.mesozoicisland.cmdplayer.SuggestionMarker;
 import com.quas.mesozoicisland.cmdplayer.TopCommand;
 import com.quas.mesozoicisland.cmdplayer.TradeDinosaurCommand;
 import com.quas.mesozoicisland.cmdplayer.TradeEggCommand;
+import com.quas.mesozoicisland.cmdplayer.TradeItemCommand;
 import com.quas.mesozoicisland.cmdplayer.TradeRuneCommand;
 import com.quas.mesozoicisland.cmdplayer.UnequipDinosaurCommand;
 import com.quas.mesozoicisland.cmdplayer.UnequipRuneCommand;
@@ -300,6 +301,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new WhoHasCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new SuggestionCheckCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new SecretSantaEnterCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new TradeItemCommand());
+//		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
