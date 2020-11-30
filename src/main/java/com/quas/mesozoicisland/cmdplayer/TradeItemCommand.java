@@ -92,13 +92,15 @@ public class TradeItemCommand implements ICommand {
 			} else {
 				event.getChannel().sendMessageFormat("%s, you do not have any of this item.", p1.getAsMention()).complete();
 			}
+			return;
 		} else if (!i1.isTradable()) {
 			event.getChannel().sendMessageFormat("%s, a %s is not tradable.", p1.getAsMention(), i1.toString()).complete();
+			return;
 		}
 
 		Item[] ia2 = Item.getItems(Integer.parseInt(args[2].replaceAll("\\D", "")));
 		Item i2 = null;
-		TreeMap<Item, Long> bag2 = p1.getBag();
+		TreeMap<Item, Long> bag2 = p2.getBag();
 		for (Item item : ia2) {
 			long count = bag2.getOrDefault(item, 0L);
 			if (count > 0) {
@@ -113,8 +115,10 @@ public class TradeItemCommand implements ICommand {
 			} else {
 				event.getChannel().sendMessageFormat("%s, %s does not have any of this item.", p1.getAsMention(), p2.getName()).complete();
 			}
+			return;
 		} else if (!i2.isTradable()) {
 			event.getChannel().sendMessageFormat("%s, a %s is not tradable.", p1.getAsMention(), i2.toString()).complete();
+			return;
 		}
 
 		Pair<Item, Item> trade = new Pair<Item, Item>(i1, i2);
