@@ -289,8 +289,12 @@ public class SpawnManager {
 			for (int q = 0; q < wild.length; q++) {
 				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
 
+				// Event Held Items
 				if (Event.isEventActive(EventType.Thanksgiving) && wild[q].getDex() != DinoID.Turkey.getDex()) {
 					wild[q].setItem(Item.getItem(ItemID.ThanksgivingToken));
+				}
+				if (Event.isEventActive(EventType.SecretSanta) && MesozoicRandom.nextInt(5) == 0) {
+					wild[q].setItem(Item.getItem(ItemID.MysteryPresent));
 				}
 			}
 			wilds.put(tier, wild);

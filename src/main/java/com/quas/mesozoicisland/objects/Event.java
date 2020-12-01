@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
@@ -14,6 +15,8 @@ import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 
@@ -125,6 +128,43 @@ public class Event {
 						sb.append("\n\nYou have each been given the contest dinosaur you have chosen.");
 						tc.sendMessage(sb.toString()).complete();
 					}
+					
+					if (et == EventType.SecretSanta) {
+						ArrayList<Long> players = new ArrayList<Long>();
+						ArrayList<Long> santa = new ArrayList<Long>();
+
+						try (ResultSet res = JDBC.executeQuery("select * from players where santa > 0;")) {
+							while (res.next()) {
+								long id = res.getLong("playerid");
+								players.add(id);
+								santa.add(id);
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+
+						int count = 0;
+						do {
+							count = 0;
+							Collections.shuffle(santa);
+
+							for (int q = 0; q < santa.size(); q++) {
+								if (players.get(q).equals(santa.get(q))) {
+									count++;
+								}
+							}
+						} while (count > 0);
+
+						Guild g = MesozoicIsland.getAssistant().getGuild();
+						for (int q = 0; q < santa.size(); q++) {
+							JDBC.executeUpdate("update players set santa = %d where playerid = %d;", santa.get(q), players.get(q));
+							Member m = g.getMemberById(players.get(q));
+							if (m == null) continue;
+							try {
+								m.getUser().openPrivateChannel().complete().sendMessageFormat("**== Secret Santa Event ==**\nThis year, you will be collecting Gift Tokens to buy presents for %s! You can get Gift Tokens by opening Mystery Presents, which wild dinosaurs have a chance of holding. Be sure to buy all your presents before Christmas!", Player.getPlayer(santa.get(q)).getName()).complete();
+							} catch (Exception e) {}
+						}
+					}
 				}
 				
 				// End of Event
@@ -161,6 +201,14 @@ public class Event {
 							Message pin = tc.sendMessageFormat("%s **%s has Ended!**\n%s", DiscordRole.EventPing.toString(), name, endstring).complete();
 							pin.pin().complete();
 						}
+					}
+
+					// Event End
+					if (et == EventType.SecretSanta) {
+						// TODO: Finish the end of secret santa happenings.
+						// If players still have presents, randomly spend them on gifts
+						// Turn gifts into mail
+						// Send mail to recipient
 					}
 				}
 			}

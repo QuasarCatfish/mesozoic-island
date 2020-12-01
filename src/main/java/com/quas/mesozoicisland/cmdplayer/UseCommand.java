@@ -323,6 +323,80 @@ public class UseCommand implements ICommand {
 				JDBC.addItem(p.getIdLong(), gauntlet.getIdDmg());
 			}
 
+			else if (i.getId() == ItemID.MysteryPresent.getItemId()) {
+				StringBuilder sb = new StringBuilder();
+				sb.append(p.getAsMention());
+				sb.append(", you open the ");
+				sb.append(i.toString());
+				sb.append(" and find... ");
+				
+				switch (MesozoicRandom.nextInt(10)) {
+					// 40% coins
+					case 0: case 1: case 2: case 3: {
+						Item prize = Item.getItem(ItemID.DinosaurCoin);
+						int count = MesozoicRandom.nextInt(10, 51);
+						sb.append(count);
+						sb.append(" ");
+						sb.append(prize.toString(count));
+						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
+					} break;
+
+					// 20% copper gacha
+					case 4: case 5: {
+						Item prize = Item.getItem(ItemID.CopperRareGachaToken);
+						int count = MesozoicRandom.nextInt(1, 3);
+						sb.append(count);
+						sb.append(" ");
+						sb.append(prize.toString(count));
+						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
+					} break;
+
+					// 10% bronze gacha
+					case 6: {
+						Item prize = Item.getItem(ItemID.BronzeRareGachaToken);
+						int count = 1;
+						sb.append(count);
+						sb.append(" ");
+						sb.append(prize.toString(count));
+						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
+					} break;
+
+					// 20% B-potion
+					case 7: case 8: {
+						Item prize = Item.getItem(ItemID.BTierXPPotion);
+						int count = 1;
+						sb.append(count);
+						sb.append(" ");
+						sb.append(prize.toString(count));
+						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
+					} break;
+
+					// 10% B-potions
+					case 9: {
+						Item prize = Item.getItem(ItemID.BTierXPPotion);
+						int count = MesozoicRandom.nextInt(2, 4);
+						sb.append(count);
+						sb.append(" ");
+						sb.append(prize.toString(count));
+						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
+					} break;
+				}
+
+				// Gift point for santa players
+				if (p.isSecretSanta()) {
+					Item prize = Item.getItem(ItemID.GiftToken);
+					int count = 1;
+					sb.append(" and ");
+					sb.append(count);
+					sb.append(" ");
+					sb.append(prize.toString(count));
+					JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
+				}
+				sb.append(".");
+
+				event.getChannel().sendMessage(sb.toString()).complete();
+;			}
+
 			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
 				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getEggCount()) {
 					event.getChannel().sendMessageFormat("%s, you have redeemed a Chocolate Egg!", p.getAsMention()).complete();

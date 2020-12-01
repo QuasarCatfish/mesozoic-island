@@ -1,4 +1,4 @@
-package com.quas.mesozoicisland.cmdplayer;
+package com.quas.mesozoicisland.cmdevent;
 
 import java.util.regex.Pattern;
 

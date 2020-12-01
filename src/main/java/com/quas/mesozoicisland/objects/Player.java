@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Constants;
@@ -46,6 +47,7 @@ public class Player {
 	private long fragranceegg;
 	private boolean muted;
 	private boolean cursed;
+	private long santa;
 	
 	private Player() {}
 	
@@ -185,6 +187,14 @@ public class Player {
 
 	public boolean isCursed() {
 		return cursed;
+	}
+
+	public boolean isSecretSanta() {
+		return santa > 0 && Event.isEventActive(EventType.SecretSanta);
+	}
+
+	public long getSecretSanta() {
+		return santa;
 	}
 	
 	public long getItemCount(Item item) {
@@ -330,6 +340,7 @@ public class Player {
 				p.fragranceegg = res.getLong("fragranceegg");
 				p.muted = res.getBoolean("muted");
 				p.cursed = res.getBoolean("cursed");
+				p.santa = res.getLong("santa");
 				return p;
 			}
 		} catch (SQLException e) {

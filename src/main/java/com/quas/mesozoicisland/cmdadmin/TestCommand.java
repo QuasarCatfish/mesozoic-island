@@ -3,11 +3,13 @@ package com.quas.mesozoicisland.cmdadmin;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
+import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
@@ -33,6 +35,8 @@ import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -179,6 +183,48 @@ public class TestCommand implements ICommand {
 					sb.append(String.format("\n%s - %b", et, Event.isEventActive(et)));
 				}
 				event.getChannel().sendMessage(sb.toString()).complete();
+			} break;
+
+			case "santa": {
+				event.getChannel().sendMessage("Start.").complete();
+				ArrayList<Long> players = new ArrayList<Long>();
+				ArrayList<Long> santa = new ArrayList<Long>();
+
+				try (ResultSet res = JDBC.executeQuery("select * from players where santa > 0;")) {
+					while (res.next()) {
+						long id = res.getLong("playerid");
+						players.add(id);
+						santa.add(id);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				int count = 0;
+				do {
+					count = 0;
+					Collections.shuffle(santa);
+
+					for (int q = 0; q < santa.size(); q++) {
+						if (players.get(q).equals(santa.get(q))) {
+							count++;
+						}
+					}
+				} while (count > 0);
+
+				Guild g = MesozoicIsland.getAssistant().getGuild();
+				for (int q = 0; q < santa.size(); q++) {
+					JDBC.executeUpdate("update players set santa = %d where playerid = %d;", santa.get(q), players.get(q));
+					if (players.get(q) != Constants.QUAS_ID) continue;
+					
+					Member m = g.getMemberById(players.get(q));
+					if (m == null) continue;
+					try {
+						m.getUser().openPrivateChannel().complete().sendMessageFormat("**== Secret Santa Event ==**\nThis year, you will be collecting Gift Tokens to buy presents for %s! You can get Gift Tokens by opening Mystery Presents, which wild dinosaurs have a chance of holding. Be sure to buy all your presents before Christmas!", Player.getPlayer(santa.get(q)).getName()).complete();
+					} catch (Exception e) {}
+				}
+
+				event.getChannel().sendMessage("Done.").complete();
 			} break;
 
 			case "benedict": {

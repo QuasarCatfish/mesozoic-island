@@ -97,7 +97,7 @@ public enum ItemID {
 	ChocolateDinoBar(404, 20),
 	Token(405, 0),
 	ThanksgivingToken(405, 11),
-	GiftPoint(405, 12),
+	GiftToken(405, 12),
 	ChickenToken(405, 13),
 	EggVoucher(406, 0),
 	JasonToken(407, 0),
