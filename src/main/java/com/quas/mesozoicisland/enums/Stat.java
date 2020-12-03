@@ -59,6 +59,9 @@ public enum Stat {
 	BattlesWonWithAccursed(27),
 	DungeonsEnteredWithAccursed(28),
 	DinosaursDefeatedWithAccursed(29),
+
+	// Events
+	GiftPointsReceived(30),
 	;
 
 	private long id;

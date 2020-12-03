@@ -2,10 +2,12 @@ package com.quas.mesozoicisland.cmdadmin;
 
 import java.util.regex.Pattern;
 
+import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Util;
@@ -78,5 +80,7 @@ public class GuildDemoteCommand implements ICommand {
 		Util.removeRoleFromMember(m, DiscordRole.Guildmaster.getIdLong());
 		event.getChannel().sendMessageFormat("%s, you have demoted %s to guild member.", event.getAuthor().getAsMention(), p.getName()).complete();
 		event.getGuild().getTextChannelById(e.getGuild()).sendMessageFormat("%s has been demoted from guildmaster.", p.getAsMention()).complete();
+		if (p.getItemCount(ItemID.GuildmasterTitle) > 0) JDBC.addItem(p.getIdLong(), ItemID.GuildmasterTitle.getId(), -1);
+		JDBC.addItem(p.getIdLong(), ItemID.FormerGuildmasterTitle.getId());
 	}
 }
