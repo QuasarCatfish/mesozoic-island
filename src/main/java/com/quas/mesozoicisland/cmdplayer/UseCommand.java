@@ -330,9 +330,9 @@ public class UseCommand implements ICommand {
 				sb.append(i.toString());
 				sb.append(" and find... ");
 				
-				switch (MesozoicRandom.nextInt(10)) {
+				switch (MesozoicRandom.nextInt(20)) {
 					// 50% coins
-					case 0: case 1: case 2: case 3: case 4: {
+					case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: {
 						Item prize = Item.getItem(ItemID.DinosaurCoin);
 						int count = MesozoicRandom.nextInt(10, 51);
 						sb.append(count);
@@ -341,8 +341,8 @@ public class UseCommand implements ICommand {
 						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
 					} break;
 
-					// 20% copper gacha
-					case 5: case 6: {
+					// 15% copper gacha
+					case 10: case 11: case 12: {
 						Item prize = Item.getItem(ItemID.CopperRareGachaToken);
 						int count = MesozoicRandom.nextInt(1, 3);
 						sb.append(count);
@@ -351,8 +351,8 @@ public class UseCommand implements ICommand {
 						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
 					} break;
 
-					// 10% bronze gacha
-					case 7: {
+					// 5% bronze gacha
+					case 13: {
 						Item prize = Item.getItem(ItemID.BronzeRareGachaToken);
 						int count = 1;
 						sb.append(count);
@@ -361,10 +361,20 @@ public class UseCommand implements ICommand {
 						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
 					} break;
 
-					// 20% B-potion
-					case 8: case 9: {
+					// 15% B-potion
+					case 14: case 15: case 16: {
 						Item prize = Item.getItem(ItemID.BTierXPPotion);
 						int count = 1;
+						sb.append(count);
+						sb.append(" ");
+						sb.append(prize.toString(count));
+						JDBC.addItem(p.getIdLong(), prize.getIdDmg(), count);
+					} break;
+
+					// 15% Dino Cane
+					case 17: case 18: case 19: {
+						Item prize = Item.getItem(ItemID.DinoCane);
+						int count = MesozoicRandom.nextInt(1, 4);
 						sb.append(count);
 						sb.append(" ");
 						sb.append(prize.toString(count));
