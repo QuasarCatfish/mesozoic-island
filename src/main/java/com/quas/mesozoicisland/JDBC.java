@@ -106,7 +106,13 @@ public class JDBC {
 	
 	public static synchronized NewPlayerStatus addPlayer(long playerid) {
 		try (ResultSet res = executeQuery("select * from players where playerid = %d;", playerid)) {
-			if (res.next()) return NewPlayerStatus.Returning;
+			if (res.next()) {
+				if (res.getString("gamestate").matches("Tutorial\\d+")) {
+					return NewPlayerStatus.InTutorial;
+				} else {
+					return NewPlayerStatus.Returning;
+				}
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
