@@ -146,12 +146,28 @@ public class DailyCommand implements ICommand {
 				} break;
 
 				// Christmas Month
-				case "1201": case "1202": case "1203": case "1204": case "1205": case "1206": case "1207": case "1208":
-				case "1209": case "1210": case "1211": case "1212": case "1213": case "1214": case "1215": case "1216":
-				case "1217": case "1218": case "1219": case "1220": case "1221": case "1222": case "1223": case "1224": {
+				case "1201": case "1202": case "1203": case "1204": case "1205": case "1206": case "1207": case "1208": {
 					if (p.isSecretSanta()) {
 						Item item = Item.getItem(ItemID.GiftToken);
 						int count = MesozoicRandom.nextInt(3, 6);
+						int days = 1225 - Integer.parseInt(date);
+						sb.append(String.format("\n%d Day%s until Christmas Bonus: %d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
+						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
+					}
+				} break;
+				case "1209": case "1210": case "1211": case "1212": case "1213": case "1214": case "1215": case "1216": {
+					if (p.isSecretSanta()) {
+						Item item = Item.getItem(ItemID.GiftToken);
+						int count = MesozoicRandom.nextInt(5, 9);
+						int days = 1225 - Integer.parseInt(date);
+						sb.append(String.format("\n%d Day%s until Christmas Bonus: %d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
+						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
+					}
+				} break;
+				case "1217": case "1218": case "1219": case "1220": case "1221": case "1222": case "1223": case "1224": {
+					if (p.isSecretSanta()) {
+						Item item = Item.getItem(ItemID.GiftToken);
+						int count = MesozoicRandom.nextInt(8, 13);
 						int days = 1225 - Integer.parseInt(date);
 						sb.append(String.format("\n%d Day%s until Christmas Bonus: %d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
 						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
