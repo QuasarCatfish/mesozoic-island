@@ -62,10 +62,11 @@ public class SecretSantaEnterCommand implements ICommand {
 		
 		if (!Event.isEventActive(EventType.SecretSantaSignup)) {
 			event.getChannel().sendMessageFormat("%s, the entry period for the Secret Santa is closed.", event.getAuthor().getAsMention()).complete();
-			return;
+		} else if (p.isBannedFromCoop()) {
+			event.getChannel().sendMessageFormat("%s, you are not allowed to enter this event. Please contact an administrator if you believe this is an error.", event.getAuthor().getAsMention()).complete();
+		} else {
+			event.getChannel().sendMessageFormat("%s, you have successfully signed up for the Secret Santa event.", event.getAuthor().getAsMention()).complete();
+			JDBC.executeUpdate("update players set santa = 1 where playerid = %d;", p.getIdLong());
 		}
-
-		event.getChannel().sendMessageFormat("%s, you have successfully signed up for the Secret Santa event.", event.getAuthor().getAsMention()).complete();
-		JDBC.executeUpdate("update players set santa = 1 where playerid = %d;", p.getIdLong());
 	}
 }

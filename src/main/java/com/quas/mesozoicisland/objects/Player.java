@@ -48,6 +48,7 @@ public class Player {
 	private boolean muted;
 	private boolean cursed;
 	private long santa;
+	private boolean coopbanned;
 	
 	private Player() {}
 	
@@ -196,6 +197,10 @@ public class Player {
 	public long getSecretSanta() {
 		return santa;
 	}
+
+	public boolean isBannedFromCoop() {
+		return coopbanned;
+	}
 	
 	public long getItemCount(Item item) {
 		return getItemCount(item.getIdDmg());
@@ -341,6 +346,7 @@ public class Player {
 				p.muted = res.getBoolean("muted");
 				p.cursed = res.getBoolean("cursed");
 				p.santa = res.getLong("santa");
+				p.coopbanned = res.getBoolean("coopbanned");
 				return p;
 			}
 		} catch (SQLException e) {
