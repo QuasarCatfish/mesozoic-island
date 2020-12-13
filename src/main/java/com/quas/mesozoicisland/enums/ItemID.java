@@ -101,6 +101,7 @@ public enum ItemID {
 	ChickenToken(405, 13),
 	EggVoucher(406, 0),
 	JasonToken(407, 0),
+	SecretSantaPresent(408, 0),
 	PageOfFlames(411, 0),
 	PageOfSparks(412, 0),
 	PageOfPlants(413, 0),

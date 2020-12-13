@@ -48,6 +48,7 @@ public class Player {
 	private boolean muted;
 	private boolean cursed;
 	private long santa;
+	private String eventstate;
 	private boolean coopbanned;
 	
 	private Player() {}
@@ -198,6 +199,10 @@ public class Player {
 		return santa;
 	}
 
+	public String getEventState() {
+		return eventstate;
+	}
+
 	public boolean isBannedFromCoop() {
 		return coopbanned;
 	}
@@ -346,6 +351,7 @@ public class Player {
 				p.muted = res.getBoolean("muted");
 				p.cursed = res.getBoolean("cursed");
 				p.santa = res.getLong("santa");
+				p.eventstate = res.getString("eventstate");
 				p.coopbanned = res.getBoolean("coopbanned");
 				return p;
 			}
