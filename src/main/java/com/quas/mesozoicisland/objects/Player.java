@@ -10,7 +10,6 @@ import java.util.TreeMap;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DinosaurForm;
-import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Constants;
@@ -192,7 +191,7 @@ public class Player {
 	}
 
 	public boolean isSecretSanta() {
-		return santa > 0 && Event.isEventActive(EventType.SecretSanta);
+		return santa > 0;
 	}
 
 	public long getSecretSanta() {

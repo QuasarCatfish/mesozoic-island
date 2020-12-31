@@ -313,7 +313,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 	
 	public boolean isTradable() {
-		return getRp() != 0;
+		return getRp() > 0;
 	}
 	
 	@Override
