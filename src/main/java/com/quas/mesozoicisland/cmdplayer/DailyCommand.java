@@ -173,6 +173,15 @@ public class DailyCommand implements ICommand {
 						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 					}
 				} break;
+
+				case "0101": {
+					for (ItemID ix : new ItemID[] {ItemID.MysteryPendantBox, ItemID.MysteryBracerBox, ItemID.MysteryGauntletBox, ItemID.PrismaticConverter}) {
+						Item item = Item.getItem(ix);
+						int count = 1;
+						sb.append(String.format("\nHappy New Year: %d %s!", count, item.toString(count)));
+						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
+					}
+				} break;
 			}
 			
 			// Send Message

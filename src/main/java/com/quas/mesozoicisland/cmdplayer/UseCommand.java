@@ -396,19 +396,29 @@ public class UseCommand implements ICommand {
 				sb.append(".");
 
 				event.getChannel().sendMessage(sb.toString()).complete();
-;			}
+			}
 
 			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
 				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getEggCount()) {
-					event.getChannel().sendMessageFormat("%s, you have redeemed a Chocolate Egg!", p.getAsMention()).complete();
-					Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
-					egg.setEggName("Chocolate Egg");
-					egg.setEggColor(EggColor.SaddleBrown);
-					JDBC.addEgg(p.getIdLong(), egg);
+					if (i.getDamage() == 0) { // Chocolate Egg Voucher
+						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
+						egg.setEggName("Chocolate Egg");
+						egg.setEggColor(EggColor.SaddleBrown);
+						JDBC.addEgg(p.getIdLong(), egg);
+						event.getChannel().sendMessageFormat("%s, you have redeemed a Chocolate Egg!", p.getAsMention()).complete();
+					} else if (i.getDamage() == 1) { // Egg Voucher
+						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
+						JDBC.addEgg(p.getIdLong(), egg);
+						event.getChannel().sendMessageFormat("%s, you have redeemed %s %s.", p.getAsMention(), Util.getArticle(egg.getEggName()), egg.getEggName()).complete();
+					} else {
+						event.getChannel().sendMessageFormat("%s, this %s is not redeemable.", p.getAsMention(), i.toString()).complete();
+						SUCCESS = false;
+					}
 				} else {
 					event.getChannel().sendMessageFormat("%s, you don't have any open incubator slots.", p.getAsMention()).complete();
 					SUCCESS = false;
 				}
+
 			}
 
 			else if (i.getId() == ItemID.DinosaurVoucher.getItemId()) {
