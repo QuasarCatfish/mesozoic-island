@@ -81,7 +81,7 @@ public class MesozoicDate implements Comparable<MesozoicDate> {
 				return -that.compareTo(this);
 			}
 		} else if (this.iyear > that.iyear) {
-			int ret = this.iday + 1;
+			int ret = this.iday;
 			for (int month = 1; month < this.imonth; month++) ret += Util.getDaysInMonth(month, Util.isLeapYear(this.iyear));
 			ret += Util.getDaysInYear(that.iyear);
 			for (int month = 1; month <= that.imonth; month++) ret -= Util.getDaysInMonth(month, Util.isLeapYear(that.iyear));
