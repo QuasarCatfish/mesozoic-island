@@ -44,17 +44,23 @@ public class Battle {
 	}
 	
 	public Battle addTeam(BattleTeam bt) {
+		return addTeam(bt, true);
+	}
+
+	public Battle addTeam(BattleTeam bt, boolean doBoost) {
 		if (bt.isInvalid()) return this;
 		if (!bt.hasDinosaur()) return this;
 		teams.add(bt);
 		
-		for (Dinosaur d : bt.getDinosaurs()) {
-			if (d.getPlayer() != null && d.getPlayer().getFragranceBattleTimer() > System.currentTimeMillis())
-				d.addBoost(Math.round(100 * Constants.BATTLE_FRAGRANCE_BONUS));
-			
-			for (Element e : loc.getBoostedElements()) {
-				if (d.getElement().getId() == e.getId()) {
-					d.addBoost(Constants.LOCATION_BOOST);
+		if (doBoost) {
+			for (Dinosaur d : bt.getDinosaurs()) {
+				if (d.getPlayer() != null && d.getPlayer().getFragranceBattleTimer() > System.currentTimeMillis())
+					d.addBoost(Math.round(100 * Constants.BATTLE_FRAGRANCE_BONUS));
+				
+				for (Element e : loc.getBoostedElements()) {
+					if (d.getElement().getId() == e.getId()) {
+						d.addBoost(Constants.LOCATION_BOOST);
+					}
 				}
 			}
 		}

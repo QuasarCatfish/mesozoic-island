@@ -497,8 +497,10 @@ public class SpawnManager {
 		// Create Joined Players Embed
 		eb = new EmbedBuilder();
 		eb.setTitle(String.format("**Dungeon** (%,d Player%s)", players, players == 1 ? "" : "s"));
-		eb.setDescription("Channel Link: ");
-		eb.appendDescription(DiscordChannel.BattleDungeon.toString());
+		if (players > 0) {
+			eb.setDescription("Channel Link: ");
+			eb.appendDescription(DiscordChannel.BattleDungeon.toString());
+		}
 		eb.setColor(Constants.COLOR);
 		
 		if (!teams.isEmpty()) {
@@ -517,7 +519,7 @@ public class SpawnManager {
 				Battle.markPlayerBattling(CustomPlayer.Dungeon.getIdLong(), true);
 				for (BattleTeam bt : teams) {
 					bt.heal();
-					b.addTeam(bt);
+					b.addTeam(bt, q == 0);
 					Battle.markPlayerBattling(bt.getPlayer().getIdLong(), true);
 				}
 				
