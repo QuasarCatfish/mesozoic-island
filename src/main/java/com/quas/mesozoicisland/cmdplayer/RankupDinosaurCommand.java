@@ -65,10 +65,10 @@ public class RankupDinosaurCommand implements ICommand {
 		Dinosaur d = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(args[0]));
 		if (d == null) {
 			event.getChannel().sendMessageFormat("%s, this dinosaur does not exist.", event.getAuthor().getAsMention()).complete();
-		} else if (!d.canRankup()) {
-			event.getChannel().sendMessageFormat("%s, your %s needs an additional %,d RP to rankup.", event.getAuthor().getAsMention(), d.getEffectiveName(), d.getRpToRankup()).complete();
 		} else if (d.getRank() == Constants.MAX_RANK) {
 			event.getChannel().sendMessageFormat("%s, your %s is at the max rank and cannot rankup any further.", event.getAuthor().getAsMention(), d.getEffectiveName()).complete();
+		} else if (!d.canRankup()) {
+			event.getChannel().sendMessageFormat("%s, your %s needs an additional %,d RP to rankup.", event.getAuthor().getAsMention(), d.getEffectiveName(), d.getRpToRankup()).complete();
 		} else {
 			JDBC.rankup(p.getIdLong(), d.getIdPair());
 			JDBC.addItem(p.getIdLong(), Stat.DinosaursRankedUp.getId());

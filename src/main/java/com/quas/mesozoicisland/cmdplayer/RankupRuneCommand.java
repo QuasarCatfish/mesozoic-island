@@ -64,10 +64,10 @@ public class RankupRuneCommand implements ICommand {
 		Rune r = Rune.getRune(p.getIdLong(), Integer.parseInt(args[0].substring(1)));
 		if (r == null) {
 			event.getChannel().sendMessageFormat("%s, this rune does not exist.", event.getAuthor().getAsMention()).complete();
-		} else if (!r.canRankup()) {
-			event.getChannel().sendMessageFormat("%s, your %s rune needs an additional %,d RP to rankup.", event.getAuthor().getAsMention(), r.getName(), r.getRpToRankup()).complete();
 		} else if (r.getRank() == Constants.MAX_RANK) {
 			event.getChannel().sendMessageFormat("%s, your %s rune is at the max rank and cannot rankup any further.", event.getAuthor().getAsMention(), r.getName()).complete();
+		} else if (!r.canRankup()) {
+			event.getChannel().sendMessageFormat("%s, your %s rune needs an additional %,d RP to rankup.", event.getAuthor().getAsMention(), r.getName(), r.getRpToRankup()).complete();
 		} else {
 			JDBC.rankup(p.getIdLong(), r.getId());
 			Rune r2 = Rune.getRune(p.getIdLong(), r.getId());
