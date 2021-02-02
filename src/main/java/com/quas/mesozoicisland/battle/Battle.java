@@ -435,8 +435,8 @@ public class Battle {
 		if (damage < Constants.MIN_DAMAGE) damage = Constants.MIN_DAMAGE;
 		
 		StringBuilder sb = new StringBuilder();
-		BattleAttack atkeff = MesozoicRandom.nextAttackingBattleEffect(attack.getDinosaur().getDinosaurForm());
-		BattleAttack defeff = MesozoicRandom.nextDefendingBattleEffect(defend.getDinosaur().getDinosaurForm());
+		BattleAttack atkeff = MesozoicRandom.nextAttackingBattleEffect(attack.getDinosaur());
+		BattleAttack defeff = MesozoicRandom.nextDefendingBattleEffect(defend.getDinosaur());
 		
 		// Special
 		if (atkeff == BattleAttack.Rune) {
@@ -498,7 +498,7 @@ public class Battle {
 		if (defeff == BattleAttack.Block) {
 			damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
 			sb.append(" but it blocked the attack. ");
-		} else if (defeff == BattleAttack.Dodge || atkeff == BattleAttack.Miss) {
+		} else if ((atkeff != BattleAttack.AlwaysHitAttack && defeff == BattleAttack.Dodge) || atkeff == BattleAttack.Miss) {
 			damage = 0;
 			sb.append(" but it dodged the attack. ");
 		} else {

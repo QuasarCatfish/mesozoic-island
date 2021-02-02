@@ -185,6 +185,11 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessage(sb.toString()).complete();
 			} break;
 
+			case "attack": {
+				Dinosaur d = Dinosaur.getDinosaur(event.getAuthor().getIdLong(), 1, 0);
+				event.getChannel().sendMessageFormat("%s", d.getAttacks()).complete();
+			} break;
+
 			case "santa": {
 				event.getChannel().sendMessage("Start.").complete();
 				ArrayList<Long> players = new ArrayList<Long>();

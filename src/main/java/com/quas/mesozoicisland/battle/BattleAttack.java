@@ -5,7 +5,7 @@ import com.quas.mesozoicisland.util.Util;
 public enum BattleAttack {
 	
 	// Attack
-	BaseAttack, Critical, Rune, Heal10, Heal50, Miss, Scare,
+	BaseAttack, AlwaysHitAttack, Critical, Rune, Heal10, Heal50, Miss, Scare,
 	
 	// Defend
 	BaseDefend, Block, Dodge;

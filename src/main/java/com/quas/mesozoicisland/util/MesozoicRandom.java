@@ -178,29 +178,29 @@ public class MesozoicRandom {
 		return 1;
 	}
 
-	public static BattleAttack nextAttackingBattleEffect(DinosaurForm form) {
-		return form.getAttacks()[nextInt(form.getAttacks().length)];
+	public static BattleAttack nextAttackingBattleEffect(Dinosaur dino) {
+		return Util.getRandomElement(dino.getAttacks());
 	}
 	
-	public static BattleAttack nextDefendingBattleEffect(DinosaurForm form) {
-		return form.getDefenses()[nextInt(form.getDefenses().length)];
+	public static BattleAttack nextDefendingBattleEffect(Dinosaur dino) {
+		return Util.getRandomElement(dino.getDefenses());
 	}
 	
 	public static int nextHatchPoints(Rarity rarity, DinosaurForm form) {
 		// HP Based on Rarity
-		int hp = rarity.getId() % 10 == 0 ? 15_000 : 1_000 * ((rarity.getId() % 10) + 4);
+		int hp = rarity.getId() % 10 == 0 ? nextInt(13_000, 17_000) : nextInt(1_000 * ((rarity.getId() % 10) + 2), 1_000 * ((rarity.getId() % 10) + 6));
 		
 		// Bonus HP Based on Form
 		switch (form) {
 		case Standard:
 			break;
 		case Prismatic:
-			hp += 10_000;
+			hp += nextInt(8_000, 12_000);
 			break;
 		case Dungeon:
 		case Halloween:
 		case Thanksgiving:
-			hp += 3_000;
+			hp += nextInt(1_500, 4_500);
 			break;
 		default:
 			hp += 1_000_000_000;
@@ -208,7 +208,6 @@ public class MesozoicRandom {
 		}
 		
 		hp += nextInt(1_000);
-		
 		return hp;
 	}
 }

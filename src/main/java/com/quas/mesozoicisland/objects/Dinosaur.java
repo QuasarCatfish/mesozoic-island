@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.quas.mesozoicisland.JDBC;
+import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
@@ -53,6 +55,9 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	private Rune rune;
 	private int wins = 0;
 	private int losses = 0;
+	private ArrayList<BattleAttack> attacks = new ArrayList<>();
+	private ArrayList<BattleAttack> defenses = new ArrayList<>();
+	
 	
 	private Dinosaur() {}
 	
@@ -166,7 +171,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return diet;
 	}
 	
-	// Player Related
+	// Individual Dinosaur Related
 	
 	public long getPlayerId() {
 		return player;
@@ -255,6 +260,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	
 	public Dinosaur setItem(Item item) {
 		this.item = item;
+		applyHeldItem();
 		return this;
 	}
 
@@ -314,6 +320,14 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	
 	public boolean isTradable() {
 		return getRp() > 0;
+	}
+
+	public ArrayList<BattleAttack> getAttacks() {
+		return attacks;
+	}
+
+	public ArrayList<BattleAttack> getDefenses() {
+		return defenses;
 	}
 	
 	@Override
@@ -391,6 +405,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		d.rune = rune == null ? null : rune.clone();
 		d.wins = wins;
 		d.losses = losses;
+		d.attacks = new ArrayList<>();
+		for (BattleAttack ba : attacks) d.attacks.add(ba);
+		d.defenses = new ArrayList<>();
+		for (BattleAttack ba : defenses) d.defenses.add(ba);
 		
 		return d;
 	}
@@ -401,6 +419,11 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		if (item.hasTag(ItemTag.Pendant)) {
 			if ((Integer.parseInt(item.getData()) & element.getId()) > 0) {
 				addBoost(Constants.PENDANT_BOOST);
+			}
+		} else if (item.hasTag(ItemTag.Charm)) {
+			if (item.getId() == ItemID.CharmOfAccuracy.getItemId()) {
+				if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
+				if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
 			}
 		}
 	}
@@ -487,6 +510,9 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				d.epoch = res.getString("epoch");
 				d.location = res.getString("location");
 				d.diet = res.getString("diet");
+				
+				for (BattleAttack ba : d.getDinosaurForm().getAttacks()) d.attacks.add(ba);
+				for (BattleAttack ba : d.getDinosaurForm().getDefenses()) d.defenses.add(ba);
 				
 				dinosaurs.put(new Pair<Integer, Integer>(dex, form), d);
 				return d.clone();

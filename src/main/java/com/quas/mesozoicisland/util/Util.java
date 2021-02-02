@@ -50,6 +50,10 @@ public class Util {
 		return arr[MesozoicRandom.nextInt(arr.length)];
 	}
 
+	public static <T> T getRandomElement(List<T> list) {
+		return list.get(MesozoicRandom.nextInt(list.size()));
+	}
+
 	public static <T> ArrayList<T> union(T[] a, T[] b) {
 		ArrayList<T> arr = new ArrayList<T>();
 		for (T t : a) arr.add(t);
