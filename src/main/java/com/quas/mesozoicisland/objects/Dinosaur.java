@@ -475,6 +475,8 @@ public class Dinosaur implements Comparable<Dinosaur> {
 			if (item.getId() == ItemID.CharmOfAccuracy.getItemId()) {
 				if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
 				if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
+			} else if (item.getId() == ItemID.CharmOfScaring.getItemId()) {
+				for (int q = 0; q < 5; q++) attacks.add(BattleAttack.Scare);
 			}
 		}
 	}
