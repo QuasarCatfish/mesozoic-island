@@ -68,6 +68,7 @@ import com.quas.mesozoicisland.cmdplayer.ElementsCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipReverseCommand;
 import com.quas.mesozoicisland.cmdplayer.GuildJoinCommand;
+import com.quas.mesozoicisland.cmdplayer.HatchAllCommand;
 import com.quas.mesozoicisland.cmdplayer.HatchCommand;
 import com.quas.mesozoicisland.cmdplayer.InfoDinosaurCommand;
 import com.quas.mesozoicisland.cmdplayer.InfoEggCommand;
@@ -304,6 +305,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new SecretSantaCheckCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new SecretSantaEnterCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new TradeItemCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new HatchAllCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands

@@ -256,6 +256,20 @@ public class Player {
 		}
 		return null;
 	}
+
+	public Egg[] getEggs() {
+		ArrayList<Egg> eggs = new ArrayList<>();
+
+		try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d;", pid)) {
+			while (res.next()) {
+				eggs.add(Egg.getEgg(res.getInt("eggid")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return eggs.toArray(new Egg[0]);
+	}
 	
 	public int getEggCount() {
 		try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", pid)) {
