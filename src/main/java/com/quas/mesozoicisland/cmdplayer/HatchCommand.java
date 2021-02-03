@@ -75,7 +75,7 @@ public class HatchCommand implements ICommand {
 		}
 		
 		Dinosaur d = Dinosaur.getDinosaur(egg.getDex(), egg.getForm());
-		event.getChannel().sendMessageFormat("%s, your %s hatched into %s %s!", p.getAsMention(), egg.getEggName(), Util.getArticle(d.getDinosaurName()), d.getDinosaurName()).complete();
+		event.getChannel().sendMessageFormat("%s, your %s hatched into %s %s (#%s)!", p.getAsMention(), egg.getEggName(), Util.getArticle(d.getDinosaurName()), d.getDinosaurName(), d.getId()).complete();
 		JDBC.executeUpdate("update eggs set player = 1 where eggid = %d;", egg.getId());
 		JDBC.addDinosaur(event.getChannel(), p.getIdLong(), d.getIdPair());
 		JDBC.addItem(p.getIdLong(), Stat.EggsHatched.getId());
