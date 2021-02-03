@@ -15,6 +15,7 @@ import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.Stat;
+import com.quas.mesozoicisland.enums.StatusEffect;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Event;
@@ -479,16 +480,28 @@ public class Battle {
 		} else if (atkeff == BattleAttack.Scare) {
 			if (MesozoicRandom.nextBoolean()) {
 				long atk = defend.getDinosaur().getAttack();
-				defend.getDinosaur().lowerAttack(Constants.SCARE_BOOST);
+				defend.getDinosaur().addEffect(StatusEffect.ScareAttack);
 				atk -= defend.getDinosaur().getAttack();
 				sb.append(String.format("%s's %s scares %s's %s, lowering its attack by %,d.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), atk));
 			} else {
 				long def = defend.getDinosaur().getDefense();
-				defend.getDinosaur().lowerDefense(Constants.SCARE_BOOST);
+				defend.getDinosaur().addEffect(StatusEffect.ScareDefense);
 				def -= defend.getDinosaur().getDefense();
 				sb.append(String.format("%s's %s scares %s's %s, lowering its defense by %,d.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), def));
 			}
 			return sb.toString();
+		} else if (atkeff == BattleAttack.Terror) {
+			long atk = defend.getDinosaur().getAttack();
+			long def = defend.getDinosaur().getDefense();
+
+			if (defend.getDinosaur().addEffect(StatusEffect.Terror)) {
+				atk -= defend.getDinosaur().getAttack();
+				def -= defend.getDinosaur().getDefense();
+				sb.append(String.format("%s's %s terrifies %s's %s, lowering its attack by %,d and its defense by %,d.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), atk, def));
+				return sb.toString();
+			} else {
+				atkeff = BattleAttack.AlwaysHitAttack;
+			}
 		}
 		
 		// No Special

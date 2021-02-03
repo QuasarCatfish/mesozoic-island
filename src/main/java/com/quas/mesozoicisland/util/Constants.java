@@ -52,7 +52,8 @@ public class Constants {
 	// Battle
 	public static final float SPECIAL_DAMAGE_MODIFIER = 1.5f;
 	public static final long MIN_DAMAGE = 25;
-	public static final int SCARE_BOOST = 5;
+	public static final int SCARE_BOOST = 10;
+	public static final int TERROR_BOOST = 50;
 	public static final int MIN_BOOST = -75;
 	
 	// Spawn

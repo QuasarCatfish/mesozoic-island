@@ -13,6 +13,8 @@ import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
+import com.quas.mesozoicisland.enums.StatusAilment;
+import com.quas.mesozoicisland.enums.StatusEffect;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Pair;
@@ -57,7 +59,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	private int losses = 0;
 	private ArrayList<BattleAttack> attacks = new ArrayList<>();
 	private ArrayList<BattleAttack> defenses = new ArrayList<>();
-	
+	private ArrayList<StatusAilment> ailments = new ArrayList<>();
 	
 	private Dinosaur() {}
 	
@@ -248,12 +250,12 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return this;
 	}
 
-	public Dinosaur lowerAttack(int boost) {
+	private Dinosaur lowerAttack(int boost) {
 		attackboost = Math.max(Constants.MIN_BOOST, attackboost - boost);
 		return this;
 	}
 
-	public Dinosaur lowerDefense(int boost) {
+	private Dinosaur lowerDefense(int boost) {
 		defenseboost = Math.max(Constants.MIN_BOOST, defenseboost - boost);
 		return this;
 	}
@@ -329,7 +331,56 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	public ArrayList<BattleAttack> getDefenses() {
 		return defenses;
 	}
-	
+
+	public boolean addEffect(StatusEffect effect) {
+		if (hasEffect(effect)) {
+			StatusAilment ailment = getAilment(effect);
+			if (ailment.levelUp()) {
+				applyEffect(effect);
+				return true;
+			} else {
+				return true;
+			}
+		} else {
+			ailments.add(new StatusAilment(effect, 1));
+			applyEffect(effect);
+			return true;
+		}
+	}
+
+	private void applyEffect(StatusEffect effect) {
+		switch (effect) {
+			case ScareAttack:
+				lowerAttack(Constants.SCARE_BOOST);
+				break;
+			case ScareDefense:
+				lowerDefense(Constants.SCARE_BOOST);
+				break;
+			case Terror:
+				lowerAttack(Constants.TERROR_BOOST);
+				lowerDefense(Constants.TERROR_BOOST);
+				break;
+		}
+	}
+
+	public boolean hasEffect(StatusEffect effect) {
+		for (StatusAilment ailment : ailments) {
+			if (ailment.getEffect() == effect) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public StatusAilment getAilment(StatusEffect effect) {
+		for (StatusAilment ailment : ailments) {
+			if (ailment.getEffect() == effect) {
+				return ailment;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
