@@ -8,8 +8,10 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Player;
 
 public class Constants {
@@ -33,7 +35,7 @@ public class Constants {
 	// Multipliers
 	public static final float XP_MULTIPLIER = 1f; // default 1f
 	public static final float getDungeonXpMultiplier() {
-		
+		if (Event.isEventActive(EventType.DarknessDescent)) return 0.6f;
 		return 1f;
 	}
 	public static final float XP_FRAGRANCE_BONUS = 0.5f; // default 0.5f
@@ -82,7 +84,7 @@ public class Constants {
 	// Dungeons
 	public static boolean SPAWN_DUNGEONS = true;
 	public static final int getDungeonSpawnChance() {
-
+		if (Event.isEventActive(EventType.DarknessDescent)) return 25;
 		return 50;
 	}
 	public static final int MAX_DUNGEON_DIFFICULTY = 5;
@@ -125,6 +127,12 @@ public class Constants {
 	public static final int LOCATION_BOOST = 10;
 	public static final int PUBLIC_MAIL_DISPLAY = 5;
 	
+	// Events
+	public static final String EVENT_DARKNESS_DESCENT_FLOORS = "darknessDescentFloors";
+	public static final String EVENT_DARKNESS_DESCENT_LOSSES = "darknessDescentLosses";
+	public static final int EVENT_DARKNESS_DESCENT_MIN_DUNGEON_FLOORS = 5;
+	public static final int EVENT_DARKNESS_DESCENT_LOSS_FLOOR_COUNT = 20;
+
 	// Misc
 	public static final String ZERO_WIDTH_SPACE = "\u200B";
 	public static final String BULLET_POINT = "\u2022";

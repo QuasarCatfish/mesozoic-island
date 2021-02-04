@@ -387,8 +387,13 @@ public class Battle {
 		if (boss.hasDinosaur()) {
 			bosswin = true;
 			if (boss.getPlayer().getIdLong() == CustomPlayer.Dungeon.getIdLong()) {
-				if (teams.size() == 1) msg = "The player has failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
-				else msg = "The players have failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
+				if (teams.size() == 1) {
+					msg = "The player has failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
+					if (Event.isEventActive(EventType.DarknessDescent)) msg += " The player wakes up to find themself in an earlier section of the cave.";
+				} else {
+					msg = "The players have failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
+					if (Event.isEventActive(EventType.DarknessDescent)) msg += " The players wake up to find themselves in an earlier section of the cave.";
+				}
 			} else {
 				if (teams.size() == 1) msg = "The player has been defeated by " + boss.getPlayer().getName() + ".";
 				else msg = "The players have been defeated by " + boss.getPlayer().getName() + ".";

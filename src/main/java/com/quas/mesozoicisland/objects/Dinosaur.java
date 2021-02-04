@@ -464,6 +464,22 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return d;
 	}
 
+	public void addAttack(BattleAttack atk) {
+		attacks.add(atk);
+	}
+
+	public boolean removeAttack(BattleAttack atk) {
+		return attacks.remove(atk);
+	}
+
+	public void addDefense(BattleAttack def) {
+		defenses.add(def);
+	}
+
+	public boolean removeDefense(BattleAttack def) {
+		return defenses.remove(def);
+	}
+
 	private void applyHeldItem() {
 		if (!hasItem()) return;
 

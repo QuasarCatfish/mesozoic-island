@@ -525,19 +525,26 @@ public class SpawnManager {
 				
 				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), String.format("The dungeon exploration team has reached Floor " + (q + 1) + " of the dungeon."));
 				timer = b.start(q + 1);
-				if (b.didBossWin()) break;
-				else if (q == d.getFloorCount() - 1) {
-					Item token = Item.getItem(ItemID.DungeonToken);
-					String winmsg = "";
-					if (teams.size() == 1) winmsg = String.format("The player has defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared.", d.getTokenCount(), token.toString(d.getTokenCount()));
-					else winmsg = String.format("The players have defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared. The players each get %,d %s.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getTokenCount(), token.toString(d.getTokenCount()));
+				if (b.didBossWin()) {
+					if (Event.isEventActive(EventType.DarknessDescent)) JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) - Constants.EVENT_DARKNESS_DESCENT_LOSS_FLOOR_COUNT));
+					if (Event.isEventActive(EventType.DarknessDescent)) JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES)) + 1));
+					break;
+				} else {
+					if (Event.isEventActive(EventType.DarknessDescent)) JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) + 1));
 					
-					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), winmsg);
-					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, winmsg);
-					
-					for (BattleTeam bt : teams) {
-						Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
-						Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, token.getIdDmg(), d.getTokenCount());
+					if (q == d.getFloorCount() - 1) {
+						Item token = Item.getItem(ItemID.DungeonToken);
+						String winmsg = "";
+						if (teams.size() == 1) winmsg = String.format("The player has defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared.", d.getTokenCount(), token.toString(d.getTokenCount()));
+						else winmsg = String.format("The players have defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared. The players each get %,d %s.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getTokenCount(), token.toString(d.getTokenCount()));
+						
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), winmsg);
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, winmsg);
+						
+						for (BattleTeam bt : teams) {
+							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
+							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, token.getIdDmg(), d.getTokenCount());
+						}
 					}
 				}
 			}
