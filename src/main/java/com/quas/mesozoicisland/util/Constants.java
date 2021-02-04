@@ -81,7 +81,10 @@ public class Constants {
 	
 	// Dungeons
 	public static boolean SPAWN_DUNGEONS = true;
-	public static final int DUNGEON_SPAWN_CHANCE = 50;
+	public static final int getDungeonSpawnChance() {
+
+		return 50;
+	}
 	public static final int MAX_DUNGEON_DIFFICULTY = 5;
 	public static final int MIN_DUNGEON_FLOORS = 3;
 	public static final int MAX_DUNGEON_FLOORS = 10;

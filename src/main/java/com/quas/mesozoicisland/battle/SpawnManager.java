@@ -113,7 +113,7 @@ public class SpawnManager {
 					SpawnType spawn = spawntype;
 
 					if (spawn == SpawnType.Random) {
-						if (Constants.SPAWN_DUNGEONS && MesozoicRandom.nextInt(Constants.DUNGEON_SPAWN_CHANCE) == 0 && !isDungeonSpawned()) {
+						if (Constants.SPAWN_DUNGEONS && MesozoicRandom.nextInt(Constants.getDungeonSpawnChance()) == 0 && !isDungeonSpawned()) {
 							spawn = SpawnType.Dungeon;
 						} else if (Constants.SPAWN_EGGS && MesozoicRandom.nextInt(Constants.EGG_SPAWN_CHANCE) == 0) {
 							spawn = SpawnType.Egg;
