@@ -62,6 +62,7 @@ public enum Stat {
 
 	// Events
 	GiftPointsReceived(30),
+	DarknessDescentDungeonsEntered(31),
 	;
 
 	private long id;

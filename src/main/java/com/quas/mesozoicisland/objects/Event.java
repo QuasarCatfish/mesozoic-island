@@ -11,6 +11,7 @@ import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EventType;
+import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
 
@@ -165,6 +166,12 @@ public class Event {
 							} catch (Exception e) {}
 						}
 					}
+
+					if (et == EventType.DarknessDescent) {
+						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, "0");
+						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, "0");
+						JDBC.executeUpdate("update bags set count = 0 where item = 0 and dmg = %d;", Stat.DarknessDescentDungeonsEntered.getStatId());
+					}
 				}
 				
 				// End of Event
@@ -205,7 +212,7 @@ public class Event {
 
 					// Event End
 					if (et == EventType.SecretSanta) {
-						// TODO: Finish the end of secret santa happenings.
+						// Finish the end of secret santa happenings.
 						// If players still have presents, randomly spend them on gifts
 						// Turn gifts into mail
 						// Send mail to recipient
