@@ -491,6 +491,7 @@ public class SpawnManager {
 			teams.add(bt);
 			JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DungeonsEntered.getId());
 			if (bt.hasAccursed()) JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DungeonsEnteredWithAccursed.getId());
+			if (Event.isEventActive(EventType.DarknessDescent)) JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DarknessDescentDungeonsEntered.getId());
 			players++;
 		}
 		
