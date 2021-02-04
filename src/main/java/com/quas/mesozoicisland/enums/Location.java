@@ -4,21 +4,25 @@ import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.util.Util;
 
 public enum Location {
-	Plains("Plains"),
-	Volcano("Volcano", Element.of(2)),
-	Mountain("Mountain", Element.of(4)),
-	Jungle("Jungle", Element.of(8)),
-	Plateau("Plateau", Element.of(16)),
-	Tundra("Tundra", Element.of(32)),
-	Cave("Cave", Element.of(64)),
-	Beach("Beach", Element.of(128)),
-	Cliffs("Cliffs", Element.of(256));
+	Plains("Plains", true),
+	Volcano("Volcano", true, Element.of(2)),
+	Mountain("Mountain", true, Element.of(4)),
+	Jungle("Jungle", true, Element.of(8)),
+	Plateau("Plateau", true, Element.of(16)),
+	Tundra("Tundra", true, Element.of(32)),
+	Cave("Cave", true, Element.of(64)),
+	Beach("Beach", true, Element.of(128)),
+	Cliffs("Cliffs", true, Element.of(256)),
+	
+	SeasideCave("Seaside Cave", false, Element.of(64), Element.of(128));
 	
 	private String name;
+	private boolean selectable;
 	private Element[] boost;
 	private boolean inuse;
-	private Location(String name, Element...boost) {
+	private Location(String name, boolean selectable, Element...boost) {
 		this.name = name;
+		this.selectable = selectable;
 		this.boost = boost;
 		inuse = false;
 	}
@@ -28,6 +32,10 @@ public enum Location {
 		return name;
 	}
 	
+	public boolean isSelectable() {
+		return selectable;
+	}
+
 	public Element[] getBoostedElements() {
 		return boost;
 	}

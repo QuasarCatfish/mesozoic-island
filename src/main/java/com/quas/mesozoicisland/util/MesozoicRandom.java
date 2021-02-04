@@ -56,11 +56,12 @@ public class MesozoicRandom {
 		ArrayList<Location> locations = new ArrayList<Location>();
 		for (Location loc : Location.values()) {
 			if (loc.isInUse()) continue;
+			if (!loc.isSelectable()) continue;
 			locations.add(loc);
 		}
 		
 		if (locations.isEmpty()) {
-			return Location.values()[nextInt(Location.values().length)];
+			return Location.Plains;
 		} else {
 			Location loc = locations.get(nextInt(locations.size()));
 			loc.setInUse(true);
@@ -138,11 +139,11 @@ public class MesozoicRandom {
 	}
 	
 	public static Dinosaur nextDinosaur(Rarity r) {
-		Dinosaur d;
-		do {
-			d = nextDinosaur();
-		} while (!d.getRarity().equals(r));
-		return d;
+		while (true) {
+			Dinosaur d = nextDinosaur();
+			if (!d.getRarity().equals(r)) continue;
+			return d;
+		}
 	}
 	
 	public static Dinosaur nextDungeonDinosaur() {
@@ -150,7 +151,9 @@ public class MesozoicRandom {
 			Dinosaur d = MesozoicRandom.nextDinosaur();
 			if (d.getDex() < 0) continue;
 			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
-			return Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeon.getId());
+			Dinosaur dungeon = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeon.getId());
+			if (dungeon == null) continue;
+			return dungeon;
 		}
 	}
 	
@@ -159,7 +162,9 @@ public class MesozoicRandom {
 			Dinosaur d = MesozoicRandom.nextDinosaur();
 			if (d.getDex() < 0) continue;
 			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
-			return Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeonBoss.getId());
+			Dinosaur boss = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeonBoss.getId());
+			if (boss == null) continue;
+			return boss;
 		}
 	}
 	
@@ -170,7 +175,7 @@ public class MesozoicRandom {
 				if (res.getString("data") == null) continue;
 				values.add(res.getLong("itemdmg"));
 			}
-			return Util.getRandomElement(values.toArray(new Long[0]));
+			return Util.getRandomElement(values);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
