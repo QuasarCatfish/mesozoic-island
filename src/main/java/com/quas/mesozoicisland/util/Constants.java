@@ -32,7 +32,10 @@ public class Constants {
 	
 	// Multipliers
 	public static final float XP_MULTIPLIER = 1f; // default 1f
-	public static final float DUNGEON_XP_MULTIPLIER = 1f; // default 1f
+	public static final float getDungeonXpMultiplier() {
+		
+		return 1f;
+	}
 	public static final float XP_FRAGRANCE_BONUS = 0.5f; // default 0.5f
 	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f; // default 0.2f
 	public static final int MAIN_ELEMENT_BOOST = 10; // +10%
