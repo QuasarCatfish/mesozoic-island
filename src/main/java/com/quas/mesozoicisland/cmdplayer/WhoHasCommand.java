@@ -79,7 +79,7 @@ public class WhoHasCommand implements ICommand {
 		}
 
 		// Invalid Dinosaur
-		if (d == null) {
+		if (d == null || d.getDex() < 0) {
 			event.getChannel().sendMessageFormat("%s, I could not find the given dinosaur.", p.getAsMention()).complete();
 			return;
 		}
