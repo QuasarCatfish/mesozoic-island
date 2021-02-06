@@ -50,6 +50,7 @@ import com.quas.mesozoicisland.cmdevent.SecretSantaEnterCommand;
 import com.quas.mesozoicisland.cmdplayer.BagCategoryCommand;
 import com.quas.mesozoicisland.cmdplayer.BagCommand;
 import com.quas.mesozoicisland.cmdplayer.BenedictBuyCommand;
+import com.quas.mesozoicisland.cmdplayer.BenedictHatchCommand;
 import com.quas.mesozoicisland.cmdplayer.BenedictStockCommand;
 import com.quas.mesozoicisland.cmdplayer.BirthdayCommand;
 import com.quas.mesozoicisland.cmdplayer.BuyCommand;
@@ -306,6 +307,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new SecretSantaEnterCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new TradeItemCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new HatchAllCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new BenedictHatchCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
