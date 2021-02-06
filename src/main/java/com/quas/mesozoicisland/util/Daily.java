@@ -14,6 +14,7 @@ import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.QuestType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
@@ -21,6 +22,7 @@ import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 
+import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class Daily {
@@ -64,7 +66,41 @@ public class Daily {
 			}
 		}
 		
-		// Daily Quest
+		// Daily Claim Quests
+		{
+			System.out.println("[DAILY] Processing completed quests");
+			try (ResultSet res = JDBC.executeQuery("select * from quests where completed = false;")) {
+				while (res.next()) {
+					Player p = Player.getPlayer(res.getLong("playerid"));
+					if (p == null) continue;
+
+					String name = res.getString("questname");
+					long quest = res.getLong("questtype");
+					Item item = Item.getItem(Stat.of(quest));
+					if (item == null) continue;
+					
+					long start = res.getLong("start");
+					long end = res.getLong("goal");
+					if (end <= 0) continue;
+					
+					long progress = p.getItemCount(item) - start;
+					if (progress < end) continue;
+
+					QuestType qt = QuestType.of(res.getInt("special"));
+					if (qt != QuestType.Standard) continue;
+					
+					PrivateChannel pc = MesozoicIsland.getAssistant().getGuild().retrieveMemberById(p.getId()).complete().getUser().openPrivateChannel().complete();
+					pc.sendMessageFormat("%s, for completing the \"%s\" quest, you have received the following rewards:\n%s", p.getAsMention(), name, JDBC.getRedeemMessage(res.getString("reward"))).complete();
+					JDBC.executeUpdate("update quests set completed = true where questid = %d;", res.getInt("questid"));
+					JDBC.addItem(p.getIdLong(), Stat.QuestsCompleted.getId(), 1);
+					JDBC.redeem(pc, p.getIdLong(), res.getString("reward"));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Daily New Quests
 		{
 			System.out.println("[DAILY] Processing quests.");
 			TreeMap<Long, Integer> valid = new TreeMap<Long, Integer>();

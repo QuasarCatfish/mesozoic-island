@@ -7,7 +7,6 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
-import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
@@ -17,7 +16,6 @@ import com.quas.mesozoicisland.enums.QuestType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
-import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Pair;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -76,7 +74,6 @@ public class QuestsCommand implements ICommand {
 			return;
 		}
 		
-		
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("**%s's Quests:**", p.getAsMention()));
 		ArrayList<Pair<String, String>> rewards = new ArrayList<Pair<String, String>>();
@@ -123,7 +120,7 @@ public class QuestsCommand implements ICommand {
 		
 		for (Pair<String, String> reward : rewards) {
 			event.getChannel().sendMessageFormat("%s, for completing the \"%s\" quest, you have received the following rewards:\n%s", p.getAsMention(), reward.getFirstValue(), JDBC.getRedeemMessage(reward.getSecondValue())).complete();
-			JDBC.redeem(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()), p.getIdLong(), reward.getSecondValue());
+			JDBC.redeem(event.getChannel(), p.getIdLong(), reward.getSecondValue());
 		}
 	}
 }
