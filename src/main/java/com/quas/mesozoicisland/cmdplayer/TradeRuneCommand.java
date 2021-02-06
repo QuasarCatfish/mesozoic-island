@@ -126,10 +126,13 @@ public class TradeRuneCommand implements ICommand {
 			event.getChannel().sendMessage(sb.toString()).complete();
 			TradeManager.addRuneTrade(trade);
 			
-			JDBC.addRune(null, p1.getIdLong(), r1.getId(), -1);
-			JDBC.addRune(event.getChannel(), p2.getIdLong(), r1.getId(), 1);
-			JDBC.addRune(null, p2.getIdLong(), r2.getId(), -1);
-			JDBC.addRune(event.getChannel(), p1.getIdLong(), r2.getId(), 1);
+			if (r1.getId() != r2.getId()) {
+				JDBC.addRune(null, p1.getIdLong(), r1.getId(), -1);
+				JDBC.addRune(event.getChannel(), p2.getIdLong(), r1.getId(), 1);
+				JDBC.addRune(null, p2.getIdLong(), r2.getId(), -1);
+				JDBC.addRune(event.getChannel(), p1.getIdLong(), r2.getId(), 1);
+			}
+			
 			JDBC.addItem(p1.getIdLong(), Stat.TimesTraded.getId());
 			JDBC.addItem(p2.getIdLong(), Stat.TimesTraded.getId());
 		} else {

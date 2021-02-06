@@ -136,10 +136,13 @@ public class TradeDinosaurCommand implements ICommand {
 			event.getChannel().sendMessage(sb.toString()).complete();
 			TradeManager.addDinosaurTrade(trade);
 			
-			JDBC.addDinosaur(null, p1.getIdLong(), d1.getIdPair(), -1);
-			JDBC.addDinosaur(event.getChannel(), p2.getIdLong(), d1.getIdPair(), 1);
-			JDBC.addDinosaur(null, p2.getIdLong(), d2.getIdPair(), -1);
-			JDBC.addDinosaur(event.getChannel(), p1.getIdLong(), d2.getIdPair(), 1);
+			if (!d1.getIdPair().equals(d2.getIdPair())) {
+				JDBC.addDinosaur(null, p1.getIdLong(), d1.getIdPair(), -1);
+				JDBC.addDinosaur(event.getChannel(), p2.getIdLong(), d1.getIdPair(), 1);
+				JDBC.addDinosaur(null, p2.getIdLong(), d2.getIdPair(), -1);
+				JDBC.addDinosaur(event.getChannel(), p1.getIdLong(), d2.getIdPair(), 1);
+			}
+			
 			JDBC.addItem(p1.getIdLong(), Stat.TimesTraded.getId());
 			JDBC.addItem(p2.getIdLong(), Stat.TimesTraded.getId());
 		} else {
