@@ -101,6 +101,6 @@ public class SuggestionAcceptCommand implements ICommand {
 		JDBC.executeUpdate("update suggestions set status = %d where suggestionid = %d;", SuggestionStatus.Accepted.getId(), Integer.parseInt(args[1]));
 
 		JDBC.addItem(suggestor.getIdLong(), ItemID.Cookie.getId());
-		event.getGuild().getTextChannelById(Constants.SPAWN_CHANNEL.getIdLong()).sendMessageFormat("%s, you have been given 1 %s.", suggestor.getAsMention(), Item.getItem(ItemID.Cookie).toString()).complete();
+		event.getGuild().getTextChannelById(Constants.SPAWN_CHANNEL.getIdLong()).sendMessageFormat("%s, for having a suggestion accepted, you have been given 1 %s.", suggestor.getAsMention(), Item.getItem(ItemID.Cookie).toString()).complete();
 	}
 }

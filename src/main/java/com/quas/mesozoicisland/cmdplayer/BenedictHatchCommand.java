@@ -64,7 +64,7 @@ public class BenedictHatchCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		Egg egg = p.getEgg(Integer.parseInt(args[0].substring(1)));
+		Egg egg = p.getEgg(Integer.parseInt(args[1].substring(1)));
 		if (egg == null) {
 			event.getChannel().sendMessageFormat("%s, you don't have an egg in this incubator.", p.getAsMention()).complete();
 			return;
@@ -73,17 +73,18 @@ public class BenedictHatchCommand implements ICommand {
 		Item coin = Item.getItem(ItemID.DinosaurCoin);
 		long money = p.getItemCount(coin);
 		int hp = Math.max(0, egg.getMaxHatchPoints() - egg.getCurrentHatchPoints());
-		if (money < hp / 5) {
+		long cost = hp / 5;
+		if (money < cost) {
 			event.getChannel().sendMessageFormat("%s, you do not have enough %s to hatch this egg.", p.getAsMention(), coin.toString(2)).complete();
 			return;
 		}
 
 		Dinosaur d = Dinosaur.getDinosaur(egg.getDex(), egg.getForm());
-		event.getChannel().sendMessageFormat("%s, your %s hatched into %s %s (#%s)!", p.getAsMention(), egg.getEggName(), Util.getArticle(d.getDinosaurName()), d.getDinosaurName(), d.getId()).complete();
+		event.getChannel().sendMessageFormat("%s, for a cost of %,d %s, your %s hatched into %s %s (#%s)!", p.getAsMention(), cost, coin.toString(cost), egg.getEggName(), Util.getArticle(d.getDinosaurName()), d.getDinosaurName(), d.getId()).complete();
 		JDBC.executeUpdate("update eggs set player = 1 where eggid = %d;", egg.getId());
 		JDBC.addDinosaur(event.getChannel(), p.getIdLong(), d.getIdPair());
 		JDBC.addItem(p.getIdLong(), Stat.EggsHatched.getId());
 		JDBC.addPlayerXp(p.getIdLong(), egg.getMaxHatchPoints() / 10);
-		JDBC.addItem(p.getIdLong(), coin.getIdDmg(), -hp / 5);
+		JDBC.addItem(p.getIdLong(), coin.getIdDmg(), -cost);
 	}
 }
