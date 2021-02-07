@@ -85,6 +85,7 @@ public enum ItemID {
 	RaffleTicketStub(402, 0),
 	MysteryPresent(403, 0),
 	DinosaurTreat(404, 0),
+	CandyHeart(404, 2),
 	ChocolateEgg(404, 4),
 	HalloweenCandy(404, 10),
 	TurkeyLeg(404, 11),

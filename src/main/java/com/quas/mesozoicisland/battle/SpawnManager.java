@@ -293,11 +293,18 @@ public class SpawnManager {
 				if (Event.isEventActive(EventType.Thanksgiving) && wild[q].getDex() != DinoID.Turkey.getDex()) {
 					wild[q].setItem(Item.getItem(ItemID.ThanksgivingToken));
 				}
+
 				if (Event.isEventActive(EventType.SecretSanta)) {
 					if (MesozoicRandom.nextInt(5) == 0) {
 						wild[q].setItem(Item.getItem(ItemID.MysteryPresent));
 					} else if (MesozoicRandom.nextInt(4) == 0) {
 						wild[q].setItem(Item.getItem(ItemID.DinoCane));
+					}
+				}
+
+				if (Event.isEventActive(EventType.Valentines)) {
+					if (MesozoicRandom.nextInt(4) == 0) {
+						wild[q].setItem(Item.getItem(ItemID.CandyHeart));
 					}
 				}
 			}

@@ -22,8 +22,10 @@ import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 
 public class Daily {
 
@@ -89,8 +91,17 @@ public class Daily {
 					QuestType qt = QuestType.of(res.getInt("special"));
 					if (qt != QuestType.Standard) continue;
 					
-					PrivateChannel pc = MesozoicIsland.getAssistant().getGuild().retrieveMemberById(p.getId()).complete().getUser().openPrivateChannel().complete();
-					pc.sendMessageFormat("%s, for completing the \"%s\" quest, you have received the following rewards:\n%s", p.getAsMention(), name, JDBC.getRedeemMessage(res.getString("reward"))).complete();
+					Member m = null;
+					try {
+						m = MesozoicIsland.getAssistant().getGuild().retrieveMemberById(p.getId()).complete();
+					} catch (ErrorResponseException e) {}
+					if (m == null) continue;
+					
+					PrivateChannel pc = m.getUser().openPrivateChannel().complete();
+					try {
+						pc.sendMessageFormat("%s, for completing the \"%s\" quest, you have received the following rewards:\n%s", p.getAsMention(), name, JDBC.getRedeemMessage(res.getString("reward"))).complete();
+					} catch (Exception e) {}
+
 					JDBC.executeUpdate("update quests set completed = true where questid = %d;", res.getInt("questid"));
 					JDBC.addItem(p.getIdLong(), Stat.QuestsCompleted.getId(), 1);
 					JDBC.redeem(pc, p.getIdLong(), res.getString("reward"));
