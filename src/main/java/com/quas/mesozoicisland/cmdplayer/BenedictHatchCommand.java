@@ -77,6 +77,12 @@ public class BenedictHatchCommand implements ICommand {
 		if (money < cost) {
 			event.getChannel().sendMessageFormat("%s, you do not have enough %s to hatch this egg.", p.getAsMention(), coin.toString(2)).complete();
 			return;
+		} else if (cost <= 0) {
+			event.getChannel().sendMessageFormat("%s, this egg is already ready to hatch. Hatch it with the `hatch` command.", p.getAsMention()).complete();
+			return;
+		} else if (cost <= 10) {
+			event.getChannel().sendMessageFormat("%s, this egg is too close to hatching.", p.getAsMention()).complete();
+			return;
 		}
 
 		Dinosaur d = Dinosaur.getDinosaur(egg.getDex(), egg.getForm());
