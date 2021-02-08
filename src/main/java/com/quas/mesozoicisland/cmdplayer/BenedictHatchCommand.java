@@ -84,6 +84,7 @@ public class BenedictHatchCommand implements ICommand {
 		JDBC.executeUpdate("update eggs set player = 1 where eggid = %d;", egg.getId());
 		JDBC.addDinosaur(event.getChannel(), p.getIdLong(), d.getIdPair());
 		JDBC.addItem(p.getIdLong(), Stat.EggsHatched.getId());
+		JDBC.addItem(p.getIdLong(), Stat.TransactionsMade.getId());
 		JDBC.addPlayerXp(p.getIdLong(), egg.getMaxHatchPoints() / 10);
 		JDBC.addItem(p.getIdLong(), coin.getIdDmg(), -cost);
 	}
