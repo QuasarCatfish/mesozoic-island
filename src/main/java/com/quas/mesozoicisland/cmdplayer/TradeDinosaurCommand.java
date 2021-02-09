@@ -62,7 +62,7 @@ public class TradeDinosaurCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Player p1 = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p1 == null) return;
 		
