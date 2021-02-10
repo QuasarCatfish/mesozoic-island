@@ -8,9 +8,11 @@ import java.util.Collections;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
+import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EventType;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
@@ -167,10 +169,26 @@ public class Event {
 						}
 					}
 
+					// reset vars and give quests
 					if (et == EventType.DarknessDescent) {
 						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, "0");
-						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, "0");
+						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES, "0");
 						JDBC.executeUpdate("update bags set count = 0 where item = 0 and dmg = %d;", Stat.DarknessDescentDungeonsEntered.getStatId());
+						JDBC.executeUpdate("update bags set count = 0 where item = 0 and dmg = %d;", Stat.DarknessDescentDinosaursDefeated.getStatId());
+						JDBC.executeUpdate("update bags set count = 0 where item = 0 and dmg = %d;", Stat.DarknessDescentFloorsCleared.getStatId());
+						
+						ItemID questbook = ItemID.QuestBook;
+						try (ResultSet res = JDBC.executeQuery("select * from bags where item = %d and dmg = %d;", questbook.getItemId(), questbook.getItemDamage())) {
+							while (res.next()) {
+								long player = res.getLong("bags.player");
+								if (player < CustomPlayer.getUpperLimit()) continue;
+
+								JDBC.addQuest(player, 1101);
+								JDBC.addQuest(player, 1103);
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 				

@@ -452,7 +452,7 @@ public class SpawnManager {
 		
 		// Build Spawn Message
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle("A Dungeon has appeared!");
+		eb.setTitle(d.getTitle());
 		eb.setColor(Constants.COLOR);
 		eb.addField("Dungeon Size", String.format("%,d Floors", d.getFloorCount()), true);
 		eb.addField("Difficulty", d.getDifficultyString(), true);
@@ -534,11 +534,18 @@ public class SpawnManager {
 				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), String.format("The dungeon exploration team has reached Floor " + (q + 1) + " of the dungeon."));
 				timer = b.start(q + 1);
 				if (b.didBossWin()) {
-					if (Event.isEventActive(EventType.DarknessDescent)) JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) - Constants.EVENT_DARKNESS_DESCENT_LOSS_FLOOR_COUNT));
-					if (Event.isEventActive(EventType.DarknessDescent)) JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES)) + 1));
+					if (Event.isEventActive(EventType.DarknessDescent)) {
+						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) - Constants.EVENT_DARKNESS_DESCENT_LOSS_FLOOR_COUNT));
+						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES)) + 1));
+					}
 					break;
 				} else {
-					if (Event.isEventActive(EventType.DarknessDescent)) JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) + 1));
+					if (Event.isEventActive(EventType.DarknessDescent)) {
+						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) + 1));
+						for (BattleTeam bt : teams) {
+							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DarknessDescentFloorsCleared.getId(), 1);
+						}
+					}
 					
 					if (q == d.getFloorCount() - 1) {
 						Item token = Item.getItem(ItemID.DungeonToken);

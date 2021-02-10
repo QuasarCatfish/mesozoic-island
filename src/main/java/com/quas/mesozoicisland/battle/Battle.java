@@ -346,6 +346,11 @@ public class Battle {
 				if (attack.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
 					Action.addDinosaurWinDelayed(attack.getPlayer().getIdLong(), time, attack.getDinosaur().getId());
 					Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DinosaursDefeated.getId(), 1);
+
+					// Event stats
+					if (Event.isEventActive(EventType.DarknessDescent) && defend.getPlayer().getIdLong() == CustomPlayer.Dungeon.getIdLong()) {
+						Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DarknessDescentDinosaursDefeated.getId(), 1);
+					}
 				}
 				if (defend.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
 					Action.addDinosaurLossDelayed(defend.getPlayer().getIdLong(), time, defend.getDinosaur().getId());

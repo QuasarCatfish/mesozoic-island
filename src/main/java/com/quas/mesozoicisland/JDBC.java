@@ -239,6 +239,26 @@ public class JDBC {
 	public static synchronized boolean setSelected(long pid, String dinos) {
 		return executeUpdate("update players set selected = '%s' where playerid = %d;", Util.cleanQuotes(dinos), pid);
 	}
+
+	public static synchronized boolean addQuest(long pid, int questid) {
+		try (ResultSet res = JDBC.executeQuery("select * from questlist where questid = %d;", questid)) {
+			if (res.next()) {
+				String name = res.getString("questname");
+				long type = res.getLong("questtype");
+				Item item = Item.getItem(Stat.of(type));
+				long base = Player.getPlayer(pid).getItemCount(item);
+				long goal = res.getLong("goal");
+				String reward = res.getString("reward");
+				int special = res.getInt("special");
+				
+				return JDBC.executeUpdate("insert into quests(playerid, questname, questtype, start, goal, reward, special) values(%d, '%s', %d, %d, %d, '%s', %d);", pid, Util.cleanQuotes(name), type, base, goal, Util.cleanQuotes(reward), special);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
 	
 	public static String getRedeemMessage(String redeem) {
 		StringBuilder ret = new StringBuilder();

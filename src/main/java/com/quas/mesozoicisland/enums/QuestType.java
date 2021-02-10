@@ -5,7 +5,8 @@ public enum QuestType {
 	Standard("", 0),
 	Event("Event", 1),
 	Curse("Jason", 2),
-	SecondaryElement("Midnight", 3);
+	SecondaryElement("Midnight", 3),
+	DarknessDescent("Descent into Darkness", 4);
 
 	private String name;
 	private int id;
@@ -30,6 +31,6 @@ public enum QuestType {
 			}
 		}
 
-		return Test;
+		return Event;
 	}
 }

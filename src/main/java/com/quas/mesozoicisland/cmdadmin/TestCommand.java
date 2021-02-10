@@ -312,8 +312,8 @@ public class TestCommand implements ICommand {
 
 			case "givequest": {
 				int questid = Integer.parseInt(args[2]);
-
 				TreeMap<Long, Integer> valid = new TreeMap<Long, Integer>();
+
 				try (ResultSet res = JDBC.executeQuery("select players.playerid, x.quests, y.books from players left join (select playerid, count(*) as quests from quests where special = 0 and completed = false group by playerid) as x on players.playerid = x.playerid left join (select player, count as books from bags where item = 5 and dmg = 0) as y on players.playerid = y.player where players.playerid > %d;", CustomPlayer.getUpperLimit())) {
 					while (res.next()) {
 						if (res.getInt("x.quests") >= Constants.MAX_QUESTS) continue;

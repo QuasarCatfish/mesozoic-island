@@ -63,6 +63,8 @@ public enum Stat {
 	// Events
 	GiftPointsReceived(30),
 	DarknessDescentDungeonsEntered(31),
+	DarknessDescentDinosaursDefeated(32),
+	DarknessDescentFloorsCleared(33),
 	;
 
 	private long id;

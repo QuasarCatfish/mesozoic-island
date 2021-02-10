@@ -16,6 +16,18 @@ public class Dungeon {
 	private Dungeon() {
 		
 	}
+
+	public String getTitle() {
+		if (Event.isEventActive(EventType.DarknessDescent)) {
+			if (Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) > 0) {
+				return "A path forward has appeared!";
+			} else {
+				return "The entrance to the Murky Labyrinth has appeared!";
+			}
+		}
+
+		return "A Dungeon has appeared!";
+	}
 	
 	public int getFloorCount() {
 		return floors.length;
@@ -70,10 +82,10 @@ public class Dungeon {
 			d.loc = Location.SeasideCave;
 
 			// set dungeon difficulty
-			if (MesozoicRandom.nextInt(5) == 0) {
+			if (MesozoicRandom.nextInt(4) == 0) {
 				d.difficulty = Constants.MAX_DUNGEON_DIFFICULTY - (int)Math.pow(MesozoicRandom.nextInt(0, (int)Math.pow(Constants.MAX_DUNGEON_DIFFICULTY, 3)), 1d / 3);
 			} else {
-				if (floorsCleared > 600 && MesozoicRandom.nextInt(2) == 0) d.difficulty = 6;
+				if (floorsCleared > 600 && MesozoicRandom.nextInt(3) == 0) d.difficulty = 6;
 				else if (floorsCleared > 450) d.difficulty = 5;
 				else if (floorsCleared > 350) d.difficulty = 4;
 				else if (floorsCleared > 200) d.difficulty = 3;
