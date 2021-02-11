@@ -99,6 +99,7 @@ import com.quas.mesozoicisland.cmdplayer.SelectTeamCommand;
 import com.quas.mesozoicisland.cmdplayer.SelectedCommand;
 import com.quas.mesozoicisland.cmdplayer.ShopCommand;
 import com.quas.mesozoicisland.cmdplayer.ShopListCommand;
+import com.quas.mesozoicisland.cmdplayer.StatsEventCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsPlayerCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsSelfCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsServerCommand;
@@ -308,6 +309,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new TradeItemCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new HatchAllCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictHatchCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new StatsEventCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
