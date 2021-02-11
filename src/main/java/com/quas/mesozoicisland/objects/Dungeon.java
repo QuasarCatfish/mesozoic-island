@@ -79,7 +79,7 @@ public class Dungeon {
 			// set basic stats
 			int floorsCleared = Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS));
 			d.floors = new Dinosaur[MesozoicRandom.nextInt(Constants.EVENT_DARKNESS_DESCENT_MIN_DUNGEON_FLOORS, Constants.MAX_DUNGEON_FLOORS + 1)][];
-			d.loc = Location.SeasideCave;
+			d.loc = Location.MurkyLabyrinth;
 
 			// set dungeon difficulty
 			if (MesozoicRandom.nextInt(4) == 0) {

@@ -20,6 +20,7 @@ import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EventType;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
@@ -307,6 +308,21 @@ public class TestCommand implements ICommand {
 
 				for (String s : Util.bulkify(print)) {
 					event.getChannel().sendMessage(s).complete();
+				}
+			} break;
+
+			case "questdarkness": {
+				ItemID questbook = ItemID.QuestBook;
+				try (ResultSet res = JDBC.executeQuery("select * from bags where item = %d and dmg = %d;", questbook.getItemId(), questbook.getItemDamage())) {
+					while (res.next()) {
+						long player = res.getLong("bags.player");
+						if (player < CustomPlayer.getUpperLimit()) continue;
+
+						JDBC.addQuest(player, 1101);
+						JDBC.addQuest(player, 1103);
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 			} break;
 

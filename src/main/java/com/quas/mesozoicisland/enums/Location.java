@@ -14,7 +14,7 @@ public enum Location {
 	Beach("Beach", true, Element.of(128)),
 	Cliffs("Cliffs", true, Element.of(256)),
 	
-	SeasideCave("Seaside Cave", false, Element.of(64), Element.of(128));
+	MurkyLabyrinth("Murky Labyrinth", false, Element.of(64), Element.of(128));
 	
 	private String name;
 	private boolean selectable;
