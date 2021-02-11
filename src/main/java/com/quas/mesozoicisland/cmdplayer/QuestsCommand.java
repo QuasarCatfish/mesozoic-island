@@ -79,7 +79,7 @@ public class QuestsCommand implements ICommand {
 		ArrayList<Pair<String, String>> rewards = new ArrayList<Pair<String, String>>();
 		
 		int questcount = 0;
-		try (ResultSet res = JDBC.executeQuery("select * from quests where playerid = %d and completed = false;", p.getIdLong())) {
+		try (ResultSet res = JDBC.executeQuery("select * from quests where playerid = %d and completed = false order by special, questid;", p.getIdLong())) {
 			while (res.next()) {
 				String name = res.getString("questname");
 				long quest = res.getLong("questtype");
