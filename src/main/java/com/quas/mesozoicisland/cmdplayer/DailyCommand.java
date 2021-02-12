@@ -133,7 +133,7 @@ public class DailyCommand implements ICommand {
 				case "1122": case "1123": case "1124": case "1125": case "1127": case "1128": {
 					Item item = Item.getItem(ItemID.ThanksgivingToken);
 					int count = 25;
-					sb.append(String.format("\nHappy Thanksgiving: %d %s!", count, item.toString(count)));
+					sb.append(String.format("\nHappy Thanksgiving: %,d %s!", count, item.toString(count)));
 					JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 				} break;
 
@@ -141,7 +141,7 @@ public class DailyCommand implements ICommand {
 				case "1126": {
 					Item item = Item.getItem(ItemID.ThanksgivingToken);
 					int count = 100;
-					sb.append(String.format("\nHappy Thanksgiving: %d %s!", count, item.toString(count)));
+					sb.append(String.format("\nHappy Thanksgiving: %,d %s!", count, item.toString(count)));
 					JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 				} break;
 
@@ -151,7 +151,7 @@ public class DailyCommand implements ICommand {
 						Item item = Item.getItem(ItemID.GiftToken);
 						int count = MesozoicRandom.nextInt(3, 6);
 						int days = 1225 - Integer.parseInt(date);
-						sb.append(String.format("\n%d Day%s until Christmas Bonus: %d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
+						sb.append(String.format("\n%d Day%s until Christmas Bonus: %,d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
 						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 					}
 				} break;
@@ -160,7 +160,7 @@ public class DailyCommand implements ICommand {
 						Item item = Item.getItem(ItemID.GiftToken);
 						int count = MesozoicRandom.nextInt(5, 9);
 						int days = 1225 - Integer.parseInt(date);
-						sb.append(String.format("\n%d Day%s until Christmas Bonus: %d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
+						sb.append(String.format("\n%d Day%s until Christmas Bonus: %,d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
 						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 					}
 				} break;
@@ -169,18 +169,26 @@ public class DailyCommand implements ICommand {
 						Item item = Item.getItem(ItemID.GiftToken);
 						int count = MesozoicRandom.nextInt(8, 13);
 						int days = 1225 - Integer.parseInt(date);
-						sb.append(String.format("\n%d Day%s until Christmas Bonus: %d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
+						sb.append(String.format("\n%d Day%s until Christmas Bonus: %,d %s!", days, days == 1 ? "" : "s", count, item.toString(count)));
 						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 					}
 				} break;
 
+				// New Year's Day
 				case "0101": {
 					for (ItemID ix : new ItemID[] {ItemID.MysteryPendantBox, ItemID.MysteryBracerBox, ItemID.MysteryGauntletBox, ItemID.PrismaticConverter}) {
 						Item item = Item.getItem(ix);
 						int count = 1;
-						sb.append(String.format("\nHappy New Year: %d %s!", count, item.toString(count)));
+						sb.append(String.format("\nHappy New Year: %,d %s!", count, item.toString(count)));
 						JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 					}
+				} break;
+
+				case "0214": {
+					Item item = Item.getItem(ItemID.CandyHeart);
+					int count = 30;
+					sb.append(String.format("\nHappy Valentine's Day: %,d %s!", count, item.toString(count)));
+					JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 				} break;
 			}
 			

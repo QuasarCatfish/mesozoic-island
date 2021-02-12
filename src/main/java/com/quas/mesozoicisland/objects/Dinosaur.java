@@ -357,8 +357,8 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				lowerDefense(Constants.SCARE_BOOST);
 				break;
 			case Terror:
-				lowerAttack(Constants.TERROR_BOOST);
-				lowerDefense(Constants.TERROR_BOOST);
+				lowerAttack(Constants.TERROR_BOOST + attackboost / 2);
+				lowerDefense(Constants.TERROR_BOOST + defenseboost / 2);
 				break;
 		}
 	}
