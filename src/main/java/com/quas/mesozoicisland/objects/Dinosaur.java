@@ -339,7 +339,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				applyEffect(effect);
 				return true;
 			} else {
-				return true;
+				return false;
 			}
 		} else {
 			ailments.add(new StatusAilment(effect, 1));
