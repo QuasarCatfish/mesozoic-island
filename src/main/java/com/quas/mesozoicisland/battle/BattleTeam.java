@@ -99,6 +99,7 @@ public class BattleTeam {
 		bt.player = player;
 		bt.dinosaurs = new Dinosaur[dinosaurs.length];
 		for (int q = 0; q < dinosaurs.length; q++) bt.dinosaurs[q] = dinosaurs[q].clone();
+		bt.max = max;
 		bt.tier = tier;
 		return bt;
 	}
