@@ -526,8 +526,7 @@ public class SpawnManager {
 				
 				Battle.markPlayerBattling(CustomPlayer.Dungeon.getIdLong(), true);
 				for (BattleTeam bt : teams) {
-					bt.heal();
-					b.addTeam(bt, q == 0);
+					b.addTeam(bt.clone());
 					Battle.markPlayerBattling(bt.getPlayer().getIdLong(), true);
 				}
 				

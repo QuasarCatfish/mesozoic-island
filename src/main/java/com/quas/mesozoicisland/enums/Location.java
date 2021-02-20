@@ -39,6 +39,12 @@ public enum Location {
 	public Element[] getBoostedElements() {
 		return boost;
 	}
+
+	public int getBoostedElementsId() {
+		int ret = 0;
+		for (Element e : boost) ret |= e.getId();
+		return ret;
+	}
 	
 	public void setInUse(boolean inuse) {
 		this.inuse = inuse;

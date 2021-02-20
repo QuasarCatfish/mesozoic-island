@@ -13,6 +13,10 @@ public class BattleTeam {
 	private int cur = 0, max = 0;
 	private BattleTier tier;
 	
+	private BattleTeam() {
+
+	}
+
 	public BattleTeam(long pid) {
 		this(Player.getPlayer(pid));
 	}
@@ -88,5 +92,14 @@ public class BattleTeam {
 			}
 		}
 		return false;
+	}
+
+	public BattleTeam clone() {
+		BattleTeam bt = new BattleTeam();
+		bt.player = player;
+		bt.dinosaurs = new Dinosaur[dinosaurs.length];
+		for (int q = 0; q < dinosaurs.length; q++) bt.dinosaurs[q] = dinosaurs[q].clone();
+		bt.tier = tier;
+		return bt;
 	}
 }

@@ -232,8 +232,9 @@ public class Daily {
 					Constants.addBirthdayMail(p);
 				}
 				
-				if (birthdays.size() == 1) sb.append("\nHappy Birthday! You have received mail.");
-				else sb.append("\nHappy Birthday to all of you! Each of you have received mail!.");
+				if (birthdays.size() == 1) sb.append("\nHappy Birthday! Check your mail for your presents!");
+				else if (birthdays.size() == 2) sb.append("\nHappy Birthday to both of you! Check your mail for your presents!");
+				else sb.append("\nHappy Birthday to all of you! Check your mail for your presents!");
 			}
 		}
 		

@@ -58,11 +58,8 @@ public class Battle {
 				if (d.getPlayer() != null && d.getPlayer().getFragranceBattleTimer() > System.currentTimeMillis())
 					d.addBoost(Math.round(100 * Constants.BATTLE_FRAGRANCE_BONUS));
 				
-				for (Element e : loc.getBoostedElements()) {
-					if (d.getElement().getId() == e.getId()) {
-						d.addBoost(Constants.LOCATION_BOOST);
-					}
-				}
+				if ((d.getElement().getId() ^ loc.getBoostedElementsId()) > 0)
+					d.addBoost(Constants.LOCATION_BOOST);
 			}
 		}
 		
@@ -395,14 +392,14 @@ public class Battle {
 			bosswin = true;
 			if (boss.getPlayer().getIdLong() == CustomPlayer.Dungeon.getIdLong()) {
 				if (teams.size() == 1) {
-					msg = "The player has failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
+					msg = teams.get(0).getPlayer().getName() + " has failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
 					if (Event.isEventActive(EventType.DarknessDescent)) msg += " The player wakes up to find themself in an earlier section of the cave.";
 				} else {
 					msg = "The players have failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
 					if (Event.isEventActive(EventType.DarknessDescent)) msg += " The players wake up to find themselves in an earlier section of the cave.";
 				}
 			} else {
-				if (teams.size() == 1) msg = "The player has been defeated by " + boss.getPlayer().getName() + ".";
+				if (teams.size() == 1) msg = teams.get(0).getPlayer().getName() + " has been defeated by " + boss.getPlayer().getName() + ".";
 				else msg = "The players have been defeated by " + boss.getPlayer().getName() + ".";
 			}
 		}
@@ -410,10 +407,10 @@ public class Battle {
 		// Players win
 		else {
 			if (boss.getPlayer().getIdLong() == CustomPlayer.Dungeon.getIdLong()) {
-				if (teams.size() == 1) msg = "The player has cleared the **" + Util.getOrdinal(floor) + " Floor** of the dungeon!";
+				if (teams.size() == 1) msg = teams.get(0).getPlayer().getName() + " has cleared the **" + Util.getOrdinal(floor) + " Floor** of the dungeon!";
 				else msg = "The players have cleared the **" + Util.getOrdinal(floor) + " Floor** of the dungeon!";
 			} else {
-				if (teams.size() == 1) msg = "The player has defeated " + boss.getPlayer().getName() + ".";
+				if (teams.size() == 1) msg = teams.get(0).getPlayer().getName() + " has defeated " + boss.getPlayer().getName() + ".";
 				else msg = "The players have defeated " + boss.getPlayer().getName() + ".";
 			}
 		}
