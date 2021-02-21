@@ -445,6 +445,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		d.diet = diet;
 		
 		d.player = player;
+		d.playerobj = playerobj;
 		d.nick = nick;
 		d.xp = xp;
 		d.rp = rp;
@@ -452,6 +453,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		d.healthmult = healthmult;
 		d.attackmult = attackmult;
 		d.defensemult = defensemult;
+		d.healthboost = healthboost;
+		d.attackboost = attackboost;
+		d.defenseboost = defenseboost;
+		d.damage = damage;
 		d.item = item;
 		d.rune = rune == null ? null : rune.clone();
 		d.wins = wins;
@@ -460,6 +465,8 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		for (BattleAttack ba : attacks) d.attacks.add(ba);
 		d.defenses = new ArrayList<>();
 		for (BattleAttack ba : defenses) d.defenses.add(ba);
+		d.ailments = new ArrayList<>();
+		for (StatusAilment sa : ailments) d.ailments.add(sa);
 		
 		return d;
 	}
