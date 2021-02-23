@@ -11,7 +11,6 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
-import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.StatusAilment;
 import com.quas.mesozoicisland.enums.StatusEffect;
@@ -495,12 +494,12 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				addBoost(Constants.PENDANT_BOOST);
 			}
 		} else if (item.hasTag(ItemTag.Charm)) {
-			if (item.getId() == ItemID.CharmOfAccuracy.getItemId()) {
-				if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
-				if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
-			} else if (item.getId() == ItemID.CharmOfScaring.getItemId()) {
-				for (int q = 0; q < 5; q++) attacks.add(BattleAttack.Scare);
-			}
+			// if (item.getId() == ItemID.CharmOfAccuracy.getItemId()) {
+			// 	if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
+			// 	if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
+			// } else if (item.getId() == ItemID.CharmOfScaring.getItemId()) {
+			// 	for (int q = 0; q < 5; q++) attacks.add(BattleAttack.Scare);
+			// }
 		}
 	}
 	

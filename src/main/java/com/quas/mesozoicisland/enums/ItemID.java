@@ -78,8 +78,6 @@ public enum ItemID {
 	AquamarineGauntlet(327, 0),
 	AmberGauntlet(328, 0),
 	LuckyRibbon(381, 0),
-	CharmOfAccuracy(382, 0),
-	CharmOfScaring(383, 0),
 	
 	RaffleTicket(401, 0),
 	RaffleTicketStub(402, 0),
