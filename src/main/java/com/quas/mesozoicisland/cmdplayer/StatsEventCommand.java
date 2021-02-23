@@ -66,11 +66,11 @@ public class StatsEventCommand implements ICommand {
 
 		if (Event.isEventActive(EventType.DarknessDescent)) {
 			if (Battle.isPlayerBattling(CustomPlayer.Dungeon.getIdLong())) {
-				eb.addField("Floors Cleared", String.format("%,d", Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS))), true);
-				eb.addField("Expeditions Failed", String.format("%,d", Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES))), true);
-			} else {
 				eb.addField("Floors Cleared", "???", true);
 				eb.addField("Expeditions Failed", "???", true);
+			} else {
+				eb.addField("Floors Cleared", String.format("%,d", Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS))), true);
+				eb.addField("Expeditions Failed", String.format("%,d", Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES))), true);
 			}
 		}
 		
