@@ -257,8 +257,6 @@ public class Battle {
 			time += wait;
 		}
 		
-		loc.setInUse(false, time);
-		
 		BattleTeam winner = getAliveTeams().get(0);
 		if (winner.getPlayer().getIdLong() == CustomPlayer.Wild.getIdLong()) {
 			String msg = "";

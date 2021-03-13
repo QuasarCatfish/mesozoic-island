@@ -530,7 +530,7 @@ public class UseCommand implements ICommand {
 					raid.addBoost(-raid.getLevel() / 3);
 
 					// Set up Battle
-					Battle b = new Battle(BattleChannel.Special, BattleType.Boss, MesozoicRandom.nextUnusedLocation());
+					Battle b = new Battle(BattleChannel.Special, BattleType.Boss, MesozoicRandom.nextLocation());
 					BattleTeam boss = new BattleTeam(Player.getPlayer(CustomPlayer.RaidChallenge.getIdLong()), Util.arr(raid));
 					BattleTeam player = new BattleTeam(p);
 					b.addBoss(boss);

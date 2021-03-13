@@ -125,7 +125,7 @@ public class Dungeon {
 			// Set basic stats
 			d.floors = new Dinosaur[MesozoicRandom.nextInt(Constants.MIN_DUNGEON_FLOORS, Constants.MAX_DUNGEON_FLOORS + 1)][];
 			d.difficulty = Constants.MAX_DUNGEON_DIFFICULTY - (int)Math.pow(MesozoicRandom.nextInt(0, (int)Math.pow(Constants.MAX_DUNGEON_DIFFICULTY, 3)), 1d / 3);
-			d.loc = MesozoicRandom.nextUnusedLocation();
+			d.loc = MesozoicRandom.nextLocation();
 
 			// fill floors
 			for (int q = 0; q < d.floors.length - 1; q++) {

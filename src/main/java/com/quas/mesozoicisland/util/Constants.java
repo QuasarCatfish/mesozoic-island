@@ -48,6 +48,9 @@ public class Constants {
 	public static final double HALLOWEEN_DINOSAUR_MULTIPLIER = 5;
 	public static final double THANKSGIVING_DINOSAUR_MULTIPLIER = 0.2;
 
+	// Spawn Item Multipliers
+	public static final int CHARM_SHARD_SPAWN_CHANCE = 5; // default 5 (20%)
+
 	// Item Multipliers
 	public static final int PENDANT_BOOST = 10; // +10%
 	public static final int BOOK_OF_ELEMENTS = 5; // +5%

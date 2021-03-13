@@ -95,7 +95,7 @@ public class TestCommand implements ICommand {
 			case "commands": {
 				event.getChannel().sendMessageFormat("%s, there are %,d commands.", event.getAuthor().getAsMention(), CommandManager.values().size()).complete();
 			} break;
-			
+
 			case "spawncheck": {
 				StringBuilder sb = new StringBuilder();
 				sb.append("```");

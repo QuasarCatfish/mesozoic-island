@@ -289,6 +289,11 @@ public class SpawnManager {
 			for (int q = 0; q < wild.length; q++) {
 				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
 
+				// Normal Held Items
+				if (MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {
+					wild[q].setItem(Item.getItem(ItemID.CharmShard));
+				}
+
 				// Event Held Items
 				if (Event.isEventActive(EventType.Thanksgiving) && wild[q].getDex() != DinoID.Turkey.getDex()) {
 					wild[q].setItem(Item.getItem(ItemID.ThanksgivingToken));
@@ -309,7 +314,7 @@ public class SpawnManager {
 				}
 			}
 			wilds.put(tier, wild);
-			locations.put(tier, MesozoicRandom.nextUnusedLocation());
+			locations.put(tier, MesozoicRandom.nextLocation());
 		}
 		
 		// Build Spawn Message
@@ -429,7 +434,6 @@ public class SpawnManager {
 				}
 			} else {
 				eb.addField(tier.toString(), "None", true);
-				locations.get(tier).setInUse(false);
 				setSpawnTime();
 			}
 		}
@@ -567,13 +571,11 @@ public class SpawnManager {
 			for (BattleTeam bt : teams) {
 				Action.removePlayerFromBattleDelayed(bt.getPlayer().getIdLong(), timer);
 			}
-			d.getLocation().setInUse(false, timer);
 			
 			Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), BattleChannel.Dungeon.getBattleChannel().getIdLong(), timer + 30_000);
 			eb.addField("Joined", Util.join(names.toArray(new String[0]), ", ", 0, names.size()), true);
 		} else {
 			eb.addField("Joined", "None", true);
-			d.getLocation().setInUse(false);
 		}
 		
 		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessage(eb.build()));

@@ -1,7 +1,6 @@
 package com.quas.mesozoicisland.enums;
 
 import com.quas.mesozoicisland.objects.Element;
-import com.quas.mesozoicisland.util.Util;
 
 public enum Location {
 	Plains("Plains", true),
@@ -19,12 +18,10 @@ public enum Location {
 	private String name;
 	private boolean selectable;
 	private Element[] boost;
-	private boolean inuse;
 	private Location(String name, boolean selectable, Element...boost) {
 		this.name = name;
 		this.selectable = selectable;
 		this.boost = boost;
-		inuse = false;
 	}
 	
 	@Override
@@ -44,23 +41,5 @@ public enum Location {
 		int ret = 0;
 		for (Element e : boost) ret |= e.getId();
 		return ret;
-	}
-	
-	public void setInUse(boolean inuse) {
-		this.inuse = inuse;
-	}
-	
-	public void setInUse(boolean inuse, long delay) {
-		new Thread() {
-			@Override
-			public void run() {
-				Util.sleep(delay);
-				setInUse(inuse);
-			};
-		}.start();
-	}
-	
-	public boolean isInUse() {
-		return inuse;
 	}
 }

@@ -18,6 +18,8 @@ public enum ItemID {
 	TutorialDinosaurCoin(100, 2),
 	DungeonToken(101, 0),
 	TeamToken(102, 0),
+	QuestToken(103, 0),
+	CharmShard(104, 0),
 
 	XPPotion(200, 0),
 	FTierXPPotion(201, 0),

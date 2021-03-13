@@ -52,21 +52,14 @@ public class MesozoicRandom {
 		}
 	}
 	
-	public static Location nextUnusedLocation() {
+	public static Location nextLocation() {
 		ArrayList<Location> locations = new ArrayList<Location>();
 		for (Location loc : Location.values()) {
-			if (loc.isInUse()) continue;
 			if (!loc.isSelectable()) continue;
 			locations.add(loc);
 		}
 		
-		if (locations.isEmpty()) {
-			return Location.Plains;
-		} else {
-			Location loc = locations.get(nextInt(locations.size()));
-			loc.setInUse(true);
-			return loc;
-		}
+		return locations.isEmpty() ? Location.Plains : Util.getRandomElement(locations);
 	}
 	
 	public static Dinosaur nextOwnableDinosaur() {
