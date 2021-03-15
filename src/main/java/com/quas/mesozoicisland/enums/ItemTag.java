@@ -17,6 +17,8 @@ public enum ItemTag {
 	Bracer("#bracer"),
 	Gauntlet("#gauntlet"),
 	Charm("#charm"),
+	DinosaurCharm("#dinocharm"),
+	BattlefieldCharm("#fieldcharm"),
 
 	HalloweenCandy("#halloweencandy"),
 

@@ -11,6 +11,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.StatusAilment;
 import com.quas.mesozoicisland.enums.StatusEffect;
@@ -95,6 +96,11 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return dinoname;
 	}
 	
+	public Dinosaur setElement(Element e) {
+		this.element = e;
+		return this;
+	}
+
 	public Element getElement() {
 		return element;
 	}
@@ -244,6 +250,12 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	
 	public Dinosaur addBoost(int boost) {
 		healthboost += boost;
+		attackboost += boost;
+		defenseboost += boost;
+		return this;
+	}
+
+	public Dinosaur addAttackDefenseBoost(int boost) {
 		attackboost += boost;
 		defenseboost += boost;
 		return this;
@@ -493,13 +505,33 @@ public class Dinosaur implements Comparable<Dinosaur> {
 			if ((Integer.parseInt(item.getData()) & element.getId()) > 0) {
 				addBoost(Constants.PENDANT_BOOST);
 			}
-		} else if (item.hasTag(ItemTag.Charm)) {
-			// if (item.getId() == ItemID.CharmOfAccuracy.getItemId()) {
-			// 	if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
-			// 	if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
-			// } else if (item.getId() == ItemID.CharmOfScaring.getItemId()) {
-			// 	for (int q = 0; q < 5; q++) attacks.add(BattleAttack.Scare);
-			// }
+		} else if (item.hasTag(ItemTag.DinosaurCharm)) {
+			if (item.getId() == ItemID.CharmOfAccuracy.getItemId()) for (int q = 0; q < 2; q++) if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
+			if (item.getId() == ItemID.CharmOfHealing.getItemId()) if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.Heal10);
+			if (item.getId() == ItemID.CharmOfCounterAttack.getItemId()) if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Counter);
+			if (item.getId() == ItemID.CharmOfBlocking.getItemId()) for (int q = 0; q < 2; q++) if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Block);
+			if (item.getId() == ItemID.CharmOfDodging.getItemId()) if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Dodge);
+
+			if (item.getId() == ItemID.CharmOfGreed.getItemId()) {
+				if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.CoinGrab);
+				if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Vulnerable);
+			}
+
+			if (item.getId() == ItemID.CharmOfTheHolidays.getItemId()) {
+				if (getDinosaurForm() == DinosaurForm.Halloween) if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.Scare);
+				if (getDinosaurForm() == DinosaurForm.Thanksgiving) if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.Heal10);
+			}
+		} else if (item.hasTag(ItemTag.BattlefieldCharm)) {
+			if (attacks.remove(BattleAttack.BaseAttack)) {
+				if (item.getId() == ItemID.CharmOfFog.getItemId()) attacks.add(BattleAttack.BattlefieldFog);
+				if (item.getId() == ItemID.CharmOfEnchantment.getItemId()) attacks.add(BattleAttack.BattlefieldEnchanted);
+				if (item.getId() == ItemID.CharmOfGreenery.getItemId()) attacks.add(BattleAttack.BattlefieldLush);
+				if (item.getId() == ItemID.CharmOfPrey.getItemId()) attacks.add(BattleAttack.BattlefieldInhabited);
+				if (item.getId() == ItemID.CharmOfExtinction.getItemId()) attacks.add(BattleAttack.BattlefieldImpendingDoom);
+				if (item.getId() == ItemID.CharmOfContagion.getItemId()) attacks.add(BattleAttack.BattlefieldPlagued);
+				if (item.getId() == ItemID.CharmOfLuminescence.getItemId()) attacks.add(BattleAttack.BattlefieldGlistening);
+				if (item.getId() == ItemID.CharmOfMoisture.getItemId()) attacks.add(BattleAttack.BattlefieldDank);
+			}
 		}
 	}
 	

@@ -61,7 +61,16 @@ public class Element implements Comparable<Element> {
 	////////////////////////////////////////////
 	
 	private static HashMap<Integer, Element> elements = new HashMap<Integer, Element>();
-	
+	public static final Element NEUTRAL = Element.of(1);
+	public static final Element FIRE = Element.of(2);
+	public static final Element LIGHTNING = Element.of(4);
+	public static final Element LEAF = Element.of(8);
+	public static final Element EARTH = Element.of(16);
+	public static final Element ICE = Element.of(32);
+	public static final Element METAL = Element.of(64);
+	public static final Element WATER = Element.of(128);
+	public static final Element AIR = Element.of(256);
+
 	public static void refresh() {
 		elements.clear();
 		readEffectiveness = false;

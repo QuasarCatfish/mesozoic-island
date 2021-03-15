@@ -2,7 +2,7 @@ package com.quas.mesozoicisland.enums;
 
 public enum EventType {
 	TestEvent(0), Contest(1), ContestEntry(2), DoubleContestXP(3),
-	BoostedPrismatic(10),
+	BoostedPrismatic(10), BoostedCharmShardChance(11),
 	
 	Halloween(20), Thanksgiving(21), Valentines(22),
 

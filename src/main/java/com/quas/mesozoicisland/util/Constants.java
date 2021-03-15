@@ -49,7 +49,7 @@ public class Constants {
 	public static final double THANKSGIVING_DINOSAUR_MULTIPLIER = 0.2;
 
 	// Spawn Item Multipliers
-	public static final int CHARM_SHARD_SPAWN_CHANCE = 5; // default 5 (20%)
+	public static final int CHARM_SHARD_SPAWN_CHANCE = 10; // default 10 (10%)
 
 	// Item Multipliers
 	public static final int PENDANT_BOOST = 10; // +10%
@@ -59,11 +59,21 @@ public class Constants {
 	
 	// Battle
 	public static final float SPECIAL_DAMAGE_MODIFIER = 1.5f;
+	public static final float SPECIAL_DAMAGE_MULTIPLIER_DOUBLE = 3f;
 	public static final long MIN_DAMAGE = 25;
 	public static final int SCARE_BOOST = 10;
 	public static final int TERROR_BOOST = 50;
 	public static final int MIN_BOOST = -75;
 	
+	// Charm Chances
+	public static final int CHARM_OF_ENDURANCE_CHANCE = 5; // 20%
+	public static final int CHARM_BOOST_AMOUNT_FULL = 20;
+	public static final int CHARM_BOOST_AMOUNT_HALF = 10;
+	public static final int DOOM_BASE_CHANCE = 5; // .25%
+	public static final int DOOM_INCREASE_CHANCE = 1; // +.05%
+	public static final int DOOM_MAX_CHANCE = 2000;
+	public static final int COUNTER_CHANCE = 5; // 20%
+
 	// Spawn
 	public static boolean SPAWN = true;
 	public static final long MIN_SPAWN_TIMER = TimeUnit.MINUTES.toMillis(2); // default 2

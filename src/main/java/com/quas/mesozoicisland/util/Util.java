@@ -20,7 +20,6 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordRole;
-import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
@@ -139,16 +138,14 @@ public class Util {
 		}
 	}
 
-	public static Item getWeightedItem(Player p, ItemID[] items) {
+	public static Item getWeightedItem(Player p, Item[] items) {
 		TreeMap<Item, Long> bag = p.getBag();
 		long max = 0;
-		TreeMap<ItemID, Item> itemid = new TreeMap<ItemID, Item>();
 
-		for (ItemID item : items) {
-			itemid.put(item, Item.getItem(item));
-			long count = bag.getOrDefault(itemid.get(item), 0L);
+		for (Item item : items) {
+			long count = bag.getOrDefault(item, 0L);
 
-			try (ResultSet res = JDBC.executeQuery("select count(*) as count from captures where player = %d and item = %d and itemdmg = %d;", p.getIdLong(), item.getItemId(), item.getItemDamage())) {
+			try (ResultSet res = JDBC.executeQuery("select count(*) as count from captures where player = %d and item = %d and itemdmg = %d;", p.getIdLong(), item.getId(), item.getDamage())) {
 				if (res.next()) {
 					count += res.getInt("count");
 				}
@@ -160,14 +157,14 @@ public class Util {
 		}
 
 		ArrayList<Item> choice = new ArrayList<Item>();
-		for (ItemID item : items) {
-			long count = bag.getOrDefault(itemid.get(item), 0L);
+		for (Item item : items) {
+			long count = bag.getOrDefault(item, 0L);
 			for (int q = 0; q < max - count + 1; q++) {
-				choice.add(itemid.get(item));
+				choice.add(item);
 			}
 		}
 
-		return Util.getRandomElement(choice.toArray(new Item[0]));
+		return Util.getRandomElement(choice);
 	}
 	
 	public static <T> T complete(RestAction<T> action) {

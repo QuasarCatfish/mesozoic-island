@@ -15,7 +15,7 @@ public class TopAllCommand extends LeaderboardCommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("(top|leaderboard)all ( ", ALPHA, ")*");
+		return pattern("(top|leaderboard)all( ", ALPHA, ")*");
 	}
 
 	@Override

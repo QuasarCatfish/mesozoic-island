@@ -5,10 +5,13 @@ import com.quas.mesozoicisland.util.Util;
 public enum BattleAttack {
 	
 	// Attack
-	BaseAttack, AlwaysHitAttack, Critical, Rune, Heal10, Heal50, Miss, Scare, Terror,
+	BaseAttack, AlwaysHitAttack, Critical, Rune, Heal10, Heal50, Miss, Scare, Terror, CoinGrab,
 	
+	// Battlefields
+	BattlefieldFog, BattlefieldEnchanted, BattlefieldLush, BattlefieldInhabited, BattlefieldImpendingDoom, BattlefieldPlagued, BattlefieldGlistening, BattlefieldDank,
+
 	// Defend
-	BaseDefend, Block, Dodge;
+	BaseDefend, Block, Dodge, Counter, Vulnerable;
 	
 	public static BattleAttack[] STANDARD_ATTACKS = Util.arr(BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, Critical, Critical, Rune);
 	public static BattleAttack[] STANDARD_DEFENSE = Util.arr(BaseDefend, BaseDefend, BaseDefend, BaseDefend, BaseDefend, BaseDefend, BaseDefend, Block, Block, Dodge);

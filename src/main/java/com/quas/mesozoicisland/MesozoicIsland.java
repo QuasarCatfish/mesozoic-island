@@ -105,6 +105,7 @@ import com.quas.mesozoicisland.cmdplayer.StatsSelfCommand;
 import com.quas.mesozoicisland.cmdplayer.StatsServerCommand;
 import com.quas.mesozoicisland.cmdplayer.SuggestionCheckCommand;
 import com.quas.mesozoicisland.cmdplayer.SuggestionMarker;
+import com.quas.mesozoicisland.cmdplayer.TopAllCommand;
 import com.quas.mesozoicisland.cmdplayer.TopCommand;
 import com.quas.mesozoicisland.cmdplayer.TradeDinosaurCommand;
 import com.quas.mesozoicisland.cmdplayer.TradeEggCommand;
@@ -310,6 +311,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new HatchAllCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictHatchCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new StatsEventCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new TopAllCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands

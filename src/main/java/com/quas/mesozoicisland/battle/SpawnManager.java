@@ -295,6 +295,10 @@ public class SpawnManager {
 				}
 
 				// Event Held Items
+				if (Event.isEventActive(EventType.BoostedCharmShardChance) && MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {
+					wild[q].setItem(Item.getItem(ItemID.CharmShard));
+				}
+
 				if (Event.isEventActive(EventType.Thanksgiving) && wild[q].getDex() != DinoID.Turkey.getDex()) {
 					wild[q].setItem(Item.getItem(ItemID.ThanksgivingToken));
 				}
