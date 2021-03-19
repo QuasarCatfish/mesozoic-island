@@ -689,22 +689,36 @@ public class Battle {
 		}
 		
 		// defending dinosaur counter attacks
-		if (defeff == BattleAttack.Counter && MesozoicRandom.nextInt(Constants.COUNTER_CHANCE) == 0) {
-			long counter = defend.getDinosaur().getStatTotal() / 100;
-			if (counter < Constants.MIN_DAMAGE) counter = Constants.MIN_DAMAGE;
-
-			// Damage
-			Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stat.DamageDealt.getId(), Math.min(counter, attack.getDinosaur().getCurrentHealth()));
-			Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(), Math.min(counter, attack.getDinosaur().getCurrentHealth()));
-			if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Accursed) {
-				Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stat.DamageDealtWithAccursed.getId(), Math.min(counter, attack.getDinosaur().getCurrentHealth()));
+		if (attack.getDinosaur().getCurrentHealth() > 0) {
+			if (defeff == BattleAttack.Counter && MesozoicRandom.nextInt(Constants.COUNTER_CHANCE) == 0) {
+				long counter = defend.getDinosaur().getStatTotal() / 100;
+				if (counter < Constants.MIN_DAMAGE) counter = Constants.MIN_DAMAGE;
+	
+				// Damage
+				Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stat.DamageDealt.getId(), Math.min(counter, attack.getDinosaur().getCurrentHealth()));
+				Action.addItemDelayed(attack.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(), Math.min(counter, attack.getDinosaur().getCurrentHealth()));
+				if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Accursed) {
+					Action.addItemDelayed(defend.getPlayer().getIdLong(), time, Stat.DamageDealtWithAccursed.getId(), Math.min(counter, attack.getDinosaur().getCurrentHealth()));
+				}
+	
+				attack.getDinosaur().damage(counter);
+				if (attack.getDinosaur().getCurrentHealth() > 0) {
+					sb.append(String.format("\n%s's %s counter attacks for %,d damage, leaving %s's %s with %,d health remaining.", defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), counter, attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), attack.getDinosaur().getCurrentHealth()));
+				} else {
+					sb.append(String.format("\n%s's %s counter attacks for %,d damage, defeating %s's %s.", defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), counter, attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName()));
+				}
 			}
+		}
 
-			attack.getDinosaur().damage(counter);
+		// activate plague effect
+		if (battlefield == BattlefieldEffect.Plagued && attack.getDinosaur().getCurrentHealth() > 0) {
+			long plague = attack.getDinosaur().getLevel() * 5;
+			
+			attack.getDinosaur().damage(plague);
 			if (attack.getDinosaur().getCurrentHealth() > 0) {
-				sb.append(String.format("%s's %s counter attacks for %,d damage, leaving %s's %s with %,d health remaining.", defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), attack.getDinosaur().getCurrentHealth()));
+				sb.append(String.format("\n%s's %s takes %,d damage from the plague. It has %,d health remaining.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), plague, attack.getDinosaur().getCurrentHealth()));
 			} else {
-				sb.append(String.format("%s's %s counter attacks for %,d damage, defeating %s's %s.", defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName()));
+				sb.append(String.format("\n%s's %s takes %,d damage from the plague, defeating it.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), plague));
 			}
 		}
 

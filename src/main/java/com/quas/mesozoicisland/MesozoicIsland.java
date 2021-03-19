@@ -44,6 +44,7 @@ import com.quas.mesozoicisland.cmdbase.HelpCommand;
 import com.quas.mesozoicisland.cmdbase.HelpListCommand;
 import com.quas.mesozoicisland.cmdbase.PingCommand;
 import com.quas.mesozoicisland.cmdbase.QuitCommand;
+import com.quas.mesozoicisland.cmdevent.ContestCheckCommand;
 import com.quas.mesozoicisland.cmdevent.ContestEnterCommand;
 import com.quas.mesozoicisland.cmdevent.SecretSantaCheckCommand;
 import com.quas.mesozoicisland.cmdevent.SecretSantaEnterCommand;
@@ -312,6 +313,8 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new BenedictHatchCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new StatsEventCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new TopAllCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new ContestCheckCommand());
+//		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
