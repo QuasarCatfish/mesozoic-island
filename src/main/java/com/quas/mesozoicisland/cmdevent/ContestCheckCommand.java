@@ -66,7 +66,8 @@ public class ContestCheckCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, you have not selected a dinosaur for the contest.", event.getAuthor().getAsMention()).complete();	
 			} else {
 				Dinosaur d = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(p.getContest()));
-				event.getChannel().sendMessageFormat("%s, %s is your representative for the contest..", event.getAuthor().getAsMention(), d.getEffectiveName()).complete();
+				if (d == null) d = Dinosaur.getDinosaur(Util.getDexForm(p.getContest()));
+				event.getChannel().sendMessageFormat("%s, %s %s is your representative for the contest..", event.getAuthor().getAsMention(), d.getId(), d.getDinosaurName()).complete();
 			}
 		} else {
 			event.getChannel().sendMessageFormat("%s, there is not a contest running.", event.getAuthor().getAsMention()).complete();
