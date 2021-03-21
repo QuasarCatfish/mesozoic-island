@@ -522,15 +522,17 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				if (getDinosaurForm() == DinosaurForm.Thanksgiving) if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.Heal10);
 			}
 		} else if (item.hasTag(ItemTag.BattlefieldCharm)) {
-			if (attacks.remove(BattleAttack.BaseAttack)) {
-				if (item.getId() == ItemID.CharmOfFog.getItemId()) attacks.add(BattleAttack.BattlefieldFog);
-				if (item.getId() == ItemID.CharmOfEnchantment.getItemId()) attacks.add(BattleAttack.BattlefieldEnchanted);
-				if (item.getId() == ItemID.CharmOfGreenery.getItemId()) attacks.add(BattleAttack.BattlefieldLush);
-				if (item.getId() == ItemID.CharmOfPrey.getItemId()) attacks.add(BattleAttack.BattlefieldInhabited);
-				if (item.getId() == ItemID.CharmOfExtinction.getItemId()) attacks.add(BattleAttack.BattlefieldImpendingDoom);
-				if (item.getId() == ItemID.CharmOfContagion.getItemId()) attacks.add(BattleAttack.BattlefieldPlagued);
-				if (item.getId() == ItemID.CharmOfLuminescence.getItemId()) attacks.add(BattleAttack.BattlefieldGlistening);
-				if (item.getId() == ItemID.CharmOfMoisture.getItemId()) attacks.add(BattleAttack.BattlefieldDank);
+			for (int q = 0; q < 3; q++) {
+				if (attacks.remove(BattleAttack.BaseAttack)) {
+					if (item.getId() == ItemID.CharmOfFog.getItemId()) attacks.add(BattleAttack.BattlefieldFog);
+					if (item.getId() == ItemID.CharmOfEnchantment.getItemId()) attacks.add(BattleAttack.BattlefieldEnchanted);
+					if (item.getId() == ItemID.CharmOfGreenery.getItemId()) attacks.add(BattleAttack.BattlefieldLush);
+					if (item.getId() == ItemID.CharmOfPrey.getItemId()) attacks.add(BattleAttack.BattlefieldInhabited);
+					if (item.getId() == ItemID.CharmOfExtinction.getItemId()) attacks.add(BattleAttack.BattlefieldImpendingDoom);
+					if (item.getId() == ItemID.CharmOfContagion.getItemId()) attacks.add(BattleAttack.BattlefieldPlagued);
+					if (item.getId() == ItemID.CharmOfLuminescence.getItemId()) attacks.add(BattleAttack.BattlefieldGlistening);
+					if (item.getId() == ItemID.CharmOfMoisture.getItemId()) attacks.add(BattleAttack.BattlefieldDank);
+				}
 			}
 		}
 	}

@@ -6,7 +6,7 @@ import com.quas.mesozoicisland.util.Util;
 
 public enum DinosaurForm {
 
-	Invalid(-1, "Invalid", "X", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, null, null),
+	Invalid(-1, "Invalid", "X", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.StandardOwned, DiscordEmote.StandardUnowned),
 	Standard(0, "Standard", "", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.StandardOwned, DiscordEmote.StandardUnowned),
 	
 	UncapturableDungeon(-2, "Dungeon", Util.mult(Constants.ZERO_WIDTH_SPACE, 1), BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, null, null),

@@ -64,14 +64,15 @@ public class Constants {
 	public static final int SCARE_BOOST = 10;
 	public static final int TERROR_BOOST = 50;
 	public static final int MIN_BOOST = -75;
+	public static final int MAX_TURN_COUNT = 1000;
 	
 	// Charm Chances
 	public static final int CHARM_OF_ENDURANCE_CHANCE = 5; // 20%
 	public static final int CHARM_BOOST_AMOUNT_FULL = 20;
 	public static final int CHARM_BOOST_AMOUNT_HALF = 10;
-	public static final int DOOM_BASE_CHANCE = 5; // .25%
-	public static final int DOOM_INCREASE_CHANCE = 1; // +.05%
-	public static final int DOOM_MAX_CHANCE = 2000;
+	public static final int DOOM_BASE_CHANCE = 25; // default 25 (.25%)
+	public static final int DOOM_INCREASE_CHANCE = 5; // default 5 (.05%)
+	public static final int DOOM_MAX_CHANCE = 100_00;
 	public static final int COUNTER_CHANCE = 5; // 20%
 
 	// Spawn

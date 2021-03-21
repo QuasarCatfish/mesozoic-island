@@ -39,6 +39,7 @@ public class Battle {
 	private BattlefieldEffect battlefield = null;
 	private boolean meteorWin = false;
 	private int impendingDoom = 0;
+	private int turnCount = 0;
 	
 	public Battle(BattleChannel channel, BattleType type, Location loc) {
 		teams = new ArrayList<BattleTeam>();
@@ -110,6 +111,7 @@ public class Battle {
 	
 	public ArrayList<BattleTeam> getAliveTeams() {
 		ArrayList<BattleTeam> alive = new ArrayList<BattleTeam>();
+
 		for (BattleTeam team : teams) {
 			if (team.hasDinosaur()) {
 				alive.add(team);
@@ -182,6 +184,8 @@ public class Battle {
 		long wait = 5_000;
 		
 		while (getAliveTeamCount() > 1) {
+			turnCount++;
+
 			// Get attack and defend
 			ArrayList<BattleTeam> alive = getAliveTeams();
 			int atk = MesozoicRandom.nextInt(alive.size());
@@ -198,12 +202,10 @@ public class Battle {
 			if (meteorWin) {
 				// Add Losses
 				for (BattleTeam bt : teams) {
-					while (true) {
+					while (bt.hasDinosaur()) {
 						Action.addDinosaurLossDelayed(bt.getPlayer().getIdLong(), time, bt.getDinosaur().getId());
 						Action.addItemDelayed(bt.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(), bt.getDinosaur().getCurrentHealth());
-						
-						if (bt.hasNextDinosaur()) bt.changeToNextDinosaur();
-						else break;
+						bt.changeToNextDinosaur();
 					}
 				}
 			} else {
@@ -363,6 +365,8 @@ public class Battle {
 		long wait = 5_000;
 		
 		while (boss.hasDinosaur() && getAliveTeamCount() > 0) {
+			turnCount++;
+
 			// Get attack and defend
 			ArrayList<BattleTeam> alive = getAliveTeams();
 			BattleTeam attack = null;
@@ -383,16 +387,14 @@ public class Battle {
 			if (meteorWin) {
 				// Add Losses
 				for (BattleTeam bt : teams) {
-					while (true) {
+					while (bt.hasDinosaur()) {
 						Action.addDinosaurLossDelayed(bt.getPlayer().getIdLong(), time, bt.getDinosaur().getId());
 						Action.addItemDelayed(bt.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(), bt.getDinosaur().getCurrentHealth());
-						
-						if (bt.hasNextDinosaur()) bt.changeToNextDinosaur();
-						else break;
+						bt.changeToNextDinosaur();
 					}
 				}
 				
-				while (boss.hasNextDinosaur()) boss.changeToNextDinosaur();
+				while (boss.hasDinosaur()) boss.changeToNextDinosaur();
 			} else {
 				for (BattleTeam[] bt : new BattleTeam[][] {{attack, defend}, {defend, attack}}) {
 					BattleTeam attackTeam = bt[0];
@@ -493,6 +495,11 @@ public class Battle {
 	}
 	
 	private String doAttack(BattleTeam attack, BattleTeam defend, long time) {
+
+		if (turnCount > Constants.MAX_TURN_COUNT) {
+			meteorWin = true;
+			return "A meteor crashes into the battlefield, eliminating all dinosaurs.";
+		}
 
 		// Impending Doom Activates
 		if (battlefield == BattlefieldEffect.ImpendingDoom) {
@@ -626,15 +633,10 @@ public class Battle {
 				}
 
 				applyBattlefield();
+				return sb.toString();
 			} else {
-				if (attack.getDinosaur().hasItem()) {
-					sb.append(String.format("%s's %s tries to activate their %s, but it failed.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), attack.getDinosaur().getItem().toString()));
-				} else {
-					sb.append(String.format("%s's %s tries to change the battlefield, but it failed.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName()));
-				}
+				atkeff = BattleAttack.BaseAttack;
 			}
-			
-			return sb.toString();
 		}
 		
 		// No Special
