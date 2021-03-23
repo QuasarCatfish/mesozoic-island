@@ -88,7 +88,7 @@ public class TestCommand implements ICommand {
 		try {
 			switch (args[1].toLowerCase()) {
 			case "level": {
-				int level = args.length > 2 ? Integer.parseInt(args[2].replaceAll("\\D", "")) : Constants.MAX_LEVEL;
+				int level = args.length > 2 ? Integer.parseInt(args[2].replaceAll("\\D", "")) : Constants.MAX_DINOSAUR_LEVEL;
 				event.getChannel().sendMessageFormat("%s, a Level %,d dinosaur would have %,d XP.", event.getAuthor().getAsMention(), level, DinoMath.getXp(level)).complete();
 			} break;
 			

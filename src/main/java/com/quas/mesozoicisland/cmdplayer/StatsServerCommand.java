@@ -67,7 +67,8 @@ public class StatsServerCommand implements ICommand {
 		eb.addField("Collectable Dinosaurs", String.format("%,d Dinosaurs", JDBC.getDexCount(DinosaurForm.AllForms.getId())), true);
 		eb.addField("Bot Line Count", String.format("%,d Lines", Constants.CODE_LINES), true);
 		eb.addField("Team Size", String.format("%,d Dinosaurs", Constants.DINOS_PER_TEAM), true);
-		eb.addField("Level Limit", String.format("Level %,d", Constants.MAX_LEVEL), true);
+		eb.addField("Player Level Limit", String.format("Level %,d", Constants.MAX_PLAYER_LEVEL), true);
+		eb.addField("Dinosaur Level Limit", String.format("Level %,d", Constants.MAX_DINOSAUR_LEVEL), true);
 		eb.addField("Rank Limit", String.format("Rank %s", RomanNumeral.of(Constants.MAX_RANK)), true);
 		eb.addField("Stat Boost Limit", String.format("+%,d%% per Stat", Constants.MAX_STAT_BOOST), true);
 		eb.addField("Current Time", String.format("%tR UTC", new MesozoicCalendar()), true);

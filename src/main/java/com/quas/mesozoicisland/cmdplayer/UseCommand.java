@@ -592,7 +592,7 @@ public class UseCommand implements ICommand {
 					if (d.getDinosaurForm() == DinosaurForm.Contest || d.getDinosaurForm() == DinosaurForm.Accursed) {
 						event.getChannel().sendMessageFormat("%s, your %s refuses to drink the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
-					} else if (d.getLevel() == Constants.MAX_LEVEL) {
+					} else if (d.getLevel() == Constants.MAX_DINOSAUR_LEVEL) {
 						event.getChannel().sendMessageFormat("%s, your %s is at the max level. You cannot use the %s on it.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 						SUCCESS = false;
 					} else {
@@ -620,7 +620,7 @@ public class UseCommand implements ICommand {
 				if (d.getDinosaurForm() == DinosaurForm.Contest || d.getDinosaurForm() == DinosaurForm.Accursed) {
 					event.getChannel().sendMessageFormat("%s, your %s refuses to drink the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
-				} else if (d.getLevel() == Constants.MAX_LEVEL) {
+				} else if (d.getLevel() == Constants.MAX_DINOSAUR_LEVEL) {
 					event.getChannel().sendMessageFormat("%s, your %s is at the max level. You cannot use the %s on it.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
 					SUCCESS = false;
 				} else {

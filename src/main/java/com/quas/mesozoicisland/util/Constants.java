@@ -133,10 +133,12 @@ public class Constants {
 
 	// Limits
 	public static final int DINOS_PER_TEAM = 3;
-	public static final int MAX_LEVEL = 50;
-	public static final long MAX_XP = DinoMath.getXp(MAX_LEVEL);
+	public static final int MAX_DINOSAUR_LEVEL = 50;
+	public static final long MAX_DINOSAUR_XP = DinoMath.getXp(MAX_DINOSAUR_LEVEL);
 	public static final int MAX_RANK = 20;
 	public static final int MAX_RP = DinoMath.getRp(MAX_RANK);
+	public static final int MAX_PLAYER_LEVEL = 50;
+	public static final long MAX_PLAYER_XP = DinoMath.getXp(MAX_PLAYER_LEVEL);
 	public static final int MAX_STAT_BOOST = 25;
 	public static final int LOCATION_BOOST = 10;
 	public static final int PUBLIC_MAIL_DISPLAY = 5;

@@ -528,9 +528,9 @@ public class JDBC {
 		if (d.getDinosaurForm() == DinosaurForm.Accursed) return false;
 		boolean b = false;
 		if (Event.isEventActive(EventType.DoubleContestXP) && d.getDinosaurForm() == DinosaurForm.Contest) {
-			b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + 2 * xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
+			b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + 2 * xp, Constants.MAX_DINOSAUR_XP), pid, dino.getFirstValue(), dino.getSecondValue());
 		} else {
-			b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + xp, Constants.MAX_XP), pid, dino.getFirstValue(), dino.getSecondValue());
+			b = executeUpdate("update captures set xp = %d where player = %d and dex = %d and form = %d;", Math.min(d.getXp() + xp, Constants.MAX_DINOSAUR_XP), pid, dino.getFirstValue(), dino.getSecondValue());
 		}
 
 		Dinosaur d2 = Dinosaur.getDinosaur(pid, dino);
@@ -547,7 +547,7 @@ public class JDBC {
 		if (xp <= 0) return false;
 
 		Player p = Player.getPlayer(playerid);
-		boolean b = executeUpdate("update players set xp = %d where playerid = %d;", Math.min(p.getXp() + xp, Constants.MAX_XP), playerid);
+		boolean b = executeUpdate("update players set xp = %d where playerid = %d;", Math.min(p.getXp() + xp, Constants.MAX_PLAYER_XP), playerid);
 		Player p2 = Player.getPlayer(playerid);
 		if (p2.getLevel() <= 2) return b;
 		

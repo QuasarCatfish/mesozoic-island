@@ -38,7 +38,7 @@ public class MesozoicRandom {
 	
 	public static int nextLevel() {
 		for (int q = 1;; q++) {
-			if (q == Constants.MAX_LEVEL || nextInt(4) == 0) {
+			if (q == Constants.MAX_DINOSAUR_LEVEL || nextInt(4) == 0) {
 				return q;
 			}
 		}
