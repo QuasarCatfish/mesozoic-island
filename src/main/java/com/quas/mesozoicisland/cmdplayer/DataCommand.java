@@ -7,9 +7,12 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
@@ -63,6 +66,12 @@ public class DataCommand implements ICommand {
 	public synchronized void run(MessageReceivedEvent event, String... args) {
 		String dinosaur = Util.join(args, " ", 0, args.length);
 		
+		if (dinosaur.toLowerCase().equals("raid")) {
+			Item item = Item.getItem(new Pair<>(ItemID.RaidPass.getItemId(), Long.parseLong(JDBC.getVariable("raidpass"))));
+			Dinosaur dino = Dinosaur.getDinosaur(Integer.parseInt(item.getData().split("\\s+")[0]), DinosaurForm.Standard.getId());
+			if (dino != null) dinosaur = dino.getDinosaurName();
+		}
+
 		if (dinosaur.toLowerCase().matches(DINOSAUR)) {
 			Dinosaur dino = Dinosaur.getDinosaur(Util.getDexForm(dinosaur));
 			if (dino != null) dinosaur = dino.getDinosaurName();
