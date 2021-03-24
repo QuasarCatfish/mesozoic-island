@@ -54,7 +54,7 @@ public class SpawnWildCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		if (SpawnManager.trySpawn(SpawnType.Wild, true)) {
 			event.getChannel().sendMessageFormat("%s is spawning a wild dinosaur battle.", event.getAuthor().getAsMention()).complete();
 		} else {

@@ -61,7 +61,7 @@ public class InformationChannelsCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		ArrayList<Long> c = new ArrayList<Long>();
 		for (IMentionable tc : event.getMessage().getMentions(MentionType.CHANNEL)) {
 			c.add(tc.getIdLong());

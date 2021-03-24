@@ -61,7 +61,7 @@ public class ColorCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		String name = Util.join(args, " ", 0, args.length);
 		EggColor color = null;
 		for (EggColor ec : EggColor.values()) {

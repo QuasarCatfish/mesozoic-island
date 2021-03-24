@@ -54,7 +54,7 @@ public class QuitCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		MesozoicIsland.setQuit(true);
 		event.getChannel().sendMessage(Util.getRandomElement(Constants.GOODBYE_MESSAGES)).complete();
 		System.exit(0);

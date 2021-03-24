@@ -55,7 +55,7 @@ public class ClearChannelCommand implements ICommand {
 	}
 	
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		List<Message> messages = Util.getMessages(event.getChannel());
 		for (Message msg : messages) {
 			if (msg.isPinned()) continue;

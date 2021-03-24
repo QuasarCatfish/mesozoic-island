@@ -58,7 +58,7 @@ public class StatsServerCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("Mesozoic Island Statistics");
 		eb.setColor(Constants.COLOR);

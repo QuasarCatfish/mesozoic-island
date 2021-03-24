@@ -57,7 +57,7 @@ public class RenamePlayerCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Player target = Player.getPlayer(Long.parseLong(args[1].replaceAll("\\D", "")));
 		if (target == null) {
 			event.getChannel().sendMessageFormat("%s, that is an invalid Player ID.", event.getAuthor().getAsMention());

@@ -57,7 +57,7 @@ public class AnnounceCommand implements ICommand {
 	}
 	
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		String msg = Util.join(args, " ", 1, args.length);
 		msg = msg.replaceAll("@N(EW)?L(INE)?@", "\n");
 		

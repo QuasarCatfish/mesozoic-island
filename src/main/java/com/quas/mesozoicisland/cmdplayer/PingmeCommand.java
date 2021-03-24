@@ -54,7 +54,7 @@ public class PingmeCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		PingType ping = PingType.of(args[0]);
 		
 		if (ping == null) {

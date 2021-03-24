@@ -59,7 +59,7 @@ public class StatsEventCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("Event Statistics");
 		eb.setColor(Constants.COLOR);

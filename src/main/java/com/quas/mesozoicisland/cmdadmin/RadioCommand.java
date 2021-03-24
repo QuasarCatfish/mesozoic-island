@@ -57,7 +57,7 @@ public class RadioCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Guild g = event.getJDA().getGuildById(Constants.GUILD_ID);
 		AudioManager am = g.getAudioManager();
 		VoiceChannel vc = g.getVoiceChannelById(DiscordChannel.DinoRadio.getId());

@@ -57,7 +57,7 @@ public abstract class LeaderboardCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		if (args.length == 0) args = Util.arr("dex");
 		LeaderboardCategory lbc = LeaderboardCategory.of(Util.join(args, " ", 0, args.length));
 		if (lbc == null) {

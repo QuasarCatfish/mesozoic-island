@@ -54,7 +54,7 @@ public class UptimeCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		event.getChannel().sendMessageFormat("%s, the Mesozoic Island bots have been online for %s.", event.getAuthor().getAsMention(), Util.formatTime(MesozoicIsland.getUptime())).complete();
 	}
 }

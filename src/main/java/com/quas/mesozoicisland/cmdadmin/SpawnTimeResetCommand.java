@@ -53,7 +53,7 @@ public class SpawnTimeResetCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		event.getChannel().sendMessageFormat("%s has set the spawn time to 0.", event.getAuthor().getAsMention()).complete();
 		SpawnManager.resetSpawnTime();
 	}

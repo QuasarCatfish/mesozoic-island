@@ -57,7 +57,7 @@ public class ItemCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		String itemname = Util.join(args, " ", 0, args.length);
 		while (itemname.charAt(0) == '0' && itemname.length() > 1) itemname = itemname.substring(1);
 

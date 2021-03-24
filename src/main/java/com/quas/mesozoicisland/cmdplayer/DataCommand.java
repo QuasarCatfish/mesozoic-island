@@ -60,7 +60,7 @@ public class DataCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		String dinosaur = Util.join(args, " ", 0, args.length);
 		
 		if (dinosaur.toLowerCase().matches(DINOSAUR)) {

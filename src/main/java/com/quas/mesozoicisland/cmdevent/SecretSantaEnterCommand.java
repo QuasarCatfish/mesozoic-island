@@ -56,7 +56,7 @@ public class SecretSantaEnterCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		

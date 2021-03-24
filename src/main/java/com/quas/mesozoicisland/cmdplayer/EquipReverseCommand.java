@@ -29,7 +29,7 @@ public class EquipReverseCommand extends EquipCommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		CommandManager.handleCommand(event, "equip", args[1], args[0]);
 	}
 }

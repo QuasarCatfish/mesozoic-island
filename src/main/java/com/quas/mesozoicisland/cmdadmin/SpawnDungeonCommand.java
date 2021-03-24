@@ -54,7 +54,7 @@ public class SpawnDungeonCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		if (SpawnManager.trySpawn(SpawnType.Dungeon, true)) {
 			event.getChannel().sendMessageFormat("%s is spawning a dungeon.", event.getAuthor().getAsMention()).complete();
 		} else {

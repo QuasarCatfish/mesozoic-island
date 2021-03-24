@@ -54,7 +54,7 @@ public class SetColorCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		int red = Integer.parseInt(args[0]);
 		int green = Integer.parseInt(args[1]);
 		int blue = Integer.parseInt(args[2]);

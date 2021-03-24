@@ -30,7 +30,7 @@ public class ColorHexCommand extends ColorCommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Color color = new Color(Integer.parseInt(args[0], 16));
 		
 		try {

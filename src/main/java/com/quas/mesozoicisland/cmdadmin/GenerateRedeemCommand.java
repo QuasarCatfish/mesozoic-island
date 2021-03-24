@@ -54,7 +54,7 @@ public class GenerateRedeemCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		String prize = Util.join(args, " ", 1, args.length) + " ";
 		
 		if (prize.length() <= 100 && prize.matches(String.format("((item %s %s( %s)? )|(dino %s %s( %s)? )|(rune %s( %s)? )|(egg %s %s )|(curse )|(quest %s ))+", INTEGER, LONG, LONG, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER, INTEGER))) {

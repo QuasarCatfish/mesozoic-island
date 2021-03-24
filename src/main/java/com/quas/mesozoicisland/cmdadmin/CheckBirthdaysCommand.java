@@ -59,7 +59,7 @@ public class CheckBirthdaysCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		
 		int month = new MesozoicCalendar().get(MesozoicCalendar.MONTH);
 		if (month == 0) month = 12;

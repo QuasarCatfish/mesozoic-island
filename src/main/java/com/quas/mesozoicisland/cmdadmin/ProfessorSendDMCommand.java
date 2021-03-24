@@ -56,7 +56,7 @@ public class ProfessorSendDMCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		User u = event.getGuild().getMemberById(args[0].replaceAll("\\D+", "")).getUser();
 		String msg = Util.join(args, " ", 1, args.length);
 		u.openPrivateChannel().complete().sendMessage(msg).complete();

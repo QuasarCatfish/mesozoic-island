@@ -57,7 +57,7 @@ public class ClearCacheCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Dinosaur.refresh();
 		Element.refresh();
 		Item.refresh();

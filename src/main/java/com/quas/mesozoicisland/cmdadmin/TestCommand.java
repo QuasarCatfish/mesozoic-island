@@ -84,7 +84,7 @@ public class TestCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		try {
 			switch (args[1].toLowerCase()) {
 			case "level": {

@@ -54,7 +54,7 @@ public class SpawnEggCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		if (SpawnManager.trySpawn(SpawnType.Egg, true)) {
 			event.getChannel().sendMessageFormat("%s is spawning an egg.", event.getAuthor().getAsMention()).complete();
 		} else {

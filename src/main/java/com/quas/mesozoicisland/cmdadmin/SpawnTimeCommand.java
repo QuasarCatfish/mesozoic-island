@@ -54,7 +54,7 @@ public class SpawnTimeCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		long time = SpawnManager.getSpawnTime();
 		
 		if (time <= System.currentTimeMillis()) {

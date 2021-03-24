@@ -59,7 +59,7 @@ public class GiveDinosaurCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		long pid = Long.parseLong(args[2].replaceAll("[^\\d]", ""));
 		Player p = Player.getPlayer(pid);
 		if (p == null) {

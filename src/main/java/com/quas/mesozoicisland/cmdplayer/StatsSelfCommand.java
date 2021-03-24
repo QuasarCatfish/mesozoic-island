@@ -22,7 +22,7 @@ public class StatsSelfCommand extends StatsPlayerCommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		super.run(event, event.getAuthor().getId());
 	}
 }

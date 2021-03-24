@@ -53,7 +53,7 @@ public class HelpCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		StringBuilder sb = new StringBuilder();
 		ArrayList<ICommand> help = new ArrayList<ICommand>();
 		

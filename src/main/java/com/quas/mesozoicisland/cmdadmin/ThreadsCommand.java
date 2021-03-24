@@ -53,7 +53,7 @@ public class ThreadsCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		TreeSet<String> threads = new TreeSet<String>();
 		for (Thread t : Thread.getAllStackTraces().keySet()) {
 			threads.add(t.getName());

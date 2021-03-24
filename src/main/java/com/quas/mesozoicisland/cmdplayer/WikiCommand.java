@@ -53,7 +53,7 @@ public class WikiCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		if (args.length == 0) {
 			event.getChannel().sendMessageFormat("%s, here's your link to the wiki!\n<https://mesozoic-island.amazingwikis.org/wiki/Main_Page>", event.getAuthor().getAsMention()).complete();
 		} else {

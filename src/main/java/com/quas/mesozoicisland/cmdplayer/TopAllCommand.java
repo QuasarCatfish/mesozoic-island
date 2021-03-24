@@ -34,7 +34,7 @@ public class TopAllCommand extends LeaderboardCommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		super.run(event, args);
 	}
 }

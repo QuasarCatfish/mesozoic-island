@@ -56,7 +56,7 @@ public class ElementsCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle("Elements");
 		eb.setColor(Constants.COLOR);

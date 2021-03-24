@@ -56,7 +56,7 @@ public class UnmuteCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Player p = Player.getPlayer(Long.parseLong(args[1].replaceAll("\\D", "")));
 		if (p == null) {
 			event.getChannel().sendMessageFormat("%s, this is an invalid player.", event.getAuthor().getAsMention());

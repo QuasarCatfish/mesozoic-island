@@ -53,7 +53,7 @@ public class EchoCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		event.getChannel().sendMessage(Util.join(args, " ", 1, args.length)).complete();
 	}
 }

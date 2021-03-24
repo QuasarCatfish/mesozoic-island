@@ -52,7 +52,7 @@ public class HelpListCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		TreeSet<String> commands = new TreeSet<String>();
 		for (ICommand command : CommandManager.values()) {
 			if (command.getCommandName() == null || command.getCommandDescription() == null) continue;

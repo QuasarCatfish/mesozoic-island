@@ -53,7 +53,7 @@ public class ToggleCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Toggle t = null;
 		for (Toggle toggle : Toggle.values()) {
 			if (toggle.name().equalsIgnoreCase(args[1])) {

@@ -55,7 +55,7 @@ public class PingmeNoneCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		ArrayList<String> messages = new ArrayList<String>();
 		
 		for (PingType ping : PingType.values()) {

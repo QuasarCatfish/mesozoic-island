@@ -53,7 +53,7 @@ public class CreditsCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		event.getChannel().sendMessage(
 				"__**Credits:**__"
 				+ "\nDeveloper: Quas"

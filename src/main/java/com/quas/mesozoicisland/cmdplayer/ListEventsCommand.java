@@ -54,7 +54,7 @@ public class ListEventsCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		Event[] events = Event.values();
 		
 		int count = 0;

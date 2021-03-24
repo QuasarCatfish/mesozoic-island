@@ -51,7 +51,7 @@ public class PingCommand implements ICommand {
 	}
 
 	@Override
-	public void run(MessageReceivedEvent event, String... args) {
+	public synchronized void run(MessageReceivedEvent event, String... args) {
 		event.getChannel().sendMessageFormat("Pong, %s! (%,d ms)", event.getAuthor().getAsMention(), event.getJDA().getRestPing().complete()).complete();
 	}
 }
