@@ -88,8 +88,14 @@ public class Constants {
 	// Eggs
 	public static boolean SPAWN_EGGS = true;
 	public static boolean UPDATE_EGG_HP = true;
-	public static final int EGG_SPAWN_CHANCE = 15;
-	public static final int MAX_EGG_SPAWN = 3;
+	public static int getEggSpawnChance() {
+		if (Event.isEventActive(EventType.Easter)) return 10;
+		return 15; // default
+	}
+	public static int getMaxEggSpawn() {
+		if (Event.isEventActive(EventType.Easter)) return 4;
+		return 3; // default
+	}
 	public static final long EGG_WAIT = TimeUnit.SECONDS.toMillis(90);
 	public static final int MIN_HP_PER_MINUTE = 1;
 	public static final int MAX_HP_PER_MINUTE = 3;

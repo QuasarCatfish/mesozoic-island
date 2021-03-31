@@ -107,7 +107,7 @@ public class BuyCommand implements ICommand {
 		// Make Purchase
 		JDBC.addItem(p.getIdLong(), shopitem.getPayItem().getIdDmg(), -pcount);
 		JDBC.addItem(p.getIdLong(), shopitem.getBuyItem().getIdDmg(), bcount);
-		event.getChannel().sendMessageFormat("%s, you have bought %,d %s for %,d %s.", event.getAuthor().getAsMention(), bcount, shopitem.getBuyItem().toString(bcount), pcount, shopitem.getPayItem().toString(pcount)).complete();
+		event.getChannel().sendMessageFormat("%s, you have bought %,d %s (ID %d) for %,d %s.", event.getAuthor().getAsMention(), bcount, shopitem.getBuyItem().toString(bcount), shopitem.getBuyItem().getId(), pcount, shopitem.getPayItem().toString(pcount)).complete();
 		JDBC.addItem(p.getIdLong(), Stat.TransactionsMade.getId(), count);
 		
 		// Update Stock

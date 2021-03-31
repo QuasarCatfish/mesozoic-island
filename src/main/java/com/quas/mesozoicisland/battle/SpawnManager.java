@@ -115,7 +115,7 @@ public class SpawnManager {
 					if (spawn == SpawnType.Random) {
 						if (Constants.SPAWN_DUNGEONS && MesozoicRandom.nextInt(Constants.getDungeonSpawnChance()) == 0 && !isDungeonSpawned()) {
 							spawn = SpawnType.Dungeon;
-						} else if (Constants.SPAWN_EGGS && MesozoicRandom.nextInt(Constants.EGG_SPAWN_CHANCE) == 0) {
+						} else if (Constants.SPAWN_EGGS && MesozoicRandom.nextInt(Constants.getEggSpawnChance()) == 0) {
 							spawn = SpawnType.Egg;
 						} else {
 							spawn = SpawnType.Wild;
@@ -197,7 +197,7 @@ public class SpawnManager {
 		waiting = true;
 		
 		// Generate Egg
-		Egg[] eggs = new Egg[MesozoicRandom.nextInt(Constants.MAX_EGG_SPAWN) + 1];
+		Egg[] eggs = new Egg[MesozoicRandom.nextInt(Constants.getMaxEggSpawn()) + 1];
 		for (int q = 0; q < eggs.length; q++) eggs[q] = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
 		
 		// Build Spawn Message
@@ -312,8 +312,14 @@ public class SpawnManager {
 				}
 
 				if (Event.isEventActive(EventType.Valentines)) {
-					if (MesozoicRandom.nextInt(4) == 0) {
+					if (MesozoicRandom.nextInt(2) == 0) {
 						wild[q].setItem(Item.getItem(ItemID.CandyHeart));
+					}
+				}
+
+				if (Event.isEventActive(EventType.Easter)) {
+					if (MesozoicRandom.nextInt(4) == 0) {
+						wild[q].setItem(Item.getItem(ItemID.ChocolateEgg));
 					}
 				}
 			}
@@ -389,6 +395,7 @@ public class SpawnManager {
 		
 		// Get Battle Teams
 		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.Fossil.getEmote()));
+		Util.sleep(100);
 		Util.complete(m.delete());
 		TreeMap<BattleTier, List<BattleTeam>> teams = new TreeMap<BattleTier, List<BattleTeam>>();
 		
@@ -493,6 +500,7 @@ public class SpawnManager {
 		
 		// Get Battle Teams
 		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.Fossil.getEmote()));
+		Util.sleep(100);
 		Util.complete(m.delete());
 		List<BattleTeam> teams = new ArrayList<BattleTeam>();
 		

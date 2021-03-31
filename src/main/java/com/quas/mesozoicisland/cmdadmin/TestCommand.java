@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -38,6 +39,8 @@ import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -231,6 +234,26 @@ public class TestCommand implements ICommand {
 				}
 
 				event.getChannel().sendMessage("Done.").complete();
+			} break;
+
+			case "checkreaction": {
+				Message m = event.getChannel().retrieveMessageById(args[2]).complete();
+				StringJoiner sj = new StringJoiner("\n");
+				sj.setEmptyValue("None");
+				
+				sj.add("Debug:");
+				for (MessageReaction mr : m.getReactions()) {
+					sj.add(mr.getReactionEmote().getEmote().getAsMention());
+					for (User u : mr.retrieveUsers().complete()) {
+						sj.add("A) " + u.getName());
+					}
+
+					for (User u : m.retrieveReactionUsers(mr.getReactionEmote().getEmote())) {
+						sj.add("B) " + u.getName());
+					}
+				}
+
+				event.getChannel().sendMessage(sj.toString()).complete();
 			} break;
 
 			case "benedict": {

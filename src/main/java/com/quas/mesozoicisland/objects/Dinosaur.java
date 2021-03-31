@@ -11,6 +11,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.StatusAilment;
@@ -93,6 +94,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 	
 	public String getDinosaurName() {
+		if (Event.isEventActive(EventType.AprilFools) && getDinosaurForm() == DinosaurForm.Standard) return "Prismatic " + dinoname;
 		return dinoname;
 	}
 	
@@ -307,11 +309,11 @@ public class Dinosaur implements Comparable<Dinosaur> {
 
 	public String getEffectiveName(boolean zalgo) {
 		if (getForm() == DinosaurForm.Accursed.getId() && zalgo) {
-			if (nick == null) return Zalgo.title(dinoname);
-			return Zalgo.title(String.format("\"%s\" the %s", nick, dinoname));
+			if (nick == null) return Zalgo.title(getDinosaurName());
+			return Zalgo.title(String.format("\"%s\" the %s", getNickname(), getDinosaurName()));
 		} else {
-			if (nick == null) return dinoname;
-			return String.format("\"%s\" the %s", nick, dinoname);
+			if (nick == null) return getDinosaurName();
+			return String.format("\"%s\" the %s", getNickname(), getDinosaurName());
 		}
 	}
 	
