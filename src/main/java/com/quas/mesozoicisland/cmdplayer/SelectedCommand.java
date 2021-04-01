@@ -116,9 +116,9 @@ public class SelectedCommand implements ICommand {
 			}
 			
 			BattleTier bt = DinoMath.getBattleTier(team);
-			int percent = DinoMath.getNextBattleTierPercent(team);
+			long percent = DinoMath.getNextBattleTierPercent(team);
 			if (percent >= 0) {
-				sb.append(String.format("Your team is in the %s and is %d%% of the way to the next tier.", bt, percent));
+				sb.append(String.format("Your team is in the %s and is %,d%% of the way to the next tier.", bt, percent));
 			} else {
 				sb.append(String.format("Your team is in the %s.", bt));
 			}

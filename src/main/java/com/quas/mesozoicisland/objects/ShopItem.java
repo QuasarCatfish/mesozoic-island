@@ -21,6 +21,7 @@ public class ShopItem {
 	private long playerstock;
 	private boolean visible;
 	private ShopType type;
+	private int reqlevel;
 	
 	public int getId() {
 		return id;
@@ -52,6 +53,10 @@ public class ShopItem {
 	
 	public long getTotalStock() {
 		return totalstock;
+	}
+
+	public int getRequiredLevel() {
+		return reqlevel;
 	}
 	
 	public long getPlayerStock(long player) {
@@ -99,6 +104,7 @@ public class ShopItem {
 				i.playerstock = res.getLong("playerstock");
 				i.visible = res.getBoolean("visible");
 				i.type = ShopType.of(res.getInt("shop"));
+				i.reqlevel = res.getInt("reqlevel");
 				return i;
 			}
 		} catch (SQLException e) {

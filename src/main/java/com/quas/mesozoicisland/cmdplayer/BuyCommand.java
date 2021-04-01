@@ -93,6 +93,12 @@ public class BuyCommand implements ICommand {
 			event.getChannel().sendMessageFormat("%s, there is not enough \"%s\" for you to buy.", event.getAuthor().getAsMention(), shopitem.getName()).complete();
 			return;
 		}
+
+		// Check Player Level
+		if (shopitem.getRequiredLevel() > p.getLevel()) {
+			event.getChannel().sendMessageFormat("%s, you must be Level %,d to buy this item.", event.getAuthor().getAsMention(), shopitem.getRequiredLevel()).complete();
+			return;
+		}
 		
 		// Pay and Buy Count
 		long pcount = count * shopitem.getPayCount();

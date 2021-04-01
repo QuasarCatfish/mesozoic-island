@@ -10,6 +10,7 @@ import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Util;
 import com.quas.mesozoicisland.util.Zalgo;
 
@@ -90,6 +91,7 @@ public class InfoDinosaurCommand implements ICommand {
 			eb.addField("Rarity", d.getRarity().getName(), true);
 			eb.addField("Level and XP", String.format("Level %,d + %,d XP", d.getLevel(), d.getXpMinusLevel()), true);
 			eb.addField("Rank and RP", String.format("Rank %s + %,d RP", d.getRankString(), d.getRp()), true);
+			eb.addField("Battle Tier", DinoMath.getBattleTier(d).toString(), true);
 			eb.addField("Health", String.format("%,d (+%d%%)", d.getHealth(), d.getHealthMultiplier()), true);
 			eb.addField("Attack", String.format("%,d (+%d%%)", d.getAttack(), d.getAttackMultiplier()), true);
 			eb.addField("Defense", String.format("%,d (+%d%%)", d.getDefense(), d.getDefenseMultiplier()), true);

@@ -94,7 +94,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 	
 	public String getDinosaurName() {
-		if (Event.isEventActive(EventType.AprilFools) && getDinosaurForm() == DinosaurForm.Standard) return "Prismatic " + dinoname;
+		if (Event.isEventActive(EventType.AprilFools)) {
+			if (getDinosaurForm() == DinosaurForm.Standard) return "Prismatic " + dinoname;
+			if (getDinosaurForm() == DinosaurForm.Prismatic) return dinoname.replace("Prismatic ", "");
+		}
 		return dinoname;
 	}
 	

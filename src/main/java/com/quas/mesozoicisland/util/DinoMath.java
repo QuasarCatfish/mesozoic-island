@@ -45,7 +45,7 @@ public class DinoMath {
 		return xp;
 	}
 	
-	public static BattleTier getBattleTier(Dinosaur[] team) {
+	public static BattleTier getBattleTier(Dinosaur... team) {
 		if (team.length == 0) return BattleTier.Tier1;
 		
 		List<BattleTier> tiers = Arrays.asList(BattleTier.getBattleTiers());
@@ -79,7 +79,7 @@ public class DinoMath {
 		return BattleTier.Tier1;
 	}
 
-	public static int getNextBattleTierPercent(Dinosaur[] team) {
+	public static long getNextBattleTierPercent(Dinosaur... team) {
 		if (team.length == 0) return -1;
 		
 		List<BattleTier> tiers = Arrays.asList(BattleTier.getBattleTiers());
@@ -113,13 +113,13 @@ public class DinoMath {
 		int level = getLevel(xp);
 
 		// Calculate Percent
-		if (level < 10 && bst < 5_000 && tiers.contains(BattleTier.Tier2)) return floor(Math.max(100f * xp / getXp(10), 100f * (bst - maxbst) / (5_000 - maxbst)));
-		if (level < 30 && bst < 7_500 && tiers.contains(BattleTier.Tier3)) return floor(Math.max(100f * (xp - getXp(10)) / (getXp(30) - getXp(10)), 100f * (bst - 5_000) / 2_500));
-		if (level < 50 && bst < 10_000 && tiers.contains(BattleTier.Tier4)) return floor(Math.max(100f * (xp - getXp(30)) / (getXp(50) - getXp(30)), 100f * (bst - 7_500) / 2_500));
-		return -1;
+		if (level < 10 && bst < 5_000) return floor(Math.max(100d * xp / getXp(10), 100d * (bst - maxbst) / (5_000 - maxbst)));
+		if (level < 30 && bst < 7_500) return floor(Math.max(100d * (xp - getXp(10)) / (getXp(30) - getXp(10)), 100d * (bst - 5_000) / 2_500));
+		// if (level < 50 && bst < 10_000)
+		return floor(Math.max(100d * (xp - getXp(30)) / (getXp(50) - getXp(30)), 100d * (bst - 7_500) / 2_500));
 	}
 
-	private static int floor(float f) {
-		return (int)f;
+	private static long floor(double f) {
+		return (long)f;
 	}
 }

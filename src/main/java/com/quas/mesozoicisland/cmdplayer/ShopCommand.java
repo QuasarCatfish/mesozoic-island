@@ -89,9 +89,15 @@ public class ShopCommand implements ICommand {
 			if (si.getShopType() != shop) continue;
 			
 			long stock = si.getPlayerStock(p.getIdLong());
-			String fname = stock == -1 ? "**" + si.getName() + "**" : String.format("**%s** (%,d left in stock)", si.getName(), stock);
+			StringBuilder fname = new StringBuilder();
+			fname.append("**");
+			fname.append(si.getName());
+			fname.append("**");
+			if (si.getRequiredLevel() > 0) fname.append(String.format(" [Requires Lv %,d]", si.getRequiredLevel()));
+			if (stock > -1) fname.append(String.format(" (%,d left in stock)", stock));
+
 			String fvalue = String.format("__Receive:__ %,d %s (You have %,d)%n__Pay:__ %,d %s (You have %,d)", si.getBuyCount(), si.getBuyItem().toString(si.getBuyCount()), bag.getOrDefault(si.getBuyItem(), 0L), si.getPayCount(), si.getPayItem().toString(si.getPayCount()), bag.getOrDefault(si.getPayItem(), 0L));
-			eb.addField(fname, fvalue, false);
+			eb.addField(fname.toString(), fvalue, false);
 		}
 		
 		event.getChannel().sendMessage(eb.build()).complete();
