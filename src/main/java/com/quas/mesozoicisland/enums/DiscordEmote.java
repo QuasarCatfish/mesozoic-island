@@ -32,6 +32,7 @@ public enum DiscordEmote {
 	TeamToken(775041150250647622L),
 	JasonToken(775041615361343488L),
 	CharmShard(821239325362618379L),
+	ChocolateEgg(827280867553968159L),
 	;
 	
 
