@@ -26,6 +26,7 @@ public enum DiscordRole {
 	GameParticipant(689557756721627172L),
 	
 	AnnouncementPing(653661008719511579L),
+	MiniAnnouncementPing(827298552043536404L),
 	EventPing(752045719833280522L),
 	DailyPing(716676414145036370L),
 	SpawnPing(646816640553713686L),
