@@ -451,8 +451,8 @@ public class JDBC {
 	}
 
 	public static synchronized boolean updateEggs(boolean fragrance) {
-		boolean b = executeUpdate("update eggs set hp = hp + floor(rand() * %d) + %d where player > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit());
-		if (fragrance) b &= executeUpdate("update eggs join players on eggs.player = players.playerid set hp = hp + floor(rand() * %d) + %d where eggs.player > %d and players.fragranceegg > %d;", Constants.MAX_HP_PER_MINUTE - Constants.MIN_HP_PER_MINUTE + 1, Constants.MIN_HP_PER_MINUTE, CustomPlayer.getUpperLimit(), System.currentTimeMillis());
+		boolean b = executeUpdate("update eggs set hp = hp + floor(rand() * %d) + %d where player > %d;", Constants.getMaxHpPerMinute() - Constants.getMinHpPerMinute() + 1, Constants.getMinHpPerMinute(), CustomPlayer.getUpperLimit());
+		if (fragrance) b &= executeUpdate("update eggs join players on eggs.player = players.playerid set hp = hp + floor(rand() * %d) + %d where eggs.player > %d and players.fragranceegg > %d;", Constants.getMaxHpPerMinute() - Constants.getMinHpPerMinute() + 1, Constants.getMinHpPerMinute(), CustomPlayer.getUpperLimit(), System.currentTimeMillis());
 		return b;
 	}
 	
