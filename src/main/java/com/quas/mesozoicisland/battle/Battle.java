@@ -3,12 +3,14 @@ package com.quas.mesozoicisland.battle;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
@@ -76,7 +78,7 @@ public class Battle {
 				}
 				
 				// Add Location Boost
-				if ((d.getElement().getId() ^ loc.getBoostedElementsId()) > 0) {
+				if ((d.getElement().getId() & loc.getBoostedElementsId()) > 0) {
 					d.addBoost(Constants.LOCATION_BOOST);
 				}
 			}

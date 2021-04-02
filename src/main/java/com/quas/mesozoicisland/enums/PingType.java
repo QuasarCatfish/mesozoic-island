@@ -2,7 +2,7 @@ package com.quas.mesozoicisland.enums;
 
 public enum PingType {
 	Announcement(DiscordRole.AnnouncementPing, "an announcement is made"),
-	MiniAnnouncement(DiscordRole.MiniAnnouncementPing, "a small annoucnement is made"),
+	MiniAnnouncement(DiscordRole.MiniAnnouncementPing, "a small announcement is made"),
 	Event(DiscordRole.EventPing, "event information is announced"),
 	Daily(DiscordRole.DailyPing, "a new day begins"),
 	Spawn(DiscordRole.SpawnPing, "a dinosaur spawns"),
