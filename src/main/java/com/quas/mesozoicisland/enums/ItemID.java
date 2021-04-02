@@ -56,6 +56,12 @@ public enum ItemID {
 	MysteryEauPouch(232, 0),
 	MysteryDinoCharmBox(233, 0),
 	MysteryFieldCharmBox(234, 0),
+	GreenDungeonLocator(235, 0),
+	YellowDungeonLocator(236, 0),
+	OrangeDungeonLocator(237, 0),
+	RedDungeonLocator(238, 0),
+	BlackDungeonLocator(239, 0),
+	GoldDungeonLocator(240, 0),
 
 	RubyPendant(301, 0),
 	TopazPendant(302, 0),

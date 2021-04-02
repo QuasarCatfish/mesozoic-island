@@ -121,7 +121,9 @@ public class Constants {
 	
 	// Raids
 	public static final int REQUIRED_RAID_LEVEL = 50;
+	public static final int BONUS_RAID_LEVEL = 10;
 	public static final int RAID_CYCLE_DAYS = 3;
+	public static final int RAID_REWARD_COUNT = 3;
 	
 	// Daily
 	public static final long DAILY_MONEY = 1_000;
@@ -206,37 +208,6 @@ public class Constants {
 		"Ready.",
 		"Ready!",
 		"I have returned!"
-	};
-	public static final String[] RAID_REWARDS = new String[] {
-		// Dungeon Ticket
-		"item 100 0 500 item 502 0 1",
-
-		// Premium Dungeon Ticket
-		// "item 100 0 500 item 503 0 1",
-
-		// A-Tier XP Potion
-		"item 100 0 500 item 206 0 1",
-
-		// S-Tier XP Potion
-		// "item 100 0 500 item 207 0 1",
-
-		// Dinosaur Locator
-		"item 100 0 500 item 221 0 1",
-
-		// Egg Locator
-		"item 100 0 500 item 222 0 1",
-
-		// Dungeon Locator
-		// "item 100 0 500 item 223 0 1",
-
-		// Fragrance
-		"item 100 0 500 item 213 0 1",
-		"item 100 0 500 item 216 0 1",
-		"item 100 0 500 item 219 0 1",
-		"item 100 0 500 item 225 0 1",
-
-		// Prismatic Converter
-		// "item 100 0 500 item 211 0 1",
 	};
 	
 	public static ArrayList<Pair<Dinosaur, String>> getStarterDinosaurs() {

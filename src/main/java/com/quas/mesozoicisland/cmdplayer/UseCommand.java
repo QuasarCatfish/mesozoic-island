@@ -3,6 +3,7 @@ package com.quas.mesozoicisland.cmdplayer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -25,6 +26,7 @@ import com.quas.mesozoicisland.enums.ItemCategory;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.ItemType;
+import com.quas.mesozoicisland.enums.RaidReward;
 import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
@@ -284,7 +286,7 @@ public class UseCommand implements ICommand {
 				}
 			}
 
-			else if (i.getId() == ItemID.DungeonLocator.getItemId()) {
+			else if (i.hasTag(ItemTag.DungeonLocator)) {
 				if (!Constants.SPAWN || !Constants.SPAWN_DUNGEONS) {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but dungeon spawning is disabled.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
@@ -294,10 +296,10 @@ public class UseCommand implements ICommand {
 				} else if (SpawnManager.isDungeonSpawned()) {
 					event.getChannel().sendMessageFormat("%s tries to use the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
-				} else if (SpawnManager.trySpawn(SpawnType.Dungeon, true)) {
+				} else if (SpawnManager.trySpawn(SpawnType.Dungeon, true, i.getData())) {
 					event.getChannel().sendMessageFormat("%s uses the %s to look for a dungeon to explore.", p.getAsMention(), i.toString()).complete();
 				} else {
-					event.getChannel().sendMessageFormat("%s tries to use the %s, but there's already a dungeon being explored.", p.getAsMention(), i.toString()).complete();
+					event.getChannel().sendMessageFormat("%s tries to use the %s, but it failed.", p.getAsMention(), i.toString()).complete();
 					SUCCESS = false;
 				}
 			}
@@ -563,7 +565,12 @@ public class UseCommand implements ICommand {
 					
 					// Prizes
 					if (!b.didBossWin()) {
-						String prize = Util.getRandomElement(Constants.RAID_REWARDS);
+						StringJoiner sj = new StringJoiner(" ");
+						for (int q = 0; q < Constants.RAID_REWARD_COUNT; q++) {
+							sj.add(RaidReward.randomReward().asRedeem());
+						}
+						
+						String prize = sj.toString();
 						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1_000, Constants.SPAWN_CHANNEL, String.format("%s, you find these rewards from the %s:\n%s", p.getAsMention(), raid.getEffectiveName(), JDBC.getRedeemMessage(prize)));
 						Action.addRedeemDelayed(MesozoicIsland.getAssistant().getIdLong(), p.getIdLong(), time + 1_000, prize);
 						Action.addItemDelayed(p.getIdLong(), time + 1_000, Stat.RaidsDefeated.getId(), 1);

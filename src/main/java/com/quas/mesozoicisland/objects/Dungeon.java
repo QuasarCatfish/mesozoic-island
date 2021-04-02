@@ -72,7 +72,7 @@ public class Dungeon {
 	
 	//////////////////////////////////////////////////
 	
-	public static Dungeon generateRandomDungeon() {
+	public static Dungeon generateRandomDungeon(String data) {
 		Dungeon d = new Dungeon();
 
 		if (Event.isEventActive(EventType.DarknessDescent)) {
@@ -122,9 +122,16 @@ public class Dungeon {
 			}
 
 		} else {
+			String[] split = data == null ? new String[0] : data.split("\\s+");
+
 			// Set basic stats
-			d.floors = new Dinosaur[MesozoicRandom.nextInt(Constants.MIN_DUNGEON_FLOORS, Constants.MAX_DUNGEON_FLOORS + 1)][];
 			d.difficulty = Constants.MAX_DUNGEON_DIFFICULTY - (int)Math.pow(MesozoicRandom.nextInt(0, (int)Math.pow(Constants.MAX_DUNGEON_DIFFICULTY, 3)), 1d / 3);
+			if (split.length > 0) d.difficulty = Math.max(d.difficulty, Integer.parseInt(split[0]));
+			
+			int floors = MesozoicRandom.nextInt(Constants.MIN_DUNGEON_FLOORS, Constants.MAX_DUNGEON_FLOORS + 1);
+			if (split.length > 1) floors = Math.max(floors, Integer.parseInt(split[1]));
+
+			d.floors = new Dinosaur[floors][];
 			d.loc = MesozoicRandom.nextLocation();
 
 			// fill floors
@@ -133,6 +140,16 @@ public class Dungeon {
 				for (int w = 0; w < d.floors[q].length; w++) {
 					int level = MesozoicRandom.nextInt(10 * (d.difficulty - 1), 10 * d.difficulty) + 1;
 					d.floors[q][w] = MesozoicRandom.nextDungeonDinosaur().setLevel(level).addBoost(Constants.DUNGEON_BOOST);
+
+					if (MesozoicRandom.nextInt(Constants.MAX_DUNGEON_FLOORS) < q) {
+						d.floors[q][w].removeAttack(BattleAttack.BaseAttack);
+						d.floors[q][w].addAttack(BattleAttack.Terror);
+					}
+
+					if (MesozoicRandom.nextInt(Constants.MAX_DUNGEON_FLOORS) < q) {
+						d.floors[q][w].removeAttack(BattleAttack.BaseAttack);
+						d.floors[q][w].addAttack(BattleAttack.Heal10);
+					}
 				}
 			}
 			

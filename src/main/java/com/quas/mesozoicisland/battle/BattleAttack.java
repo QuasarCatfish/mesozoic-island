@@ -22,6 +22,6 @@ public enum BattleAttack {
 	
 	public static BattleAttack[] DUNGEON_BOSS_ATTACKS = Util.arr(BaseAttack, BaseAttack, BaseAttack, Critical, Rune, Heal10);
 	
-	public static BattleAttack[] RAID_BOSS_ATTACKS = Util.arr(Critical, Critical, Heal50);
-	public static BattleAttack[] RAID_BOSS_DEFENSE = Util.arr(BaseDefend, BaseDefend, Block);
+	public static BattleAttack[] RAID_BOSS_ATTACKS = Util.arr(Critical, Critical, Terror, Heal50);
+	public static BattleAttack[] RAID_BOSS_DEFENSE = Util.arr(BaseDefend, BaseDefend, Block, Counter);
 }

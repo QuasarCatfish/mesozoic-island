@@ -51,6 +51,10 @@ public class SpawnManager {
 	}
 	
 	public static boolean trySpawn(final SpawnType spawntype, boolean forcespawn) {
+		return trySpawn(spawntype, forcespawn, null);
+	}
+
+	public static boolean trySpawn(final SpawnType spawntype, boolean forcespawn, String data) {
 		Util.sleep(100);
 		if (MesozoicIsland.isQuitting()) return false;
 		if (!Constants.SPAWN) return false;
@@ -129,7 +133,7 @@ public class SpawnManager {
 							spawnWild();
 							break;
 						case Dungeon:
-							spawnDungeon();
+							spawnDungeon(data);
 							break;
 						case Egg:
 							spawnEgg();
@@ -459,11 +463,11 @@ public class SpawnManager {
 		waiting = false;
 	}
 	
-	private static synchronized void spawnDungeon() {
+	private static synchronized void spawnDungeon(String data) {
 		waiting = true;
 		
 		// Generate Dungeon
-		Dungeon d = Dungeon.generateRandomDungeon();
+		Dungeon d = Dungeon.generateRandomDungeon(data);
 		
 		// Build Spawn Message
 		EmbedBuilder eb = new EmbedBuilder();

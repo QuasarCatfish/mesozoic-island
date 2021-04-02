@@ -112,8 +112,15 @@ public class DailyCommand implements ICommand {
 			String raid = JDBC.getVariable("raidpass");
 			if (p.getLevel() >= Constants.REQUIRED_RAID_LEVEL && raid != null) {
 				Item item = Item.getItem(new Pair<Integer, Long>(ItemID.RaidPass.getItemId(), Long.parseLong(raid)));
-				sb.append(String.format("\nDaily Raid Pass: %s %s!", Util.getArticle(item.toString()), item.toString()));
-				JDBC.addItem(p.getIdLong(), item.getIdDmg());
+				int count = 1 + (p.getLevel() - Constants.REQUIRED_RAID_LEVEL) / Constants.BONUS_RAID_LEVEL;
+
+				if (count == 1) {
+					sb.append(String.format("\nDaily Raid Pass: %s %s!", Util.getArticle(item.toString()), item.toString()));
+				} else {
+					sb.append(String.format("\nDaily Raid Pass: %,d %s!", count, item.toString(count)));
+				}
+
+				JDBC.addItem(p.getIdLong(), item.getIdDmg(), count);
 			}
 
 			// Special Day

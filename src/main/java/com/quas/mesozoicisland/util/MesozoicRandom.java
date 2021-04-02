@@ -35,6 +35,10 @@ public class MesozoicRandom {
 	public static boolean nextBoolean() {
 		return ThreadLocalRandom.current().nextBoolean();
 	}
+
+	public static double nextDouble(double bound) {
+		return ThreadLocalRandom.current().nextDouble(bound);
+	}
 	
 	public static int nextLevel() {
 		for (int q = 1;; q++) {
