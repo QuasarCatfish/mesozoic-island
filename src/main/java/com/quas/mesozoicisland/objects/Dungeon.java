@@ -130,13 +130,21 @@ public class Dungeon {
 
 		} else {
 			String[] split = data == null ? new String[0] : data.split("\\s+");
+			boolean forcedata = false;
+			for (String s : split) if (s.equalsIgnoreCase("force")) forcedata = true;
 
 			// Set basic stats
 			d.difficulty = Constants.MAX_DUNGEON_DIFFICULTY - (int)Math.pow(MesozoicRandom.nextInt(0, (int)Math.pow(Constants.MAX_DUNGEON_DIFFICULTY, 3)), 1d / 3);
-			if (split.length > 0) d.difficulty = Math.max(d.difficulty, Integer.parseInt(split[0]));
+			if (split.length > 0) {
+				if (forcedata) d.difficulty = Integer.parseInt(split[0]);
+				else d.difficulty = Math.max(d.difficulty, Integer.parseInt(split[0]));
+			}
 			
 			int floors = MesozoicRandom.nextInt(Constants.MIN_DUNGEON_FLOORS, Constants.MAX_DUNGEON_FLOORS + 1);
-			if (split.length > 1) floors = Math.max(floors, Integer.parseInt(split[1]));
+			if (split.length > 1) {
+				if (forcedata) floors = Integer.parseInt(split[1]);
+				else floors = Math.max(floors, Integer.parseInt(split[1]));
+			}
 
 			d.floors = new Dinosaur[floors][];
 			d.loc = MesozoicRandom.nextLocation();
