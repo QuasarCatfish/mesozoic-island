@@ -3,15 +3,18 @@ package com.quas.mesozoicisland.objects;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.EventType;
+import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicRandom;
+import com.quas.mesozoicisland.util.Util;
 
 public class Dungeon {
 
 	private Dinosaur[][] floors;
 	private int difficulty;
 	private Location loc;
+	private int charmShardCount = 0;
 	
 	private Dungeon() {
 		
@@ -64,6 +67,10 @@ public class Dungeon {
 	public int getTokenCount() {
 		if (Event.isEventActive(EventType.DarknessDescent)) return 2 * difficulty;
 		return Math.round((float)Math.ceil(difficulty * floors.length / 2f));
+	}
+
+	public int getCharmShardCount() {
+		return charmShardCount;
 	}
 	
 	public Dinosaur getBoss() {
@@ -145,14 +152,23 @@ public class Dungeon {
 					int level = MesozoicRandom.nextInt(minLevel, maxLevel) + 1;
 					d.floors[q][w] = MesozoicRandom.nextDungeonDinosaur().setLevel(level).addBoost(Constants.DUNGEON_BOOST);
 
+					// Chance to add Scare attack
 					if (MesozoicRandom.nextInt(Constants.MAX_DUNGEON_FLOORS) < q) {
 						d.floors[q][w].removeAttack(BattleAttack.BaseAttack);
-						d.floors[q][w].addAttack(BattleAttack.Terror);
+						d.floors[q][w].addAttack(BattleAttack.Scare);
 					}
 
+					// Chance to add Heal10 attack
 					if (MesozoicRandom.nextInt(Constants.MAX_DUNGEON_FLOORS) < q) {
 						d.floors[q][w].removeAttack(BattleAttack.BaseAttack);
 						d.floors[q][w].addAttack(BattleAttack.Heal10);
+					}
+					
+					// Chance to have a random dinosaur charm
+					if (MesozoicRandom.nextInt(Constants.DUNGEON_CHARM_CHANCE) == 0) {
+						Item charm = Util.getRandomElement(Item.getItemsWithTag(ItemTag.DinosaurCharm));
+						d.floors[q][w].setItem(charm);
+						d.charmShardCount++;
 					}
 				}
 			}

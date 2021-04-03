@@ -117,6 +117,7 @@ public class Constants {
 	public static final int MIN_DUNGEON_FLOORS = 3;
 	public static final int MAX_DUNGEON_FLOORS = 10;
 	public static final int DUNGEON_BOOST = 50;
+	public static final int DUNGEON_CHARM_CHANCE = 7;
 	public static final long DUNGEON_WAIT = TimeUnit.SECONDS.toMillis(150);
 	
 	// Raids

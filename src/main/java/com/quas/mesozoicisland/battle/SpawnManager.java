@@ -568,16 +568,28 @@ public class SpawnManager {
 					
 					if (q == d.getFloorCount() - 1) {
 						Item token = Item.getItem(ItemID.DungeonToken);
-						String winmsg = "";
-						if (teams.size() == 1) winmsg = String.format("The player has defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared.", d.getTokenCount(), token.toString(d.getTokenCount()));
-						else winmsg = String.format("The players have defeated **all floors** of the dungeon! A crate of %,d %s was left as the dungeon disappeared. The players each get %,d %s.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getTokenCount(), token.toString(d.getTokenCount()));
+						Item charmShard = Item.getItem(ItemID.CharmShard);
+						StringBuilder winmsg = new StringBuilder();
+
+						winmsg.append("The ");
+						winmsg.append(teams.size() == 1 ? "player has" : "players have");
+						winmsg.append(" defeated **all floors** of the dungeon!");
+
+						if (d.getCharmShardCount() > 0) winmsg.append(String.format(" A crate of %,d %s and %,d %s was left as the dungeon disappeared.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getCharmShardCount() * teams.size(), charmShard.toString(d.getCharmShardCount() * teams.size())));
+						else winmsg.append(String.format(" A crate of %,d %s was left as the dungeon disappeared.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size())));
+
+						if (teams.size() > 1) {
+							if (d.getCharmShardCount() > 0) winmsg.append(String.format(" The players each get %,d %s and %,d %s.", d.getTokenCount(), token.toString(d.getTokenCount()), d.getCharmShardCount(), charmShard.toString(d.getCharmShardCount())));
+							else winmsg.append(String.format(" The players each get %,d %s.", d.getTokenCount(), token.toString(d.getTokenCount())));
+						}
 						
-						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), winmsg);
-						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, winmsg);
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), winmsg.toString());
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, winmsg.toString());
 						
 						for (BattleTeam bt : teams) {
 							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
 							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, token.getIdDmg(), d.getTokenCount());
+							if (d.getCharmShardCount() > 0) Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, charmShard.getIdDmg(), d.getCharmShardCount());
 						}
 					}
 				}
