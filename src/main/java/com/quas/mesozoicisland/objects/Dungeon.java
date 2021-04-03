@@ -139,7 +139,8 @@ public class Dungeon {
 
 			// fill floors
 			for (int q = 0; q < d.floors.length - 1; q++) {
-				d.floors[q] = new Dinosaur[d.difficulty];
+				d.floors[q] = new Dinosaur[(d.difficulty * 3 + 1) / 2];
+
 				for (int w = 0; w < d.floors[q].length; w++) {
 					int level = MesozoicRandom.nextInt(minLevel, maxLevel) + 1;
 					d.floors[q][w] = MesozoicRandom.nextDungeonDinosaur().setLevel(level).addBoost(Constants.DUNGEON_BOOST);
