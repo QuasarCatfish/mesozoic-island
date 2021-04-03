@@ -134,11 +134,14 @@ public class Dungeon {
 			d.floors = new Dinosaur[floors][];
 			d.loc = MesozoicRandom.nextLocation();
 
+			int maxLevel = 5 * d.difficulty * (d.difficulty - 1);
+			int minLevel = 5 * d.difficulty * (d.difficulty + 1);
+
 			// fill floors
 			for (int q = 0; q < d.floors.length - 1; q++) {
 				d.floors[q] = new Dinosaur[d.difficulty];
 				for (int w = 0; w < d.floors[q].length; w++) {
-					int level = MesozoicRandom.nextInt(10 * (d.difficulty - 1), 10 * d.difficulty) + 1;
+					int level = MesozoicRandom.nextInt(minLevel, maxLevel) + 1;
 					d.floors[q][w] = MesozoicRandom.nextDungeonDinosaur().setLevel(level).addBoost(Constants.DUNGEON_BOOST);
 
 					if (MesozoicRandom.nextInt(Constants.MAX_DUNGEON_FLOORS) < q) {
@@ -155,7 +158,7 @@ public class Dungeon {
 			
 			// fill dungeon boss
 			d.floors[d.floors.length - 1] = new Dinosaur[] {
-				MesozoicRandom.nextDungeonBossDinosaur().setLevel(10 * d.difficulty).addBoost(Constants.DUNGEON_BOOST)
+				MesozoicRandom.nextDungeonBossDinosaur().setLevel(maxLevel).addBoost(Constants.DUNGEON_BOOST)
 			};
 		}
 		

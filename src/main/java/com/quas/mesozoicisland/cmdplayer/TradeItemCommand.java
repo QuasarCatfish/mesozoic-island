@@ -14,6 +14,7 @@ import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.TradeManager;
 import com.quas.mesozoicisland.util.Pair;
+import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -93,8 +94,10 @@ public class TradeItemCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, you do not have any of this item.", p1.getAsMention()).complete();
 			}
 			return;
+		} else if (i1.getId() == 0) {
+			event.getChannel().sendMessageFormat("%s, this item does not exist.", p1.getAsMention()).complete();
 		} else if (!i1.isTradable()) {
-			event.getChannel().sendMessageFormat("%s, a %s is not tradable.", p1.getAsMention(), i1.toString()).complete();
+			event.getChannel().sendMessageFormat("%s, %s %s is not tradable.", p1.getAsMention(), Util.getArticle(i1.toString()), i1.toString()).complete();
 			return;
 		}
 
@@ -116,8 +119,10 @@ public class TradeItemCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, %s does not have any of this item.", p1.getAsMention(), p2.getName()).complete();
 			}
 			return;
+		} else if (i2.getId() == 0) {
+			event.getChannel().sendMessageFormat("%s, this item does not exist.", p1.getAsMention()).complete();
 		} else if (!i2.isTradable()) {
-			event.getChannel().sendMessageFormat("%s, a %s is not tradable.", p1.getAsMention(), i2.toString()).complete();
+			event.getChannel().sendMessageFormat("%s, %s %s is not tradable.", p1.getAsMention(), Util.getArticle(i2.toString()), i2.toString()).complete();
 			return;
 		}
 
