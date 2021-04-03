@@ -405,14 +405,62 @@ public class Battle {
 		ArrayList<String> print = new ArrayList<String>();
 		print.add("**" + boss.getPlayer().getName() + "'s Team:**");
 		for (Dinosaur d : boss.getDinosaursInBattle()) {
-			print.add(String.format("%s %s (%,d Health)", Constants.BULLET_POINT, d.toString(), d.getHealth()));
+			StringBuilder sb = new StringBuilder();
+				sb.append(Constants.BULLET_POINT);
+				sb.append(" ");
+				sb.append(d.toString());
+
+				if (d.hasItem()) {
+					if (d.getItem().hasIcon()) {
+						sb.append(" ");
+						sb.append(d.getItem().getIcon().toString());
+					} else {
+						sb.append(" [Holding: ");
+						sb.append(d.getItem().toString());
+						sb.append("]");
+					}
+				}
+
+				if (d.hasRune()) {
+					sb.append(" [Rune: ");
+					sb.append(d.getRune().getName());
+					sb.append("]");
+				}
+
+				sb.append(String.format(" (%,d Health)", d.getHealth()));
+				print.add(sb.toString());
 		}
 		print.add(DiscordEmote.Blank.toString());
+
 		for (BattleTeam bt : teams) {
 			print.add("**" + bt.getPlayer().getName() + "'s Team:**");
 			for (Dinosaur d : bt.getDinosaursInBattle()) {
-				print.add(String.format("%s %s (%,d Health)", Constants.BULLET_POINT, d.toString(), d.getHealth()));
+				StringBuilder sb = new StringBuilder();
+				sb.append(Constants.BULLET_POINT);
+				sb.append(" ");
+				sb.append(d.toString());
+
+				if (d.hasItem()) {
+					if (d.getItem().hasIcon()) {
+						sb.append(" ");
+						sb.append(d.getItem().getIcon().toString());
+					} else {
+						sb.append(" [Holding: ");
+						sb.append(d.getItem().toString());
+						sb.append("]");
+					}
+				}
+
+				if (d.hasRune()) {
+					sb.append(" [Rune: ");
+					sb.append(d.getRune().getName());
+					sb.append("]");
+				}
+
+				sb.append(String.format(" (%,d Health)", d.getHealth()));
+				print.add(sb.toString());
 			}
+			
 			print.add(DiscordEmote.Blank.toString());
 		}
 

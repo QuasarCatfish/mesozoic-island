@@ -113,12 +113,12 @@ public class Constants {
 		if (Event.isEventActive(EventType.DarknessDescent)) return 25;
 		return 50;
 	}
-	public static final int MAX_DUNGEON_DIFFICULTY = 5;
-	public static final int MIN_DUNGEON_FLOORS = 3;
-	public static final int MAX_DUNGEON_FLOORS = 10;
-	public static final int DUNGEON_BOOST = 50;
-	public static final int DUNGEON_CHARM_CHANCE = 7;
-	public static final long DUNGEON_WAIT = TimeUnit.SECONDS.toMillis(150);
+	public static final int MAX_DUNGEON_DIFFICULTY = 5; // default 5
+	public static final int MIN_DUNGEON_FLOORS = 3; // default 3
+	public static final int MAX_DUNGEON_FLOORS = 10; // default 10
+	public static final int DUNGEON_BOOST = 50; // default 50
+	public static final int DUNGEON_CHARM_CHANCE = 7; // default 7
+	public static final long DUNGEON_WAIT = TimeUnit.SECONDS.toMillis(150); // default 150 sec
 	
 	// Raids
 	public static final int REQUIRED_RAID_LEVEL = 50;
