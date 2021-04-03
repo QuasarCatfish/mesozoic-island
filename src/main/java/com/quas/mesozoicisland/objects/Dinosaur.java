@@ -566,7 +566,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				d.healthmult = res.getInt("modhealth");
 				d.attackmult = res.getInt("modattack");
 				d.defensemult = res.getInt("moddefense");
-				d.setItem(Item.getItem(new Pair<Integer, Long>(res.getInt("item"), res.getLong("itemdmg"))));
+				Item item = Item.getItem(new Pair<Integer, Long>(res.getInt("item"), res.getLong("itemdmg")));
 				d.rune = Rune.getRune(res.getInt("rune"));
 				d.wins = res.getInt("wins");
 				d.losses = res.getInt("losses");
@@ -580,10 +580,12 @@ public class Dinosaur implements Comparable<Dinosaur> {
 						boost -= 50;
 					}
 				}
+				
 				d.healthboost = d.healthmult + boost;
 				d.attackboost = d.attackmult + boost;
 				d.defenseboost = d.defensemult + boost;
-				
+				d.setItem(item);
+
 				return d;
 			}
 		} catch (SQLException e) {
