@@ -134,8 +134,8 @@ public class Dungeon {
 			d.floors = new Dinosaur[floors][];
 			d.loc = MesozoicRandom.nextLocation();
 
-			int maxLevel = 5 * d.difficulty * (d.difficulty - 1);
-			int minLevel = 5 * d.difficulty * (d.difficulty + 1);
+			int minLevel = 5 * d.difficulty * (d.difficulty - 1);
+			int maxLevel = 5 * d.difficulty * (d.difficulty + 1);
 
 			// fill floors
 			for (int q = 0; q < d.floors.length - 1; q++) {
