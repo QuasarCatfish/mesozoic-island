@@ -541,7 +541,8 @@ public class UseCommand implements ICommand {
 					// Raid Boss Dinosaur
 					String[] data = i.getData().split("\\s+");
 					Dinosaur raid = Dinosaur.getDinosaur(Integer.parseInt(data[0]), DinosaurForm.RaidBoss.getId());
-					raid.setLevel(Integer.parseInt(data[1]));
+					raid.setLevel(2 * p.getLevel());
+					if (data.length > 1) raid.setLevel(Integer.parseInt(data[1]));
 					raid.setRank(0);
 					raid.addBoost(-raid.getLevel() / 3);
 
@@ -569,7 +570,7 @@ public class UseCommand implements ICommand {
 						for (int q = 0; q < Constants.RAID_REWARD_COUNT; q++) {
 							sj.add(RaidReward.randomReward().asRedeem());
 						}
-						
+
 						String prize = sj.toString();
 						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1_000, Constants.SPAWN_CHANNEL, String.format("%s, you find these rewards from the %s:\n%s", p.getAsMention(), raid.getEffectiveName(), JDBC.getRedeemMessage(prize)));
 						Action.addRedeemDelayed(MesozoicIsland.getAssistant().getIdLong(), p.getIdLong(), time + 1_000, prize);
