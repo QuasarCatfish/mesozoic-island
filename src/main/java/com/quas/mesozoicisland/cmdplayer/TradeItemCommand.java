@@ -96,6 +96,7 @@ public class TradeItemCommand implements ICommand {
 			return;
 		} else if (i1.getId() == 0) {
 			event.getChannel().sendMessageFormat("%s, this item does not exist.", p1.getAsMention()).complete();
+			return;
 		} else if (!i1.isTradable()) {
 			event.getChannel().sendMessageFormat("%s, %s %s is not tradable.", p1.getAsMention(), Util.getArticle(i1.toString()), i1.toString()).complete();
 			return;
@@ -121,6 +122,7 @@ public class TradeItemCommand implements ICommand {
 			return;
 		} else if (i2.getId() == 0) {
 			event.getChannel().sendMessageFormat("%s, this item does not exist.", p1.getAsMention()).complete();
+			return;
 		} else if (!i2.isTradable()) {
 			event.getChannel().sendMessageFormat("%s, %s %s is not tradable.", p1.getAsMention(), Util.getArticle(i2.toString()), i2.toString()).complete();
 			return;
