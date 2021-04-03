@@ -174,7 +174,7 @@ public class Dungeon {
 					
 					// Chance to have a random dinosaur charm
 					if (MesozoicRandom.nextInt(Constants.DUNGEON_CHARM_CHANCE) == 0) {
-						Item charm = Util.getRandomElement(Item.getItemsWithTag(ItemTag.DinosaurCharm));
+						Item charm = Util.getRandomElement(Item.getItemsWithTag(ItemTag.DungeonDinoCharm));
 						d.floors[q][w].setItem(charm);
 						d.charmShardCount++;
 					}

@@ -19,6 +19,7 @@ public enum ItemTag {
 	Charm("#charm"),
 	DinosaurCharm("#dinocharm"),
 	BattlefieldCharm("#fieldcharm"),
+	DungeonDinoCharm("#ddcharm"),
 
 	HalloweenCandy("#halloweencandy"),
 
