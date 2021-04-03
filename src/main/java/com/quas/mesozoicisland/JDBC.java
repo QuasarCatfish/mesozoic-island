@@ -270,22 +270,24 @@ public class JDBC {
 				int itemid = in.nextInt();
 				long itemdmg = in.nextLong();
 				long count = in.hasNextLong() ? in.nextLong() : 1L;
-				ret.append(String.format("%s %,d %s%n", Constants.BULLET_POINT, count, Item.getItem(new Pair<Integer, Long>(itemid, itemdmg)).toString(count)));
+				ret.append(String.format("%s %,d %s (ID %d)%n", Constants.BULLET_POINT, count, Item.getItem(new Pair<Integer, Long>(itemid, itemdmg)).toString(count), itemid));
 				break;
 			case "d": case "dino": case "dinosaur":
 				int dinoid = in.nextInt();
 				int dinoform = in.nextInt();
 				int dinorp = in.hasNextInt() ? in.nextInt() : 1;
+				Dinosaur dino = Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform));
 				if (dinoform == DinosaurForm.Accursed.getId()) {
-					ret.append(Constants.BULLET_POINT + " " + Zalgo.field(String.format("%,d %s Crystal%s", dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s")) + "\n");
+					ret.append(Constants.BULLET_POINT + " " + Zalgo.field(String.format("%,d %s Crystal%s (#%s)", dinorp, dino.getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s", dino.getId())) + "\n");
 				} else {
-					ret.append(String.format("%s %,d %s Crystal%s%n", Constants.BULLET_POINT, dinorp, Dinosaur.getDinosaur(new Pair<Integer, Integer>(dinoid, dinoform)).getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s"));
+					ret.append(String.format("%s %,d %s Crystal%s (#%s)%n", Constants.BULLET_POINT, dinorp, dino.getDinosaurName(), dinorp == 1 || dinorp == -1 ? "" : "s", dino.getId()));
 				}
 				break;
 			case "r": case "rune":
 				int runeid = in.nextInt();
 				int runerp = in.hasNextInt() ? in.nextInt() : 1;
-				ret.append(String.format("%s %,d %s Rune%s%n", Constants.BULLET_POINT, runerp, Rune.getRune(runeid).getName(), runerp == 1 || runerp == -1 ? "" : "s"));
+				Rune rune = Rune.getRune(runeid);
+				ret.append(String.format("%s %,d %s Rune%s (#%03d)%n", Constants.BULLET_POINT, runerp, rune.getName(), runerp == 1 || runerp == -1 ? "" : "s", rune.getId()));
 				break;
 			case "e": case "egg":
 				int eggdex = in.nextInt();
