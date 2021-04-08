@@ -22,6 +22,7 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.RaidReward;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
@@ -97,6 +98,10 @@ public class TestCommand implements ICommand {
 			
 			case "commands": {
 				event.getChannel().sendMessageFormat("%s, there are %,d commands.", event.getAuthor().getAsMention(), CommandManager.values().size()).complete();
+			} break;
+
+			case "raidreward": {
+				event.getChannel().sendMessageFormat(JDBC.getRedeemMessage(RaidReward.randomReward())).complete();
 			} break;
 
 			case "spawncheck": {

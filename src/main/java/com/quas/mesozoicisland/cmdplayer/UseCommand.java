@@ -3,7 +3,6 @@ package com.quas.mesozoicisland.cmdplayer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -566,12 +565,7 @@ public class UseCommand implements ICommand {
 					
 					// Prizes
 					if (!b.didBossWin()) {
-						StringJoiner sj = new StringJoiner(" ");
-						for (int q = 0; q < Constants.RAID_REWARD_COUNT; q++) {
-							sj.add(RaidReward.randomReward().asRedeem());
-						}
-
-						String prize = sj.toString();
+						String prize = RaidReward.randomReward();
 						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1_000, Constants.SPAWN_CHANNEL, String.format("%s, you find these rewards from the %s:\n%s", p.getAsMention(), raid.getEffectiveName(), JDBC.getRedeemMessage(prize)));
 						Action.addRedeemDelayed(MesozoicIsland.getAssistant().getIdLong(), p.getIdLong(), time + 1_000, prize);
 						Action.addItemDelayed(p.getIdLong(), time + 1_000, Stat.RaidsDefeated.getId(), 1);

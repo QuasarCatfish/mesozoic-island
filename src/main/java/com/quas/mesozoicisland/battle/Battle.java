@@ -759,6 +759,23 @@ public class Battle {
 						defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), def));
 			}
 			return sb.toString();
+		} else if (atkeff == BattleAttack.DoubleScare) {
+			long atk = defend.getDinosaur().getAttack();
+			long def = defend.getDinosaur().getDefense();
+
+			boolean sa = defend.getDinosaur().addEffect(StatusEffect.ScareAttack);
+			boolean sd = defend.getDinosaur().addEffect(StatusEffect.ScareDefense);
+			
+			if (sa || sd) {
+				atk -= defend.getDinosaur().getAttack();
+				def -= defend.getDinosaur().getDefense();
+				sb.append(String.format("%s's %s scares %s's %s, lowering its attack by %,d and its defense by %,d.",
+						attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(),
+						defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName(), atk, def));
+				return sb.toString();
+			} else {
+				atkeff = BattleAttack.AlwaysHitAttack;
+			}
 		} else if (atkeff == BattleAttack.Terror) {
 			long atk = defend.getDinosaur().getAttack();
 			long def = defend.getDinosaur().getDefense();

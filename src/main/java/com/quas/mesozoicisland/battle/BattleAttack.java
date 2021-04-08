@@ -5,7 +5,7 @@ import com.quas.mesozoicisland.util.Util;
 public enum BattleAttack {
 	
 	// Attack
-	BaseAttack, AlwaysHitAttack, Critical, Rune, Heal10, Heal50, Miss, Scare, Terror, CoinGrab,
+	BaseAttack, AlwaysHitAttack, Critical, Rune, Heal10, Heal50, Miss, Scare, DoubleScare, Terror, CoinGrab,
 	
 	// Battlefields
 	BattlefieldFog, BattlefieldEnchanted, BattlefieldLush, BattlefieldInhabited, BattlefieldImpendingDoom, BattlefieldPlagued, BattlefieldGlistening, BattlefieldDank,
@@ -22,6 +22,6 @@ public enum BattleAttack {
 	
 	public static BattleAttack[] DUNGEON_BOSS_ATTACKS = Util.arr(BaseAttack, BaseAttack, BaseAttack, Critical, Rune, Heal10);
 	
-	public static BattleAttack[] RAID_BOSS_ATTACKS = Util.arr(Critical, Critical, Terror, Heal50);
+	public static BattleAttack[] RAID_BOSS_ATTACKS = Util.arr(Critical, Critical, DoubleScare, Heal50);
 	public static BattleAttack[] RAID_BOSS_DEFENSE = Util.arr(BaseDefend, BaseDefend, Block, Counter);
 }

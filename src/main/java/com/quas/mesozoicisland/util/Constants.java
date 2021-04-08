@@ -124,7 +124,7 @@ public class Constants {
 	public static final int REQUIRED_RAID_LEVEL = 50;
 	public static final int BONUS_RAID_LEVEL = 10;
 	public static final int RAID_CYCLE_DAYS = 3;
-	public static final int RAID_REWARD_COUNT = 3;
+	public static final int RAID_MIN_POINTS = 10;
 	
 	// Daily
 	public static final long DAILY_MONEY = 1_000;
