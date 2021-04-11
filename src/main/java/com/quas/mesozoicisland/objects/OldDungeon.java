@@ -9,14 +9,14 @@ import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Util;
 
-public class Dungeon {
+public class OldDungeon {
 
 	private Dinosaur[][] floors;
 	private int difficulty;
 	private Location loc;
 	private int charmShardCount = 0;
 	
-	private Dungeon() {
+	private OldDungeon() {
 		
 	}
 
@@ -79,8 +79,8 @@ public class Dungeon {
 	
 	//////////////////////////////////////////////////
 	
-	public static Dungeon generateRandomDungeon(String data) {
-		Dungeon d = new Dungeon();
+	public static OldDungeon generateRandomDungeon(String data) {
+		OldDungeon d = new OldDungeon();
 
 		if (Event.isEventActive(EventType.DarknessDescent)) {
 			// set basic stats

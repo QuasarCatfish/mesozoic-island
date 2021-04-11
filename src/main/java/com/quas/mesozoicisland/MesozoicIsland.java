@@ -179,6 +179,7 @@ public class MesozoicIsland {
 		professor.getJDA().addEventListener(new NewMember());
 		professor.getJDA().addEventListener(new CheckNamesAndSpawn());
 		professor.getJDA().addEventListener(new CheckMassPings());
+		professor.getJDA().addEventListener(new CheckGiveawayBotMessage());
 		professor.getJDA().addEventListener(new CheckBattleMessage());
 		professor.getJDA().addEventListener(new MonitorDMs());
 		assistant.getJDA().addEventListener(new MonitorDMs());

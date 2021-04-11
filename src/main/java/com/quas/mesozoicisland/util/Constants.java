@@ -19,6 +19,7 @@ public class Constants {
 	public static final Color COLOR = new Color(0x94BFE2);
 	public static final String GUILD_ID = "643624107753340945";
 	public static final long QUAS_ID = 563661703124877322L;
+	public static final long GIVEAWAY_BOT_ID = 294882584201003009L;
 
 	public static final String JAVA_PATH = "C:\\Users\\ctsn9\\mesozoic-island\\src\\main\\java\\";
 	public static final String RESOURCE_PATH = "C:\\Users\\ctsn9\\mesozoic-island\\src\\main\\resources\\";

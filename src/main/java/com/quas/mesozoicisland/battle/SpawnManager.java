@@ -20,7 +20,7 @@ import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
-import com.quas.mesozoicisland.objects.Dungeon;
+import com.quas.mesozoicisland.objects.OldDungeon;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
@@ -467,7 +467,7 @@ public class SpawnManager {
 		waiting = true;
 		
 		// Generate Dungeon
-		Dungeon d = Dungeon.generateRandomDungeon(data);
+		OldDungeon d = OldDungeon.generateRandomDungeon(data);
 		
 		// Build Spawn Message
 		EmbedBuilder eb = new EmbedBuilder();
