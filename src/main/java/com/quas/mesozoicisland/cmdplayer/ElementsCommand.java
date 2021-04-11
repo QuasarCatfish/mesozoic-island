@@ -62,17 +62,13 @@ public class ElementsCommand implements ICommand {
 		eb.setColor(Constants.COLOR);
 		
 		for (Element e1 : Element.values()) {
-			if (e1.getId() < 0) continue;
-			if (Integer.bitCount(e1.getId()) > 1) continue;
-			if (e1.getName() == null) continue;
+			if (!e1.isVisible()) continue;
 			
 			ArrayList<String> strong = new ArrayList<String>();
 			ArrayList<String> weak = new ArrayList<String>();
 			
 			for (Element e2 : Element.values()) {
-				if (e2.getId() < 0) continue;
-				if (Integer.bitCount(e2.getId()) > 1) continue;
-				if (e2.getName() == null) continue;
+				if (!e2.isVisible()) continue;
 				
 				double eff = e1.getEffectivenessAgainst(e2);
 				if (eff > 1.001) {

@@ -16,7 +16,8 @@ public class Element implements Comparable<Element> {
 	private String name;
 	private long role;
 	private long guild;
-	
+	private boolean visible;
+
 	private Element() {}
 	
 	public int getId() {
@@ -40,6 +41,10 @@ public class Element implements Comparable<Element> {
 		return guild;
 	}
 	
+	public boolean isVisible() {
+		return visible;
+	}
+
 	@Override
 	public int compareTo(Element that) {
 		return Integer.compare(this.id, that.id);
@@ -70,6 +75,7 @@ public class Element implements Comparable<Element> {
 	public static final Element METAL = Element.of(64);
 	public static final Element WATER = Element.of(128);
 	public static final Element AIR = Element.of(256);
+	public static final Element CHAOS = Element.of(1024);
 
 	public static void refresh() {
 		elements.clear();
@@ -87,6 +93,7 @@ public class Element implements Comparable<Element> {
 				e.name = res.getString("elementname");
 				e.role = res.getLong("elementrole");
 				e.guild = res.getLong("guild");
+				e.visible = res.getBoolean("visible");
 				
 				elements.put(id, e);
 				return e;
