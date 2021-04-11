@@ -604,7 +604,7 @@ public class UseCommand implements ICommand {
 				} else {
 					if (form == -1) {
 						Dinosaur d2 = Dinosaur.getDinosaur(dex, DinosaurForm.Standard.getId());
-						event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on a %s.", p.getAsMention(), d2.getDinosaurName()).complete();
+						event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on %s %s.", p.getAsMention(), Util.getArticle(d2.getDinosaurName()), d2.getDinosaurName()).complete();
 						SUCCESS = false;
 					} else if (form == DinosaurForm.Standard.getId()) {
 						Dinosaur d2 = Dinosaur.getDinosaur(dex, form);
@@ -612,7 +612,7 @@ public class UseCommand implements ICommand {
 						SUCCESS = false;
 					} else {
 						Dinosaur d2 = Dinosaur.getDinosaur(dex, form);
-						event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on a %s.", p.getAsMention(), d2.getDinosaurName()).complete();
+						event.getChannel().sendMessageFormat("%s, this XP Potion can only be used on %s %s.", p.getAsMention(), Util.getArticle(d2.getDinosaurName()), d2.getDinosaurName()).complete();
 						SUCCESS = false;
 					}
 				}
