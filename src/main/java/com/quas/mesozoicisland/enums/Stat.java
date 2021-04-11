@@ -17,6 +17,8 @@ public enum Stat {
 	// Dungeons
 	DungeonsEntered(3),
 	DungeonsCleared(4),
+	InfiniDungeonFloorsCleared(34),
+	InfiniDungeonDeepestFloor(35),
 
 	// Dinosaurs
 	DinosaursCaught(5),

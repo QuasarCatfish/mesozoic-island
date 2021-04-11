@@ -20,7 +20,7 @@ import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
-import com.quas.mesozoicisland.objects.OldDungeon;
+import com.quas.mesozoicisland.objects.Dungeon;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
@@ -32,6 +32,7 @@ import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.MessageHistory;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -467,23 +468,25 @@ public class SpawnManager {
 		waiting = true;
 		
 		// Generate Dungeon
-		OldDungeon d = OldDungeon.generateRandomDungeon(data);
+		Dungeon d = Dungeon.generateRandomDungeon(data);
+		// OldDungeon d = OldDungeon.generateRandomDungeon(data);
 		
 		// Build Spawn Message
-		EmbedBuilder eb = new EmbedBuilder();
-		eb.setTitle(d.getTitle());
-		eb.setColor(Constants.COLOR);
-		eb.addField("Dungeon Size", String.format("%,d Floors", d.getFloorCount()), true);
-		eb.addField("Difficulty", d.getDifficultyString(), true);
-		eb.addField("Location", d.getLocation().toString(), true);
-		eb.addField("Boss", d.getBoss().toString() + " [" + d.getBoss().getElement().toString() + "]", true);
+		MessageEmbed me = d.getEmbed();
+		// EmbedBuilder eb = new EmbedBuilder();
+		// eb.setTitle(d.getTitle());
+		// eb.setColor(Constants.COLOR);
+		// eb.addField("Dungeon Size", String.format("%,d Floors", d.getFloorCount()), true);
+		// eb.addField("Difficulty", d.getDifficultyString(), true);
+		// eb.addField("Location", d.getLocation().toString(), true);
+		// eb.addField("Boss", d.getBoss().toString() + " [" + d.getBoss().getElement().toString() + "]", true);
 		
 		String msg = String.format("React with %s to join the dungeon exploration team.", DiscordEmote.Fossil.toString());
 		String time = " You have %s remaining.";
 		
 		// Send Initial Message
 		Util.setRolesMentionable(true, DiscordRole.SpawnPing, DiscordRole.DungeonPing);
-		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s %s %s", DiscordRole.SpawnPing, DiscordRole.DungeonPing, eb.build().getTitle()).embed(eb.build()));
+		Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s %s %s", DiscordRole.SpawnPing, DiscordRole.DungeonPing, me.getTitle()).embed(me));
 		Util.setRolesMentionable(false, DiscordRole.SpawnPing, DiscordRole.DungeonPing);
 		
 		// Send Timer Mesage
@@ -523,7 +526,7 @@ public class SpawnManager {
 		}
 		
 		// Create Joined Players Embed
-		eb = new EmbedBuilder();
+		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle(String.format("**Dungeon** (%,d Player%s)", players, players == 1 ? "" : "s"));
 		if (players > 0) {
 			eb.setDescription("Channel Link: ");
@@ -538,8 +541,9 @@ public class SpawnManager {
 				names.add(bt.getPlayer().getName());
 			}
 			
-			for (int q = 0; q < d.getFloorCount(); q++) {
-				Dinosaur[] boss = d.getDinosaursOnFloor(q);
+			boolean bossWin = false;
+			while (d.hasNextFloor()) {
+				Dinosaur[] boss = d.nextFloor();
 				Battle b = new Battle(BattleChannel.Dungeon, BattleType.Boss, d.getLocation());
 				b.addBoss(new BattleTeam(CustomPlayer.Dungeon.getPlayer(), boss));
 				b.setDelayTime(timer);
@@ -550,51 +554,16 @@ public class SpawnManager {
 					Battle.markPlayerBattling(bt.getPlayer().getIdLong(), true);
 				}
 				
-				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), String.format("The dungeon exploration team has reached Floor " + (q + 1) + " of the dungeon."));
-				timer = b.start(q + 1);
-				if (b.didBossWin()) {
-					if (Event.isEventActive(EventType.DarknessDescent)) {
-						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) - Constants.EVENT_DARKNESS_DESCENT_LOSS_FLOOR_COUNT));
-						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES)) + 1));
-					}
-					break;
-				} else {
-					if (Event.isEventActive(EventType.DarknessDescent)) {
-						JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) + 1));
-						for (BattleTeam bt : teams) {
-							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DarknessDescentFloorsCleared.getId(), 1);
-						}
-					}
-					
-					if (q == d.getFloorCount() - 1) {
-						Item token = Item.getItem(ItemID.DungeonToken);
-						Item charmShard = Item.getItem(ItemID.CharmShard);
-						StringBuilder winmsg = new StringBuilder();
+				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), String.format("The dungeon exploration team has reached Floor " + d.getFloor() + " of the dungeon."));
+				timer = b.start(d.getFloor());
+				bossWin = b.didBossWin();
+				d.onEndFloor(teams, timer, bossWin);
 
-						winmsg.append("The ");
-						winmsg.append(teams.size() == 1 ? "player has" : "players have");
-						winmsg.append(" defeated **all floors** of the dungeon!");
-
-						if (d.getCharmShardCount() > 0) winmsg.append(String.format(" A crate of %,d %s and %,d %s was left as the dungeon disappeared.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size()), d.getCharmShardCount() * teams.size(), charmShard.toString(d.getCharmShardCount() * teams.size())));
-						else winmsg.append(String.format(" A crate of %,d %s was left as the dungeon disappeared.", d.getTokenCount() * teams.size(), token.toString(d.getTokenCount() * teams.size())));
-
-						if (teams.size() > 1) {
-							if (d.getCharmShardCount() > 0) winmsg.append(String.format(" The players each get %,d %s and %,d %s.", d.getTokenCount(), token.toString(d.getTokenCount()), d.getCharmShardCount(), charmShard.toString(d.getCharmShardCount())));
-							else winmsg.append(String.format(" The players each get %,d %s.", d.getTokenCount(), token.toString(d.getTokenCount())));
-						}
-						
-						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), winmsg.toString());
-						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, winmsg.toString());
-						
-						for (BattleTeam bt : teams) {
-							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
-							Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, token.getIdDmg(), d.getTokenCount());
-							if (d.getCharmShardCount() > 0) Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, charmShard.getIdDmg(), d.getCharmShardCount());
-						}
-					}
-				}
+				if (bossWin) break;
 			}
-			
+
+			d.onEndDungeon(teams, timer, bossWin);
+
 			Action.removePlayerFromBattleDelayed(CustomPlayer.Dungeon.getIdLong(), timer);
 			for (BattleTeam bt : teams) {
 				Action.removePlayerFromBattleDelayed(bt.getPlayer().getIdLong(), timer);
