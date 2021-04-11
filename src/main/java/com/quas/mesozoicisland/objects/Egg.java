@@ -194,6 +194,10 @@ public class Egg implements Comparable<Egg> {
 	public String getPatternString() {
 		return patterncolor.toString() + " " + pattern.toString();
 	}
+
+	public String getNumbers() {
+		return String.format("%d %d %d %d %d %d %d", dex, form, color.getId(), basepatterncolor.getId(), basepattern.getId(), patterncolor.getId(), pattern.getId());
+	}
 	
 	@Override
 	public String toString() {
@@ -283,6 +287,22 @@ public class Egg implements Comparable<Egg> {
 
 		e.eggname = e.getColorString() + " Egg" + (e.pattern == EggPattern.None ? "" : " with " + e.getPatternString());
 		return e;
+	}
+
+	public static Egg getEgg(String numbers) {
+		String[] split = numbers.split("\\s+");
+		int[] nums = new int[split.length];
+		for (int q = 0; q < split.length; q++) nums[q] = Integer.parseInt(split[q]);
+
+		Egg egg = new Egg();
+		egg.dex = nums[0];
+		egg.form = nums[1];
+		egg.color = EggColor.of(nums[2]);
+		egg.basepatterncolor = EggColor.of(nums[3]);
+		egg.basepattern = EggPattern.of(nums[4]);
+		egg.patterncolor = EggColor.of(nums[5]);
+		egg.pattern = EggPattern.of(nums[6]);
+		return egg;
 	}
 	
 	public static Egg getEgg(EggColor color) {

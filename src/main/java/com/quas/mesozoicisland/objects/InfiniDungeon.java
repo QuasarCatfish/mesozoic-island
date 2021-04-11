@@ -3,7 +3,6 @@ package com.quas.mesozoicisland.objects;
 import java.util.HashMap;
 import java.util.List;
 
-import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.battle.BattleChannel;
@@ -89,7 +88,7 @@ public class InfiniDungeon extends Dungeon {
 		sb.append(String.format(" successfully defeated **%,d Floor%s** of the dungeon!", floorsCleared, floorsCleared == 1 ? "" : "s"));
 
 		sb.append(" A crate was left as the dungeon disappeared. It contained:\n");
-		sb.append(JDBC.getRedeemMessage(getTotalRewardString(teams.size())));
+		sb.append(getRewardString(teams.size()));
 		if (teams.size() > 1) sb.append(String.format("The %,d players split the rewards evenly.", teams.size()));
 
 		Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());

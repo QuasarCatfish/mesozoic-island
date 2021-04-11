@@ -14,6 +14,7 @@ import com.quas.mesozoicisland.battle.BattleChannel;
 import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.enums.ActionType;
 import com.quas.mesozoicisland.enums.DiscordChannel;
+import com.quas.mesozoicisland.objects.Egg;
 
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Guild;
@@ -116,6 +117,10 @@ public class Action {
 					long htime = res.getLong("time");
 					Daily.doHourly(htime);
 					JDBC.addAction(ActionType.NewHour, self, 0, "2-Hourly Message.", htime + TimeUnit.HOURS.toMillis(2));
+					break;
+				case GiveEgg:
+					Egg egg = Egg.getEgg(res.getString("msg"));
+					JDBC.addEgg(res.getLong("recipient"), egg);
 					break;
 				}
 				
@@ -228,5 +233,9 @@ public class Action {
 
 	public static void addDinosaurLossDelayed(long to, long after, String dino) {
 		JDBC.addAction(ActionType.AddLossToDinosaur, 0, to, dino, System.currentTimeMillis() + after);
+	}
+
+	public static void addEggDelayed(long to, long after, Egg egg) {
+		JDBC.addAction(ActionType.GiveEgg, 0, to, egg.getNumbers(), System.currentTimeMillis() + after);
 	}
 }

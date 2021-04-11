@@ -143,25 +143,14 @@ public class MesozoicRandom {
 		}
 	}
 	
-	public static Dinosaur nextDungeonDinosaur() {
+	public static Dinosaur nextDinosaur(DinosaurForm form) {
 		while (true) {
-			Dinosaur d = MesozoicRandom.nextDinosaur();
-			if (d.getDex() < 0) continue;
-			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
-			Dinosaur dungeon = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeon.getId());
-			if (dungeon == null) continue;
-			return dungeon;
-		}
-	}
-	
-	public static Dinosaur nextDungeonBossDinosaur() {
-		while (true) {
-			Dinosaur d = MesozoicRandom.nextDinosaur();
-			if (d.getDex() < 0) continue;
-			if (d.getDinosaurForm() != DinosaurForm.Standard) continue;
-			Dinosaur boss = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.UncapturableDungeonBoss.getId());
-			if (boss == null) continue;
-			return boss;
+			Dinosaur base = MesozoicRandom.nextDinosaur();
+			if (base.getDex() < 0) continue;
+			if (base.getDinosaurForm() != DinosaurForm.Standard) continue;
+			Dinosaur dino = Dinosaur.getDinosaur(base.getDex(), form.getId());
+			if (dino == null) continue;
+			return dino;
 		}
 	}
 	
@@ -203,6 +192,9 @@ public class MesozoicRandom {
 		case Halloween:
 		case Thanksgiving:
 			hp += nextInt(1_500, 4_500);
+			break;
+		case Chaos:
+			hp += nextInt(10_000, 20_000);
 			break;
 		default:
 			hp += 1_000_000_000;

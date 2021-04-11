@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.StringJoiner;
 import java.util.TreeMap;
 
-import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.battle.BattleChannel;
 import com.quas.mesozoicisland.battle.BattleTeam;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
@@ -56,10 +56,18 @@ public abstract class Dungeon {
 		return reward;
 	}
 
-	public String getTotalRewardString(int players) {
-		StringJoiner sj = new StringJoiner(" ");
-		for (ItemID item : reward.keySet()) {
-			sj.add(String.format("item %d %d %d", item.getItemId(), item.getItemDamage(), reward.get(item) * players));
+	public String getRewardString(int players) {
+		StringJoiner sj = new StringJoiner("\n");
+		for (ItemID itemid : reward.keySet()) {
+			Item item = Item.getItem(itemid);
+			int total = players * reward.get(itemid);
+
+			StringBuilder sb = new StringBuilder();
+			sb.append(Constants.BULLET_POINT);
+			sb.append(String.format(" %,d %s", total, item.toString(total)));
+			if (players > 1) sb.append(String.format(" (%,d per trainer)", reward.get(itemid)));
+
+			sj.add(sb.toString());
 		}
 		return sj.toString();
 	}
@@ -95,7 +103,7 @@ public abstract class Dungeon {
 			sb.append(" defeated **all floors** of the dungeon!");
 
 			sb.append(" A crate was left as the dungeon disappeared. It contained:\n");
-			sb.append(JDBC.getRedeemMessage(getTotalRewardString(teams.size())));
+			sb.append(getRewardString(teams.size()));
 			if (teams.size() > 1) sb.append(String.format("The %,d players split the rewards evenly.", teams.size()));
 
 			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
@@ -116,13 +124,13 @@ public abstract class Dungeon {
 		int minLevel = 5 * difficulty * (difficulty - 1);
 		int maxLevel = 5 * difficulty * (difficulty + 1);
 		int level = MesozoicRandom.nextInt(minLevel, maxLevel) + 1;
-		Dinosaur dino = MesozoicRandom.nextDungeonDinosaur().setLevel(level).addBoost(Constants.DUNGEON_BOOST);
+		Dinosaur dino = MesozoicRandom.nextDinosaur(DinosaurForm.UncapturableDungeon).setLevel(level).addBoost(Constants.DUNGEON_BOOST);
 		return dino;
 	}
 
 	protected Dinosaur randDinosaurBoss() {
 		int level = 5 * difficulty * (difficulty + 1);
-		return MesozoicRandom.nextDungeonBossDinosaur().setLevel(level).addBoost(Constants.DUNGEON_BOOST);
+		return MesozoicRandom.nextDinosaur(DinosaurForm.UncapturableDungeonBoss).setLevel(level).addBoost(Constants.DUNGEON_BOOST);
 	}
 
 	///////////////////////////////////////////////
@@ -155,14 +163,25 @@ public abstract class Dungeon {
 			}
 		}
 		
-		if (Event.isEventActive(EventType.DarknessDescent) || data.get("type").equals("darknessDescent")) {
+		// Specific Dungeon Type
+		switch (data.get("type")) {
+			case "basic": return new BasicDungeon(data);
+			case "infini": return new InfiniDungeon(data);
+			case "chaos": return new ChaosDungeon(data);
+		}
+
+		// Event Dungeons
+		if (Event.isEventActive(EventType.DarknessDescent)) {
 			return new DarknessDescentDungeon(data);
 		}
 
-		if (data.get("type").equals("infini")) {
-			return new InfiniDungeon(data);
+		// Dungeon Variant
+		switch (MesozoicRandom.nextInt(Constants.DUNGEON_VARIANT_CHANCE)) {
+			case 0: return new InfiniDungeon(data);
+			case 1: return new ChaosDungeon(data);
 		}
 
+		// Basic Dungeon
 		return new BasicDungeon(data);
 	}
 }

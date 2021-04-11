@@ -46,11 +46,15 @@ public class BasicDungeon extends Dungeon {
 
 		eb.setTitle(getEmbedTitle());
 		eb.addField("Dungeon Size", String.format("%,d Floors", floors), true);
-		eb.addField("Difficulty", getStars(difficulty), true);
+		eb.addField("Difficulty", getDifficultyString(), true);
 		eb.addField("Location", loc.toString(), true);
 		eb.addField("Boss", String.format("%s [%s]", boss, boss.getElement()), false);
 
 		return eb.build();
+	}
+
+	protected String getDifficultyString() {
+		return getStars(difficulty);
 	}
 
 	@Override

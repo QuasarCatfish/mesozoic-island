@@ -118,7 +118,9 @@ public class Constants {
 	public static final int MIN_DUNGEON_FLOORS = 3; // default 3
 	public static final int MAX_DUNGEON_FLOORS = 10; // default 10
 	public static final int DUNGEON_BOOST = 50; // default 50
+	public static final int CHAOS_DUNGEON_BOOST = 200; // default 200
 	public static final int DUNGEON_CHARM_CHANCE = 7; // default 7
+	public static final int DUNGEON_VARIANT_CHANCE = 12; // default 12
 	public static final long DUNGEON_WAIT = TimeUnit.SECONDS.toMillis(150); // default 150 sec
 	
 	// Raids
