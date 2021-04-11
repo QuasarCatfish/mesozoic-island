@@ -145,7 +145,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add("__Battles:__");
 			introduction.add(Constants.BULLET_POINT + " To enter a battle, you must select a team of up to three dinosaurs to participate, using the `select` command.");
 			introduction.add(Constants.BULLET_POINT + " Wild dinosaurs can spawn in groups of one, two, or three for each of the tiers of battle. This is also the maximum number of dinosaurs that will be sent into battle, even if you have more selected.");
-			introduction.add(Constants.BULLET_POINT + " Battles against wild dinosaurs are free-for-alls. Players and the wild dinosaurs can each attack all players in the battle. Any player who defeats a wild dinosaur will receive its crystal and add it to their collection.");
+			introduction.add(Constants.BULLET_POINT + " Battles against wild dinosaurs are free-for-alls. Trainers and the wild dinosaurs can each attack all trainers in the battle. Any trainer who defeats a wild dinosaur will receive its crystal and add it to their collection.");
 			introduction.add(Constants.BULLET_POINT + " Defeating any dinosaur in a battle will reward your dinosaur with Experience, used to level up your dinosaur.");
 			introduction.add(Constants.BULLET_POINT + " The tier of battle that you enter is dictated by which dinosaurs you have selected. When selecting your dinosaurs, or when you use the `selected` command, the tier of your team will be displayed.");
 			introduction.add(DiscordEmote.Blank.toString());
@@ -157,17 +157,44 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " To see the list of eggs you have, and how many Hatch Points they have and need, you can use the `eggs` command.");
 			introduction.add(Constants.BULLET_POINT + " To see more detailed information about your egg, you can use the `info` command.");
 			introduction.add(Constants.BULLET_POINT + " If your egg has the required hatch points, you can hatch the egg with the `hatch` command.");
+			introduction.add(Constants.BULLET_POINT + " Egg Salesman Benedict can give or hatch your eggs in exchange for Dinosaur Coins");
 			introduction.add(Constants.BULLET_POINT + " For more information about Eggs, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Eggs>.");
 			introduction.add(DiscordEmote.Blank.toString());
 
-			introduction.add("__Dungeons:__");
-			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosuars spawning, a Dungeon will appear. All players of any tier are able to join the dungeon expedition.");
+			introduction.add("__Standard Dungeons:__");
+			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosuars spawning, a Dungeon will appear. All trainers of any tier are able to join the dungeon expedition.");
 			introduction.add(Constants.BULLET_POINT + " Unlike wild battles, dinosaur trainers work together to defeat the Dungeon Dinosaurs present in the mysterious Dungeons.");
 			introduction.add(Constants.BULLET_POINT + " Dungeons are made up of multiple floors, each floor having a difficult battle. There can range between three and ten floors in a dungeon.");
 			introduction.add(Constants.BULLET_POINT + " The final floor of the dungeon houses a single dinosaur, the Dungeon Boss. This dinosaur is extremely difficult to defeat.");
-			introduction.add(Constants.BULLET_POINT + " Dungeons also have an associated difficulty. The more stars a dungeon has, the harder each battle will be, but the better rewards you'll find at the top.");
-			introduction.add(Constants.BULLET_POINT + " Defeating a dungeon rewards all players with Dungeon Tokens, which can be used to obtain Dungeon Dinosaurs of your own.");
-			introduction.add(Constants.BULLET_POINT + " For more information about Dungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
+			introduction.add(Constants.BULLET_POINT + " Dungeons also have an associated difficulty. The more stars a dungeon has, the harder each battle will be, but the better rewards you'll find at the end.");
+			introduction.add(Constants.BULLET_POINT + " Defeating a dungeon rewards all trainers with Dungeon Tokens, which can be used to obtain Dungeon Dinosaurs of your own.");
+			introduction.add(Constants.BULLET_POINT + " In addition to Dungeon Tokens, trainers can earn Charm Shards based on the number of dinosaurs in the dungeon holding a Charm.");
+			introduction.add(Constants.BULLET_POINT + " For more information about Standard Dungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
+			introduction.add(DiscordEmote.Blank.toString());
+
+			introduction.add("__Chaos Dungeons:__");
+			introduction.add(Constants.BULLET_POINT + " Unlike regular dungeons, which have a single Dungeon Boss Dinosaur on the final floor, a Chaos Dungeon will feature a team of Chaos Dinosaurs and a Chaos Boss Dinosaur.");
+			introduction.add(Constants.BULLET_POINT + " The rest of the dungeon features stronger than normal Dungeon Dinosaurs, which are powered up by the Chaos Boss Dinosaur.");
+			introduction.add(Constants.BULLET_POINT + " If the trainers defeat the Chaos Boss Dinosaur, one player at random will receive a Chaos Egg, which will hatch into a Chaos Dinosaur.");
+			introduction.add(Constants.BULLET_POINT + " Chaos Dungeons will also yield more Dungeon Tokens than a Standard Dungeon.");
+			introduction.add(Constants.BULLET_POINT + " For more information about Chaos Dungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
+			introduction.add(DiscordEmote.Blank.toString());
+
+			introduction.add("__InfiniDungeons:__");
+			introduction.add(Constants.BULLET_POINT + " Unlike regular dungeons, which have a set number of floors, the InfiniDungeon is endless and trainers will continue until they lose a battle.");
+			introduction.add(Constants.BULLET_POINT + " Each floor is significantly more difficult than the last, but will give a lot more Experience too.");
+			introduction.add(Constants.BULLET_POINT + " Since traversal through an InfiniDungeon is guarenteed to end in failure, the reward is instead based on the number of floors cleared.");
+			introduction.add(Constants.BULLET_POINT + " For more information about InfiniDungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
+			introduction.add(DiscordEmote.Blank.toString());
+
+			introduction.add("__Raid Battles:__");
+			introduction.add(Constants.BULLET_POINT + " Once a trainer reaches Level 50, alongside their normal daily, the trainer will receive a Raid Pass.");
+			introduction.add(Constants.BULLET_POINT + " Using the Raid Pass will immediately start a battle against the daily Raid Boss, so be sure your team is ready before using it.");
+			introduction.add(Constants.BULLET_POINT + " The Raid Boss's level scales with your player level, starting at Level 100.");
+			introduction.add(Constants.BULLET_POINT + " For every 10 levels above Level 50, trainers will receive an additional Raid Pass every day.");
+			introduction.add(Constants.BULLET_POINT + " Defeating the Raid Boss will grant various rewards randomly, including Dinosaur Coins, Colored Dungeon Locators, or Prismatic Converters.");
+			introduction.add(Constants.BULLET_POINT + " ");
+			introduction.add(Constants.BULLET_POINT + " For more information about Raids, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Raids>.");
 			introduction.add(DiscordEmote.Blank.toString());
 
 			TextChannel channel = DiscordChannel.Introduction.getChannel(MesozoicIsland.getProfessor());
@@ -195,8 +222,9 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordChannel.Trading.toString() + " - Where you can discuss and perform trades with other trainers.");
 			channels.add(DiscordChannel.BotCommands.toString() + " - A channel for users to use their spammy commands.");
 			channels.add(DiscordChannel.Wiki.toString() + " - A channel for the Mesozoic Island wiki.");
+			channels.add(DiscordChannel.Giveaways.toString() + " - A channel for various giveaways of Mesozoic Island items and other goodies.");
 			channels.add(DiscordChannel.Events.toString() + " - Information about in-game events.");
-			channels.add(DiscordChannel.Contest.toString() + " - Information about the current contest.");
+			channels.add(DiscordChannel.Contest.toString() + " - Information about the current or most recent contest.");
 			channels.add(DiscordEmote.Blank.toString());
 			
 			channels.add("__**Chatting**__");
