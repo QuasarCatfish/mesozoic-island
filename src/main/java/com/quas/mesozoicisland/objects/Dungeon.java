@@ -111,6 +111,8 @@ public abstract class Dungeon {
 			
 			for (BattleTeam bt : teams) {
 				Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
+				if (this instanceof ChaosDungeon) Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.ChaosDungeonsCleared.getId(), 1);
+
 				for (ItemID item : reward.keySet()) {
 					Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, item.getId(), reward.get(item));
 				}

@@ -19,6 +19,8 @@ public enum Stat {
 	DungeonsCleared(4),
 	InfiniDungeonFloorsCleared(34),
 	InfiniDungeonDeepestFloor(35),
+	ChaosDungeonsEntered(36),
+	ChaosDungeonsCleared(37),
 
 	// Dinosaurs
 	DinosaursCaught(5),
@@ -40,6 +42,7 @@ public enum Stat {
 	// Eggs
 	EggsReceived(13),
 	EggsHatched(14),
+	ChaosEggsReceived(38),
 
 	// Shop
 	TransactionsMade(15),

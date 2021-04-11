@@ -438,6 +438,7 @@ public class JDBC {
 	public static synchronized boolean addEgg(long pid, Egg egg) {
 		int slot = Util.getFirstOpenIncubator(pid);
 		JDBC.addItem(pid, Stat.EggsReceived.getId());
+		if (egg.getForm() == DinosaurForm.Chaos.getId()) JDBC.addItem(pid, Stat.ChaosEggsReceived.getId());
 		
 		if (egg.hasCustomName()) {
 			return executeUpdate("insert into eggs(dex, form, player, incubator, original, maxhp, color, patterncolorbase, patternbase, patterncolor, pattern, eggname) values(%d, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '%s');",

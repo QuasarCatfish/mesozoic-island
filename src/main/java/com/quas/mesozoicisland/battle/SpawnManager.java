@@ -19,6 +19,7 @@ import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
+import com.quas.mesozoicisland.objects.ChaosDungeon;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Dungeon;
 import com.quas.mesozoicisland.objects.Egg;
@@ -522,6 +523,7 @@ public class SpawnManager {
 			JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DungeonsEntered.getId());
 			if (bt.hasAccursed()) JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DungeonsEnteredWithAccursed.getId());
 			if (Event.isEventActive(EventType.DarknessDescent)) JDBC.addItem(bt.getPlayer().getIdLong(), Stat.DarknessDescentDungeonsEntered.getId());
+			if (d instanceof ChaosDungeon) JDBC.addItem(bt.getPlayer().getIdLong(), Stat.ChaosDungeonsEntered.getId());
 			players++;
 		}
 		
