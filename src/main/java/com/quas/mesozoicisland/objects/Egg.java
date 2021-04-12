@@ -261,8 +261,6 @@ public class Egg implements Comparable<Egg> {
 		e.player = -1;
 		e.hp = 0;
 
-		e.dex = -1;
-		e.form = 0;
 		e.dex = dino.getFirstValue();
 		e.form = dino.getSecondValue();
 		
@@ -302,6 +300,10 @@ public class Egg implements Comparable<Egg> {
 		egg.basepattern = EggPattern.of(nums[4]);
 		egg.patterncolor = EggColor.of(nums[5]);
 		egg.pattern = EggPattern.of(nums[6]);
+
+		Dinosaur dino = Dinosaur.getDinosaur(egg.dex, egg.form);
+		egg.maxhp = MesozoicRandom.nextHatchPoints(dino.getRarity(), dino.getDinosaurForm());
+		
 		return egg;
 	}
 	

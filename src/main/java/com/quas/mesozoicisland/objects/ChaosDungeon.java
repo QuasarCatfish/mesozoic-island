@@ -50,18 +50,20 @@ public class ChaosDungeon extends BasicDungeon {
 	public void onEndDungeon(List<BattleTeam> teams, long timer, boolean bossWin) {
 		super.onEndDungeon(teams, timer, bossWin);
 
-		Player p = Util.getRandomElement(teams).getPlayer();		
-		StringBuilder sb = new StringBuilder();
-		Egg egg = getEgg();
-
-		sb.append(p.getName());
-		sb.append(" picks up the ");
-		sb.append(egg.getEggName());
-		sb.append(" at the end of the dungeon. What could be inside?");
-
-		Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
-		Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
-		Action.addEggDelayed(p.getIdLong(), timer, egg);
+		if (!bossWin) {
+			Player p = Util.getRandomElement(teams).getPlayer();		
+			StringBuilder sb = new StringBuilder();
+			Egg egg = getEgg();
+	
+			sb.append(p.getName());
+			sb.append(" picks up the ");
+			sb.append(egg.getEggName());
+			sb.append(" at the end of the dungeon. What could be inside?");
+	
+			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
+			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
+			Action.addEggDelayed(p.getIdLong(), timer, egg);
+		}
 	}
 
 	private Egg getEgg() {

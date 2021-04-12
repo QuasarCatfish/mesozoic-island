@@ -175,7 +175,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add("__Chaos Dungeons:__");
 			introduction.add(Constants.BULLET_POINT + " Unlike regular dungeons, which have a single Dungeon Boss Dinosaur on the final floor, a Chaos Dungeon will feature a team of Chaos Dinosaurs and a Chaos Boss Dinosaur.");
 			introduction.add(Constants.BULLET_POINT + " The rest of the dungeon features stronger than normal Dungeon Dinosaurs, which are powered up by the Chaos Boss Dinosaur.");
-			introduction.add(Constants.BULLET_POINT + " If the trainers defeat the Chaos Boss Dinosaur, one player at random will receive a Chaos Egg, which will hatch into a Chaos Dinosaur.");
+			introduction.add(Constants.BULLET_POINT + " At the very end of the Chaos Dungeon is a mysterious egg. A trainer at random will take this egg with them if they make it past the Chaos Boss. What could be inside?");
 			introduction.add(Constants.BULLET_POINT + " Chaos Dungeons will also yield more Dungeon Tokens than a Standard Dungeon.");
 			introduction.add(Constants.BULLET_POINT + " For more information about Chaos Dungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
 			introduction.add(DiscordEmote.Blank.toString());
