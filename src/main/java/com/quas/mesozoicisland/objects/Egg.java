@@ -196,7 +196,7 @@ public class Egg implements Comparable<Egg> {
 	}
 
 	public String getNumbers() {
-		return String.format("%d %d %d %d %d %d %d", dex, form, color.getId(), basepatterncolor.getId(), basepattern.getId(), patterncolor.getId(), pattern.getId());
+		return String.format("%d %d %d %d %d %d %d %d", dex, form, maxhp, color.getId(), basepatterncolor.getId(), basepattern.getId(), patterncolor.getId(), pattern.getId());
 	}
 	
 	@Override
@@ -295,15 +295,13 @@ public class Egg implements Comparable<Egg> {
 		Egg egg = new Egg();
 		egg.dex = nums[0];
 		egg.form = nums[1];
-		egg.color = EggColor.of(nums[2]);
-		egg.basepatterncolor = EggColor.of(nums[3]);
-		egg.basepattern = EggPattern.of(nums[4]);
-		egg.patterncolor = EggColor.of(nums[5]);
-		egg.pattern = EggPattern.of(nums[6]);
+		egg.maxhp = nums[2];
+		egg.color = EggColor.of(nums[3]);
+		egg.basepatterncolor = EggColor.of(nums[4]);
+		egg.basepattern = EggPattern.of(nums[5]);
+		egg.patterncolor = EggColor.of(nums[6]);
+		egg.pattern = EggPattern.of(nums[7]);
 
-		Dinosaur dino = Dinosaur.getDinosaur(egg.dex, egg.form);
-		egg.maxhp = MesozoicRandom.nextHatchPoints(dino.getRarity(), dino.getDinosaurForm());
-		
 		return egg;
 	}
 	
