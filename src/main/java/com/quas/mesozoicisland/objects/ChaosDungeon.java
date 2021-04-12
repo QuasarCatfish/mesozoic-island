@@ -51,7 +51,7 @@ public class ChaosDungeon extends BasicDungeon {
 		super.onEndDungeon(teams, timer, bossWin);
 
 		if (!bossWin) {
-			Player p = Util.getRandomElement(teams).getPlayer();		
+			Player p = Util.getRandomElement(teams).getPlayer();
 			StringBuilder sb = new StringBuilder();
 			Egg egg = getEgg();
 	

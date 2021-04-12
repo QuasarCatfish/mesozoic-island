@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
@@ -70,6 +71,12 @@ public class BenedictHatchCommand implements ICommand {
 			return;
 		}
 
+		Dinosaur d = Dinosaur.getDinosaur(egg.getDex(), egg.getForm());
+		if (d.getDinosaurForm() == DinosaurForm.Chaos) {
+			event.getChannel().sendMessageFormat("%s, the energy emitting from this egg prevents it from being hatched early.", p.getAsMention()).complete();
+			return;
+		}
+
 		Item coin = Item.getItem(ItemID.DinosaurCoin);
 		long money = p.getItemCount(coin);
 		int hp = Math.max(0, egg.getMaxHatchPoints() - egg.getCurrentHatchPoints());
@@ -85,7 +92,6 @@ public class BenedictHatchCommand implements ICommand {
 			return;
 		}
 
-		Dinosaur d = Dinosaur.getDinosaur(egg.getDex(), egg.getForm());
 		event.getChannel().sendMessageFormat("%s, for a cost of %,d %s, your %s hatched into %s %s (#%s)!", p.getAsMention(), cost, coin.toString(cost), egg.getEggName(), Util.getArticle(d.getDinosaurName()), d.getDinosaurName(), d.getId()).complete();
 		JDBC.executeUpdate("update eggs set player = 1 where eggid = %d;", egg.getId());
 		JDBC.addDinosaur(event.getChannel(), p.getIdLong(), d.getIdPair());

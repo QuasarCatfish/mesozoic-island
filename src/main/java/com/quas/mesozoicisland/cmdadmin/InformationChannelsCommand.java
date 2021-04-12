@@ -72,7 +72,7 @@ public class InformationChannelsCommand implements ICommand {
 		if (c.contains(DiscordChannel.Rules.getIdLong())) {
 			ArrayList<String> rules = new ArrayList<String>();
 			rules.add("__**Rules**__");
-			rules.add(bullet + "**Follow Discord's Terms of Service and Community Guidelines**\nAbide by Discord's terms of service (https://discordapp.com/terms) and community guidelines (https://discordapp.com/guidelines).");
+			rules.add(bullet + "**Follow Discord's Terms of Service and Community Guidelines**\nAbide by Discord's terms of service (<https://discord.com/terms>) and community guidelines (<https://discord.com/guidelines>).");
 			rules.add(bullet + "**No trading in-game goods for outside currency**\nBuying or selling assets, such as dinosaurs, for real-world money is prohibited. Additionally, you are not allowed to trade for assets of another bot.");
 			rules.add(bullet + "**No NSFW images or context**\nThis server should be safe for everyone. Any NSFW pictures or discussions will result in a ban.");
 			rules.add(bullet + "**No illegal discussion**\nThis includes any discussion about illegal drugs or activities, as well as hacking and piracy.");
@@ -87,7 +87,7 @@ public class InformationChannelsCommand implements ICommand {
 			rules.add(bullet + "**Do not mass ping**\nPinging @everyone and @here is disabled, but you will receive a warning if you attempt to. This includes pinging a large number of people in one message.");
 			rules.add(bullet + "**Don't mini-mod**\nIf you are not a moderator, don't try to moderate other players. Notifying a player that they are breaking a rule, or about to, is acceptable, as long as you don't do it excessively. DM a moderator if you have an issue with another user, and they will handle it.");
 			rules.add(bullet + "**Do not impersonate someone else**\nThis includes admins, moderators, bots, and other users.");
-			rules.add(bullet + "**Don't talk back to Mods**\nRespect the moderators! They are here to make sure the rules are followed. If you believe a moderator is not acting appropriately for a mod, DM an admin about the issue.");
+			rules.add(bullet + "**Respect the Moderators**\nRespect the moderators and don't talk back to them! They are here to make sure the rules are followed. If you believe a moderator is not acting appropriately for a mod, DM an admin about the issue.");
 			rules.add(bullet + "**Don't ping <@&646815748181721088> or <@&646815809662091281>**\nMass pinging all admins or moderators should only be done in dire circumstances. Moderators can take care of issues with users but might not be able to help with game-related issues.");
 			rules.add(bullet + "**Keep conversations in English**\nMesozoic Island is an English-speaking server. Please aim to keep all conversations in English.");
 			rules.add("Breaking one or more of these rules will result in a warning, mute, or ban, depending on the severity of the infraction and your past sanctions. If you believe another user is breaking the rules, please DM a moderator, with evidence, and do not make a scene with the user.");
@@ -115,7 +115,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " The `bag` command lists all of the items you have with you.");
 			introduction.add(Constants.BULLET_POINT + " To learn more about a specific item, you can use the `item` command.");
 			introduction.add(Constants.BULLET_POINT + " To receive pings for various happenings, use the `pingme` command.");
-			introduction.add(Constants.BULLET_POINT + " The `shop` command lists all items available for purcahse, which you can purchase with the `buy` command.");
+			introduction.add(Constants.BULLET_POINT + " The `shop` command lists all items available for purchase, which you can purchase with the `buy` command.");
 			introduction.add(Constants.BULLET_POINT + " For more information about commands, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Commands>.");
 			introduction.add(DiscordEmote.Blank.toString());
 			
@@ -183,7 +183,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add("__InfiniDungeons:__");
 			introduction.add(Constants.BULLET_POINT + " Unlike regular dungeons, which have a set number of floors, the InfiniDungeon is endless and trainers will continue until they lose a battle.");
 			introduction.add(Constants.BULLET_POINT + " Each floor is significantly more difficult than the last, but will give a lot more Experience too.");
-			introduction.add(Constants.BULLET_POINT + " Since traversal through an InfiniDungeon is guarenteed to end in failure, the reward is instead based on the number of floors cleared.");
+			introduction.add(Constants.BULLET_POINT + " Since traversal through an InfiniDungeon is guaranteed to end in failure, the reward is instead based on the number of floors cleared.");
 			introduction.add(Constants.BULLET_POINT + " For more information about InfiniDungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
 			introduction.add(DiscordEmote.Blank.toString());
 
@@ -193,7 +193,6 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " The Raid Boss's level scales with your player level, starting at Level 100.");
 			introduction.add(Constants.BULLET_POINT + " For every 10 levels above Level 50, trainers will receive an additional Raid Pass every day.");
 			introduction.add(Constants.BULLET_POINT + " Defeating the Raid Boss will grant various rewards randomly, including Dinosaur Coins, Colored Dungeon Locators, or Prismatic Converters.");
-			introduction.add(Constants.BULLET_POINT + " ");
 			introduction.add(Constants.BULLET_POINT + " For more information about Raids, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Raids>.");
 			introduction.add(DiscordEmote.Blank.toString());
 
