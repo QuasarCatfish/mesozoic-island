@@ -24,4 +24,5 @@ public enum BattleAttack {
 	
 	public static BattleAttack[] RAID_BOSS_ATTACKS = Util.arr(Critical, Critical, DoubleScare, Heal50);
 	public static BattleAttack[] RAID_BOSS_DEFENSE = Util.arr(BaseDefend, BaseDefend, Block, Counter);
+	public static BattleAttack[] CHAOS_BOSS_ATTACKS = Util.arr(BaseAttack, BaseAttack, Critical, DoubleScare, Heal10);
 }
