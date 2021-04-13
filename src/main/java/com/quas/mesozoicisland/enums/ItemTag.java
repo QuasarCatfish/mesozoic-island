@@ -21,6 +21,7 @@ public enum ItemTag {
 	BattlefieldCharm("#fieldcharm"),
 	DungeonDinoCharm("#ddcharm"),
 
+	Snack("#snack"),
 	HalloweenCandy("#halloweencandy"),
 
 	DungeonLocator("#dungeonlocator"),

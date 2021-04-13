@@ -33,6 +33,7 @@ import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.Rarity;
+import com.quas.mesozoicisland.objects.SnackModule;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.MesozoicDate;
@@ -40,7 +41,6 @@ import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class UseCommand implements ICommand {
@@ -647,13 +647,10 @@ public class UseCommand implements ICommand {
 				}
 			}
 
-			else if (i.getId() == ItemID.DinosaurTreat.getItemId()) {
-				if (d.getDinosaurForm() == DinosaurForm.Contest || d.getDinosaurForm() == DinosaurForm.Accursed) {
-					event.getChannel().sendMessageFormat("%s, your %s refuses to eat the %s.", p.getAsMention(), d.getEffectiveName(), i.toString()).complete();
-					SUCCESS = false;
-				} else {
-					SUCCESS = useTreat(event.getChannel(), d, i);
-				}
+			else if (i.hasTag(ItemTag.Snack)) {
+				SnackModule sm = new SnackModule(d, i);
+				SUCCESS = false;
+				event.getChannel().sendMessage(sm.getResult()).complete();
 			}
 
 			else {
@@ -684,73 +681,5 @@ public class UseCommand implements ICommand {
 	
 	private void sendUnimplemented(MessageReceivedEvent event) {
 		event.getChannel().sendMessageFormat("%s, the implemetation of this item is incomplete. If you believe this is an error, please contact a developer.", event.getAuthor().getAsMention()).complete();
-	}
-	
-	private boolean useTreat(MessageChannel channel, Dinosaur d, Item item) {
-		String name = null, column = null;
-		int max = 0;
-		
-		switch (MesozoicRandom.nextInt(3)) {
-		// HEALTH
-		case 0:
-			max = Constants.MAX_STAT_BOOST - d.getHealthMultiplier();
-			if (max > 0) {
-				name = "Health";
-				column = "modhealth";
-				break;
-			}
-		
-		// ATTACK
-		case 1:
-			max = Constants.MAX_STAT_BOOST - d.getAttackMultiplier();
-			if (max > 0) {
-				name = "Attack";
-				column = "modattack";
-				break;
-			}
-			
-		// DEFENSE
-		case 2:
-			max = Constants.MAX_STAT_BOOST - d.getDefenseMultiplier();
-			if (max > 0) {
-				name = "Defense";
-				column = "moddefense";
-				break;
-			}
-			
-		// DEFAULT
-		default:
-			max = Constants.MAX_STAT_BOOST - d.getHealthMultiplier();
-			if (max > 0) {
-				name = "Health";
-				column = "modhealth";
-				break;
-			}
-			
-			max = Constants.MAX_STAT_BOOST - d.getAttackMultiplier();
-			if (max > 0) {
-				name = "Attack";
-				column = "modattack";
-				break;
-			}
-			
-			max = Constants.MAX_STAT_BOOST - d.getDefenseMultiplier();
-			if (max > 0) {
-				name = "Defense";
-				column = "moddefense";
-				break;
-			}
-		}
-		
-		if (max > 0) {
-			int value = MesozoicRandom.nextInt(Math.min(max, Integer.parseInt(item.getData()))) + 1;
-			channel.sendMessageFormat("%s, you feed the %s to your %s, and it gained +%d%% %s.", d.getPlayer().getAsMention(), item.toString(), d.getEffectiveName(), value, name).complete();
-			JDBC.executeUpdate("update captures set %s = %s + %d where player = %d and dex = %d and form = %d;", column, column, value, d.getPlayerId(), d.getDex(), d.getForm());
-			JDBC.addItem(d.getPlayerId(), Stat.SnacksFed.getId());
-			return true;
-		} else {
-			channel.sendMessageFormat("%s, your %s has maxed stats and refuses to eat the %s.", d.getPlayer().getAsMention(), d.getEffectiveName(), item.toString()).complete();
-			return false;
-		}
 	}
 }

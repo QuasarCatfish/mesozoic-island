@@ -26,7 +26,7 @@ import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 
 public class Action {
 
-	public static void doActions(Guild guild) {
+	public static synchronized void doActions(Guild guild) {
 		long self = guild.getSelfMember().getUser().getIdLong();
 
 		try (ResultSet res = JDBC.executeQuery("select * from actions order by time, actionid;")) {

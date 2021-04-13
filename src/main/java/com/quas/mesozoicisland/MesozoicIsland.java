@@ -69,6 +69,7 @@ import com.quas.mesozoicisland.cmdplayer.EggsSilentCommand;
 import com.quas.mesozoicisland.cmdplayer.ElementsCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipReverseCommand;
+import com.quas.mesozoicisland.cmdplayer.FeedCommand;
 import com.quas.mesozoicisland.cmdplayer.GuildJoinCommand;
 import com.quas.mesozoicisland.cmdplayer.HatchAllCommand;
 import com.quas.mesozoicisland.cmdplayer.HatchCommand;
@@ -315,7 +316,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new StatsEventCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new TopAllCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ContestCheckCommand());
-//		CommandManager.addCommand(assistant.getIdLong(), new Command());
+		CommandManager.addCommand(assistant.getIdLong(), new FeedCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands
