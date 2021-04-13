@@ -513,7 +513,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		} else if (item.hasTag(ItemTag.DinosaurCharm)) {
 			if (item.getId() == ItemID.CharmOfAccuracy.getItemId()) for (int q = 0; q < 2; q++) if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.AlwaysHitAttack);
 			if (item.getId() == ItemID.CharmOfHealing.getItemId()) if (attacks.remove(BattleAttack.BaseAttack)) attacks.add(BattleAttack.Heal10);
-			if (item.getId() == ItemID.CharmOfCounterAttack.getItemId()) for (int q = 0; q < 4; q++) if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Counter);
+			if (item.getId() == ItemID.CharmOfCounterAttack.getItemId()) for (int q = 0; q < 3; q++) if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Counter);
 			if (item.getId() == ItemID.CharmOfBlocking.getItemId()) for (int q = 0; q < 2; q++) if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Block);
 			if (item.getId() == ItemID.CharmOfDodging.getItemId()) if (defenses.remove(BattleAttack.BaseDefend)) defenses.add(BattleAttack.Dodge);
 
