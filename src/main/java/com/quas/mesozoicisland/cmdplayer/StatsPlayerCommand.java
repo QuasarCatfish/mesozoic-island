@@ -83,19 +83,20 @@ public class StatsPlayerCommand implements ICommand {
 		
 		eb.addField("__Join Date__", p.getJoinDate(), true);
 		eb.addField("__Trainer Level and XP__", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
+		eb.addField("__Guild and Emblems__", String.format("Guild: %s\nEmblems: %s", p.getMainElement(), p.getSubElement()), true);
 		
 		if (event.getChannel().getIdLong() == DiscordChannel.Game.getIdLong()) {
 			eb.setDescription("Use this command in " + DiscordChannel.BotCommands.toString() + " or DMs for a full list of stats.");
 		} else {
 			TreeMap<String, String> map = new TreeMap<String, String>();
-			String[] keys = new String[] {"Dailies", "Battles", "Damage", "Dungeons", "Raids", "Dinosaurs", "Dinosaur Coins", "Eggs", "Miscellaneous"};
+			String[] keys = new String[] {"Dailies", "Battles", "Damage", "Dungeons", "Raids", "Dinosaurs", "Dinosaur Coins", "Eggs", "InfiniDungeon", "Chaos Dungeons", "Miscellaneous"};
 			for (String key : keys) map.put(key, "");
 
 			for (Item i : items) {
 				if (Integer.parseInt(i.getData()) < 0) continue;
 
 				for (String key : keys) {
-					if (i.toString(2).contains(key)) {
+					if (i.toString(2).startsWith(key)) {
 						map.put(key, map.get(key) + String.format("%,d %s\n", bag.getOrDefault(i, 0L), i.toString(2).replace(key + " ", "")));
 						break;
 					} else if (key.equals(keys[keys.length - 1])) {
