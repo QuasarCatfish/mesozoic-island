@@ -73,11 +73,11 @@ public class SnackModule {
 	}
 
 	private boolean applySnack(Item snack) {
+		lastItem = snack;
 		if (!canDinoEatSnacks()) return false;
 
 		int option = NONE;
 		int max = 0;
-		lastItem = snack;
 		
 		switch (MesozoicRandom.nextInt(3)) {
 		// HEALTH
