@@ -17,6 +17,8 @@ public class Element implements Comparable<Element> {
 	private long role;
 	private long guild;
 	private boolean visible;
+	private boolean hasguild;
+	private boolean hasemblem;
 
 	private Element() {}
 	
@@ -43,6 +45,14 @@ public class Element implements Comparable<Element> {
 	
 	public boolean isVisible() {
 		return visible;
+	}
+
+	public boolean isGuild() {
+		return hasguild;
+	}
+
+	public boolean isEmblem() {
+		return hasemblem;
 	}
 
 	@Override
@@ -94,6 +104,8 @@ public class Element implements Comparable<Element> {
 				e.role = res.getLong("elementrole");
 				e.guild = res.getLong("guild");
 				e.visible = res.getBoolean("visible");
+				e.hasguild = res.getBoolean("isguild");
+				e.hasemblem = res.getBoolean("isemblem");
 				
 				elements.put(id, e);
 				return e;
@@ -102,6 +114,15 @@ public class Element implements Comparable<Element> {
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
+
+	public static Element of(String name) {
+		for (Element ele : values()) {
+			if (ele.getName().equalsIgnoreCase(name)) {
+				return ele;
+			}
+		}
 		return null;
 	}
 	

@@ -72,11 +72,13 @@ public class Action {
 					List<Message> messages = Util.getMessages(bc.getBattleChannel().getChannel(MesozoicIsland.getBot(self)));
 					Collections.reverse(messages);
 					ArrayList<String> print = new ArrayList<String>();
-					
+					long time = 0;
+
 					for (Message m : messages) {
 						if (m.getAuthor().isBot()) print.add(m.getContentRaw());
 						else print.add(String.format("**%s**: %s", m.getMember() == null ? "Unknown" : m.getMember().getEffectiveName(), m.getContentRaw()));
-						deleteMessage(res.getLong("bot"), m.getChannel().getIdLong(), m.getIdLong());
+						Action.deleteMessageDelayed(res.getLong("bot"), m.getChannel().getIdLong(), m.getIdLong(), time);
+						time += 1500;
 					}
 					
 					for (String s : Util.bulkify(print)) {

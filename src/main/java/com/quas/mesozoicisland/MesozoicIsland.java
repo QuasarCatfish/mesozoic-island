@@ -70,7 +70,6 @@ import com.quas.mesozoicisland.cmdplayer.ElementsCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipReverseCommand;
 import com.quas.mesozoicisland.cmdplayer.FeedCommand;
-import com.quas.mesozoicisland.cmdplayer.GuildJoinCommand;
 import com.quas.mesozoicisland.cmdplayer.HatchAllCommand;
 import com.quas.mesozoicisland.cmdplayer.HatchCommand;
 import com.quas.mesozoicisland.cmdplayer.InfoDinosaurCommand;
@@ -284,7 +283,6 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new MailCheckCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new MailCheckAllCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new MailOpenCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new GuildJoinCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new GuildKickCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new StatsSelfCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new StatsPlayerCommand());

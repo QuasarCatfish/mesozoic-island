@@ -30,6 +30,7 @@ import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Egg;
+import com.quas.mesozoicisland.objects.Element;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.Rarity;
@@ -47,7 +48,7 @@ public class UseCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("use ", INTEGER, "( ", DINOSAUR, ")?");
+		return pattern("use ", INTEGER, "( .+)?");
 	}
 
 	@Override
@@ -116,12 +117,12 @@ public class UseCommand implements ICommand {
 			return;
 		}
 		
-		boolean CONSUME = i.getItemType() == ItemType.Held || i.getItemType() == ItemType.Consume || i.getItemType() == ItemType.ConsumeDinosaur;
-		boolean DINOSAUR = i.getItemType() == ItemType.Held || i.getItemType() == ItemType.ConsumeDinosaur;
+		boolean IS_CONSUME = i.getItemType() == ItemType.Held || i.getItemType() == ItemType.Consume || i.getItemType() == ItemType.ConsumeDinosaur;
+		boolean IS_DINOSAUR = i.getItemType() == ItemType.Held || i.getItemType() == ItemType.ConsumeDinosaur;
 		boolean SUCCESS = true;
 		
-		Dinosaur d = args.length > 1 ? Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(args[1])) : null;
-		if (DINOSAUR && d == null) {
+		Dinosaur d = args.length > 1 && args[1].matches(DINOSAUR) ? Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(args[1])) : null;
+		if (IS_DINOSAUR && d == null) {
 			event.getChannel().sendMessageFormat("%s, you must use this item on a dinosaur.", p.getAsMention()).complete();
 			return;
 		}
@@ -146,6 +147,56 @@ public class UseCommand implements ICommand {
 				CommandManager.handleCommand(event, "license");
 			}
 			
+			else if (i.getId() == ItemID.GuildBadge.getItemId()) {
+				if (args.length > 1) {
+					Element ele = Element.of(args[1]);
+					if (ele == null) {
+						event.getChannel().sendMessageFormat("%s, this is not a valid element.", p.getAsMention()).complete();
+					} else if (!ele.isGuild()) {
+						event.getChannel().sendMessageFormat("%s, the %s element is not a valid guild option.", p.getAsMention(), ele.getName()).complete();
+					} else {
+						event.getChannel().sendMessageFormat("%s, you have successfully joined the %s Guild.", p.getAsMention(), ele.getName()).complete();
+						JDBC.executeUpdate("update players set mainelement = %d where playerid = %d;", ele.getId(), p.getIdLong());
+						Util.addRoleToMember(event.getMember(), ele.getRole());
+						JDBC.addItem(p.getIdLong(), i.getIdDmg(), -1);
+						JDBC.addItem(p.getIdLong(), new Pair<Integer, Long>(i.getId(), (long)ele.getId()), 1);
+						event.getGuild().getTextChannelById(ele.getGuild()).sendMessageFormat("Welcome %s to the %s Guild!", p.getAsMention(), ele.getName()).complete();
+
+						if ((p.getSubElement().getId() & ele.getId()) > 0) {
+							Item emblem = Item.getItem(new Pair<Integer, Long>(ItemID.ElementalEmblem.getItemId(), (long)ele.getId()));
+							event.getChannel().sendMessageFormat("%s, your %s goes inert.", p.getAsMention(), emblem.toString()).complete();
+							JDBC.executeUpdate("update players set subelement = subelement - %d where playerid = %d;", ele.getId(), p.getIdLong());
+							JDBC.addItem(p.getIdLong(), ItemID.ElementalEmblem.getId(), 1);
+							JDBC.addItem(p.getIdLong(), emblem.getIdDmg(), -1);
+						}
+					}
+				} else {
+					event.getChannel().sendMessageFormat("%s, you must specify an element for this item.", p.getAsMention()).complete();
+				}
+			}
+
+			else if (i.getId() == ItemID.ElementalEmblem.getItemId()) {
+				if (args.length > 1) {
+					Element ele = Element.of(args[1]);
+					if (ele == null) {
+						event.getChannel().sendMessageFormat("%s, this is not a valid element.", p.getAsMention()).complete();
+					} else if (!ele.isEmblem()) {
+						event.getChannel().sendMessageFormat("%s, the %s element is not a valid emblem option.", p.getAsMention(), ele.getName()).complete();
+					} else if ((p.getMainElement().getId() & ele.getId()) > 0) {
+						event.getChannel().sendMessageFormat("%s, you are in the %s Guild and cannot imbue %s %s with this element.", p.getAsMention(), ele.getName(), Util.getArticle(i.toString()), i.toString()).complete();
+					} else if ((p.getSubElement().getId() & ele.getId()) > 0) {
+						event.getChannel().sendMessageFormat("%s, you have already imbued %s %s with the Essence of %s.", p.getAsMention(), Util.getArticle(i.toString()), i.toString(), ele.getName()).complete();
+					} else {
+						event.getChannel().sendMessageFormat("%s, you have successfully imbued your %s with the Essence of %s.", p.getAsMention(), i.toString(), ele.getName()).complete();
+						JDBC.executeUpdate("update players set subelement = subelement + %d where playerid = %d;", ele.getId(), p.getIdLong());
+						JDBC.addItem(p.getIdLong(), i.getIdDmg(), -1);
+						JDBC.addItem(p.getIdLong(), new Pair<Integer, Long>(i.getId(), (long)ele.getId()), 1);
+					}
+				} else {
+					event.getChannel().sendMessageFormat("%s, you must specify an element for this item.", p.getAsMention()).complete();
+				}
+			}
+
 			else if (i.getId() == ItemID.QuestBook.getItemId()) {
 				CommandManager.handleCommand(event, "quests");
 			}
@@ -674,7 +725,7 @@ public class UseCommand implements ICommand {
 			break;
 		}
 		
-		if (SUCCESS && CONSUME) {
+		if (SUCCESS && IS_CONSUME) {
 			JDBC.addItem(p.getIdLong(), i.getIdDmg(), -1);
 		}
 	}

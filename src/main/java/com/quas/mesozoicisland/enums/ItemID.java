@@ -7,6 +7,7 @@ public enum ItemID {
 	Nothing(0, 0),
 	MesozoicIslandTrainerLicense(1, 0),
 	GuildBadge(2, 0),
+	ElementalEmblem(3, 0),
 	QuestBook(5, 0),
 	DinosaurPhotograph(30, 0),
 	Cookie(90, 0),
