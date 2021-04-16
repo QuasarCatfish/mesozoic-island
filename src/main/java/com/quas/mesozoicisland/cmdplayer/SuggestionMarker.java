@@ -63,7 +63,6 @@ public class SuggestionMarker implements ICommand {
 		
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
-		if (p.getIdLong() == Constants.QUAS_ID) return;
 
 		// get suggestion info
 		int id = JDBC.getNextSuggestionId();
