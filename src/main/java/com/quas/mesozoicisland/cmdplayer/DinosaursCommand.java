@@ -180,6 +180,7 @@ public class DinosaursCommand implements ICommand {
 		Dungeon("Dungeon", "dungeon", "captures.form = " + DinosaurForm.Dungeon.getId(), false),
 		Halloween("Halloween", "halloween", "captures.form = " + DinosaurForm.Halloween.getId(), false),
 		Thanksgiving("Thanksgiving", "thanksgiving", "captures.form = " + DinosaurForm.Thanksgiving.getId(), false),
+		Chaos("Chaos", "chaos", "captures.form = " + DinosaurForm.Chaos.getId(), false),
 		
 //		MinLevel
 //		MaxLevel
