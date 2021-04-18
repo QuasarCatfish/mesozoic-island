@@ -68,7 +68,7 @@ public class Constants {
 	public static final int MAX_TURN_COUNT = 1000;
 	
 	// Charm Chances
-	public static final int CHARM_OF_ENDURANCE_CHANCE = 5; // 20%
+	public static final int CHARM_OF_ENDURANCE_CHANCE = 3; // 33%
 	public static final int CHARM_BOOST_AMOUNT_FULL = 20;
 	public static final int CHARM_BOOST_AMOUNT_HALF = 10;
 	public static final int DOOM_BASE_CHANCE = 25; // default 25 (.25%)

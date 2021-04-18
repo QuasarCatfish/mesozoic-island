@@ -78,7 +78,7 @@ public class Action {
 						if (m.getAuthor().isBot()) print.add(m.getContentRaw());
 						else print.add(String.format("**%s**: %s", m.getMember() == null ? "Unknown" : m.getMember().getEffectiveName(), m.getContentRaw()));
 						Action.deleteMessageDelayed(res.getLong("bot"), m.getChannel().getIdLong(), m.getIdLong(), time);
-						time += 1500;
+						time += 2000;
 					}
 					
 					for (String s : Util.bulkify(print)) {
