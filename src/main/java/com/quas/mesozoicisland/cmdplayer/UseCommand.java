@@ -464,6 +464,12 @@ public class UseCommand implements ICommand {
 				event.getChannel().sendMessage(sb.toString()).complete();
 			}
 
+			else if (i.hasTag(ItemTag.RecycleItem)) {
+				Item recycle = Item.getItem(ItemID.RecycleToken);
+				JDBC.addItem(p.getIdLong(), recycle.getIdDmg());
+				event.getChannel().sendMessageFormat("%s, you properly dispose of the %s, earning %s %s.", p.getAsMention(), i.toString(), Util.getArticle(recycle.toString()), recycle.toString()).complete();
+			}
+
 			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
 				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getEggCount()) {
 					if (i.getDamage() == 0) { // Chocolate Egg Voucher

@@ -10,8 +10,12 @@ import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.EventType;
+import com.quas.mesozoicisland.enums.ItemID;
+import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.Location;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Event;
+import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Rarity;
 
 public class MesozoicRandom {
@@ -203,5 +207,51 @@ public class MesozoicRandom {
 		
 		hp += nextInt(1_000);
 		return hp;
+	}
+
+	public static Item nextWildHeldItem(int dex) {
+		
+		// Event Held Items
+		if (Event.isEventActive(EventType.BoostedCharmShardChance) && MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {
+			return Item.getItem(ItemID.CharmShard);
+		}
+
+		if (Event.isEventActive(EventType.Thanksgiving) && dex != DinoID.Turkey.getDex()) {
+			return Item.getItem(ItemID.ThanksgivingToken);
+		}
+
+		if (Event.isEventActive(EventType.SecretSanta)) {
+			if (MesozoicRandom.nextInt(5) == 0) {
+				return Item.getItem(ItemID.MysteryPresent);
+			} else if (MesozoicRandom.nextInt(4) == 0) {
+				return Item.getItem(ItemID.DinoCane);
+			}
+		}
+
+		if (Event.isEventActive(EventType.Valentines)) {
+			if (MesozoicRandom.nextInt(2) == 0) {
+				return Item.getItem(ItemID.CandyHeart);
+			}
+		}
+
+		if (Event.isEventActive(EventType.Easter)) {
+			if (MesozoicRandom.nextInt(4) == 0) {
+				return Item.getItem(ItemID.ChocolateEgg);
+			}
+		}
+
+		if (Event.isEventActive(EventType.EarthDay)) {
+			// 60% chance for recycle item
+			if (MesozoicRandom.nextInt(5) < 3) {
+				return Util.getRandomElement(Item.getItemsWithTag(ItemTag.RecycleItem));
+			}
+		}
+
+		// Normal Held Items
+		if (MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {
+			return Item.getItem(ItemID.CharmShard);
+		}
+
+		return null;
 	}
 }

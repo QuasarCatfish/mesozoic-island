@@ -28,6 +28,7 @@ public enum ItemTag {
 	DungeonTicket("#dungeonticket"),
 	DinosaurGacha("#dinosaurgacha"),
 
+	RecycleItem("#recycleitem"),
 	LostPage("#lostpage"),
 
 	AchievementTitle("#achievementtitle"),

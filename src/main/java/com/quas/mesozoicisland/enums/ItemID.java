@@ -129,6 +129,7 @@ public enum ItemID {
 	ThanksgivingToken(405, 11),
 	GiftToken(405, 12),
 	ChickenToken(405, 13),
+	RecycleToken(405, 14),
 	EggVoucher(406, 0),
 	JasonToken(407, 0),
 	SecretSantaPresent(408, 0),

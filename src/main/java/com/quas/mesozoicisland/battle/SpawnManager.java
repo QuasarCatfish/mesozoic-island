@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
-import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.DiscordRole;
@@ -294,40 +293,7 @@ public class SpawnManager {
 			Dinosaur[] wild = new Dinosaur[MesozoicRandom.nextSpawnCount()];
 			for (int q = 0; q < wild.length; q++) {
 				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
-
-				// Normal Held Items
-				if (MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {
-					wild[q].setItem(Item.getItem(ItemID.CharmShard));
-				}
-
-				// Event Held Items
-				if (Event.isEventActive(EventType.BoostedCharmShardChance) && MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {
-					wild[q].setItem(Item.getItem(ItemID.CharmShard));
-				}
-
-				if (Event.isEventActive(EventType.Thanksgiving) && wild[q].getDex() != DinoID.Turkey.getDex()) {
-					wild[q].setItem(Item.getItem(ItemID.ThanksgivingToken));
-				}
-
-				if (Event.isEventActive(EventType.SecretSanta)) {
-					if (MesozoicRandom.nextInt(5) == 0) {
-						wild[q].setItem(Item.getItem(ItemID.MysteryPresent));
-					} else if (MesozoicRandom.nextInt(4) == 0) {
-						wild[q].setItem(Item.getItem(ItemID.DinoCane));
-					}
-				}
-
-				if (Event.isEventActive(EventType.Valentines)) {
-					if (MesozoicRandom.nextInt(2) == 0) {
-						wild[q].setItem(Item.getItem(ItemID.CandyHeart));
-					}
-				}
-
-				if (Event.isEventActive(EventType.Easter)) {
-					if (MesozoicRandom.nextInt(4) == 0) {
-						wild[q].setItem(Item.getItem(ItemID.ChocolateEgg));
-					}
-				}
+				wild[q].setItem(MesozoicRandom.nextWildHeldItem(wild[q].getDex()));
 			}
 			wilds.put(tier, wild);
 			locations.put(tier, MesozoicRandom.nextLocation());
