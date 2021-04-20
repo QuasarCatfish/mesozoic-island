@@ -18,6 +18,15 @@ public class DinoMath {
 		if (level < 1) return -1;
 		return 30L * level * (level * level + 10L * level - 11L);
 	}
+
+	public static int getOmegaLevel(long xp) {
+		if (xp < 0) return -1;
+		for (int q = 1;; q++) if (getOmegaXp(q) > xp) return q - 1;
+	}
+
+	public static long getOmegaXp(int level) {
+		return 500_000 * level * (level + 1);
+	}
 	
 	public static int getRank(int rp) {
 		if (rp < 0) return -1;

@@ -2,6 +2,7 @@ package com.quas.mesozoicisland.cmdplayer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,8 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
+import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -81,8 +84,14 @@ public class StatsPlayerCommand implements ICommand {
 		eb.setColor(p.getColor());
 		eb.setTitle(p.getName() + "'s Stats");
 		
+		StringJoiner xpField = new StringJoiner("\n");
+		xpField.add(String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()));
+		if (p.isOmega()) xpField.add(String.format("%s Level %,d + %,d %sXP", Constants.OMEGA, p.getOmegaLevel(), p.getOmegaXpMinusLevel(), Constants.OMEGA));
+		if (!p.isMaxLevel()) xpField.add(String.format("(%,d XP until Level Up)", DinoMath.getXp(p.getLevel() + 1) - p.getXp()));
+		else xpField.add(String.format("(%,d %sXP until next %s Level Up)", DinoMath.getOmegaXp(p.getOmegaLevel() + 1) - p.getOmegaXp(), Constants.OMEGA, Constants.OMEGA));
+		
 		eb.addField("__Join Date__", p.getJoinDate(), true);
-		eb.addField("__Trainer Level and XP__", String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()), true);
+		eb.addField("__Trainer Level and XP__", xpField.toString(), true);
 		eb.addField("__Guild and Emblems__", String.format("Guild: %s\nEmblems: %s", p.getMainElement(), p.getSubElement()), true);
 		
 		if (event.getChannel().getIdLong() == DiscordChannel.Game.getIdLong()) {

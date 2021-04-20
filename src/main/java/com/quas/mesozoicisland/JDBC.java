@@ -550,14 +550,33 @@ public class JDBC {
 		if (xp <= 0) return false;
 
 		Player p = Player.getPlayer(playerid);
-		boolean b = executeUpdate("update players set xp = %d where playerid = %d;", Math.min(p.getXp() + xp, Constants.MAX_PLAYER_XP), playerid);
-		Player p2 = Player.getPlayer(playerid);
-		if (p2.getLevel() <= 2) return b;
-		
-		for (int level = p.getLevel() + 1; level <= p2.getLevel(); level++) {
-			Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s, you have leveled up to **Level %,d**! Check your mailbox for your reward.", p.getAsMention(), level).complete();
-			Constants.addLevelUpMail(p, level);
+		long standard = Math.min(p.getXp() + xp, Constants.MAX_PLAYER_XP) - p.getXp();
+		long omega = xp - standard;
+		boolean b = true;
+
+		if (standard > 0) {
+			b &= executeUpdate("update players set xp = xp + %d where playerid = %d;", standard, playerid);
+			Player p2 = Player.getPlayer(playerid);
+
+			if (p2.getLevel() > 2 && p2.getLevel() > p.getLevel()) {
+				for (int level = p.getLevel() + 1; level <= p2.getLevel(); level++) {
+					Constants.addLevelUpMail(p, level);
+				}
+
+				Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s, you have leveled up to **Level %,d**! Check your mailbox for your reward.", p.getAsMention(), p2.getLevel()).complete();
+			}
 		}
+		
+		// TODO: change to "omega > 0" when wave 2 is released
+		if (omega > 0) {
+			b &= executeUpdate("update players set omegaxp = omegaxp + %d where playerid = %d;", omega, playerid);
+			Player p2 = Player.getPlayer(playerid);
+
+			if (p2.getOmegaLevel() > p.getOmegaLevel()) {
+				Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s, you have leveled up to **%s Level %,d**!", p.getAsMention(), Constants.OMEGA, p2.getOmegaLevel()).complete();
+			}
+		}
+
 		return b;
 	}
 	

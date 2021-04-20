@@ -171,6 +171,7 @@ public class Constants {
 	public static final String ZERO_WIDTH_SPACE = "\u200B";
 	public static final String BULLET_POINT = "\u2022";
 	public static final String NOTE = "\u203B";
+	public static final String OMEGA = "\u03A9";
 	public static final String EMOJI_ONE = "1\u20E3";
 	public static final String EMOJI_TWO = "2\u20E3";
 	public static final String EMOJI_THREE = "3\u20E3";

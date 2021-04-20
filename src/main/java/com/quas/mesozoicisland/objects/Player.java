@@ -36,6 +36,7 @@ public class Player {
 	private String state;
 	private String join;
 	private long xp;
+	private long omegaxp;
 	private AccessLevel access;
 	private Element elemain;
 	private Element elesub;
@@ -119,7 +120,28 @@ public class Player {
 	public long getXpMinusLevel() {
 		return xp - DinoMath.getXp(getLevel());
 	}
+
+	public boolean isMaxLevel() {
+		return xp >= Constants.MAX_PLAYER_XP;
+	}
 	
+	public long getOmegaXp() {
+		return omegaxp;
+	}
+
+	public int getOmegaLevel() {
+		return DinoMath.getOmegaLevel(omegaxp);
+	}
+
+	public long getOmegaXpMinusLevel() {
+		return omegaxp - DinoMath.getOmegaXp(getOmegaLevel());
+	}
+
+
+	public boolean isOmega() {
+		return omegaxp > 0 || isMaxLevel();
+	}
+
 	public String getSelected() {
 		return selected;
 	}
@@ -353,6 +375,7 @@ public class Player {
 				p.state = res.getString("gamestate");
 				p.join = res.getString("joindate");
 				p.xp = res.getLong("xp");
+				p.omegaxp = res.getLong("omegaxp");
 				p.access = AccessLevel.of(res.getInt("access"));
 				p.elemain = Element.of(res.getInt("mainelement"));
 				p.elesub = Element.of(res.getInt("subelement"));
