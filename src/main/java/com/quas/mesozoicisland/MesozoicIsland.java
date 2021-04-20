@@ -196,6 +196,9 @@ public class MesozoicIsland {
 		CommandManager.addCommand(professor.getIdLong(), new ClearChannelCommand());
 		CommandManager.addCommand(professor.getIdLong(), new InformationChannelsCommand());
 		CommandManager.addCommand(professor.getIdLong(), new ProfessorSendDMCommand());
+		CommandManager.addCommand(professor.getIdLong(), new SuggestionAcceptCommand());
+		CommandManager.addCommand(professor.getIdLong(), new SuggestionRejectCommand());
+		CommandManager.addCommand(professor.getIdLong(), new SuggestionPlannedCommand());
 		// CommandManager.addCommand(professor.getIdLong(), new Command());
 		
 		// Tutorial Commands
@@ -346,9 +349,6 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new MuteCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new UnmuteCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new AssistantSendDMCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new SuggestionAcceptCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new SuggestionRejectCommand());
-		CommandManager.addCommand(assistant.getIdLong(), new SuggestionPlannedCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
