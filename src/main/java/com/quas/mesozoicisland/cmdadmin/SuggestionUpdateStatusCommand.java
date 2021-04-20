@@ -2,6 +2,7 @@ package com.quas.mesozoicisland.cmdadmin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
@@ -18,7 +19,19 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-public abstract class SuggestionUpdateStatusCommand implements ICommand {
+public class SuggestionUpdateStatusCommand implements ICommand {
+
+	private SuggestionStatus newStatus;
+	private String statusName;
+	public SuggestionUpdateStatusCommand(SuggestionStatus newStatus, String string) {
+		this.newStatus = newStatus;
+		this.statusName = string;
+	}
+
+	@Override
+	public Pattern getCommand() {
+		return pattern("suggestion ", statusName, "( ", INTEGER, ")+");
+	}
 
 	@Override
 	public AccessLevel getAccessLevel() {
@@ -28,6 +41,16 @@ public abstract class SuggestionUpdateStatusCommand implements ICommand {
 	@Override
 	public String getCommandName() {
 		return "suggestion";
+	}
+
+	@Override
+	public String getCommandSyntax() {
+		return "suggestion " + statusName + " <id> ...";
+	}
+
+	@Override
+	public String getCommandDescription() {
+		return "Sets the status of the given suggestions to " + newStatus.name() + ".";
 	}
 
 	@Override
@@ -45,7 +68,8 @@ public abstract class SuggestionUpdateStatusCommand implements ICommand {
 		return null;
 	}
 
-	public synchronized void doUpdate(MessageReceivedEvent event, SuggestionStatus newStatus, String... args) {
+	@Override
+	public void run(MessageReceivedEvent event, String... args) {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 

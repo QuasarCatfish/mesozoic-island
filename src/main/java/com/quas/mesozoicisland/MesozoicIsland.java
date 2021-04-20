@@ -32,9 +32,7 @@ import com.quas.mesozoicisland.cmdadmin.SpawnEggCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnTimeCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnTimeResetCommand;
 import com.quas.mesozoicisland.cmdadmin.SpawnWildCommand;
-import com.quas.mesozoicisland.cmdadmin.SuggestionAcceptCommand;
-import com.quas.mesozoicisland.cmdadmin.SuggestionPlannedCommand;
-import com.quas.mesozoicisland.cmdadmin.SuggestionRejectCommand;
+import com.quas.mesozoicisland.cmdadmin.SuggestionUpdateStatusCommand;
 import com.quas.mesozoicisland.cmdadmin.TestCommand;
 import com.quas.mesozoicisland.cmdadmin.ThreadsCommand;
 import com.quas.mesozoicisland.cmdadmin.ToggleCommand;
@@ -155,6 +153,7 @@ import com.quas.mesozoicisland.cmdtutorial.TutorialShopCommand;
 import com.quas.mesozoicisland.cmdtutorial.TutorialUseCommand;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.SpawnType;
+import com.quas.mesozoicisland.enums.SuggestionStatus;
 import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
@@ -196,9 +195,10 @@ public class MesozoicIsland {
 		CommandManager.addCommand(professor.getIdLong(), new ClearChannelCommand());
 		CommandManager.addCommand(professor.getIdLong(), new InformationChannelsCommand());
 		CommandManager.addCommand(professor.getIdLong(), new ProfessorSendDMCommand());
-		CommandManager.addCommand(professor.getIdLong(), new SuggestionAcceptCommand());
-		CommandManager.addCommand(professor.getIdLong(), new SuggestionRejectCommand());
-		CommandManager.addCommand(professor.getIdLong(), new SuggestionPlannedCommand());
+		CommandManager.addCommand(professor.getIdLong(), new SuggestionUpdateStatusCommand(SuggestionStatus.Pending, "pending"));
+		CommandManager.addCommand(professor.getIdLong(), new SuggestionUpdateStatusCommand(SuggestionStatus.Accepted, "accept"));
+		CommandManager.addCommand(professor.getIdLong(), new SuggestionUpdateStatusCommand(SuggestionStatus.Rejected, "reject"));
+		CommandManager.addCommand(professor.getIdLong(), new SuggestionUpdateStatusCommand(SuggestionStatus.Planned, "planned"));
 		// CommandManager.addCommand(professor.getIdLong(), new Command());
 		
 		// Tutorial Commands
