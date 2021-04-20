@@ -7,6 +7,7 @@ import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
+import com.quas.mesozoicisland.enums.SuggestionStatus;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
@@ -71,7 +72,7 @@ public class SuggestionMarker implements ICommand {
 		
 		// build embed
 		EmbedBuilder eb = new EmbedBuilder();
-		eb.setColor(Constants.COLOR);
+		eb.setColor(SuggestionStatus.Pending.getColor());
 		eb.setTitle(String.format("Suggestion %,d", id));
 		eb.setDescription(suggestion);
 		eb.setImage(image);
