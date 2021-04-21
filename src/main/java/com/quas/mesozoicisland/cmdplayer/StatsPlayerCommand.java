@@ -85,7 +85,8 @@ public class StatsPlayerCommand implements ICommand {
 		eb.setTitle(p.getName() + "'s Stats");
 		
 		StringJoiner xpField = new StringJoiner("\n");
-		xpField.add(String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()));
+		if (!p.isMaxLevel()) xpField.add(String.format("Level %,d + %,d XP", p.getLevel(), p.getXpMinusLevel()));
+		else xpField.add(String.format("Level %,d (MAX)", p.getLevel()));
 		if (p.isOmega()) xpField.add(String.format("%s Level %,d + %,d %sXP", Constants.OMEGA, p.getOmegaLevel(), p.getOmegaXpMinusLevel(), Constants.OMEGA));
 		if (!p.isMaxLevel()) xpField.add(String.format("(%,d XP until Level Up)", DinoMath.getXp(p.getLevel() + 1) - p.getXp()));
 		else xpField.add(String.format("(%,d %sXP until next %s Level Up)", DinoMath.getOmegaXp(p.getOmegaLevel() + 1) - p.getOmegaXp(), Constants.OMEGA, Constants.OMEGA));
