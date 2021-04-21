@@ -170,7 +170,12 @@ public abstract class LeaderboardCommand implements ICommand {
 				while (res.next()) {
 					Player p = Player.getPlayer(res.getLong("playerid"));
 					if (p.getIdLong() < CustomPlayer.getUpperLimit()) continue;
-					lb.addEntry(res.getLong("xp"), p.getName(), p.getLevel(), p.getXpMinusLevel());
+
+					if (p.getOmegaXp() > 0) {
+						lb.addEntry(Constants.MAX_PLAYER_XP + res.getLong("omegaxp"), p.getName(), Constants.OMEGA + " ", p.getOmegaLevel(), p.getOmegaXpMinusLevel(), Constants.OMEGA);
+					} else {
+						lb.addEntry(res.getLong("xp"), p.getName(), "", p.getLevel(), p.getXpMinusLevel(), "");
+					}
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -314,7 +319,7 @@ public abstract class LeaderboardCommand implements ICommand {
 		PlayerRuneCount("%s - %,d/%,d Runes"),
 		PlayerItem("%s - %,d %s"),
 		PlayerStat("%s - %,d %s"),
-		PlayerLevel("%s - Level %,d + %,d XP");
+		PlayerLevel("%s - %sLevel %,d + %,d %sXP");
 		
 		private String regex;
 		private LeaderboardType(String regex) {
