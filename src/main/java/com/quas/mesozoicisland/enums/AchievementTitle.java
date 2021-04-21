@@ -67,7 +67,8 @@ public enum AchievementTitle {
 	RaidVictor4(ItemID.MasterRaidVictorTitle, 1_000, Stat.RaidsDefeated, "defeating", "raids"),
 	RaidVictor5(ItemID.LegendaryRaidVictorTitle, 5_000, Stat.RaidsDefeated, "defeating", "raids"),
 	RaidVictor6(ItemID.TranscendantRaidVictorTitle, 20_000, Stat.RaidsDefeated, "defeating", "raids"),
-	;
+
+	Veteran(ItemID.VeteranTitle, 365, Stat.DailiesClaimed, "claiming your daily for", "days");
 
 	private ItemID item;
 	private long amount;
