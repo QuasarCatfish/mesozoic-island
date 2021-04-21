@@ -107,7 +107,7 @@ public class SuggestionUpdateStatusCommand implements ICommand {
 			EmbedBuilder eb = new EmbedBuilder(m.getEmbeds().get(0));
 			eb.setColor(newStatus.getColor());
 			eb.setFooter(null);
-			event.getGuild().getTextChannelById(DiscordChannel.PreviousSuggestions.getIdLong()).sendMessageFormat("**%s Suggestion by %s**", suggestor.getName(), newStatus.name()).embed(eb.build()).complete();
+			event.getGuild().getTextChannelById(DiscordChannel.PreviousSuggestions.getIdLong()).sendMessageFormat("**%s Suggestion by %s**", newStatus.name(), suggestor.getName()).embed(eb.build()).complete();
 			
 			// give cookie for accepted
 			if (newStatus == SuggestionStatus.Accepted) {
