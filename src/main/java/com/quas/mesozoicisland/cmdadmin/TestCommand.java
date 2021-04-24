@@ -1,5 +1,7 @@
 package com.quas.mesozoicisland.cmdadmin;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -127,21 +129,26 @@ public class TestCommand implements ICommand {
 			} break;
 
 			case "levelrewards": {
-				for (int level = 1; level <= 60; level++) {
-					String lv = "level" + level;
-					String reward = JDBC.getReward(lv);
+				File f = new File(Util.generateRandomString(20) + ".txt");
+				PrintWriter out = new PrintWriter(f);
+				out.println("{| class = \"wikitable\"");
+				out.println("! Current Level !! Total Experience !! XP to Level Up !! Level Up Reward");
 
-					ArrayList<String> print = new ArrayList<>();
-					if (reward == null) {
-						print.add(String.format("Reward **%s** - Does not exist", lv));
+				for (int level = 1; level <= Constants.MAX_PLAYER_LEVEL; level++) {
+					String reward = JDBC.getReward("level" + level);
+					String print = reward == null ? "None" : JDBC.getRedeemMessage(reward).replace("\n", "<br>");
+
+					out.println("|-");
+					if (level == Constants.MAX_PLAYER_LEVEL) {
+						out.printf("| Level %,d || %,d XP || N/A || %s\n", level, DinoMath.getXp(level), print);
 					} else {
-						print.add(String.format("Reward **%s** -\n%s", lv, JDBC.getRedeemMessage(reward)));
-					}
-
-					for (String s : Util.bulkify(print)) {
-						event.getChannel().sendMessage(s).complete();
+						out.printf("| Level %,d || %,d XP || %,d XP || %s\n", level, DinoMath.getXp(level), DinoMath.getXp(level + 1) - DinoMath.getXp(level), print);
 					}
 				}
+
+				out.close();
+				event.getChannel().sendFile(f).complete();
+				f.delete();
 			} break;
 
 			case "givehp": {
