@@ -573,7 +573,7 @@ public class JDBC {
 			Player p2 = Player.getPlayer(playerid);
 
 			if (p2.getOmegaLevel() > p.getOmegaLevel()) {
-				Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s, you have leveled up to **%s Level %,d**!", p.getAsMention(), Constants.OMEGA, p2.getOmegaLevel()).complete();
+				Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat("%s, you have leveled up to **%s Level %,d**! Too bad there isn't a reward.", p.getAsMention(), Constants.OMEGA, p2.getOmegaLevel()).complete();
 			}
 		}
 
