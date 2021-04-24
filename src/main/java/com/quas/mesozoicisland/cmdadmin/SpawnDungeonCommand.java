@@ -15,7 +15,7 @@ public class SpawnDungeonCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("admin spawn dungeon");
+		return pattern("admin spawn dungeon( .+)?");
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class SpawnDungeonCommand implements ICommand {
 
 	@Override
 	public synchronized void run(MessageReceivedEvent event, String... args) {
-		if (SpawnManager.trySpawn(SpawnType.Dungeon, true)) {
+		if (SpawnManager.trySpawn(SpawnType.Dungeon, true, args.length > 2 ? args[2] : null)) {
 			event.getChannel().sendMessageFormat("%s is spawning a dungeon.", event.getAuthor().getAsMention()).complete();
 		} else {
 			event.getChannel().sendMessageFormat("%s, failed to spawn a dungeon.", event.getAuthor().getAsMention()).complete();
