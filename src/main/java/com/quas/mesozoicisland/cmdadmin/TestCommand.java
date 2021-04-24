@@ -137,6 +137,10 @@ public class TestCommand implements ICommand {
 					} else {
 						print.add(String.format("Reward **%s** -\n%s", reward, JDBC.getRedeemMessage(reward)));
 					}
+
+					for (String s : Util.bulkify(print)) {
+						event.getChannel().sendMessage(s).complete();
+					}
 				}
 			} break;
 
