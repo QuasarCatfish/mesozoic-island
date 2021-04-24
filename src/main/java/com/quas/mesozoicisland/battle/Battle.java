@@ -211,13 +211,14 @@ public class Battle {
 				for (BattleTeam bt : teams) {
 					while (bt.hasDinosaur()) {
 						Action.addDinosaurLossDelayed(bt.getPlayer().getIdLong(), time, bt.getDinosaur().getId());
-						Action.addItemDelayed(bt.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(),
-								bt.getDinosaur().getCurrentHealth());
+						Action.addItemDelayed(bt.getPlayer().getIdLong(), time, Stat.DamageReceived.getId(), bt.getDinosaur().getCurrentHealth());
 						bt.changeToNextDinosaur();
 					}
 				}
 			} else {
-				for (BattleTeam[] bt : new BattleTeam[][] { { attack, defend }, { defend, attack } }) {
+				ArrayList<BattleTeam> switchDino = new ArrayList<>();
+
+				for (BattleTeam[] bt : new BattleTeam[][] {{attack, defend}, {defend, attack}}) {
 					BattleTeam attackTeam = bt[0];
 					BattleTeam defendTeam = bt[1];
 
@@ -225,52 +226,36 @@ public class Battle {
 					if (!defendTeam.getDinosaur().isAlive()) {
 
 						// Add Win and Loss
-						if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
-							Action.addDinosaurWinDelayed(attackTeam.getPlayer().getIdLong(), time,
-									attackTeam.getDinosaur().getId());
-							Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time,
-									Stat.DinosaursDefeated.getId(), 1);
+						if (attackTeam.hasDinosaur() && attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
+							Action.addDinosaurWinDelayed(attackTeam.getPlayer().getIdLong(), time, attackTeam.getDinosaur().getId());
+							Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time, Stat.DinosaursDefeated.getId(), 1);
 							if (attackTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Accursed) {
-								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time,
-										Stat.DinosaursDefeatedWithAccursed.getId(), 1);
+								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time, Stat.DinosaursDefeatedWithAccursed.getId(), 1);
 							}
 						}
-						if (defendTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
-							Action.addDinosaurLossDelayed(defendTeam.getPlayer().getIdLong(), time,
-									defendTeam.getDinosaur().getId());
+						if (defendTeam.hasDinosaur() && defendTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
+							Action.addDinosaurLossDelayed(defendTeam.getPlayer().getIdLong(), time, defendTeam.getDinosaur().getId());
 						}
 
 						// Defeat Wild Dinosaur
 						if (defendTeam.getPlayer().getIdLong() == CustomPlayer.Wild.getIdLong()) {
 
 							// Pick up dinosaur
-							if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()
-									&& defendTeam.getDinosaur().getDex() > 0) {
-								String get = String.format("%s picks up the %s crystal",
-										attackTeam.getPlayer().getName(), defendTeam.getDinosaur().getDinosaurName());
+							if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0) {
+								String get = String.format("%s picks up the %s crystal", attackTeam.getPlayer().getName(), defendTeam.getDinosaur().getDinosaurName());
 								if (defendTeam.getDinosaur().hasRune())
-									get += String.format(" and the %s rune",
-											defendTeam.getDinosaur().getRune().getName());
+									get += String.format(" and the %s rune", defendTeam.getDinosaur().getRune().getName());
 								if (defendTeam.getDinosaur().hasItem())
-									get += String.format(" and %s %s",
-											Util.getArticle(defendTeam.getDinosaur().getItem().toString()),
-											defendTeam.getDinosaur().getItem().toString());
+									get += String.format(" and %s %s", Util.getArticle(defendTeam.getDinosaur().getItem().toString()), defendTeam.getDinosaur().getItem().toString());
 
 								// Send pickup message
-								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time,
-										channel.getBattleChannel(), get + ".");
-								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time,
-										Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
+								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
+								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
 
 								// Give dinosaur, rune, and item
-								Action.addDinosaurDelayed(attackTeam.getPlayer().getIdLong(), time + 1500,
-										defendTeam.getDinosaur().getId());
-								if (defendTeam.getDinosaur().hasRune())
-									Action.addRuneDelayed(attackTeam.getPlayer().getIdLong(), time + 1500,
-											defendTeam.getDinosaur().getRune().getId());
-								if (defendTeam.getDinosaur().hasItem())
-									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500,
-											defendTeam.getDinosaur().getItem().getIdDmg(), 1);
+								Action.addDinosaurDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getId());
+								if (defendTeam.getDinosaur().hasRune()) Action.addRuneDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getRune().getId());
+								if (defendTeam.getDinosaur().hasItem()) Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getItem().getIdDmg(), 1);
 							}
 
 							// Dinosaur dropped a lost page
@@ -281,12 +266,8 @@ public class Battle {
 							// Dinosaur dopped halloween candy
 							if (Event.isEventActive(EventType.Halloween) && MesozoicRandom.nextInt(7) == 0) {
 								Item item = Item.getItem(Util.getRandomElement(Constants.HALLOWEEN_CANDY));
-								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500,
-										Constants.SPAWN_CHANNEL,
-										String.format("%s, you found %s %s.", attackTeam.getPlayer().getAsMention(),
-												Util.getArticle(item.toString()), item.toString()));
-								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, item.getIdDmg(),
-										1);
+								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %s %s.", attackTeam.getPlayer().getAsMention(), Util.getArticle(item.toString()), item.toString()));
+								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, item.getIdDmg(), 1);
 							}
 
 							// Thanksgiving
@@ -298,16 +279,9 @@ public class Battle {
 									Item itemturkey = Item.getItem(ItemID.TurkeyLeg);
 									int turkeylegs = 2; // 2 turkey legs
 
-									Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500,
-											Constants.SPAWN_CHANNEL,
-											String.format("%s, you found %,d %s and %,d %s.",
-													attackTeam.getPlayer().getAsMention(), tokens,
-													itemtoken.toString(tokens), turkeylegs,
-													itemturkey.toString(turkeylegs)));
-									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500,
-											itemtoken.getIdDmg(), tokens);
-									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500,
-											itemturkey.getIdDmg(), turkeylegs);
+									Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s and %,d %s.", attackTeam.getPlayer().getAsMention(), tokens, itemtoken.toString(tokens), turkeylegs, itemturkey.toString(turkeylegs)));
+									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, itemtoken.getIdDmg(), tokens);
+									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, itemturkey.getIdDmg(), turkeylegs);
 								}
 							}
 						}
@@ -315,30 +289,24 @@ public class Battle {
 						// Dinosaur gains XP
 						if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit()) {
 							double mult = Constants.XP_MULTIPLIER;
-							if (attackTeam.getPlayer().getFragranceXpTimer() > System.currentTimeMillis())
-								mult += Constants.XP_FRAGRANCE_BONUS;
-							Action.addXpDelayed(attackTeam.getPlayer().getIdLong(), time,
-									attackTeam.getDinosaur().getId(),
-									Math.round(mult * DinoMath.getXpDropped(attackTeam.getDinosaur().getLevel(),
-											defendTeam.getDinosaur().getLevel())));
+							if (attackTeam.getPlayer().getFragranceXpTimer() > System.currentTimeMillis()) mult += Constants.XP_FRAGRANCE_BONUS;
+							Action.addXpDelayed(attackTeam.getPlayer().getIdLong(), time, attackTeam.getDinosaur().getId(), Math.round(mult * DinoMath.getXpDropped(attackTeam.getDinosaur().getLevel(), defendTeam.getDinosaur().getLevel())));
 						}
 
 						// Switch to next Dinosaur
-						defendTeam.changeToNextDinosaur();
-						if (defendTeam.hasDinosaur()) {
-							Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time,
-									channel.getBattleChannel(),
-									String.format("**%s switches dinosaurs to their %s.**",
-											defendTeam.getPlayer().getName(),
-											defendTeam.getDinosaur().getEffectiveName()));
-						} else {
-							Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time,
-									channel.getBattleChannel(),
-									String.format("**%s has been defeated.**", defendTeam.getPlayer().getName()));
-						}
+						switchDino.add(defendTeam);
 					}
 				}
-
+				
+				// Do the switching
+				for (BattleTeam bt : switchDino) {
+					bt.changeToNextDinosaur();
+					if (bt.hasDinosaur()) {
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), String.format("**%s switches dinosaurs to their %s.**", bt.getPlayer().getName(), bt.getDinosaur().getEffectiveName()));
+					} else {
+						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), String.format("**%s has been defeated.**", bt.getPlayer().getName()));
+					}
+				}
 			}
 
 			time += wait;
