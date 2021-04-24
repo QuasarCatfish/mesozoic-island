@@ -13,6 +13,7 @@ public enum ItemID {
 	Cookie(90, 0),
 	GoldenCookie(90, 1),
 	EggIncubator(91, 0),
+	ChaosIncubator(91, 1),
 
 	DinosaurCoin(100, 0),
 	PlasticDinosaurCoin(100, 1),

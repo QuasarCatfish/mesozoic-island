@@ -1,8 +1,13 @@
 package com.quas.mesozoicisland.objects;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.battle.BattleChannel;
@@ -51,18 +56,38 @@ public class ChaosDungeon extends BasicDungeon {
 		super.onEndDungeon(teams, timer, bossWin);
 
 		if (!bossWin) {
-			Player p = Util.getRandomElement(teams).getPlayer();
-			StringBuilder sb = new StringBuilder();
-			Egg egg = getEgg();
-	
-			sb.append(p.getName());
-			sb.append(" picks up the ");
-			sb.append(egg.getEggName());
-			sb.append(" at the end of the dungeon. What could be inside?");
-	
-			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
-			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
-			Action.addEggDelayed(p.getIdLong(), timer, egg);
+			ArrayList<Player> possible = new ArrayList<>();
+			for (BattleTeam team : teams) {
+				long incubator = team.getPlayer().getItemCount(ItemID.ChaosIncubator);
+				long eggCount = 0;
+				try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d and form = %d;", team.getPlayer().getIdLong(), DinosaurForm.Chaos.getId())) {
+					if (res.next()) eggCount = res.getInt("count");
+				} catch (SQLException e) {}
+
+				if (incubator - eggCount > 0) {
+					possible.add(team.getPlayer());
+				}
+			}
+
+			Collections.shuffle(possible);
+			ArrayList<Player> win = new ArrayList<>();
+			for (int q = 0; q < difficulty && q < possible.size(); q++) {
+				win.add(possible.get(q));
+			}
+
+			for (Player p : win) {
+				StringBuilder sb = new StringBuilder();
+				Egg egg = getEgg();
+		
+				sb.append(p.getName());
+				sb.append(" picks up the ");
+				sb.append(egg.getEggName());
+				sb.append(" at the end of the dungeon. What could be inside?");
+		
+				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
+				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
+				Action.addEggDelayed(p.getIdLong(), timer, egg);
+			}
 		}
 	}
 
