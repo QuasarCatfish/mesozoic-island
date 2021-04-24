@@ -568,7 +568,7 @@ public class JDBC {
 		}
 		
 		// TODO: change to "omega > 0" when wave 2 is released
-		if (omega > 0) {
+		if (omega > 1_000_000_000) {
 			b &= executeUpdate("update players set omegaxp = omegaxp + %d where playerid = %d;", omega, playerid);
 			Player p2 = Player.getPlayer(playerid);
 
