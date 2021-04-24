@@ -78,7 +78,7 @@ public class BenedictBuyCommand implements ICommand {
 
 		long money = p.getItemCount(ItemID.DinosaurCoin);
 		long incubator = p.getItemCount(ItemID.EggIncubator);
-		int eggs = p.getEggCount();
+		int eggs = p.getStandardEggCount();
 
 		if (forsale <= 0) {
 			event.getChannel().sendMessageFormat("%s, there are no eggs left in stock.", p.getAsMention()).complete();

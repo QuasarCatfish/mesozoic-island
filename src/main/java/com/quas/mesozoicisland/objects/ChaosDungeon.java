@@ -1,13 +1,10 @@
 package com.quas.mesozoicisland.objects;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.battle.BattleAttack;
 import com.quas.mesozoicisland.battle.BattleChannel;
@@ -59,10 +56,7 @@ public class ChaosDungeon extends BasicDungeon {
 			ArrayList<Player> possible = new ArrayList<>();
 			for (BattleTeam team : teams) {
 				long incubator = team.getPlayer().getItemCount(ItemID.ChaosIncubator);
-				long eggCount = 0;
-				try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d and form = %d;", team.getPlayer().getIdLong(), DinosaurForm.Chaos.getId())) {
-					if (res.next()) eggCount = res.getInt("count");
-				} catch (SQLException e) {}
+				long eggCount = team.getPlayer().getChaosEggCount();
 
 				if (incubator - eggCount > 0) {
 					possible.add(team.getPlayer());

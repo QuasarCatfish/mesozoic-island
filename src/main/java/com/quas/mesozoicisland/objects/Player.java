@@ -293,8 +293,19 @@ public class Player {
 		return eggs.toArray(new Egg[0]);
 	}
 	
-	public int getEggCount() {
-		try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", pid)) {
+	public int getStandardEggCount() {
+		try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d and form != %d;", pid, DinosaurForm.Chaos.getId())) {
+			if (res.next()) {
+				return res.getInt("count");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 0;
+	}
+
+	public int getChaosEggCount() {
+		try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d and form = %d;", pid, DinosaurForm.Chaos.getId())) {
 			if (res.next()) {
 				return res.getInt("count");
 			}

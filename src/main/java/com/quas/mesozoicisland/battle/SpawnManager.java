@@ -248,8 +248,9 @@ public class SpawnManager {
 			Player p = Player.getPlayer(u.getIdLong());
 			if (p == null) continue;
 			long inc = p.getBag().getOrDefault(incubator, 0L);
-			if (inc <= p.getEggCount()) continue;
-			slotsCount.put(p, inc - p.getEggCount());
+			int eggcount = p.getStandardEggCount();
+			if (inc <= eggcount) continue;
+			slotsCount.put(p, inc - eggcount);
 			players.add(p);
 		}
 		

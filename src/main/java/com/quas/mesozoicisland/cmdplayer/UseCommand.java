@@ -471,7 +471,7 @@ public class UseCommand implements ICommand {
 			}
 
 			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
-				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getEggCount()) {
+				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getStandardEggCount()) {
 					if (i.getDamage() == 0) { // Chocolate Egg Voucher
 						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
 						egg.setEggName("Chocolate Egg");
