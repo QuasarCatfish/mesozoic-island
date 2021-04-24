@@ -87,24 +87,27 @@ public class InfiniDungeon extends Dungeon {
 		}
 		sb.append(String.format(" successfully defeated **%,d Floor%s** of the dungeon!", floorsCleared, floorsCleared == 1 ? "" : "s"));
 
-		sb.append(" A crate was left as the dungeon disappeared. It contained:\n");
-		sb.append(getRewardString(teams.size()));
-		if (teams.size() > 1) sb.append(String.format("\nThe %,d players split the rewards evenly.", teams.size()));
-
-		Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
-		Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
-		
-		for (BattleTeam bt : teams) {
-			Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
-			Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.InfiniDungeonFloorsCleared.getId(), floorsCleared);
-
-			long deepest = bt.getPlayer().getItemCount(Stat.InfiniDungeonDeepestFloor);
-			if (floorsCleared > deepest) {
-				Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.InfiniDungeonDeepestFloor.getId(), floorsCleared - deepest);
-			}
+		if (hasReward()) {
+			sb.append(" A crate was left as the dungeon disappeared. It contained:\n");
+			sb.append(getRewardString(teams.size()));
+			if (teams.size() > 1) sb.append(String.format("\nThe %,d players split the rewards evenly.", teams.size()));
+	
+			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
+			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
 			
-			for (ItemID item : reward.keySet()) {
-				Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, item.getId(), reward.get(item));
+			for (BattleTeam bt : teams) {
+				Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.DungeonsCleared.getId(), 1);
+				Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.InfiniDungeonFloorsCleared.getId(), floorsCleared);
+	
+				long deepest = bt.getPlayer().getItemCount(Stat.InfiniDungeonDeepestFloor);
+				if (floorsCleared > deepest) {
+					Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.InfiniDungeonDeepestFloor.getId(), floorsCleared - deepest);
+				}
+				
+				for (ItemID item : reward.keySet()) {
+					if (reward.get(item) <= 0) continue;
+					Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, item.getId(), reward.get(item));
+				}
 			}
 		}
 	}
