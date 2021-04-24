@@ -435,19 +435,8 @@ public class SpawnManager {
 	private static synchronized void spawnDungeon(String data) {
 		waiting = true;
 		
-		// Generate Dungeon
 		Dungeon d = Dungeon.generateRandomDungeon(data);
-		// OldDungeon d = OldDungeon.generateRandomDungeon(data);
-		
-		// Build Spawn Message
 		MessageEmbed me = d.getEmbed();
-		// EmbedBuilder eb = new EmbedBuilder();
-		// eb.setTitle(d.getTitle());
-		// eb.setColor(Constants.COLOR);
-		// eb.addField("Dungeon Size", String.format("%,d Floors", d.getFloorCount()), true);
-		// eb.addField("Difficulty", d.getDifficultyString(), true);
-		// eb.addField("Location", d.getLocation().toString(), true);
-		// eb.addField("Boss", d.getBoss().toString() + " [" + d.getBoss().getElement().toString() + "]", true);
 		
 		String msg = String.format("React with %s to join the dungeon exploration team.", DiscordEmote.Fossil.toString());
 		String time = " You have %s remaining.";
