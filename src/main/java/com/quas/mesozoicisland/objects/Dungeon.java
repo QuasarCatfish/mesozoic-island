@@ -59,6 +59,8 @@ public abstract class Dungeon {
 	public String getRewardString(int players) {
 		StringJoiner sj = new StringJoiner("\n");
 		for (ItemID itemid : reward.keySet()) {
+			if (reward.get(itemid) <= 0) continue;
+
 			Item item = Item.getItem(itemid);
 			int total = players * reward.get(itemid);
 

@@ -121,7 +121,7 @@ public class UseCommand implements ICommand {
 		boolean IS_DINOSAUR = i.getItemType() == ItemType.Held || i.getItemType() == ItemType.ConsumeDinosaur;
 		boolean SUCCESS = true;
 		
-		Dinosaur d = args.length > 1 && args[1].matches(DINOSAUR) ? Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(args[1])) : null;
+		Dinosaur d = args.length > 1 && args[1].toLowerCase().matches(DINOSAUR) ? Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(args[1])) : null;
 		if (IS_DINOSAUR && d == null) {
 			event.getChannel().sendMessageFormat("%s, you must use this item on a dinosaur.", p.getAsMention()).complete();
 			return;

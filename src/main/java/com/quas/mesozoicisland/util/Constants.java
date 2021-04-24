@@ -35,9 +35,11 @@ public class Constants {
 	
 	// Multipliers
 	public static final float XP_MULTIPLIER = 1f; // default 1f
+	public static final float DUNGEON_XP_DEFAULT = 0.25f;
 	public static final float getDungeonXpMultiplier() {
-		if (Event.isEventActive(EventType.DarknessDescent)) return 0.6f;
-		return 1f;
+		float mod = 1f;
+		if (Event.isEventActive(EventType.DarknessDescent)) mod *= 0.6f;
+		return mod * DUNGEON_XP_DEFAULT;
 	}
 	public static final float XP_FRAGRANCE_BONUS = 0.5f; // default 0.5f
 	public static final float BATTLE_FRAGRANCE_BONUS = 0.2f; // default 0.2f
