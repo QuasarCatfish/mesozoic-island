@@ -25,6 +25,7 @@ public class MesozoicRandom {
 	}
 	
 	public static int nextInt(int low, int high) {
+		if (low >= high) return low;
 		return ThreadLocalRandom.current().nextInt(low, high);
 	}
 	
@@ -33,6 +34,7 @@ public class MesozoicRandom {
 	}
 	
 	public static long nextLong(long low, long high) {
+		if (low >= high) return low;
 		return ThreadLocalRandom.current().nextLong(low, high);
 	}
 	
