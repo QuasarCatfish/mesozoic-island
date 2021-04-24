@@ -125,6 +125,7 @@ public abstract class Dungeon {
 				if (this instanceof ChaosDungeon) Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, Stat.ChaosDungeonsCleared.getId(), 1);
 
 				for (ItemID item : reward.keySet()) {
+					if (reward.get(item) <= 0) continue;
 					Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, item.getId(), reward.get(item));
 				}
 			}
