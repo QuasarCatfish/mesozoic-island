@@ -56,7 +56,7 @@ public class NewMember extends ListenerAdapter {
 			if (nps == NewPlayerStatus.NewToVersion) Action.sendMessage(MesozoicIsland.getAssistant().getIdLong(), c, "It appears that you have played Mesozoic Island Version 1. Your progress from that version is currently not transfered to this version. When you join a Guild, you will receive mail containing all of your previously owned dinosaurs that are currently released. In future updates, you will receive your previously owned dinosaurs when the update drops, if you are in a Guild, or when you join a Guild.");
 			
 			Util.addRoleToMember(m, DiscordRole.NewPlayer.getIdLong());
-			c.getManager().setName("tutorial").putPermissionOverride(m, Util.list(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE), new ArrayList<Permission>()).complete();
+			c.getManager().setName("tutorial").putPermissionOverride(m, Util.list(Permission.MESSAGE_READ, Permission.MESSAGE_WRITE), new ArrayList<Permission>()).setTopic(String.format("Tutorial channel for %s (ID %d).", m.getUser().getName(), m.getUser().getIdLong())).complete();
 			JDBC.executeUpdate("insert into tutorialchannels values(%d, %d);", m.getIdLong(), c.getIdLong());
 		} else if (nps == NewPlayerStatus.Returning) {
 			Player p = Player.getPlayer(m.getIdLong());
