@@ -146,7 +146,9 @@ public class TestCommand implements ICommand {
 					}
 				}
 
+				out.println("|}");
 				out.close();
+				
 				event.getChannel().sendFile(f).complete();
 				f.delete();
 			} break;
