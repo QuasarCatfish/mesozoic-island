@@ -133,9 +133,9 @@ public class TestCommand implements ICommand {
 
 					ArrayList<String> print = new ArrayList<>();
 					if (reward == null) {
-						print.add(String.format("Reward **%s** - Does not exist", reward));
+						print.add(String.format("Reward **%s** - Does not exist", lv));
 					} else {
-						print.add(String.format("Reward **%s** -\n%s", reward, JDBC.getRedeemMessage(reward)));
+						print.add(String.format("Reward **%s** -\n%s", lv, JDBC.getRedeemMessage(reward)));
 					}
 
 					for (String s : Util.bulkify(print)) {
