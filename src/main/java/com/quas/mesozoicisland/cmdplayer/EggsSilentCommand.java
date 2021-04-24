@@ -3,18 +3,19 @@ package com.quas.mesozoicisland.cmdplayer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
-import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -65,16 +66,20 @@ public class EggsSilentCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		Item inc = Item.getItem(ItemID.EggIncubator);
-		long incubators = p.getBag().getOrDefault(inc, 0L);
+		Item standardIncubator = Item.getItem(ItemID.EggIncubator);
+		long standardIncubatorCount = p.getItemCount(ItemID.EggIncubator);
+		Item chaosIncubator = Item.getItem(ItemID.ChaosIncubator);
+		long chaosIncubatorCount = p.getItemCount(ItemID.ChaosIncubator);
 		
 		ArrayList<String> eggs = new ArrayList<String>();
-		int eggcount = 0;
+		int standardEggCount = 0;
+		int chaosEggCount = 0;
 
 		try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d order by incubator;", p.getIdLong())) {
 			while (res.next()) {
 				Egg egg = Egg.getEgg(res.getInt("eggid"));
-				eggcount++;
+				if (egg.getForm() == DinosaurForm.Chaos.getId()) chaosEggCount++;
+				else standardEggCount++;
 				if (egg.isHatchable()) eggs.add("E" + egg.getIncubatorSlot());
 			}
 		} catch (SQLException e) {
@@ -82,23 +87,16 @@ public class EggsSilentCommand implements ICommand {
 		}
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("**");
-		sb.append(p.getAsMention());
-		sb.append("'s ");
-		sb.append(inc.toString(incubators));
-		sb.append(":**");
+		sb.append(String.format("**%s's Incubators:**", p.getAsMention()));
+		sb.append(String.format("\nIn Use: %,d of %,d %s", standardEggCount, standardIncubatorCount, standardIncubator.toString(standardIncubatorCount)));
+		if (chaosIncubatorCount > 0 || chaosEggCount > 0) sb.append(String.format("\nIn Use: %,d of %,d %s", chaosEggCount, chaosIncubatorCount, chaosIncubator.toString(chaosIncubatorCount)));
 		
-		sb.append("\nIn Use: ");
-		sb.append(Util.formatNumber(eggcount));
-		sb.append("/");
-		sb.append(Util.formatNumber(incubators));
+		StringJoiner sj = new StringJoiner(", ");
+		sj.setEmptyValue("None");
+		for (String egg : eggs) sj.add(egg);
 		
 		sb.append("\nHatchable Eggs: ");
-		if (eggs.isEmpty()) {
-			sb.append("None");
-		} else {
-			sb.append(String.join(", ", eggs));
-		}
+		sb.append(sj.toString());
 		
 		event.getChannel().sendMessage(sb.toString()).complete();
 	}

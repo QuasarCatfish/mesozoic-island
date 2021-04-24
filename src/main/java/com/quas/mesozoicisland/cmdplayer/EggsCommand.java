@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
@@ -66,15 +67,22 @@ public class EggsCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 		
-		Item inc = Item.getItem(ItemID.EggIncubator);
-		long incubators = p.getBag().getOrDefault(inc, 0L);
+		Item standardIncubator = Item.getItem(ItemID.EggIncubator);
+		long standardIncubatorCount = p.getItemCount(ItemID.EggIncubator);
+		Item chaosIncubator = Item.getItem(ItemID.ChaosIncubator);
+		long chaosIncubatorCount = p.getItemCount(ItemID.ChaosIncubator);
 		long hatch = 0;
 		
 		ArrayList<Egg> eggs = new ArrayList<Egg>();
+		int standardEggCount = 0;
+		int chaosEggCount = 0;
+
 		try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d order by incubator;", p.getIdLong())) {
 			while (res.next()) {
 				Egg egg = Egg.getEgg(res.getInt("eggid"));
 				eggs.add(egg);
+				if (egg.getForm() == DinosaurForm.Chaos.getId()) chaosEggCount++;
+				else standardEggCount++;
 				if (egg.isHatchable()) hatch++;
 			}
 		} catch (SQLException e) {
@@ -82,27 +90,16 @@ public class EggsCommand implements ICommand {
 		}
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append("**");
-		sb.append(p.getAsMention());
-		sb.append("'s ");
-		sb.append(inc.toString(incubators));
-		sb.append(":**");
-		
-		sb.append("\nIn Use: ");
-		sb.append(Util.formatNumber(eggs.size()));
-		sb.append("/");
-		sb.append(Util.formatNumber(incubators));
-		
-		sb.append("\nHatchable Eggs: ");
-		sb.append(Util.formatNumber(hatch));
-		sb.append("/");
-		sb.append(Util.formatNumber(eggs.size()));
+		sb.append(String.format("**%s's Incubators:**", p.getAsMention()));
+		sb.append(String.format("\nIn Use: %,d of %,d %s", standardEggCount, standardIncubatorCount, standardIncubator.toString(standardIncubatorCount)));
+		if (chaosIncubatorCount > 0 || chaosEggCount > 0) sb.append(String.format("\nIn Use: %,d of %,d %s", chaosEggCount, chaosIncubatorCount, chaosIncubator.toString(chaosIncubatorCount)));
+		sb.append(String.format("\nHatchable Eggs: %,d/%,d", hatch, eggs.size()));
 		
 		sb.append("\nYou'll find a full list of your egg incubators in your DMs.");
 		event.getChannel().sendMessage(sb.toString()).complete();
 		
 		ArrayList<String> print = new ArrayList<String>();
-		print.add("**Your " + inc.toString(incubators) + ":**");
+		print.add("**Your Incubators:**");
 		for (Egg egg : eggs) {
 			if (egg.isHatchable()) {
 				print.add(String.format("E%,d) %s (Ready to Hatch)", egg.getIncubatorSlot(), egg.toString()));
@@ -111,7 +108,10 @@ public class EggsCommand implements ICommand {
 			}
 		}
 
-		if (incubators > eggs.size()) print.add(" + " + (incubators - eggs.size()) + " empty " + inc.toString(incubators - eggs.size()));
+		long unusedStandard = standardIncubatorCount - standardEggCount;
+		if (unusedStandard > 0) print.add(String.format(" + %,d empty %s", unusedStandard, standardIncubator.toString(unusedStandard)));
+		long unusedChaos = chaosIncubatorCount - chaosEggCount;
+		if (unusedChaos > 0) print.add(String.format(" + %,d empty %s", unusedChaos, chaosIncubator.toString(unusedChaos)));
 		
 		PrivateChannel pc = event.getAuthor().openPrivateChannel().complete();
 		for (String msg : Util.bulkify(print)) {
