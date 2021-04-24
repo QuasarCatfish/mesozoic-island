@@ -126,6 +126,20 @@ public class TestCommand implements ICommand {
 				}
 			} break;
 
+			case "levelrewards": {
+				for (int level = 1; level <= 60; level++) {
+					String lv = "level" + level;
+					String reward = JDBC.getReward(lv);
+
+					ArrayList<String> print = new ArrayList<>();
+					if (reward == null) {
+						print.add(String.format("Reward **%s** - Does not exist", reward));
+					} else {
+						print.add(String.format("Reward **%s** -\n%s", reward, JDBC.getRedeemMessage(reward)));
+					}
+				}
+			} break;
+
 			case "givehp": {
 				int x = Integer.parseInt(args[2]);
 				while (x --> 0) {
