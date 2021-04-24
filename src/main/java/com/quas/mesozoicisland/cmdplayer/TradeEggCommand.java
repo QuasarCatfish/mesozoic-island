@@ -6,6 +6,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.Stat;
@@ -78,11 +79,17 @@ public class TradeEggCommand implements ICommand {
 		if (e1 == null) {
 			event.getChannel().sendMessageFormat("%s, you do not have an egg in this incubator slot.", p1.getAsMention()).complete();
 			return;
+		} else if (e1.getForm() == DinosaurForm.Chaos.getId()) {
+			event.getChannel().sendMessageFormat("%s, the energy emitting from your egg prevents it from being removed from its incubator.", p1.getAsMention()).complete();
+			return;
 		}
 		
 		Egg e2 = p2.getEgg(Integer.parseInt(args[2].substring(1)));
 		if (e2 == null) {
 			event.getChannel().sendMessageFormat("%s, %s does not have an egg in this incubator slot.", p1.getAsMention(), p2.getName()).complete();
+			return;
+		} else if (e1.getForm() == DinosaurForm.Chaos.getId()) {
+			event.getChannel().sendMessageFormat("%s, the energy emitting from their egg prevents it from being removed from its incubator.", p1.getAsMention()).complete();
 			return;
 		}
 		
