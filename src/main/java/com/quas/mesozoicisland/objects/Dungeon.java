@@ -56,6 +56,13 @@ public abstract class Dungeon {
 		return reward;
 	}
 
+	public boolean hasReward() {
+		for (ItemID itemid : reward.keySet()) {
+			if (reward.get(itemid) > 0) return true;
+		}
+		return false;
+	}
+
 	public String getRewardString(int players) {
 		StringJoiner sj = new StringJoiner("\n");
 		for (ItemID itemid : reward.keySet()) {
@@ -104,9 +111,11 @@ public abstract class Dungeon {
 			}
 			sb.append(" defeated **all floors** of the dungeon!");
 
-			sb.append(" A crate was left as the dungeon disappeared. It contained:\n");
-			sb.append(getRewardString(teams.size()));
-			if (teams.size() > 1) sb.append(String.format("\nThe %,d players split the rewards evenly.", teams.size()));
+			if (hasReward()) {
+				sb.append(" A crate was left as the dungeon disappeared. It contained:\n");
+				sb.append(getRewardString(teams.size()));
+				if (teams.size() > 1) sb.append(String.format("\nThe %,d players split the rewards evenly.", teams.size()));
+			}
 
 			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
 			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
