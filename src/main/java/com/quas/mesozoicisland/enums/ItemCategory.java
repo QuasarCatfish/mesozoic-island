@@ -4,14 +4,27 @@ import com.quas.mesozoicisland.util.Util;
 
 public enum ItemCategory {
 
+	// Important Items
 	KeyItems(1, "Key Items", "Key Item", "Key", "KI"),
 	Money(2, "Money", "$"),
+
+	// Consumable Items
 	Consumable(3, "Consumables", "Consumable", "Consume"),
+	Snack(7, "Snacks", "Snack", "Food"),
+	Fragrances(9, "Fragrances", "Fragrance", "Frags", "Frag", "Scents", "Scent", "Eaux", "Eau"),
+	Gacha(10, "Gacha"),
+
+	// Held Items
 	HeldItems(4, "Held Items", "Held Item", "Held", "Hold Items", "Hold Item", "Hold", "HI", "Equip", "Equipable"),
+	Charms(8, "Charms", "Charm"),
+
+	// Other
 	Tickets(5, "Tickets", "Ticket", "Tix"),
 	Event(6, "Event Items", "Event", "Events", "EI"),
-	
+
+	// Titles
 	Titles(99, "Titles", "Title"),
+	AchievementTitles(100, "Achievement Titles", "Achievement", "Achieve"),
 	
 	None(-1, "None"),
 	Misc(0, "Miscellaneous");
