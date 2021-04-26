@@ -99,7 +99,7 @@ public class BagCategoryCommand implements ICommand {
 			StringBuilder sb = new StringBuilder();
 			for (Item i : bag.keySet()) {
 				if (i.getItemCategory() != cat) continue;
-				if (bag.get(i) != 1 || (cat != ItemCategory.KeyItems && cat != ItemCategory.Titles)) {
+				if (bag.get(i) != 1 || cat.doesShowCount()) {
 					sb.append(Util.formatNumber(bag.get(i)));
 					sb.append(" ");
 				}
