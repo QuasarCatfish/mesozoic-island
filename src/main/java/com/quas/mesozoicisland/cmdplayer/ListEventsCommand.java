@@ -15,7 +15,7 @@ public class ListEventsCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("events");
+		return pattern("events?");
 	}
 
 	@Override
