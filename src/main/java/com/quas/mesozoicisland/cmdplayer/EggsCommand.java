@@ -71,19 +71,18 @@ public class EggsCommand implements ICommand {
 		long standardIncubatorCount = p.getItemCount(ItemID.EggIncubator);
 		Item chaosIncubator = Item.getItem(ItemID.ChaosIncubator);
 		long chaosIncubatorCount = p.getItemCount(ItemID.ChaosIncubator);
-		long hatch = 0;
+		long hatch = 0, eggs = 0;
 		
-		ArrayList<Egg> eggs = new ArrayList<Egg>();
-		int standardEggCount = 0;
-		int chaosEggCount = 0;
+		ArrayList<Egg> standardEggs = new ArrayList<>();
+		ArrayList<Egg> chaosEggs = new ArrayList<>();
 
 		try (ResultSet res = JDBC.executeQuery("select * from eggs where player = %d order by incubator;", p.getIdLong())) {
 			while (res.next()) {
 				Egg egg = Egg.getEgg(res.getInt("eggid"));
-				eggs.add(egg);
-				if (egg.getForm() == DinosaurForm.Chaos.getId()) chaosEggCount++;
-				else standardEggCount++;
+				if (egg.getForm() == DinosaurForm.Chaos.getId()) chaosEggs.add(egg);
+				else standardEggs.add(egg);
 				if (egg.isHatchable()) hatch++;
+				eggs++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -91,27 +90,43 @@ public class EggsCommand implements ICommand {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format("**%s's Incubators:**", p.getAsMention()));
-		sb.append(String.format("\nIn Use: %,d of %,d %s", standardEggCount, standardIncubatorCount, standardIncubator.toString(standardIncubatorCount)));
-		if (chaosIncubatorCount > 0 || chaosEggCount > 0) sb.append(String.format("\nIn Use: %,d of %,d %s", chaosEggCount, chaosIncubatorCount, chaosIncubator.toString(chaosIncubatorCount)));
-		sb.append(String.format("\nHatchable Eggs: %,d/%,d", hatch, eggs.size()));
+		sb.append(String.format("\nIn Use: %,d of %,d %s", standardEggs.size(), standardIncubatorCount, standardIncubator.toString(standardIncubatorCount)));
+		if (chaosIncubatorCount > 0 || chaosEggs.size() > 0) sb.append(String.format("\nIn Use: %,d of %,d %s", chaosEggs.size(), chaosIncubatorCount, chaosIncubator.toString(chaosIncubatorCount)));
+		sb.append(String.format("\nHatchable Eggs: %,d/%,d", hatch, eggs));
 		
 		sb.append("\nYou'll find a full list of your egg incubators in your DMs.");
 		event.getChannel().sendMessage(sb.toString()).complete();
 		
 		ArrayList<String> print = new ArrayList<String>();
-		print.add("**Your Incubators:**");
-		for (Egg egg : eggs) {
-			if (egg.isHatchable()) {
-				print.add(String.format("E%,d) %s (Ready to Hatch)", egg.getIncubatorSlot(), egg.toString()));
-			} else {
-				print.add(String.format("E%,d) %s (%,d of %,d Hatch Points)", egg.getIncubatorSlot(), egg.toString(), egg.getCurrentHatchPoints(), egg.getMaxHatchPoints()));
+
+		if (!standardEggs.isEmpty()) {
+			print.add("**Egg Incubators:**");
+			for (Egg egg : standardEggs) {
+				if (egg.isHatchable()) {
+					print.add(String.format("E%,d) %s (Ready to Hatch)", egg.getIncubatorSlot(), egg.toString()));
+				} else {
+					print.add(String.format("E%,d) %s (%,d of %,d Hatch Points)", egg.getIncubatorSlot(), egg.toString(), egg.getCurrentHatchPoints(), egg.getMaxHatchPoints()));
+				}
 			}
 		}
 
-		long unusedStandard = standardIncubatorCount - standardEggCount;
-		if (unusedStandard > 0) print.add(String.format(" + %,d empty %s", unusedStandard, standardIncubator.toString(unusedStandard)));
-		long unusedChaos = chaosIncubatorCount - chaosEggCount;
-		if (unusedChaos > 0) print.add(String.format(" + %,d empty %s", unusedChaos, chaosIncubator.toString(unusedChaos)));
+		if (!chaosEggs.isEmpty()) {
+			print.add("**Chaos Incubators:**");
+			for (Egg egg : chaosEggs) {
+				if (egg.isHatchable()) {
+					print.add(String.format("E%,d) %s (Ready to Hatch)", egg.getIncubatorSlot(), egg.toString()));
+				} else {
+					print.add(String.format("E%,d) %s (%,d of %,d Hatch Points)", egg.getIncubatorSlot(), egg.toString(), egg.getCurrentHatchPoints(), egg.getMaxHatchPoints()));
+				}
+			}
+		}
+
+		long unusedStandard = standardIncubatorCount - standardEggs.size();
+		long unusedChaos = chaosIncubatorCount - chaosEggs.size();
+		long unused = unusedStandard + unusedChaos;
+		if (unused > 0) print.add("**Unused Incubators:**");
+		if (unusedStandard > 0) print.add(String.format("%,d empty %s", unusedStandard, standardIncubator.toString(unusedStandard)));
+		if (unusedChaos > 0) print.add(String.format("%,d empty %s", unusedChaos, chaosIncubator.toString(unusedChaos)));
 		
 		PrivateChannel pc = event.getAuthor().openPrivateChannel().complete();
 		for (String msg : Util.bulkify(print)) {
