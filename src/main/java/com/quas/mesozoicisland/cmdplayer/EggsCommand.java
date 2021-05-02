@@ -92,10 +92,12 @@ public class EggsCommand implements ICommand {
 		sb.append(String.format("**%s's Incubators:**", p.getAsMention()));
 		sb.append(String.format("\nIn Use: %,d of %,d %s", standardEggs.size(), standardIncubatorCount, standardIncubator.toString(standardIncubatorCount)));
 		if (chaosIncubatorCount > 0 || chaosEggs.size() > 0) sb.append(String.format("\nIn Use: %,d of %,d %s", chaosEggs.size(), chaosIncubatorCount, chaosIncubator.toString(chaosIncubatorCount)));
-		sb.append(String.format("\nHatchable Eggs: %,d/%,d", hatch, eggs));
+		if (eggs > 0) sb.append(String.format("\nHatchable Eggs: %,d/%,d", hatch, eggs));
 		
-		sb.append("\nYou'll find a full list of your egg incubators in your DMs.");
+		long incubatorCount = standardIncubatorCount + chaosIncubatorCount;
+		if (incubatorCount > 0) sb.append("\nYou'll find a full list of your egg incubators in your DMs.");
 		event.getChannel().sendMessage(sb.toString()).complete();
+		if (incubatorCount <= 0) return;
 		
 		ArrayList<String> print = new ArrayList<String>();
 
