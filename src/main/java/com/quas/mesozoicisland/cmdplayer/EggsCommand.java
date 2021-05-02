@@ -100,7 +100,7 @@ public class EggsCommand implements ICommand {
 		ArrayList<String> print = new ArrayList<String>();
 
 		if (!standardEggs.isEmpty()) {
-			print.add("**Egg Incubators:**");
+			print.add("**== Egg Incubators ==**");
 			for (Egg egg : standardEggs) {
 				if (egg.isHatchable()) {
 					print.add(String.format("E%,d) %s (Ready to Hatch)", egg.getIncubatorSlot(), egg.toString()));
@@ -111,7 +111,7 @@ public class EggsCommand implements ICommand {
 		}
 
 		if (!chaosEggs.isEmpty()) {
-			print.add("**Chaos Incubators:**");
+			print.add("**== Chaos Incubators ==**");
 			for (Egg egg : chaosEggs) {
 				if (egg.isHatchable()) {
 					print.add(String.format("E%,d) %s (Ready to Hatch)", egg.getIncubatorSlot(), egg.toString()));
@@ -124,7 +124,7 @@ public class EggsCommand implements ICommand {
 		long unusedStandard = standardIncubatorCount - standardEggs.size();
 		long unusedChaos = chaosIncubatorCount - chaosEggs.size();
 		long unused = unusedStandard + unusedChaos;
-		if (unused > 0) print.add("**Unused Incubators:**");
+		if (unused > 0) print.add("**== Unused Incubators ==**");
 		if (unusedStandard > 0) print.add(String.format("%,d empty %s", unusedStandard, standardIncubator.toString(unusedStandard)));
 		if (unusedChaos > 0) print.add(String.format("%,d empty %s", unusedChaos, chaosIncubator.toString(unusedChaos)));
 		
