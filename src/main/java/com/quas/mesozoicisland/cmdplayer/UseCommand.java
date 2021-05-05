@@ -236,6 +236,28 @@ public class UseCommand implements ICommand {
 				}
 			}
 
+			else if (i.getId() == ItemID.MechanicalComponent.getItemId()) {
+				long count = bag.getOrDefault(i, 0L);
+
+				if (d.getDinosaurForm() != DinosaurForm.Standard) {
+					event.getChannel().sendMessageFormat("%s, you can only convert a Standard form dinosaur into its Mechanical form.", p.getAsMention()).complete();
+				} else if (d.isTradable()) {
+					Dinosaur mechanical = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Mechanical.getId());
+					if (mechanical == null) {
+						event.getChannel().sendMessageFormat("%s, this dinosaur does not have a Mechanical form.", p.getAsMention()).complete();
+					} else if (count < d.getRarity().getId()) {
+						event.getChannel().sendMessageFormat("%s, you do not have enough %s to convert this dinosaur.", p.getAsMention(), i.toString(2)).complete();
+					} else {
+						event.getChannel().sendMessageFormat("%s, 1 RP from your %s and %,d %s were used to create a %s.", p.getAsMention(), d.getEffectiveName(), mechanical.getDinosaurName()).complete();
+						JDBC.addItem(p.getIdLong(), i.getIdDmg(), -d.getRarity().getId());
+						JDBC.addDinosaur(null, p.getIdLong(), d.getIdPair(), -1);
+						JDBC.addDinosaur(event.getChannel(), p.getIdLong(), mechanical.getIdPair(), 1);
+					}
+				} else {
+					event.getChannel().sendMessageFormat("%s, your %s does not have any RP to use.", p.getAsMention(), d.getEffectiveName()).complete();
+				}
+			}
+
 			else {
 				sendUnimplemented(event);
 				SUCCESS = false;
