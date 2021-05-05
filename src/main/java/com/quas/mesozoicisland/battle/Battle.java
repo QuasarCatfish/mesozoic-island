@@ -243,8 +243,8 @@ public class Battle {
 							// Pick up dinosaur
 							if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0) {
 								String get = "";
-								int amount = (defendTeam.getDinosaur().getRarity().getId() % 20) / 2 + 1;
-
+								int amount = MesozoicRandom.nextInt(defend.getDinosaur().getRarity().getId() % 20, 2 * (defend.getDinosaur().getRarity().getId() % 20));
+								
 								// crystal pickup or otherwise
 								if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) {
 									Item item = Item.getItem(ItemID.MechanicalComponent);

@@ -238,18 +238,22 @@ public class UseCommand implements ICommand {
 
 			else if (i.getId() == ItemID.MechanicalComponent.getItemId()) {
 				long count = bag.getOrDefault(i, 0L);
-
-				if (d.getDinosaurForm() != DinosaurForm.Standard) {
+				
+				if (d == null) {
+					event.getChannel().sendMessageFormat("%s, you must use this item on a dinosaur.", p.getAsMention()).complete();
+				} else if (d.getDinosaurForm() != DinosaurForm.Standard) {
 					event.getChannel().sendMessageFormat("%s, you can only convert a Standard form dinosaur into its Mechanical form.", p.getAsMention()).complete();
 				} else if (d.isTradable()) {
 					Dinosaur mechanical = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Mechanical.getId());
+					int cost = 5 * d.getRarity().getId();
+
 					if (mechanical == null) {
 						event.getChannel().sendMessageFormat("%s, this dinosaur does not have a Mechanical form.", p.getAsMention()).complete();
-					} else if (count < d.getRarity().getId()) {
+					} else if (count < cost) {
 						event.getChannel().sendMessageFormat("%s, you do not have enough %s to convert this dinosaur.", p.getAsMention(), i.toString(2)).complete();
 					} else {
-						event.getChannel().sendMessageFormat("%s, 1 RP from your %s and %,d %s were used to create a %s.", p.getAsMention(), d.getEffectiveName(), mechanical.getDinosaurName()).complete();
-						JDBC.addItem(p.getIdLong(), i.getIdDmg(), -d.getRarity().getId());
+						event.getChannel().sendMessageFormat("%s, 1 RP from your %s and %,d %s were used to create a %s.", p.getAsMention(), d.getEffectiveName(), cost, i.toString(cost), mechanical.getDinosaurName()).complete();
+						JDBC.addItem(p.getIdLong(), i.getIdDmg(), -cost);
 						JDBC.addDinosaur(null, p.getIdLong(), d.getIdPair(), -1);
 						JDBC.addDinosaur(event.getChannel(), p.getIdLong(), mechanical.getIdPair(), 1);
 					}
