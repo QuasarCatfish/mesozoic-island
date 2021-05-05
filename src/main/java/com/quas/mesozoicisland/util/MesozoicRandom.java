@@ -136,6 +136,8 @@ public class MesozoicRandom {
 			return (long)(Constants.THANKSGIVING_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
 		} else if (e.isEventActive(EventType.Thanksgiving) && d.getDex() == DinoID.Turkey.getDex()) {
 			return d.getRarity().getSpecialCount();
+		} else if (e.isEventActive(EventType.MechanicalMayhem) && d.getDinosaurForm() == DinosaurForm.Mechanical) {
+			return (long)(Constants.MECHANICAL_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
 		} else{
 			return d.getRarity().getDinoCount();
 		}

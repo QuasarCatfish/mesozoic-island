@@ -8,7 +8,7 @@ public enum EventType {
 
 	SecretSantaSignup(30), SecretSanta(31),
 
-	DarknessDescent(100), LostPages(101);
+	DarknessDescent(100), LostPages(101), MechanicalMayhem(102);
 
 	private int type;
 	private EventType(int type)	 {
