@@ -242,18 +242,39 @@ public class Battle {
 
 							// Pick up dinosaur
 							if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0) {
-								String get = String.format("%s picks up the %s crystal", attackTeam.getPlayer().getName(), defendTeam.getDinosaur().getDinosaurName());
-								if (defendTeam.getDinosaur().hasRune())
+								String get = "";
+								int amount = (defendTeam.getDinosaur().getRarity().getId() % 20) / 2 + 1;
+
+								// crystal pickup or otherwise
+								if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) {
+									Item item = Item.getItem(ItemID.MechanicalComponent);
+									get = String.format("%s picks up %,d %s", attackTeam.getPlayer().getName(), amount, item.toString(amount));
+								} else {
+									get = String.format("%s picks up the %s crystal", attackTeam.getPlayer().getName(), defendTeam.getDinosaur().getDinosaurName());
+								}
+
+								// rune pickup
+								if (defendTeam.getDinosaur().hasRune()) {
 									get += String.format(" and the %s rune", defendTeam.getDinosaur().getRune().getName());
-								if (defendTeam.getDinosaur().hasItem())
+								}
+
+								// item pickup
+								if (defendTeam.getDinosaur().hasItem()) {
 									get += String.format(" and %s %s", Util.getArticle(defendTeam.getDinosaur().getItem().toString()), defendTeam.getDinosaur().getItem().toString());
+								}
 
 								// Send pickup message
 								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
 								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
 
-								// Give dinosaur, rune, and item
-								Action.addDinosaurDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getId());
+								// Give dinosaur, rune
+								if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) {
+									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, ItemID.MechanicalComponent.getId(), amount);
+								} else {
+									Action.addDinosaurDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getId());
+								}
+
+								// give rune and item
 								if (defendTeam.getDinosaur().hasRune()) Action.addRuneDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getRune().getId());
 								if (defendTeam.getDinosaur().hasItem()) Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getItem().getIdDmg(), 1);
 							}
@@ -735,6 +756,7 @@ public class Battle {
 		// Defense
 		if (defeff == BattleAttack.Block) {
 			damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
+			if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
 			sb.append(" but it blocked the attack. ");
 		} else if ((atkeff != BattleAttack.AlwaysHitAttack && defeff == BattleAttack.Dodge) || atkeff == BattleAttack.Miss) {
 			damage = 0;

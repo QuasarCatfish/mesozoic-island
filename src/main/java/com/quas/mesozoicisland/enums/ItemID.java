@@ -134,6 +134,10 @@ public enum ItemID {
 	EggVoucher(406, 0),
 	JasonToken(407, 0),
 	SecretSantaPresent(408, 0),
+	PlasticWaste(409, 0),
+	MechanicalComponent(410, 0),
+
+	// unused
 	PageOfFlames(411, 0),
 	PageOfSparks(412, 0),
 	PageOfPlants(413, 0),

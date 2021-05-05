@@ -21,7 +21,8 @@ public enum DinosaurForm {
 	Chaos(12, "Chaos", "K", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, null, null),
 	Halloween(1031, "Halloween", "H", BattleAttack.STANDARD_ATTACKS_SCARE, BattleAttack.STANDARD_DEFENSE, DiscordEmote.HalloweenOwned, DiscordEmote.HalloweenUnowned),
 	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACKS_HEAL, BattleAttack.STANDARD_DEFENSE, DiscordEmote.ThanksgivingOwned, DiscordEmote.ThanksgivingUnowned),
-	
+	Mechanical(1400, "Mechanical", "M", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE_BLOCK, null, null),
+
 	AllForms(Integer.MIN_VALUE, "All", Util.mult(Constants.ZERO_WIDTH_SPACE, 3), null, null, null, null),
 	AnyForms(Integer.MIN_VALUE + 1, "Any", Util.mult(Constants.ZERO_WIDTH_SPACE, 5), null, null, null, null);
 	
