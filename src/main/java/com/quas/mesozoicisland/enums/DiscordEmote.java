@@ -21,6 +21,8 @@ public enum DiscordEmote {
 	HalloweenOwned(770493483559551016L),
 	ThanksgivingUnowned(770493483680661524L),
 	ThanksgivingOwned(770493483445518337L),
+	MechanicalUnowned(839428662511009833L),
+	MechanicalOwned(839428662893477909L),
 
 	// Token Emotes
 	Token(774870857742286859L),
