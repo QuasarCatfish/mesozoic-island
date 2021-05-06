@@ -151,13 +151,13 @@ public class Element implements Comparable<Element> {
 		if (!readEffectiveness) {
 			readElements();
 		}
-		
+
 		double mult = 1d;
 		for (int amask = 1; amask <= attack.getId(); amask <<= 1) {
 			if ((amask & attack.getId()) == 0) continue;
 			for (int dmask = 1; dmask <= defend.getId(); dmask <<= 1) {
 				if ((dmask & defend.getId()) == 0) continue;
-				mult *= effectiveness.getOrDefault(new Pair<Element, Element>(attack, defend), 1f);
+				mult *= effectiveness.getOrDefault(new Pair<Element, Element>(of(amask), of(dmask)), 1f);
 			}
 		}
 		

@@ -110,7 +110,7 @@ public class TestCommand implements ICommand {
 				Element e1 = Element.of(Element.LIGHTNING.getId());
 				Element e2 = Element.of(Element.EARTH.getId() | Element.METAL.getId());
 				event.getChannel().sendMessageFormat("%s deals %1.2fx damage on %s.", e1, e1.getEffectivenessAgainst(e2), e2).complete();
-			}
+			} break;
 
 			case "spawncheck": {
 				StringBuilder sb = new StringBuilder();
