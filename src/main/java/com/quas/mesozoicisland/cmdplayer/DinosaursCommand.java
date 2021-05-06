@@ -181,6 +181,7 @@ public class DinosaursCommand implements ICommand {
 		Halloween("Halloween", "halloween", "captures.form = " + DinosaurForm.Halloween.getId(), false),
 		Thanksgiving("Thanksgiving", "thanksgiving", "captures.form = " + DinosaurForm.Thanksgiving.getId(), false),
 		Chaos("Chaos", "chaos", "captures.form = " + DinosaurForm.Chaos.getId(), false),
+		Mechanical("Mechanical", "mechanical", "captures.form = " + DinosaurForm.Mechanical.getId(), false),
 		
 //		MinLevel
 //		MaxLevel
