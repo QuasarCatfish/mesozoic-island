@@ -203,7 +203,7 @@ public class SpawnManager {
 		
 		// Generate Egg
 		Egg[] eggs = new Egg[MesozoicRandom.nextInt(Constants.getMaxEggSpawn()) + 1];
-		for (int q = 0; q < eggs.length; q++) eggs[q] = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
+		for (int q = 0; q < eggs.length; q++) eggs[q] = Egg.getRandomEgg(MesozoicRandom.nextEggDinosaur().getIdPair());
 		
 		// Build Spawn Message
 		EmbedBuilder eb = new EmbedBuilder();

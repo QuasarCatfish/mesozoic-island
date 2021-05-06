@@ -72,6 +72,14 @@ public class MesozoicRandom {
 		return locations.isEmpty() ? Location.Plains : Util.getRandomElement(locations);
 	}
 	
+	public static Dinosaur nextEggDinosaur() {
+		while (true) {
+			Dinosaur d = nextOwnableDinosaur();
+			if (nextHatchPoints(d.getRarity(), d.getDinosaurForm()) >= Constants.ILLEGAL_EGG_HP) continue;
+			return d;
+		}
+	}
+
 	public static Dinosaur nextOwnableDinosaur() {
 		return nextOwnableDinosaur(0);
 	}
@@ -202,10 +210,10 @@ public class MesozoicRandom {
 			hp += nextInt(1_500, 4_500);
 			break;
 		case Chaos:
-			hp += nextInt(10_000, 20_000);
+			hp += 10_000 + nextInt(2_500, 7_500);
 			break;
 		default:
-			hp += 1_000_000_000;
+			hp += Constants.ILLEGAL_EGG_HP;
 			break;
 		}
 		

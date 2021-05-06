@@ -93,6 +93,8 @@ public class Constants {
 	public static boolean SPAWN_EGGS = true;
 	public static boolean UPDATE_EGG_HP = true;
 	public static final int EGG_PRICE = 750;
+	public static final int ILLEGAL_EGG_HP = 1_000_000_000;
+
 	public static int getEggSpawnChance() {
 		if (Event.isEventActive(EventType.Easter)) return 10;
 		return 15; // default

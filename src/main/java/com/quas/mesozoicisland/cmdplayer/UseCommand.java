@@ -499,13 +499,13 @@ public class UseCommand implements ICommand {
 			else if (i.getId() == ItemID.EggVoucher.getItemId()) {
 				if (bag.getOrDefault(Item.getItem(ItemID.EggIncubator), 0L) > p.getStandardEggCount()) {
 					if (i.getDamage() == 0) { // Chocolate Egg Voucher
-						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
+						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextEggDinosaur().getIdPair());
 						egg.setEggName("Chocolate Egg");
 						egg.setEggColor(EggColor.SaddleBrown);
 						JDBC.addEgg(p.getIdLong(), egg);
 						event.getChannel().sendMessageFormat("%s, you have redeemed a Chocolate Egg!", p.getAsMention()).complete();
 					} else if (i.getDamage() == 1) { // Egg Voucher
-						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextOwnableDinosaur().getIdPair());
+						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextEggDinosaur().getIdPair());
 						JDBC.addEgg(p.getIdLong(), egg);
 						event.getChannel().sendMessageFormat("%s, you have redeemed %s %s.", p.getAsMention(), Util.getArticle(egg.getEggName()), egg.getEggName()).complete();
 					} else {
