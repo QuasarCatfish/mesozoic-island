@@ -21,8 +21,8 @@ public enum DiscordEmote {
 	// Form Emotes
 	StandardUnowned(770493483496505375L),
 	StandardOwned(770493483520884766L),
-	PrismaticUnowned(770493483131076609L),
-	PrismaticOwned(770493483231608833L),
+	PrismaticUnowned(839725929056043009L),
+	PrismaticOwned(839725928707915778L),
 	DungeonUnowned(770493483470946334L),
 	DungeonOwned(770493483290198047L),
 	HalloweenUnowned(770493483471208468L),
@@ -59,8 +59,8 @@ public enum DiscordEmote {
 		return id;
 	}
 	
-	public Emote emote = null;
-	public boolean gotEmote = false;
+	private Emote emote = null;
+	private boolean gotEmote = false;
 	public Emote getEmote() {
 		if (gotEmote) return emote;
 
