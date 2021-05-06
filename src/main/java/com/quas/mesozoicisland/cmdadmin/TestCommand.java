@@ -106,6 +106,12 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessageFormat(JDBC.getRedeemMessage(RaidReward.randomReward())).complete();
 			} break;
 
+			case "elementeffectiveness": {
+				Element e1 = Element.of(Element.LIGHTNING.getId());
+				Element e2 = Element.of(Element.EARTH.getId() | Element.METAL.getId());
+				event.getChannel().sendMessageFormat("%s deals %1.2fx damage on %s.", e1, e1.getEffectivenessAgainst(e2), e2).complete();
+			}
+
 			case "spawncheck": {
 				StringBuilder sb = new StringBuilder();
 				sb.append("```");
