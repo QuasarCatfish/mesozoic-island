@@ -87,7 +87,7 @@ public class DataCommand implements ICommand {
 				
 				eb.addField("Dex Number", "#" + d.getId(), true);
 				eb.addField("Element", d.getElement().toString(), true);
-				eb.addField("Rarity", d.getRarity().toString(), true);
+				eb.addField("Rarity", d.getRarity().getAsString(), true);
 				eb.addField("Base Health", Util.formatNumber(d.getHealth()), true);
 				eb.addField("Base Attack", Util.formatNumber(d.getAttack()), true);
 				eb.addField("Base Defense", Util.formatNumber(d.getDefense()), true);
