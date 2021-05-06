@@ -95,7 +95,7 @@ public class Tutorial09 implements ICommand {
 		Util.sleep(2000);
 		
 		sendTyping(event.getChannel(), 3000);
-		event.getChannel().sendMessageFormat("**%s** is your dinosaur's rarity. The higher the rarity, the less it spawns in the wild. Rarer dinosaurs also tend to be more valuable.", starter.getRarity().getName()).complete();
+		event.getChannel().sendMessageFormat("**%s** is your dinosaur's rarity. The higher the rarity, the less it spawns in the wild. Rarer dinosaurs also tend to be more valuable.", starter.getRarity()).complete();
 		Util.sleep(2000);
 		
 		sendTyping(event.getChannel(), 2000);

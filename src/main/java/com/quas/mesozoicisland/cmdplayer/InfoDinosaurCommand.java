@@ -88,7 +88,7 @@ public class InfoDinosaurCommand implements ICommand {
 			if (d.getForm() != 0) eb.addField("Form", d.getFormName(), true);
 			eb.addField("Owner", p.getName(), true);
 			eb.addField("Element", d.getElement().getName(), true);
-			eb.addField("Rarity", d.getRarity().getName(), true);
+			eb.addField("Rarity", d.getRarity().getAsString(), true);
 			eb.addField("Level and XP", String.format("Level %,d + %,d XP", d.getLevel(), d.getXpMinusLevel()), true);
 			eb.addField("Rank and RP", String.format("Rank %s + %,d RP", d.getRankString(), d.getRp()), true);
 			eb.addField("Battle Tier", DinoMath.getBattleTier(d).toString(), true);

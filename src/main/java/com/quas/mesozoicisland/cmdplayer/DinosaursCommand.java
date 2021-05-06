@@ -144,7 +144,7 @@ public class DinosaursCommand implements ICommand {
 					if (d.getRune() != null && d.getRune().getId() != 0) sb.append(Zalgo.field(String.format(" [Rune: #%03d %s]", d.getRune().getId(), d.getRune().getName())));
 				} else {
 					sb.append(String.format(" [%s]", d.getElement().getName()));
-					sb.append(String.format(" [%s]", d.getRarity().getName()));
+					sb.append(String.format(" %s", d.getRarity().getAsBrackets()));
 					sb.append(String.format(" [%,d Health, %,d Attack, %,d Defense, %,d Total]", d.getHealth(), d.getAttack(), d.getDefense(), d.getStatTotal()));
 					if (d.getItem() != null && d.getItem().getId() != 0) {
 						if (d.getItem().hasIcon()) {

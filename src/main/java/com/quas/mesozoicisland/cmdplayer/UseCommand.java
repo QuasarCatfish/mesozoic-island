@@ -567,7 +567,7 @@ public class UseCommand implements ICommand {
 						for (String s : lowtier) if (s.equals(dino)) lower = true;
 
 						Dinosaur d2 = Dinosaur.getDinosaur(Util.getDexForm(dino));
-						sb.append(String.format("\n%s %s [%s] [%s]", lower ? Constants.NOTE : Constants.BULLET_POINT, d2.toString(), d2.getElement().getName(), d2.getRarity().getName()));
+						sb.append(String.format("\n%s %s [%s] %s", lower ? Constants.NOTE : Constants.BULLET_POINT, d2.toString(), d2.getElement().getName(), d2.getRarity().getAsBrackets()));
 					}
 
 					if (tier > 1) {

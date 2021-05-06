@@ -311,16 +311,7 @@ public class SpawnManager {
 			
 			sb.append("\nDinosaurs:");
 			for (Dinosaur d : wilds.get(tier)) {
-				sb.append("\n");
-				sb.append(Constants.BULLET_POINT);
-				sb.append(" ");
-				sb.append(d.toString());
-				sb.append(" [");
-				sb.append(d.getElement().toString());
-				sb.append("]");
-				sb.append(" [");
-				sb.append(d.getRarity().toString());
-				sb.append("]");
+				sb.append(String.format("\n%s %s [%s] %s", Constants.BULLET_POINT, d.toString(), d.getElement().toString(), d.getRarity().getAsBrackets()));
 
 				if (d.hasItem()) {
 					if (d.getItem().hasIcon()) {

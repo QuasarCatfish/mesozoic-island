@@ -10,6 +10,14 @@ public enum DiscordEmote {
 	Egg(735224390396149860L),
 	Blank(730749486086881321L),
 	
+	// Rarities
+	RarityCopper(839689038055473192L),
+	RarityBronze(839689037224476683L),
+	RarityIron(839689037648363570L),
+	RaritySilver(839689038021132299L),
+	RarityGold(839689037971456051L),
+	RarityPlatinum(839689037324484619L),
+
 	// Form Emotes
 	StandardUnowned(770493483496505375L),
 	StandardOwned(770493483520884766L),
@@ -51,11 +59,20 @@ public enum DiscordEmote {
 		return id;
 	}
 	
+	public Emote emote = null;
+	public boolean gotEmote = false;
 	public Emote getEmote() {
+		if (gotEmote) return emote;
+
 		for (Guild g : MesozoicIsland.getProfessor().getJDA().getGuilds()) {
 			Emote e = g.getEmoteById(id);
-			if (e != null) return e;
+			if (e != null) {
+				gotEmote = true;
+				return emote = e;
+			}
 		}
+
+		gotEmote = true;
 		return null;
 	}
 	

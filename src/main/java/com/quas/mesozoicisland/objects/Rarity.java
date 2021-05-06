@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.quas.mesozoicisland.JDBC;
+import com.quas.mesozoicisland.enums.DiscordEmote;
 
 public class Rarity implements Comparable<Rarity> {
 
@@ -15,18 +16,15 @@ public class Rarity implements Comparable<Rarity> {
 	private String symbol;
 	private int dinocount;
 	private int specialcount;
+	private DiscordEmote emote;
 	
 	public int getId() {
 		return id;
 	}
-	
-	public String getName() {
-		return name;
-	}
-	
+
 	@Override
 	public String toString() {
-		return getName();
+		return name;
 	}
 	
 	public String getSymbol() {
@@ -39,6 +37,18 @@ public class Rarity implements Comparable<Rarity> {
 	
 	public int getSpecialCount() {
 		return specialcount;
+	}
+
+	public DiscordEmote getEmote() {
+		return emote;
+	}
+
+	public String getAsBrackets() {
+		return emote == null ? String.format("[%s]", name) : emote.getEmote().getAsMention();
+	}
+
+	public String getAsString() {
+		return emote == null ? name : String.format("%s %s", name, emote.getEmote().getAsMention());
 	}
 	
 	@Override
@@ -74,7 +84,8 @@ public class Rarity implements Comparable<Rarity> {
 				r.symbol = res.getString("rarityshort");
 				r.dinocount = res.getInt("spawndino");
 				r.specialcount = res.getInt("spawnspecial");
-				
+				r.emote = DiscordEmote.getEmote(res.getLong("emote"));
+
 				rarities.put(id, r);
 				return r;
 			}
