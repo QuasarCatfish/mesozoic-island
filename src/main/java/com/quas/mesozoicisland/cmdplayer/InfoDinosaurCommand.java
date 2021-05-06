@@ -85,7 +85,13 @@ public class InfoDinosaurCommand implements ICommand {
 			if (d.getRune() != null && d.getRune().getId() != 0) eb.addField(Zalgo.title("Rune"), Zalgo.field(d.getRune().getName()), true);
 		} else {
 			eb.addField("Dex Number", d.getDex() < 0 ? "#" + Util.mult("?", Constants.MAX_DEX_DIGITS) : String.format("#%0" + Constants.MAX_DEX_DIGITS + "d", d.getDex()), true);
-			if (d.getForm() != 0) eb.addField("Form", d.getFormName(), true);
+			if (d.getDinosaurForm() != DinosaurForm.Standard) {
+				if (d.getDinosaurForm().getOwnedEmote() == null) {
+					eb.addField("Form", d.getFormName(), true);
+				} else {
+					eb.addField("Form", String.format("%s %s", d.getFormName(), d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention()), true);
+				}
+			}
 			eb.addField("Owner", p.getName(), true);
 			eb.addField("Element", d.getElement().getName(), true);
 			eb.addField("Rarity", d.getRarity().getAsString(), true);
