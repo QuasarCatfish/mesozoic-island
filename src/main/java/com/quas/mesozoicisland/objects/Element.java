@@ -55,6 +55,10 @@ public class Element implements Comparable<Element> {
 		return hasemblem;
 	}
 
+	public String getAsBrackets() {
+		return String.format("[%s]", name);
+	}
+
 	@Override
 	public int compareTo(Element that) {
 		return Integer.compare(this.id, that.id);

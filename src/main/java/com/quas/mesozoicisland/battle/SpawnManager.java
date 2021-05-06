@@ -312,12 +312,16 @@ public class SpawnManager {
 			
 			sb.append("\nDinosaurs:");
 			for (Dinosaur d : wilds.get(tier)) {
-				sb.append(String.format("\n%s %s [%s] %s", Constants.BULLET_POINT, d.toString(), d.getElement().toString(), d.getRarity().getAsBrackets()));
+				sb.append(String.format("\n%s %s", Constants.BULLET_POINT, d.toString()));
 
+				// add form
 				if (d.getDinosaurForm() != DinosaurForm.Standard && d.getDinosaurForm().getOwnedEmote() != null) {
 					sb.append(" ");
 					sb.append(d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention());
 				}
+
+				// add element and rarity
+				sb.append(String.format(" %s %s", d.getElement().getAsBrackets(), d.getRarity().getAsBrackets()));
 
 				if (d.hasItem()) {
 					if (d.getItem().hasIcon()) {
