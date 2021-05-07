@@ -16,9 +16,9 @@ public enum DinosaurForm {
 	Accursed(-6, "Accursed", "A", BattleAttack.STANDARD_ATTACKS_LOW_ACCURACY, BattleAttack.STANDARD_DEFENSE, null, null),
 	ChaosBoss(-7, "Chaos Boss", Util.mult(Constants.ZERO_WIDTH_SPACE, 6), BattleAttack.CHAOS_BOSS_ATTACKS, BattleAttack.RAID_BOSS_DEFENSE, null, null),
 	
-	Prismatic(10, "Prismatic", "P", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.PrismaticOwned, DiscordEmote.PrismaticUnowned),
+	Prismatic(10, "Prismatic", "P", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.PrismaticOwned, null),
 	Dungeon(11, "Dungeon", "D", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.DungeonOwned, DiscordEmote.DungeonUnowned),
-	Chaos(12, "Chaos", "K", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, null, null),
+	Chaos(12, "Chaos", "K", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.ChaosOwned, null),
 	Halloween(1031, "Halloween", "H", BattleAttack.STANDARD_ATTACKS_SCARE, BattleAttack.STANDARD_DEFENSE, DiscordEmote.HalloweenOwned, DiscordEmote.HalloweenUnowned),
 	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACKS_HEAL, BattleAttack.STANDARD_DEFENSE, DiscordEmote.ThanksgivingOwned, DiscordEmote.ThanksgivingUnowned),
 	Mechanical(1400, "Mechanical", "M", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE_BLOCK, DiscordEmote.MechanicalOwned, DiscordEmote.MechanicalUnowned),

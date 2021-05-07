@@ -86,11 +86,13 @@ public class DinodexCommand implements ICommand {
 
 			for (Pair<Dinosaur, Boolean> pair : dinos.get(key)) {
 				DinosaurForm form = pair.getFirstValue().getDinosaurForm();
-				if (form.getOwnedEmote() == null || form.getUnownedEmote() == null) continue;
-
+				if (form.getOwnedEmote() == null && form.getUnownedEmote() == null) continue;
+				
 				if (pair.getSecondValue()) {
+					if (form.getOwnedEmote() == null) continue;
 					forms.add(form.getOwnedEmote().toString());
-				} else if (form != DinosaurForm.Prismatic) {
+				} else {
+					if (form.getUnownedEmote() == null) continue;
 					forms.add(form.getUnownedEmote().toString());
 				}
 			}
