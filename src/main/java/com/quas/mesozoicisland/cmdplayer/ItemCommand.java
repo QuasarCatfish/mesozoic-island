@@ -62,6 +62,9 @@ public class ItemCommand implements ICommand {
 		String itemname = Util.join(args, " ", 0, args.length);
 		while (itemname.charAt(0) == '0' && itemname.length() > 1) itemname = itemname.substring(1);
 
+		Item item = null;
+
+		loop:
 		for (Item i : Item.values()) {
 			if (i.getItemCategory() == ItemCategory.None) continue;
 			
@@ -69,36 +72,36 @@ public class ItemCommand implements ICommand {
 			for (String s : arr) {
 				if (s.equalsIgnoreCase(itemname)) {
 					if (Constants.HIDE_ITEMS && !i.isDiscovered()) continue;
-
-					EmbedBuilder eb = new EmbedBuilder();
-					eb.setColor(Constants.COLOR);
-					eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
-					eb.setDescription(i.getDescription());
-					if (i.hasIcon()) eb.setThumbnail(i.getIcon().getEmote().getImageUrl());
-					event.getChannel().sendMessage(eb.build()).complete();
-					return;
+					item = i;
+					break loop;
 				}
 			}
 		}
 
-		for (ShopItem si : ShopItem.values()) {
-			Item i = si.getBuyItem();
-			if (i.getItemCategory() == ItemCategory.None) continue;
-			
-			if (si.getName().equalsIgnoreCase(itemname)) {
-				if (Constants.HIDE_ITEMS && !i.isDiscovered()) continue;
-				if (!si.isVisible()) continue;
-
-				EmbedBuilder eb = new EmbedBuilder();
-				eb.setColor(Constants.COLOR);
-				eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
-				eb.setDescription(i.getDescription());
-				if (i.hasIcon()) eb.setThumbnail(i.getIcon().getEmote().getImageUrl());
-				event.getChannel().sendMessage(eb.build()).complete();
-				return;
+		if (item == null) {
+			for (ShopItem si : ShopItem.values()) {
+				Item i = si.getBuyItem();
+				if (i.getItemCategory() == ItemCategory.None) continue;
+				
+				if (si.getName().equalsIgnoreCase(itemname)) {
+					if (Constants.HIDE_ITEMS && !i.isDiscovered()) continue;
+					if (!si.isVisible()) continue;
+					item = i;
+					break;
+				}
 			}
 		}
 		
-		event.getChannel().sendMessageFormat("%s, this item does not exist.", event.getAuthor().getAsMention()).complete();
+		if (item == null) {
+			event.getChannel().sendMessageFormat("%s, this item does not exist.", event.getAuthor().getAsMention()).complete();
+		} else {
+
+		}
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setColor(Constants.COLOR);
+		eb.setTitle(String.format("**%s** (ID %d)", item.toString(), item.getId()));
+		eb.setDescription(item.getDescription());
+		if (item.hasIcon()) eb.setThumbnail(item.getIcon().getEmote().getImageUrl());
+		event.getChannel().sendMessage(eb.build()).complete();
 	}
 }
