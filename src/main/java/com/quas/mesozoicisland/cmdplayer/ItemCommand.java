@@ -95,13 +95,12 @@ public class ItemCommand implements ICommand {
 		if (item == null) {
 			event.getChannel().sendMessageFormat("%s, this item does not exist.", event.getAuthor().getAsMention()).complete();
 		} else {
-
+			EmbedBuilder eb = new EmbedBuilder();
+			eb.setColor(Constants.COLOR);
+			eb.setTitle(String.format("**%s** (ID %d)", item.toString(), item.getId()));
+			eb.setDescription(item.getDescription());
+			if (item.hasIcon()) eb.setThumbnail(item.getIcon().getEmote().getImageUrl());
+			event.getChannel().sendMessage(eb.build()).complete();
 		}
-		EmbedBuilder eb = new EmbedBuilder();
-		eb.setColor(Constants.COLOR);
-		eb.setTitle(String.format("**%s** (ID %d)", item.toString(), item.getId()));
-		eb.setDescription(item.getDescription());
-		if (item.hasIcon()) eb.setThumbnail(item.getIcon().getEmote().getImageUrl());
-		event.getChannel().sendMessage(eb.build()).complete();
 	}
 }
