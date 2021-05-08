@@ -91,7 +91,7 @@ public class StatsPlayerCommand implements ICommand {
 		if (!p.isMaxLevel()) xpField.add(String.format("(%,d XP until Level Up)", DinoMath.getXp(p.getLevel() + 1) - p.getXp()));
 		else xpField.add(String.format("(%,d %sXP until next %s Level Up)", DinoMath.getOmegaXp(p.getOmegaLevel() + 1) - p.getOmegaXp(), Constants.OMEGA, Constants.OMEGA));
 		
-		eb.addField("__Join Date__", p.getJoinDate(), true);
+		if (event.getChannel().getIdLong() != DiscordChannel.Game.getIdLong()) eb.addField("__Join Date__", p.getJoinDate(), true);
 		eb.addField("__Trainer Level and XP__", xpField.toString(), true);
 		eb.addField("__Guild and Emblems__", String.format("Guild: %s\nEmblems: %s", p.getMainElement(), p.getSubElement()), true);
 		
