@@ -8,6 +8,7 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemCategory;
 import com.quas.mesozoicisland.objects.Item;
+import com.quas.mesozoicisland.objects.ShopItem;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.Util;
 
@@ -67,18 +68,34 @@ public class ItemCommand implements ICommand {
 			String[] arr = Util.arr(Integer.toString(i.getId()), i.toString(1), i.toString(2));
 			for (String s : arr) {
 				if (s.equalsIgnoreCase(itemname)) {
-					if (!Constants.HIDE_ITEMS || i.isDiscovered()) {
-						EmbedBuilder eb = new EmbedBuilder();
-						eb.setColor(Constants.COLOR);
-						eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
-						eb.setDescription(i.getDescription());
-						if (i.hasIcon()) eb.setThumbnail(i.getIcon().getEmote().getImageUrl());
-						event.getChannel().sendMessage(eb.build()).complete();
-					} else {
-						event.getChannel().sendMessageFormat("%s, this item does not exist.", event.getAuthor().getAsMention()).complete();
-					}
+					if (Constants.HIDE_ITEMS && !i.isDiscovered()) continue;
+
+					EmbedBuilder eb = new EmbedBuilder();
+					eb.setColor(Constants.COLOR);
+					eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
+					eb.setDescription(i.getDescription());
+					if (i.hasIcon()) eb.setThumbnail(i.getIcon().getEmote().getImageUrl());
+					event.getChannel().sendMessage(eb.build()).complete();
 					return;
 				}
+			}
+		}
+
+		for (ShopItem si : ShopItem.values()) {
+			Item i = si.getBuyItem();
+			if (i.getItemCategory() == ItemCategory.None) continue;
+			
+			if (si.getName().equalsIgnoreCase(itemname)) {
+				if (Constants.HIDE_ITEMS && !i.isDiscovered()) continue;
+				if (!si.isVisible()) continue;
+
+				EmbedBuilder eb = new EmbedBuilder();
+				eb.setColor(Constants.COLOR);
+				eb.setTitle(String.format("**%s** (ID %d)", i.toString(), i.getId()));
+				eb.setDescription(i.getDescription());
+				if (i.hasIcon()) eb.setThumbnail(i.getIcon().getEmote().getImageUrl());
+				event.getChannel().sendMessage(eb.build()).complete();
+				return;
 			}
 		}
 		
