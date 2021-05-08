@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.StringJoiner;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
 
@@ -18,32 +17,23 @@ import com.quas.mesozoicisland.cmdbase.CommandManager;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.CustomPlayer;
-import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
-import com.quas.mesozoicisland.enums.EventType;
 import com.quas.mesozoicisland.enums.ItemID;
-import com.quas.mesozoicisland.enums.RaidReward;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Dinosaur;
-import com.quas.mesozoicisland.objects.Egg;
 import com.quas.mesozoicisland.objects.Element;
-import com.quas.mesozoicisland.objects.Event;
 import com.quas.mesozoicisland.objects.Item;
-import com.quas.mesozoicisland.objects.Leaderboard;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.objects.Rarity;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
-import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.entities.MessageReaction;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
@@ -102,14 +92,15 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, there are %,d commands.", event.getAuthor().getAsMention(), CommandManager.values().size()).complete();
 			} break;
 
-			case "raidreward": {
-				event.getChannel().sendMessageFormat(JDBC.getRedeemMessage(RaidReward.randomReward())).complete();
-			} break;
-
-			case "elementeffectiveness": {
-				Element e1 = Element.of(Element.LIGHTNING.getId());
-				Element e2 = Element.of(Element.EARTH.getId() | Element.METAL.getId());
-				event.getChannel().sendMessageFormat("%s deals %1.2fx damage on %s.", e1, e1.getEffectivenessAgainst(e2), e2).complete();
+			case "deletecontest": {
+				try (ResultSet res = JDBC.executeQuery("select * from captures where form = %d;", DinosaurForm.Contest.getId())) {
+					while (res.next()) {
+						JDBC.deleteDinosaur(res.getLong("player"), new Pair<>(res.getInt("dex"), res.getInt("form")));
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				event.getChannel().sendMessage("All Contest Dinosaurs have been removed.").complete();
 			} break;
 
 			case "spawncheck": {
@@ -164,25 +155,7 @@ public class TestCommand implements ICommand {
 				while (x --> 0) {
 					JDBC.updateEggs(false);
 				}
-			} break;
-
-			case "contest": {
-				Leaderboard lb = new Leaderboard("%s's %s - Level %,d + %,d XP");
-				lb.setUnlimited(true);
-
-				try (ResultSet res = JDBC.executeQuery("select * from captures where form = %d order by xp desc limit %d;", DinosaurForm.Contest.getId())) {
-					while (res.next()) {
-						if (res.getLong("player") < CustomPlayer.getUpperLimit()) continue;
-						Dinosaur d = Dinosaur.getDinosaur(res.getLong("player"), new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
-						lb.addEntry(d.getXp() + 1, d.getPlayer().getName(), d.getEffectiveName(), d.getLevel(), d.getXpMinusLevel());
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-
-				for (String s : Util.bulkify(lb.getLeaderboard())) {
-					event.getChannel().sendMessage(s).complete();
-				}
+				event.getChannel().sendMessage("Done.").complete();
 			} break;
 
 			case "suggestion": {
@@ -217,19 +190,6 @@ public class TestCommand implements ICommand {
 				long id = Long.parseLong(args[2].replaceAll("\\D", ""));
 				User u = event.getGuild().getMemberById(id).getUser();
 				event.getChannel().sendMessage(u.getAvatarUrl()).complete();
-			} break;
-
-			case "eventtype": {
-				StringBuilder sb = new StringBuilder("Event Type List:");
-				for (EventType et : EventType.values()) {
-					sb.append(String.format("\n%s - %b", et, Event.isEventActive(et)));
-				}
-				event.getChannel().sendMessage(sb.toString()).complete();
-			} break;
-
-			case "attack": {
-				Dinosaur d = Dinosaur.getDinosaur(event.getAuthor().getIdLong(), 1, 0);
-				event.getChannel().sendMessageFormat("%s", d.getAttacks()).complete();
 			} break;
 
 			case "santa": {
@@ -272,66 +232,6 @@ public class TestCommand implements ICommand {
 				}
 
 				event.getChannel().sendMessage("Done.").complete();
-			} break;
-
-			case "checkreaction": {
-				Message m = event.getChannel().retrieveMessageById(args[2]).complete();
-				StringJoiner sj = new StringJoiner("\n");
-				sj.setEmptyValue("None");
-				
-				sj.add("Debug:");
-				for (MessageReaction mr : m.getReactions()) {
-					sj.add(mr.getReactionEmote().getEmote().getAsMention());
-					for (User u : mr.retrieveUsers().complete()) {
-						sj.add("A) " + u.getName());
-					}
-
-					for (User u : m.retrieveReactionUsers(mr.getReactionEmote().getEmote())) {
-						sj.add("B) " + u.getName());
-					}
-				}
-
-				event.getChannel().sendMessage(sj.toString()).complete();
-			} break;
-
-			case "benedict": {
-				int count = -1;
-				try (ResultSet res = JDBC.executeQuery("select count(*) as count from eggs where player = %d;", CustomPlayer.EggSalesman.getIdLong())) {
-					if (res.next()) {
-						count = res.getInt("count");
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-
-				if (count > -1) {
-					int max = Integer.parseInt(JDBC.getVariable("benedict"));
-					if (count == 0) {
-						max += 1;
-						JDBC.setVariable("benedict", Integer.toString(max));
-					}
-
-					for (int q = count; q < max; q++) {
-						Egg egg = Egg.getRandomEgg(MesozoicRandom.nextEggDinosaur().getIdPair());
-						JDBC.addEgg(CustomPlayer.EggSalesman.getIdLong(), egg);
-						event.getChannel().sendMessage("Generated " + egg.getEggName()).complete();
-					}
-
-					event.getChannel().sendMessageFormat("\n%s %s has received more eggs. There are %,d eggs in stock today.", Constants.BULLET_POINT, CustomPlayer.EggSalesman.getPlayer().getName(), Math.max(count, max)).complete();
-				} else {
-					event.getChannel().sendMessage("There was an error in giving eggs.").complete();
-				}
-			} break;
-
-			case "ihateturkey": {
-				int count = 0;
-
-				for (int q = 0; q < 10_000; q++) {
-					Dinosaur d = MesozoicRandom.nextOwnableDinosaur();
-					if (d.getDex() == DinoID.Turkey.getDex()) count++;
-				}
-
-				event.getChannel().sendMessageFormat("%s %d", event.getAuthor().getAsMention(), count).complete();
 			} break;
 
 			case "lost": {
