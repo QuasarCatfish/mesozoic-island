@@ -803,7 +803,7 @@ public class Battle {
 		}
 
 		// defending dinosaur counter attacks
-		if (attack.getDinosaur().getCurrentHealth() > 0) {
+		if (attack.getDinosaur().getCurrentHealth() > 0 && defend.getDinosaur().getCurrentHealth() > 0) {
 			if (defeff == BattleAttack.Counter && MesozoicRandom.nextInt(Constants.COUNTER_CHANCE) == 0) {
 				long counter = defend.getDinosaur().getStatTotal() / 100;
 				if (counter < Constants.MIN_DAMAGE) counter = Constants.MIN_DAMAGE;
