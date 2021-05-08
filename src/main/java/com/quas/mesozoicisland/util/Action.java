@@ -124,6 +124,10 @@ public class Action {
 					Egg egg = Egg.getEgg(res.getString("msg"));
 					JDBC.addEgg(res.getLong("recipient"), egg);
 					break;
+				case IncrementVariable:
+					String[] split = res.getString("msg").split("\\s+");
+					JDBC.setVariable(split[0], Long.toString(Long.parseLong(JDBC.getVariable(split[0])) + Long.parseLong(split[1])));
+					break;
 				}
 				
 				JDBC.deleteAction(res.getInt("actionid"));
@@ -239,5 +243,9 @@ public class Action {
 
 	public static void addEggDelayed(long to, long after, Egg egg) {
 		JDBC.addAction(ActionType.GiveEgg, 0, to, egg.getNumbers(), System.currentTimeMillis() + after);
+	}
+
+	public static void incrementVariableDelayed(String var, long increment, long after) {
+		JDBC.addAction(ActionType.IncrementVariable, 0, 0, var + " " + Long.toString(increment), System.currentTimeMillis() + after);
 	}
 }

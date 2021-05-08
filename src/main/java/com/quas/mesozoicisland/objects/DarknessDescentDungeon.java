@@ -49,8 +49,8 @@ public class DarknessDescentDungeon extends BasicDungeon {
 		super.onEndFloor(teams, timer, bossWin);
 
 		if (bossWin) {
-			JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) - Constants.EVENT_DARKNESS_DESCENT_LOSS_FLOOR_COUNT));
-			JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_LOSSES)) + 1));
+			Action.incrementVariableDelayed(Constants.EVENT_DARKNESS_DESCENT_FLOORS, -Constants.EVENT_DARKNESS_DESCENT_LOSS_FLOOR_COUNT, timer);
+			Action.incrementVariableDelayed(Constants.EVENT_DARKNESS_DESCENT_LOSSES, 1, timer);
 		} else {
 			JDBC.setVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS, Integer.toString(Integer.parseInt(JDBC.getVariable(Constants.EVENT_DARKNESS_DESCENT_FLOORS)) + 1));
 			for (BattleTeam bt : teams) {
