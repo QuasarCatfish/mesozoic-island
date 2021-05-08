@@ -65,46 +65,66 @@ public class DataCommand implements ICommand {
 	@Override
 	public synchronized void run(MessageReceivedEvent event, String... args) {
 		String dinosaur = Util.join(args, " ", 0, args.length);
+		Dinosaur d = null;
 		
 		if (dinosaur.toLowerCase().equals("raid")) {
 			Item item = Item.getItem(new Pair<>(ItemID.RaidPass.getItemId(), Long.parseLong(JDBC.getVariable("raidpass"))));
-			Dinosaur dino = Dinosaur.getDinosaur(Integer.parseInt(item.getData().split("\\s+")[0]), DinosaurForm.Standard.getId());
-			if (dino != null) dinosaur = dino.getDinosaurName();
-		}
-
-		if (dinosaur.toLowerCase().matches(DINOSAUR)) {
-			Dinosaur dino = Dinosaur.getDinosaur(Util.getDexForm(dinosaur));
-			if (dino != null) dinosaur = dino.getDinosaurName();
+			d = Dinosaur.getDinosaur(Integer.parseInt(item.getData().split("\\s+")[0]), DinosaurForm.Standard.getId());
+		} else if (dinosaur.toLowerCase().matches(DINOSAUR)) {
+			d = Dinosaur.getDinosaur(Util.getDexForm(dinosaur));
+		} else {
+			try (ResultSet res = JDBC.executeQuery("select * from dinosaurs where lower(dinoname) = '%s' and rarity >= 0;", Util.cleanQuotes(dinosaur.toLowerCase()))) {
+				if (res.next()) {
+					d = Dinosaur.getDinosaur(new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		try (ResultSet res = JDBC.executeQuery("select * from dinosaurs where lower(dinoname) = '%s' and rarity >= 0;", Util.cleanQuotes(dinosaur.toLowerCase()))) {
-			if (res.next()) {
-				Dinosaur d = Dinosaur.getDinosaur(new Pair<Integer, Integer>(res.getInt("dex"), res.getInt("form")));
-				
-				EmbedBuilder eb = new EmbedBuilder();
-				eb.setColor(Constants.COLOR);
-				eb.setTitle(d.getDinosaurName());
-				
-				eb.addField("Dex Number", "#" + d.getId(), true);
-				eb.addField("Element", d.getElement().toString(), true);
-				eb.addField("Rarity", d.getRarity().getAsString(), true);
-				eb.addField("Base Health", Util.formatNumber(d.getHealth()), true);
-				eb.addField("Base Attack", Util.formatNumber(d.getAttack()), true);
-				eb.addField("Base Defense", Util.formatNumber(d.getDefense()), true);
-				eb.addField("Classification", d.getCreatureType(), true);
-				if (d.getEpoch() != null) eb.addField("Geological Period", d.getEpoch(), true);
-				if (d.getLocation() != null) eb.addField("Location", d.getLocation(), true);
-				if (d.getDiet() != null) eb.addField("Diet", d.getDiet(), true);
-				if (d.getDiscoveryYear() > 0) eb.addField("Discovery Year", Integer.toString(d.getDiscoveryYear()), true);
-				if (d.getAuthors() != null) eb.addField("Author(s)", d.getAuthors(), false);
-				eb.addField("Wikipedia Link", d.getWikiLink(), false);
-				
-				event.getChannel().sendMessage(eb.build()).complete();
-			} else {
-				event.getChannel().sendMessageFormat("%s, this dinosaur could not be found.", event.getAuthor().getAsMention()).complete();
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		if (d == null) {
+			event.getChannel().sendMessageFormat("%s, this dinosaur could not be found.", event.getAuthor().getAsMention()).complete();
+			return;
 		}
+		
+		EmbedBuilder eb = new EmbedBuilder();
+		eb.setColor(Constants.COLOR);
+		eb.setTitle(d.getDinosaurName());
+		
+		if (event.getChannel().getIdLong() == DiscordChannel.Game.getIdLong()) {
+			if (d.getDinosaurForm() == DinosaurForm.Standard) {
+				eb.addField("Dex", "#" + d.getId(), true);
+			} else if (d.getDinosaurForm().getOwnedEmote() == null) {
+				eb.addField("Dex and Form", String.format("#%s\n%s", d.getId(), d.getFormName()), true);
+			} else {
+				eb.addField("Dex and Form", String.format("#%s\n%s %s", d.getId(), d.getFormName(), d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention()), true);
+			}
+			eb.addField("Element and Rarity", String.format("%s\n%s", d.getElement().toString(), d.getRarity().getAsString()), true);
+			eb.addField("Base Stats", String.format("%,d Health\n%,d Attack\n%,d Defense", d.getHealth(), d.getAttack(), d.getDefense()), true);
+		} else {
+			eb.addField("Dex Number", "#" + d.getId(), true);
+			if (d.getDinosaurForm() != DinosaurForm.Standard) {
+				if (d.getDinosaurForm().getOwnedEmote() == null) {
+					eb.addField("Form", d.getFormName(), true);
+				} else {
+					eb.addField("Form", String.format("%s %s", d.getFormName(), d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention()), true);
+				}
+			}
+			eb.addField("Element", d.getElement().getName(), true);
+			eb.addField("Rarity", d.getRarity().getAsString(), true);
+
+			eb.addField("Base Health", Util.formatNumber(d.getHealth()), true);
+			eb.addField("Base Attack", Util.formatNumber(d.getAttack()), true);
+			eb.addField("Base Defense", Util.formatNumber(d.getDefense()), true);
+			eb.addField("Classification", d.getCreatureType(), true);
+			if (d.getEpoch() != null) eb.addField("Geological Period", d.getEpoch(), true);
+			if (d.getLocation() != null) eb.addField("Location", d.getLocation(), true);
+			if (d.getDiet() != null) eb.addField("Diet", d.getDiet(), true);
+			if (d.getDiscoveryYear() > 0) eb.addField("Discovery Year", Integer.toString(d.getDiscoveryYear()), true);
+			if (d.getAuthors() != null) eb.addField("Author(s)", d.getAuthors(), false);
+			eb.addField("Wikipedia Link", d.getWikiLink(), false);
+		}
+
+		event.getChannel().sendMessage(eb.build()).complete();
 	}
 }
