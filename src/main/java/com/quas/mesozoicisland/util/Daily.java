@@ -29,6 +29,8 @@ import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 
 public class Daily {
 
+	private static String readyDay = new MesozoicDate(System.currentTimeMillis()).toString();
+
 	public static void doUpdate(long millis) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(DiscordRole.DailyPing);
@@ -250,6 +252,12 @@ public class Daily {
 		if (Integer.parseInt(JDBC.getVariable("day")) % Constants.RAID_CYCLE_DAYS == 0) {
 			JDBC.setNextRaidPass(MesozoicRandom.nextRaidPass());
 		}
+
+		readyDay = today.toString();
+	}
+
+	public static boolean isDailyReady() {
+		return readyDay.equals(new MesozoicDate(System.currentTimeMillis()).toString());
 	}
 
 	public static void doHourly(long millis) {

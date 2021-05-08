@@ -12,6 +12,7 @@ import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.Daily;
 import com.quas.mesozoicisland.util.MesozoicDate;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
@@ -71,7 +72,9 @@ public class DailyCommand implements ICommand {
 		int delta = Math.abs(today.compareTo(daily));
 		
 		if (delta == 0) {
-			event.getChannel().sendMessage(String.format("%s, your daily will be ready to claim in %s.", event.getAuthor().getAsMention(), Util.formatTime(Util.getTimeLeftInDay()))).complete();
+			event.getChannel().sendMessageFormat("%s, your daily will be ready to claim in %s.", event.getAuthor().getAsMention(), Util.formatTime(Util.getTimeLeftInDay())).complete();
+		} else if (!Daily.isDailyReady()) {
+			event.getChannel().sendMessageFormat("%s, your daily will be ready to claim momentarily.", event.getAuthor().getAsMention()).complete();
 		} else {
 			StringBuilder sb = new StringBuilder();
 			
