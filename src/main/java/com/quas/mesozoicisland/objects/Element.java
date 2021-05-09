@@ -58,7 +58,7 @@ public class Element implements Comparable<Element> {
 	}
 
 	public String getAsBrackets() {
-		return String.format("[%s]", name);
+		return emote == null ? String.format("[%s]", name) : emote.getEmote().getAsMention();
 	}
 
 	public String getAsString() {

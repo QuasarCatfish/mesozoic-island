@@ -72,21 +72,21 @@ public class ElementsCommand implements ICommand {
 				
 				double eff = e1.getEffectivenessAgainst(e2);
 				if (eff > 1.001) {
-					strong.add(e2.toString());
+					strong.add(e2.getEmote() == null ? e2.toString() : e2.getEmote().getEmote().getAsMention());
 				} else if (eff < .999) {
-					weak.add(e2.toString());
+					weak.add(e2.getEmote() == null ? e2.toString() : e2.getEmote().getEmote().getAsMention());
 				}
 			}
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append("Strong Against: ");
 			if (strong.isEmpty()) sb.append("None");
-			else sb.append(String.join(", ", strong));
+			else sb.append(String.join(" ", strong));
 			sb.append("\nResisted By: ");
 			if (weak.isEmpty()) sb.append("None");
-			else sb.append(String.join(", ", weak));
+			else sb.append(String.join(" ", weak));
 			
-			eb.addField(e1.toString(), sb.toString(), true);
+			eb.addField(e1.getAsString(), sb.toString(), true);
 		}
 		
 		event.getChannel().sendMessage(eb.build()).complete();
