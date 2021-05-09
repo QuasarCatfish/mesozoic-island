@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import com.quas.mesozoicisland.cmdbase.ICommand;
 import com.quas.mesozoicisland.enums.AccessLevel;
 import com.quas.mesozoicisland.enums.DiscordChannel;
+import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Element;
@@ -63,6 +64,7 @@ public class ClearCacheCommand implements ICommand {
 		Item.refresh();
 		Rarity.refresh();
 		Rune.refresh();
+		DiscordEmote.refresh();
 		event.getChannel().sendMessageFormat("%s, the cache has been cleared.", event.getAuthor().getAsMention()).complete();
 	}
 }

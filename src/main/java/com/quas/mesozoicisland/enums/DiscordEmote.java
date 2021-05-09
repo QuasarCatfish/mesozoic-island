@@ -65,7 +65,8 @@ public class DiscordEmote {
 	public static DiscordEmote getEmote(long id) {
 		if (emotes.containsKey(id)) return emotes.get(id);
 		initialize();
-		return emotes.getOrDefault(id, null);
+		if (!emotes.containsKey(id)) emotes.put(id, null);
+		return emotes.get(id);
 	}
 
 	public static void initialize() {
@@ -80,5 +81,10 @@ public class DiscordEmote {
 				emotes.put(e.getIdLong(), de);
 			}
 		}
+	}
+
+	public static void refresh() {
+		emotes.clear();
+		initialize();
 	}
 }
