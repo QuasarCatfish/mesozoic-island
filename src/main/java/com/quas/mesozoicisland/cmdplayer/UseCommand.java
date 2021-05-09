@@ -613,7 +613,10 @@ public class UseCommand implements ICommand {
 			}
 
 			else if (i.getId() == ItemID.RaidPass.getItemId()) {
-				if (Battle.isPlayerBattling(p.getIdLong())) {
+				if (!Constants.SPAWN) {
+					event.getChannel().sendMessageFormat("%s, you cannot challenge this Raid Boss because spawns are disabled.", p.getAsMention()).complete();
+					SUCCESS = false;
+				} else if (Battle.isPlayerBattling(p.getIdLong())) {
 					event.getChannel().sendMessageFormat("%s, you cannot challenge this Raid Boss because you are already in another battle.", p.getAsMention()).complete();
 					SUCCESS = false;
 				} else if (Battle.isPlayerBattling(CustomPlayer.RaidChallenge.getIdLong())) {
