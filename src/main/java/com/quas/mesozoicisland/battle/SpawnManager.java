@@ -212,7 +212,7 @@ public class SpawnManager {
 		eb.setColor(Constants.COLOR);
 		for (int q = 0; q < eggs.length; q++) eb.addField("Egg", eggs[q].getEggName(), false);
 		
-		String msg = String.format("React with %s to have a chance to win %s egg.", DiscordEmote.FOSSIL.toString(), eggs.length == 1 ? "the" : "an");
+		String msg = String.format("React with %s to have a chance to win %s egg.", DiscordEmote.getFossil().toString(), eggs.length == 1 ? "the" : "an");
 		String time = " You have %s remaining.";
 		
 		// Send Spawn Message
@@ -222,7 +222,7 @@ public class SpawnManager {
 		
 		// Send Timer Message
 		Message m = Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat(msg + time, Util.formatTime(Constants.EGG_WAIT)));
-		Util.complete(m.addReaction(DiscordEmote.FOSSIL.getEmote()));
+		Util.complete(m.addReaction(DiscordEmote.getFossil().getEmote()));
 		
 		// Edit with time remaining
 		for (long q = Constants.EGG_WAIT;; q -= Math.min(q, 5_000)) {
@@ -237,7 +237,7 @@ public class SpawnManager {
 		}
 		
 		// Get Battle Teams
-		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.FOSSIL.getEmote()));
+		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.getFossil().getEmote()));
 		List<Player> players = new ArrayList<Player>();
 		HashMap<Player, Long> slotsCount = new HashMap<Player, Long>();
 		Util.complete(m.delete());
@@ -343,7 +343,7 @@ public class SpawnManager {
 			
 			eb.addField(tier.toString(), sb.toString(), false);
 		}
-		String msg = String.format("React with %s to join the battle.", DiscordEmote.FOSSIL.toString());
+		String msg = String.format("React with %s to join the battle.", DiscordEmote.getFossil().toString());
 		String time = " You have %s remaining.";
 		
 		// Send Spawn Message
@@ -353,7 +353,7 @@ public class SpawnManager {
 		
 		// Send Timer Message
 		Message m = Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat(msg + time, Util.formatTime(Constants.BATTLE_WAIT)));
-		Util.complete(m.addReaction(DiscordEmote.FOSSIL.getEmote()));
+		Util.complete(m.addReaction(DiscordEmote.getFossil().getEmote()));
 		
 		// Edit with time remaining
 		for (long q = Constants.BATTLE_WAIT;; q -= Math.min(q, 5_000)) {
@@ -368,7 +368,7 @@ public class SpawnManager {
 		}
 		
 		// Get Battle Teams
-		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.FOSSIL.getEmote()));
+		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.getFossil().getEmote()));
 		Util.sleep(100);
 		Util.complete(m.delete());
 		TreeMap<BattleTier, List<BattleTeam>> teams = new TreeMap<BattleTier, List<BattleTeam>>();
@@ -439,7 +439,7 @@ public class SpawnManager {
 		Dungeon d = Dungeon.generateRandomDungeon(data);
 		MessageEmbed me = d.getEmbed();
 		
-		String msg = String.format("React with %s to join the dungeon exploration team.", DiscordEmote.FOSSIL.toString());
+		String msg = String.format("React with %s to join the dungeon exploration team.", DiscordEmote.getFossil().toString());
 		String time = " You have %s remaining.";
 		
 		// Send Initial Message
@@ -449,7 +449,7 @@ public class SpawnManager {
 		
 		// Send Timer Mesage
 		Message m = Util.complete(Constants.SPAWN_CHANNEL.getChannel(MesozoicIsland.getAssistant()).sendMessageFormat(msg + time, Util.formatTime(Constants.DUNGEON_WAIT)));
-		Util.complete(m.addReaction(DiscordEmote.FOSSIL.getEmote()));
+		Util.complete(m.addReaction(DiscordEmote.getFossil().getEmote()));
 		
 		// Edit with time remaining
 		for (long q = Constants.DUNGEON_WAIT;; q -= Math.min(q, 5_000)) {
@@ -464,7 +464,7 @@ public class SpawnManager {
 		}
 		
 		// Get Battle Teams
-		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.FOSSIL.getEmote()));
+		List<User> users = Util.complete(m.retrieveReactionUsers(DiscordEmote.getFossil().getEmote()));
 		Util.sleep(100);
 		Util.complete(m.delete());
 		List<BattleTeam> teams = new ArrayList<BattleTeam>();

@@ -10,22 +10,35 @@ import net.dv8tion.jda.api.entities.Guild;
 public class DiscordEmote {
 
 	// Basic Emotes
-	public static final DiscordEmote FOSSIL = getEmote(735224390396149860L);
-	public static final DiscordEmote BLANK = getEmote(730749486086881321L);
+	public static DiscordEmote getFossil() {
+		return getEmote(735224390396149860L);
+	}
+	public static DiscordEmote getBlank() {
+		return getEmote(730749486086881321L);
+	}
 	
 	// Form Emotes
-	public static final DiscordEmote STANDARD_UNOWNED = getEmote(840325163664408576L);
-	public static final DiscordEmote STANDARD_OWNED = getEmote(840325164109791242L);
-	public static final DiscordEmote PRISMATIC_OWNED = getEmote(839725928707915778L);
-	public static final DiscordEmote DUNGEON_UNOWNED = getEmote(840324048814342194L);
-	public static final DiscordEmote DUNGEON_OWNED = getEmote(840324050278416394L);
-	public static final DiscordEmote HALLOWEEN_UNOWNED = getEmote(840027534237761597L);
-	public static final DiscordEmote HALLOWEEN_OWNED = getEmote(840027534715912202L);
-	public static final DiscordEmote THANKSGIVING_UNOWNED = getEmote(840030074261471243L);
-	public static final DiscordEmote THANKSGIVING_OWNED = getEmote(840030074363052032L);
-	public static final DiscordEmote CHAOS_OWNED = getEmote(840027534204338246L);
-	public static final DiscordEmote MECHANICAL_UNOWNED = getEmote(839428662511009833L);
-	public static final DiscordEmote MECHANICAL_OWNED = getEmote(839428662893477909L);
+	public static DiscordEmote getStandard(boolean owned) {
+		return owned ? getEmote(840325164109791242L) : getEmote(840325163664408576L);
+	}
+	public static DiscordEmote getPrismatic(boolean owned) {
+		return owned ? getEmote(839725928707915778L) : null;
+	}
+	public static DiscordEmote getDungeon(boolean owned) {
+		return owned ? getEmote(840324050278416394L) : getEmote(840324048814342194L);
+	}
+	public static DiscordEmote getHalloween(boolean owned) {
+		return owned ? getEmote(840027534715912202L) : getEmote(840027534237761597L);
+	}
+	public static DiscordEmote getThanksgiving(boolean owned) {
+		return owned ? getEmote(840030074363052032L) : getEmote(840030074261471243L);
+	}
+	public static DiscordEmote getChaos(boolean owned) {
+		return owned ? getEmote(840027534204338246L) : null;
+	}
+	public static DiscordEmote getMechanical(boolean owned) {
+		return owned ? getEmote(839428662893477909L) : getEmote(839428662511009833L);
+	}
 
 	private long id;
 	private DiscordEmote(long id) {
