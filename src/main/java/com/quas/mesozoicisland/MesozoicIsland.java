@@ -152,6 +152,7 @@ import com.quas.mesozoicisland.cmdtutorial.TutorialSelectedCommand;
 import com.quas.mesozoicisland.cmdtutorial.TutorialShopCommand;
 import com.quas.mesozoicisland.cmdtutorial.TutorialUseCommand;
 import com.quas.mesozoicisland.enums.DiscordChannel;
+import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.SpawnType;
 import com.quas.mesozoicisland.enums.SuggestionStatus;
 import com.quas.mesozoicisland.objects.Event;
@@ -358,6 +359,7 @@ public class MesozoicIsland {
 		
 		// Other Initialization
 		Event.initialize();
+		DiscordEmote.initialize();
 		
 		// Send Ready Message
 		if (Constants.SHOW_READY) Action.sendMessage(professor.getIdLong(), Constants.SPAWN_CHANNEL, Util.getRandomElement(Constants.READY_MESSAGES));

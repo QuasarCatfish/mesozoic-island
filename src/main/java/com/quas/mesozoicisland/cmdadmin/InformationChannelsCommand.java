@@ -95,7 +95,7 @@ public class InformationChannelsCommand implements ICommand {
 			rules.add("Thank you and enjoy your stay here on Mesozoic Island.");
 			
 			TextChannel channel = DiscordChannel.Rules.getChannel(MesozoicIsland.getProfessor());
-			for (String s : Util.bulkify(rules, "\n" + DiscordEmote.Blank.toString() + "\n")) {
+			for (String s : Util.bulkify(rules, "\n" + DiscordEmote.BLANK.toString() + "\n")) {
 				MessageBuilder mb = new MessageBuilder(s);
 				mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.ROLE, MentionType.USER);
 				channel.sendMessage(mb.build()).complete();
@@ -107,7 +107,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add("Welcome, trainers, to **Mesozoic Island**, an island inhabited by hundreds of dinosaur species! I am the resident researcher on this island, Professor Megan Lowe, and it is my dream to discover all the secrets and mysteries that this island holds.");
 			introduction.add("My assistant is <@644300007259897856>, but most people just call her Elise. She's a robot that helps me and all of you a whole bunch, even if you don't realize it.");
 			introduction.add("A lot of information about Mesozoic Island can be found on various pages on our wiki. Check it out at <https://mesozoic-island.amazingwikis.org/wiki/Main_Page>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 			
 			introduction.add("__Helpful Commands:__");
 			introduction.add(Constants.BULLET_POINT + " Using the `help` command lists all usable commands. You can also use this command to learn more about other commands.");
@@ -117,7 +117,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " To receive pings for various happenings, use the `pingme` command.");
 			introduction.add(Constants.BULLET_POINT + " The `shop` command lists all items available for purchase, which you can purchase with the `buy` command.");
 			introduction.add(Constants.BULLET_POINT + " For more information about commands, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Commands>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 			
 			introduction.add("__Dinosaurs:__");
 			introduction.add(Constants.BULLET_POINT + " There are a few key stats to note about each dinosaur: Element, Rarity, Health, Attack, Defense, Level, and Rank.");
@@ -134,7 +134,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " Using the `elements` command will list which elements are strong or weak against other elements.");
 			introduction.add(Constants.BULLET_POINT + " Learn more about a specific dinosaur of yours with the `info` command.");
 			introduction.add(Constants.BULLET_POINT + " For more information about dinosaurs, including a list of every dinosaur currently in the game, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dinosaurs>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 			
 			/**
 			introduction.add("__Runes:__");
@@ -148,7 +148,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " Battles against wild dinosaurs are free-for-alls. Trainers and the wild dinosaurs can each attack all trainers in the battle. Any trainer who defeats a wild dinosaur will receive its crystal and add it to their collection.");
 			introduction.add(Constants.BULLET_POINT + " Defeating any dinosaur in a battle will reward your dinosaur with Experience, used to level up your dinosaur.");
 			introduction.add(Constants.BULLET_POINT + " The tier of battle that you enter is dictated by which dinosaurs you have selected. When selecting your dinosaurs, or when you use the `selected` command, the tier of your team will be displayed.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 
 			introduction.add("__Eggs:__");
 			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosaurs spawning, an Egg will be found. As long as you have a free Egg Incubator, you have a chance of taking home that egg.");
@@ -159,7 +159,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " If your egg has the required hatch points, you can hatch the egg with the `hatch` command.");
 			introduction.add(Constants.BULLET_POINT + " Egg Salesman Benedict can give or hatch your eggs in exchange for Dinosaur Coins");
 			introduction.add(Constants.BULLET_POINT + " For more information about Eggs, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Eggs>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 
 			introduction.add("__Standard Dungeons:__");
 			introduction.add(Constants.BULLET_POINT + " Occasionally, instead of wild dinosuars spawning, a Dungeon will appear. All trainers of any tier are able to join the dungeon expedition.");
@@ -170,7 +170,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " Defeating a dungeon rewards all trainers with Dungeon Tokens, which can be used to obtain Dungeon Dinosaurs of your own.");
 			introduction.add(Constants.BULLET_POINT + " In addition to Dungeon Tokens, trainers can earn Charm Shards based on the number of dinosaurs in the dungeon holding a Charm.");
 			introduction.add(Constants.BULLET_POINT + " For more information about Standard Dungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 
 			introduction.add("__Chaos Dungeons:__");
 			introduction.add(Constants.BULLET_POINT + " Unlike regular dungeons, which have a single Dungeon Boss Dinosaur on the final floor, a Chaos Dungeon will feature a team of Chaos Dinosaurs and a Chaos Boss Dinosaur.");
@@ -178,14 +178,14 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " At the very end of the Chaos Dungeon is a mysterious egg. A trainer at random will take this egg with them if they make it past the Chaos Boss. What could be inside?");
 			introduction.add(Constants.BULLET_POINT + " Chaos Dungeons will also yield more Dungeon Tokens than a Standard Dungeon.");
 			introduction.add(Constants.BULLET_POINT + " For more information about Chaos Dungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 
 			introduction.add("__InfiniDungeons:__");
 			introduction.add(Constants.BULLET_POINT + " Unlike regular dungeons, which have a set number of floors, the InfiniDungeon is endless and trainers will continue until they lose a battle.");
 			introduction.add(Constants.BULLET_POINT + " Each floor is significantly more difficult than the last, but will give a lot more Experience too.");
 			introduction.add(Constants.BULLET_POINT + " Since traversal through an InfiniDungeon is guaranteed to end in failure, the reward is instead based on the number of floors cleared.");
 			introduction.add(Constants.BULLET_POINT + " For more information about InfiniDungeons, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Dungeons>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 
 			introduction.add("__Raid Battles:__");
 			introduction.add(Constants.BULLET_POINT + " Once a trainer reaches Level 50, alongside their normal daily, the trainer will receive a Raid Pass.");
@@ -194,7 +194,7 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(Constants.BULLET_POINT + " For every 10 levels above Level 50, trainers will receive an additional Raid Pass every day.");
 			introduction.add(Constants.BULLET_POINT + " Defeating the Raid Boss will grant various rewards randomly, including Dinosaur Coins, Colored Dungeon Locators, or Prismatic Converters.");
 			introduction.add(Constants.BULLET_POINT + " For more information about Raids, you can visit the wiki at <https://mesozoic-island.amazingwikis.org/wiki/Raids>.");
-			introduction.add(DiscordEmote.Blank.toString());
+			introduction.add(DiscordEmote.BLANK.toString());
 
 			TextChannel channel = DiscordChannel.Introduction.getChannel(MesozoicIsland.getProfessor());
 			for (String s : Util.bulkify(introduction, "\n")) {
@@ -214,7 +214,7 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordChannel.AnnouncementLog.toString() + " - Log of all announcements.");
 			channels.add(DiscordChannel.DailyAnnouncements.toString() + " - Announcements for daily features and updates.");
 			channels.add(DiscordChannel.Changelog.toString() + " - List of new and updated features to the game.");
-			channels.add(DiscordEmote.Blank.toString());
+			channels.add(DiscordEmote.BLANK.toString());
 			
 			channels.add("__**Game**__");
 			channels.add(DiscordChannel.Game.toString() + " - Where all the action happens!");
@@ -224,11 +224,11 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordChannel.Giveaways.toString() + " - A channel for various giveaways of Mesozoic Island items and other goodies.");
 			channels.add(DiscordChannel.Events.toString() + " - Information about in-game events.");
 			channels.add(DiscordChannel.Contest.toString() + " - Information about the current or most recent contest.");
-			channels.add(DiscordEmote.Blank.toString());
+			channels.add(DiscordEmote.BLANK.toString());
 			
 			channels.add("__**Chatting**__");
 			channels.add("Channels for chatting about various topics. See channel topics for more information.");
-			channels.add(DiscordEmote.Blank.toString());
+			channels.add(DiscordEmote.BLANK.toString());
 
 			channels.add("__**Battle**__");
 			channels.add(DiscordChannel.Battle1.toString() + " - Novice Tier wild battles.");
@@ -240,7 +240,7 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordChannel.BattleDungeonLog.toString() + " - Logs battles from dungeons.");
 			channels.add(DiscordChannel.BattleSpecial.toString() + " - Special battles that do not fit in any other battle channel.");
 			channels.add(DiscordChannel.BattleSpecialLog.toString() + " - Logs special battles.");
-			channels.add(DiscordEmote.Blank.toString());
+			channels.add(DiscordEmote.BLANK.toString());
 
 			channels.add("__**Suggestions**__");
 			channels.add(DiscordChannel.GameSuggestions.toString() + " - Where you can make suggestions for the game or server.");
@@ -248,7 +248,7 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordChannel.PreviousSuggestions.toString() + " - Where you can see what suggestions have been previously made.");
 			channels.add(DiscordChannel.BugReports.toString() + " - Where you can report bugs that you find.");
 			channels.add(DiscordChannel.Feedback.toString() + " - Where you leave feedback you have on the game.");
-			channels.add(DiscordEmote.Blank.toString());
+			channels.add(DiscordEmote.BLANK.toString());
 
 			TextChannel channel = DiscordChannel.Channels.getChannel(MesozoicIsland.getProfessor());
 			for (String s : Util.bulkify(channels, "\n")) {

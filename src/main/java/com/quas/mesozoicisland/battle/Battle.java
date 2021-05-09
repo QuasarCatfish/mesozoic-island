@@ -177,7 +177,7 @@ public class Battle {
 				sb.append(String.format(" (%,d Health)", d.getHealth()));
 				print.add(sb.toString());
 			}
-			print.add(DiscordEmote.Blank.toString());
+			print.add(DiscordEmote.BLANK.toString());
 		}
 
 		time += 1_000;
@@ -405,7 +405,7 @@ public class Battle {
 				sb.append(String.format(" (%,d Health)", d.getHealth()));
 				print.add(sb.toString());
 		}
-		print.add(DiscordEmote.Blank.toString());
+		print.add(DiscordEmote.BLANK.toString());
 
 		for (BattleTeam bt : teams) {
 			print.add("**" + bt.getPlayer().getName() + "'s Team:**");
@@ -436,7 +436,7 @@ public class Battle {
 				print.add(sb.toString());
 			}
 			
-			print.add(DiscordEmote.Blank.toString());
+			print.add(DiscordEmote.BLANK.toString());
 		}
 
 		time += 1_000;

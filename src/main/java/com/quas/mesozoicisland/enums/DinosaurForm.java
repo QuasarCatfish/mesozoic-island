@@ -7,7 +7,7 @@ import com.quas.mesozoicisland.util.Util;
 public enum DinosaurForm {
 
 	Invalid(-1, "Invalid", "X", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, null, null),
-	Standard(0, "Standard", "", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.StandardOwned, DiscordEmote.StandardUnowned),
+	Standard(0, "Standard", "", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.STANDARD_OWNED, DiscordEmote.STANDARD_UNOWNED),
 	
 	UncapturableDungeon(-2, "Dungeon", Util.mult(Constants.ZERO_WIDTH_SPACE, 1), BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, null, null),
 	UncapturableDungeonBoss(-3, "Dungeon Boss", Util.mult(Constants.ZERO_WIDTH_SPACE, 2), BattleAttack.DUNGEON_BOSS_ATTACKS, BattleAttack.STANDARD_DEFENSE, null, null),
@@ -16,12 +16,12 @@ public enum DinosaurForm {
 	Accursed(-6, "Accursed", "A", BattleAttack.STANDARD_ATTACKS_LOW_ACCURACY, BattleAttack.STANDARD_DEFENSE, null, null),
 	ChaosBoss(-7, "Chaos Boss", Util.mult(Constants.ZERO_WIDTH_SPACE, 6), BattleAttack.CHAOS_BOSS_ATTACKS, BattleAttack.RAID_BOSS_DEFENSE, null, null),
 	
-	Prismatic(10, "Prismatic", "P", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.PrismaticOwned, null),
-	Dungeon(11, "Dungeon", "D", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.DungeonOwned, DiscordEmote.DungeonUnowned),
-	Chaos(12, "Chaos", "K", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.ChaosOwned, null),
-	Halloween(1031, "Halloween", "H", BattleAttack.STANDARD_ATTACKS_SCARE, BattleAttack.STANDARD_DEFENSE, DiscordEmote.HalloweenOwned, DiscordEmote.HalloweenUnowned),
-	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACKS_HEAL, BattleAttack.STANDARD_DEFENSE, DiscordEmote.ThanksgivingOwned, DiscordEmote.ThanksgivingUnowned),
-	Mechanical(1400, "Mechanical", "M", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE_BLOCK, DiscordEmote.MechanicalOwned, DiscordEmote.MechanicalUnowned),
+	Prismatic(10, "Prismatic", "P", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.PRISMATIC_OWNED, null),
+	Dungeon(11, "Dungeon", "D", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.DUNGEON_OWNED, DiscordEmote.DUNGEON_UNOWNED),
+	Chaos(12, "Chaos", "K", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE, DiscordEmote.CHAOS_OWNED, null),
+	Halloween(1031, "Halloween", "H", BattleAttack.STANDARD_ATTACKS_SCARE, BattleAttack.STANDARD_DEFENSE, DiscordEmote.HALLOWEEN_OWNED, DiscordEmote.HALLOWEEN_UNOWNED),
+	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACKS_HEAL, BattleAttack.STANDARD_DEFENSE, DiscordEmote.THANKSGIVING_OWNED, DiscordEmote.THANKSGIVING_UNOWNED),
+	Mechanical(1400, "Mechanical", "M", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE_BLOCK, DiscordEmote.MECHANICAL_OWNED, DiscordEmote.MECHANICAL_UNOWNED),
 
 	AllForms(Integer.MIN_VALUE, "All", Util.mult(Constants.ZERO_WIDTH_SPACE, 3), null, null, null, null),
 	AnyForms(Integer.MIN_VALUE + 1, "Any", Util.mult(Constants.ZERO_WIDTH_SPACE, 5), null, null, null, null);
