@@ -83,7 +83,7 @@ public class Tutorial07 implements ICommand {
 			JDBC.setState(p.getIdLong(), "Tutorial07");
 		} else {
 			sendTyping(event.getChannel(), 3000);
-			event.getChannel().sendMessageFormat("Are you sure you want the %s-type dinosaur, %s?", select.getElement().getName(), select.getDinosaurName()).complete();
+			event.getChannel().sendMessageFormat("Are you sure you want the %s-Element dinosaur, %s?", select.getElement().toString(), select.getDinosaurName()).complete();
 			
 			JDBC.setStarter(p.getIdLong(), select);
 			JDBC.setState(p.getIdLong(), "Tutorial08");

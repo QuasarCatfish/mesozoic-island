@@ -91,7 +91,7 @@ public class Tutorial09 implements ICommand {
 		Util.sleep(2000);
 		
 		sendTyping(event.getChannel(), 3000);
-		event.getChannel().sendMessageFormat("**%s** is your dinosaur's element. This determines what attacks are strong and weak against your dinosaur.", starter.getElement().getName()).complete();
+		event.getChannel().sendMessageFormat("**%s** is your dinosaur's element. This determines what attacks are strong and weak against your dinosaur.", starter.getElement()).complete();
 		Util.sleep(2000);
 		
 		sendTyping(event.getChannel(), 3000);

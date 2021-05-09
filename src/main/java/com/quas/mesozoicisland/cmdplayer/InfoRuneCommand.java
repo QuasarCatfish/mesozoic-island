@@ -75,7 +75,7 @@ public class InfoRuneCommand implements ICommand {
 		
 		eb.addField("Rune ID", r.getId() > 0 ? String.format("#%03d", r.getId()) : "#???", true);
 		eb.addField("Owner", p.getName(), true);
-		eb.addField("Element", r.getElement().getName(), true);
+		eb.addField("Element", r.getElement().getAsString(), true);
 		eb.addField("Rarity", r.getRarity().getAsString(), true);
 		eb.addField("Rank and RP", String.format("Rank %s + %,d RP", r.getRankString(), r.getRp()), true);
 		eb.addField("Effect", r.getEffect(), true);

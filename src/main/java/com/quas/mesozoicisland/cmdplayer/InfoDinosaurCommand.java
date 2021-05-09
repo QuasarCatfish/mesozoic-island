@@ -78,7 +78,7 @@ public class InfoDinosaurCommand implements ICommand {
 			if (d.getDinosaurForm() == DinosaurForm.Accursed) {
 				eb.addField(Zalgo.title("Dex and Form"), String.format("%s\n%s", Zalgo.field("#" + d.getId()), Zalgo.field(d.getFormName())), true);
 				eb.addField(Zalgo.title("Owner"), Zalgo.field(p.getName()), true);
-				eb.addField(Zalgo.title("Element"), Zalgo.field(d.getElement().getName()), true);
+				eb.addField(Zalgo.title("Element"), Zalgo.field(d.getElement().toString()), true);
 
 				if (d.getItem() != null && d.getItem().getId() != 0) eb.addField(Zalgo.title("Held Item"), Zalgo.field(d.getItem().toString()), true);
 				if (d.getRune() != null && d.getRune().getId() != 0) eb.addField(Zalgo.title("Rune"), Zalgo.field(d.getRune().getName()), true);
@@ -91,7 +91,7 @@ public class InfoDinosaurCommand implements ICommand {
 					eb.addField("Dex and Form", String.format("#%s\n%s %s", d.getId(), d.getFormName(), d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention()), true);
 				}
 				eb.addField("Owner", p.getName(), true);
-				eb.addField("Element and Rarity", String.format("%s\n%s", d.getElement().toString(), d.getRarity().getAsString()), true);
+				eb.addField("Element and Rarity", String.format("%s\n%s", d.getElement().getAsString(), d.getRarity().getAsString()), true);
 				
 				eb.addField("Level and Rank", String.format("Level %,d + %,d XP\nRank %s + %,d RP", d.getLevel(), d.getXpMinusLevel(), d.getRankString(), d.getRp()), true);
 				eb.addField("Battle Tier", String.format("%s + %,d%%", DinoMath.getBattleTier(d).toString(), DinoMath.getNextBattleTierPercent(d)), true);
@@ -112,7 +112,7 @@ public class InfoDinosaurCommand implements ICommand {
 				eb.addField(Zalgo.title("Form"), Zalgo.field(d.getFormName()), true);
 				eb.addField(Zalgo.title("Owner"), Zalgo.field(p.getName()), true);
 
-				eb.addField(Zalgo.title("Element"), Zalgo.field(d.getElement().getName()), true);
+				eb.addField(Zalgo.title("Element"), Zalgo.field(d.getElement().toString()), true);
 				eb.addField(Zalgo.title("Dinosaurs Defeated"), Zalgo.field(Util.formatNumber(d.getWins())), true);
 				eb.addField(Zalgo.title("Times Defeated"), Zalgo.field(Util.formatNumber(d.getLosses())), true);
 
@@ -128,7 +128,7 @@ public class InfoDinosaurCommand implements ICommand {
 					}
 				}
 				eb.addField("Owner", p.getName(), true);
-				eb.addField("Element", d.getElement().getName(), true);
+				eb.addField("Element", d.getElement().getAsString(), true);
 				eb.addField("Rarity", d.getRarity().getAsString(), true);
 
 				// level

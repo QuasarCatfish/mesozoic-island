@@ -22,10 +22,10 @@ public class WikiDinosaurs {
 				
 				out.println("|-");
 				if (d.getDinosaurForm() == DinosaurForm.Standard) {
-					out.printf("| %s || [[%s]] || {{%s}} || {{%s}} || %,d || %,d || %,d || %s\n", d.getId(), d.getDinosaurName(), d.getElement().getName(), d.getRarity(), d.getHealth(), d.getAttack(), d.getDefense(), d.getCreatureType());
+					out.printf("| %s || [[%s]] || {{%s}} || {{%s}} || %,d || %,d || %,d || %s\n", d.getId(), d.getDinosaurName(), d.getElement(), d.getRarity(), d.getHealth(), d.getAttack(), d.getDefense(), d.getCreatureType());
 				} else {
 					Dinosaur base = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Standard.getId());
-					out.printf("| %s || [[%s|%s]] || {{%s}} || {{%s}} || %,d || %,d || %,d || %s\n", d.getId(), base.getDinosaurName(), d.getDinosaurName(), d.getElement().getName(), d.getRarity(), d.getHealth(), d.getAttack(), d.getDefense(), d.getCreatureType());
+					out.printf("| %s || [[%s|%s]] || {{%s}} || {{%s}} || %,d || %,d || %,d || %s\n", d.getId(), base.getDinosaurName(), d.getDinosaurName(), d.getElement(), d.getRarity(), d.getHealth(), d.getAttack(), d.getDefense(), d.getCreatureType());
 				}
 			}
 			

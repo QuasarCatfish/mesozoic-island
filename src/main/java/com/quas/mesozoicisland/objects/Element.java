@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.TreeMap;
 
 import com.quas.mesozoicisland.JDBC;
+import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.util.Pair;
 
 public class Element implements Comparable<Element> {
@@ -19,6 +20,7 @@ public class Element implements Comparable<Element> {
 	private boolean visible;
 	private boolean hasguild;
 	private boolean hasemblem;
+	private DiscordEmote emote;
 
 	private Element() {}
 	
@@ -26,13 +28,9 @@ public class Element implements Comparable<Element> {
 		return id;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
 	@Override
 	public String toString() {
-		return getName();
+		return name;
 	}
 	
 	public long getRole() {
@@ -55,8 +53,16 @@ public class Element implements Comparable<Element> {
 		return hasemblem;
 	}
 
+	public DiscordEmote getEmote() {
+		return emote;
+	}
+
 	public String getAsBrackets() {
 		return String.format("[%s]", name);
+	}
+
+	public String getAsString() {
+		return emote == null ? name : String.format("%s %s", name, emote.getEmote().getAsMention());
 	}
 
 	@Override
@@ -110,6 +116,7 @@ public class Element implements Comparable<Element> {
 				e.visible = res.getBoolean("visible");
 				e.hasguild = res.getBoolean("isguild");
 				e.hasemblem = res.getBoolean("isemblem");
+				e.emote = DiscordEmote.getEmote(res.getLong("emote"));
 				
 				elements.put(id, e);
 				return e;
@@ -123,7 +130,7 @@ public class Element implements Comparable<Element> {
 
 	public static Element of(String name) {
 		for (Element ele : values()) {
-			if (ele.getName().equalsIgnoreCase(name)) {
+			if (ele.name.equalsIgnoreCase(name)) {
 				return ele;
 			}
 		}

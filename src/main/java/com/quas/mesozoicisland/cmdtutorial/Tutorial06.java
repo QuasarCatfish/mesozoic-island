@@ -101,7 +101,7 @@ public class Tutorial06 implements ICommand {
 			eb.setTitle("Dinosaur Data");
 			
 			eb.addField("Dinosaur Name", pair.getFirstValue().getDinosaurName(), true);
-			eb.addField("Element", pair.getFirstValue().getElement().getName(), true);
+			eb.addField("Element", pair.getFirstValue().getElement().getAsString(), true);
 			eb.addField("Element Effectiveness", getElementEffectiveness(pair.getFirstValue().getElement()), true);
 			eb.addField("Dinosaur Description", pair.getSecondValue(), false);
 
@@ -132,9 +132,9 @@ public class Tutorial06 implements ICommand {
 			
 			double eff = e1.getEffectivenessAgainst(e2);
 			if (eff > 1.001) {
-				strong.add(e2.getName());
+				strong.add(e2.toString());
 			} else if (eff < .999) {
-				weak.add(e2.getName());
+				weak.add(e2.toString());
 			}
 		}
 

@@ -85,7 +85,7 @@ public class RunesCommand implements ICommand {
 				Rune r = Rune.getRune(p.getIdLong(), res.getInt("rune"));
 				sb = new StringBuilder();
 				sb.append(String.format("**%s**", r.toString()));
-				sb.append(String.format(" [%s]", r.getElement().getName()));
+				sb.append(String.format(" %s", r.getElement().getAsBrackets()));
 				sb.append(String.format(" %s", r.getRarity().getAsBrackets()));
 				sb.append(String.format(" [Effect: %s]", r.getEffect()));
 				if (r.isEquipped()) sb.append(String.format(" [Equipped: %s]", Dinosaur.getDinosaur(r.getPlayerId(), Util.getDexForm(r.getEquipped())).getEffectiveName()));

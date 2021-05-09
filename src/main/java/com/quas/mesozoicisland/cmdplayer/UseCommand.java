@@ -153,14 +153,14 @@ public class UseCommand implements ICommand {
 					if (ele == null) {
 						event.getChannel().sendMessageFormat("%s, this is not a valid element.", p.getAsMention()).complete();
 					} else if (!ele.isGuild()) {
-						event.getChannel().sendMessageFormat("%s, the %s element is not a valid guild option.", p.getAsMention(), ele.getName()).complete();
+						event.getChannel().sendMessageFormat("%s, the %s element is not a valid guild option.", p.getAsMention(), ele.toString()).complete();
 					} else {
-						event.getChannel().sendMessageFormat("%s, you have successfully joined the %s Guild.", p.getAsMention(), ele.getName()).complete();
+						event.getChannel().sendMessageFormat("%s, you have successfully joined the %s Guild.", p.getAsMention(), ele.toString()).complete();
 						JDBC.executeUpdate("update players set mainelement = %d where playerid = %d;", ele.getId(), p.getIdLong());
 						Util.addRoleToMember(event.getMember(), ele.getRole());
 						JDBC.addItem(p.getIdLong(), i.getIdDmg(), -1);
 						JDBC.addItem(p.getIdLong(), new Pair<Integer, Long>(i.getId(), (long)ele.getId()), 1);
-						event.getGuild().getTextChannelById(ele.getGuild()).sendMessageFormat("Welcome %s to the %s Guild!", p.getAsMention(), ele.getName()).complete();
+						event.getGuild().getTextChannelById(ele.getGuild()).sendMessageFormat("Welcome %s to the %s Guild!", p.getAsMention(), ele.toString()).complete();
 
 						if ((p.getSubElement().getId() & ele.getId()) > 0) {
 							Item emblem = Item.getItem(new Pair<Integer, Long>(ItemID.ElementalEmblem.getItemId(), (long)ele.getId()));
@@ -181,13 +181,13 @@ public class UseCommand implements ICommand {
 					if (ele == null) {
 						event.getChannel().sendMessageFormat("%s, this is not a valid element.", p.getAsMention()).complete();
 					} else if (!ele.isEmblem()) {
-						event.getChannel().sendMessageFormat("%s, the %s element is not a valid emblem option.", p.getAsMention(), ele.getName()).complete();
+						event.getChannel().sendMessageFormat("%s, the %s element is not a valid emblem option.", p.getAsMention(), ele.toString()).complete();
 					} else if ((p.getMainElement().getId() & ele.getId()) > 0) {
-						event.getChannel().sendMessageFormat("%s, you are in the %s Guild and cannot imbue %s %s with this element.", p.getAsMention(), ele.getName(), Util.getArticle(i.toString()), i.toString()).complete();
+						event.getChannel().sendMessageFormat("%s, you are in the %s Guild and cannot imbue %s %s with this element.", p.getAsMention(), ele.toString(), Util.getArticle(i.toString()), i.toString()).complete();
 					} else if ((p.getSubElement().getId() & ele.getId()) > 0) {
-						event.getChannel().sendMessageFormat("%s, you have already imbued %s %s with the Essence of %s.", p.getAsMention(), Util.getArticle(i.toString()), i.toString(), ele.getName()).complete();
+						event.getChannel().sendMessageFormat("%s, you have already imbued %s %s with the Essence of %s.", p.getAsMention(), Util.getArticle(i.toString()), i.toString(), ele.toString()).complete();
 					} else {
-						event.getChannel().sendMessageFormat("%s, you have successfully imbued your %s with the Essence of %s.", p.getAsMention(), i.toString(), ele.getName()).complete();
+						event.getChannel().sendMessageFormat("%s, you have successfully imbued your %s with the Essence of %s.", p.getAsMention(), i.toString(), ele.toString()).complete();
 						JDBC.executeUpdate("update players set subelement = subelement + %d where playerid = %d;", ele.getId(), p.getIdLong());
 						JDBC.addItem(p.getIdLong(), i.getIdDmg(), -1);
 						JDBC.addItem(p.getIdLong(), new Pair<Integer, Long>(i.getId(), (long)ele.getId()), 1);
@@ -567,7 +567,7 @@ public class UseCommand implements ICommand {
 						for (String s : lowtier) if (s.equals(dino)) lower = true;
 
 						Dinosaur d2 = Dinosaur.getDinosaur(Util.getDexForm(dino));
-						sb.append(String.format("\n%s %s [%s] %s", lower ? Constants.NOTE : Constants.BULLET_POINT, d2.toString(), d2.getElement().getName(), d2.getRarity().getAsBrackets()));
+						sb.append(String.format("\n%s %s %s %s", lower ? Constants.NOTE : Constants.BULLET_POINT, d2.toString(), d2.getElement().getAsBrackets(), d2.getRarity().getAsBrackets()));
 					}
 
 					if (tier > 1) {

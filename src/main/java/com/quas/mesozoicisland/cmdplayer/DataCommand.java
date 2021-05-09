@@ -99,7 +99,7 @@ public class DataCommand implements ICommand {
 			} else {
 				eb.addField("Dex and Form", String.format("#%s\n%s %s", d.getId(), d.getFormName(), d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention()), true);
 			}
-			eb.addField("Element and Rarity", String.format("%s\n%s", d.getElement().toString(), d.getRarity().getAsString()), true);
+			eb.addField("Element and Rarity", String.format("%s\n%s", d.getElement().getAsString(), d.getRarity().getAsString()), true);
 			eb.addField("Base Stats", String.format("%,d Health\n%,d Attack\n%,d Defense", d.getHealth(), d.getAttack(), d.getDefense()), true);
 		} else {
 			eb.addField("Dex Number", "#" + d.getId(), true);
@@ -110,7 +110,7 @@ public class DataCommand implements ICommand {
 					eb.addField("Form", String.format("%s %s", d.getFormName(), d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention()), true);
 				}
 			}
-			eb.addField("Element", d.getElement().getName(), true);
+			eb.addField("Element", d.getElement().getAsString(), true);
 			eb.addField("Rarity", d.getRarity().getAsString(), true);
 
 			eb.addField("Base Health", Util.formatNumber(d.getHealth()), true);

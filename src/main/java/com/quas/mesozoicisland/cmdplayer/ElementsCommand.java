@@ -72,9 +72,9 @@ public class ElementsCommand implements ICommand {
 				
 				double eff = e1.getEffectivenessAgainst(e2);
 				if (eff > 1.001) {
-					strong.add(e2.getName());
+					strong.add(e2.toString());
 				} else if (eff < .999) {
-					weak.add(e2.getName());
+					weak.add(e2.toString());
 				}
 			}
 			
@@ -86,7 +86,7 @@ public class ElementsCommand implements ICommand {
 			if (weak.isEmpty()) sb.append("None");
 			else sb.append(String.join(", ", weak));
 			
-			eb.addField(e1.getName(), sb.toString(), true);
+			eb.addField(e1.toString(), sb.toString(), true);
 		}
 		
 		event.getChannel().sendMessage(eb.build()).complete();
