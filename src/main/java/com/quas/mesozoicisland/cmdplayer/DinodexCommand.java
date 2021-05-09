@@ -97,7 +97,7 @@ public class DinodexCommand implements ICommand {
 				}
 			}
 			
-			print.add(String.format("%s [%s] %s %s", base, base.getElement(), base.getRarity().getAsBrackets(), String.join(" ", forms)));
+			print.add(String.format("%s %s %s %s", base, base.getElement().getAsBrackets(), base.getRarity().getAsBrackets(), String.join(" ", forms)));
 		}
 		
 		PrivateChannel pc = event.getAuthor().openPrivateChannel().complete();
