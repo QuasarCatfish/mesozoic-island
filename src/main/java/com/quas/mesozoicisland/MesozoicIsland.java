@@ -177,7 +177,7 @@ public class MesozoicIsland {
 		assistant = new Bot(Secrets.ASSISTANT_TOKEN, new MesozoicListenerAdapter());
 		
 		// Add Extra Listeners
-		professor.getJDA().addEventListener(new NewMember());
+		professor.getJDA().addEventListener(new JoinServer());
 		professor.getJDA().addEventListener(new CheckNamesAndSpawn());
 		professor.getJDA().addEventListener(new CheckMassPings());
 		professor.getJDA().addEventListener(new CheckGiveawayBotMessage());

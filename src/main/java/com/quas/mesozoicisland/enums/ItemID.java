@@ -181,21 +181,24 @@ public enum ItemID {
 	FormerChampionTitle(10008, 1),
 	CustomTitle(10010, 0),
 	CookieMonsterTitle(10010, 484873357045792769L),
-	BeginnerTrainerTitle(10011, 0),
-	NoviceTrainerTitle(10012, 0),
-	RisingTrainerTitle(10013, 0),
-	Level35Title(10014, 0),
-	Level50Title(10015, 0),
-	ExpertTrainerTitle(10016, 0),
-	MasterTrainerTitle(10017, 0),
-	Level200Title(10018, 0),
-	Level300Title(10019, 0),
-	Level500Title(10020, 0),
+	BeginnerTrainerTitle(10011, 0), // lv 1
+	NoviceTrainerTitle(10012, 0), // lv 10
+	RisingTrainerTitle(10013, 0), // lv 20
+	AdvancedTrainerTitle(10014, 0), // lv 35
+	ProficientTrainerTitle(10015, 0), // lv 50
+	Level75Title(10016, 0), // lv 75
+	Level100Title(10017, 0), // lv 100
+	Level200Title(10018, 0), // lv 200
+	Level300Title(10019, 0), // lv 300
+	Level500Title(10020, 0), // lv 500
 	GenerousTitle(10021, 0),
 	ChickenHunterTitle(10022, 0),
 	ContestWinnerTitle(10023, 0),
 	ContestRunnerUpTitle(10024, 0),
 	ContestParticipantTitle(10025, 0),
+	ValorousTitle(10026, 0),
+	CursedTitle(10027, 0),
+	CleansedTitle(10027, 1),
 	
 	NoviceDamagerTitle(11001, 0),
 	AdvancedDamagerTitle(11002, 0),

@@ -25,7 +25,7 @@ import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.ErrorResponseException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
-public class NewMember extends ListenerAdapter {
+public class JoinServer extends ListenerAdapter {
 
 	@Override
 	public void onGuildMemberJoin(GuildMemberJoinEvent event) {
@@ -72,7 +72,10 @@ public class NewMember extends ListenerAdapter {
 			if (bag.getOrDefault(Item.getItem(ItemID.GuildmasterTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.Guildmaster.getIdLong());
 			if (bag.getOrDefault(Item.getItem(ItemID.SupporterTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.Supporter.getIdLong());
 			if (bag.getOrDefault(Item.getItem(ItemID.GuineaPigTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.GuineaPig.getIdLong());
-			
+			if (bag.getOrDefault(Item.getItem(ItemID.ProficientTrainerTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.ProficientTrainer.getIdLong());
+			if (bag.getOrDefault(Item.getItem(ItemID.CursedTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.Cursed.getIdLong());
+			if (bag.getOrDefault(Item.getItem(ItemID.CleansedTitle), 0L) > 0L) Util.addRoleToMember(m, DiscordRole.Cleansed.getIdLong());
+
 			// Add Roles
 			Util.addRoleToMember(m, DiscordRole.DinosaurTrainer.getIdLong());
 			if (p.getMainElement() != null && p.getMainElement().getId() > 0) Util.addRoleToMember(m, p.getMainElement().getRole());
