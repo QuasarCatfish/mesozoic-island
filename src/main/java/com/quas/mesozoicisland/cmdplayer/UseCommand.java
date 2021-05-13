@@ -42,6 +42,7 @@ import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class UseCommand implements ICommand {
@@ -222,9 +223,22 @@ public class UseCommand implements ICommand {
 						if (res.next()) {
 							Dinosaur dino = Dinosaur.getDinosaur(p.getIdLong(), res.getInt("dex"), res.getInt("form"));
 							event.getChannel().sendMessageFormat("%s, the tokens spin around your %s bathing it in a blinding light. When the light disappears, the dinosaur is nowhere to be found.", p.getAsMention(), dino.getEffectiveName()).complete();
+
+							// delete dinosaur, set cursed to false, and remove jason tokens
 							JDBC.deleteDinosaur(p.getIdLong(), dino.getIdPair());
 							JDBC.setCursed(p.getIdLong(), false);
 							JDBC.addItem(p.getIdLong(), ItemID.JasonToken.getId(), -Constants.ACCURSED_REMOVAL_QUESTS);
+
+							// remove cursed title and role
+							Member m = event.getMember();
+							JDBC.addItem(p.getIdLong(), ItemID.CursedTitle.getId(), -1);
+							Util.removeRoleFromMember(m, DiscordRole.Cursed.getIdLong());
+
+							// add cleansed title and role
+							JDBC.addItem(p.getIdLong(), ItemID.CleansedTitle.getId(), 1);
+							Util.addRoleToMember(m, DiscordRole.Cleansed.getIdLong());
+
+							if (p.getTitle().equals("Cursed")) JDBC.setTitle(p.getIdLong(), "Cleansed", false);
 						} else {
 							event.getChannel().sendMessageFormat("%s, you do not have an Accursed dinosaur.", p.getAsMention()).complete();
 						}
