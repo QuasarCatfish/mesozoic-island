@@ -190,6 +190,21 @@ public class Util {
 		
 		return list;
 	}
+
+	public static void clearChannel(TextChannel channel) {
+		MessageHistory mh = channel.getHistory();
+
+		while (true) {
+			List<Message> retrieve = mh.retrievePast(100).complete();
+			if (retrieve == null || retrieve.isEmpty()) break;
+
+			if (retrieve.size() == 1) {
+				retrieve.get(0).delete().complete();
+			} else {
+				channel.deleteMessages(retrieve).complete();
+			}
+		}
+	}
 	
 	public static String getAvatar(User user) {
 		if (user.getAvatarUrl() != null) return user.getAvatarUrl();

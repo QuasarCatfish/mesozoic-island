@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +14,7 @@ import com.quas.mesozoicisland.battle.Battle;
 import com.quas.mesozoicisland.battle.BattleChannel;
 import com.quas.mesozoicisland.battle.SpawnManager;
 import com.quas.mesozoicisland.enums.ActionType;
+import com.quas.mesozoicisland.enums.CustomPlayer;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.objects.Egg;
 
@@ -69,21 +71,33 @@ public class Action {
 				case LogBattleChannel:
 					BattleChannel bc = BattleChannel.of(res.getLong("recipient"));
 					if (bc == null) break;
-					List<Message> messages = Util.getMessages(bc.getBattleChannel().getChannel(MesozoicIsland.getBot(self)));
+					TextChannel channel = bc.getBattleChannel().getChannel(MesozoicIsland.getBot(self));
+					List<Message> messages = Util.getMessages(channel);
 					Collections.reverse(messages);
 					ArrayList<String> print = new ArrayList<String>();
-					long time = 0;
 
+					// get all player names
+					HashMap<Long, String> names = new HashMap<>();
+					try (ResultSet res2 = JDBC.executeQuery("select playerid, playername from players where playerid > %d;", CustomPlayer.getUpperLimit())) {
+						while (res2.next()) {
+							names.put(res2.getLong("playerid"), res2.getString("playername"));
+						}
+					}
+
+					// get all messages for logging
 					for (Message m : messages) {
 						if (m.getAuthor().isBot()) print.add(m.getContentRaw());
-						else print.add(String.format("**%s**: %s", m.getMember() == null ? "Unknown" : m.getMember().getEffectiveName(), m.getContentRaw()));
-						Action.deleteMessageDelayed(res.getLong("bot"), m.getChannel().getIdLong(), m.getIdLong(), time);
-						time += 2000;
+						else print.add(String.format("**%s**: %s", names.getOrDefault(m.getAuthor().getIdLong(), "Unknown"), m.getContentRaw()));
 					}
 					
+					// print messages
 					for (String s : Util.bulkify(print)) {
 						Action.sendMessage(self, bc.getLogChannel(), s);
 					}
+
+					// clear channel
+					Util.clearChannel(channel);
+
 					break;
 				case DeleteMessage:
 					try {
