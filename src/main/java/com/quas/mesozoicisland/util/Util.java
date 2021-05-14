@@ -211,7 +211,49 @@ public class Util {
 	
 	/////////////////////////////////////////////////////////////
 	
-	
+	public static String formatTeam(Dinosaur...team) {
+		StringBuilder sb = new StringBuilder();
+
+		for (int q = 0; q < team.length; q++) {
+			if (team[q].getDinosaurForm() == DinosaurForm.Accursed) {
+				sb.append(String.format("%,d) %s %s", q + 1, team[q], Zalgo.field(team[q].getElement().getAsBrackets())));
+				
+				if (team[q].hasItem()) {
+					sb.append(" ");
+					if (team[q].getItem().hasIcon()) {
+						sb.append(team[q].getItem().getIcon().getEmote().getAsMention());
+					} else {
+						sb.append(Zalgo.field(String.format("[Holding: %s]", team[q].getItem())));
+					}
+				}
+
+				if (team[q].hasRune()) {
+					sb.append(" ");
+					sb.append(Zalgo.field(String.format("[Rune: %s]", team[q].getRune().getName())));
+				}
+			} else {
+				sb.append(String.format("%,d) %s %s", q + 1, team[q], team[q].getElement().getAsBrackets()));
+				
+				if (team[q].hasItem()) {
+					sb.append(" ");
+					if (team[q].getItem().hasIcon()) {
+						sb.append(team[q].getItem().getIcon().getEmote().getAsMention());
+					} else {
+						sb.append(String.format("[Holding: %s]", team[q].getItem()));
+					}
+				}
+
+				if (team[q].hasRune()) {
+					sb.append(" ");
+					sb.append(String.format("[Rune: %s]", team[q].getRune().getName()));
+				}
+			}
+
+			sb.append("\n");
+		}
+
+		return sb.toString();
+	}
 	
 	//////////////////////////////////////////////////////////////
 	
