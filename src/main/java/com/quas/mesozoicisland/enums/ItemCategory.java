@@ -24,7 +24,7 @@ public enum ItemCategory {
 
 	// Titles
 	Titles(99, false, "Titles", "Title"),
-	AchievementTitles(100, false, "Achievement Titles", "Achievement", "Achieve"),
+	AchievementTitles(100, false, "Achievement Titles", "Achievement", "Achieve", "AT"),
 	
 	None(-1, false, "None"),
 	Misc(0, true, "Miscellaneous", "Misc");
