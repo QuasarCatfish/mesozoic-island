@@ -12,7 +12,7 @@ public enum BattleChannel {
 	Contest(DiscordChannel.BattleContest, DiscordChannel.BattleLog),
 	Dungeon(DiscordChannel.BattleDungeon, DiscordChannel.BattleDungeonLog),
 	Test(DiscordChannel.BattleTest, DiscordChannel.BattleTestLog),
-	Special(DiscordChannel.BattleSpecial, DiscordChannel.BattleSpecialLog);
+	Raid(DiscordChannel.BattleRaid, DiscordChannel.BattleSpecialLog);
 	
 	private DiscordChannel battle, log;
 	private BattleChannel(DiscordChannel battle, DiscordChannel log) {

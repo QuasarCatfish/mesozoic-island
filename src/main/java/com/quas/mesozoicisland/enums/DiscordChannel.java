@@ -21,7 +21,7 @@ public enum DiscordChannel {
 	// Information
 	Rules(650471046436356107L),
 	Introduction(650471102933630995L),
-	Channels(730762074401275914L),
+	ServersAndChannels(730762074401275914L),
 	Announcements(650471070180180021L),
 	DailyAnnouncements(717248577839300618L),
 	AnnouncementLog(726486491177680977L),
@@ -70,7 +70,7 @@ public enum DiscordChannel {
 	BattleDungeonLog(655592913845354506L),
 	BattleTest(650478290716327956L),
 	BattleTestLog(650530876563652660L),
-	BattleSpecial(650478308739514379L),
+	BattleRaid(650478308739514379L),
 	BattleSpecialLog(650530946881159198L),
 	BattleStatus(650479327598870541L),
 	
@@ -119,7 +119,7 @@ public enum DiscordChannel {
 	public static final DiscordChannel[] TESTING_CHANNELS_DMS = Util.arr(Admins, GameTesting, DirectMessages);
 	public static final DiscordChannel[] GUILD_CHANNELS = Util.arr(FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
 	public static final DiscordChannel[] GUILDMASTER_GUILD_CHANNELS = Util.arr(Guildmasters, FireGuild, LightningGuild, LeafGuild, EarthGuild, IceGuild, MetalGuild, WaterGuild, AirGuild);
-	public static final DiscordChannel[] BATTLE_CHANNELS = Util.arr(Battle1, Battle2, Battle3, BattlePVP, BattleContest, BattleDungeon, BattleTest, BattleSpecial);
+	public static final DiscordChannel[] BATTLE_CHANNELS = Util.arr(Battle1, Battle2, Battle3, BattlePVP, BattleContest, BattleDungeon, BattleTest, BattleRaid);
 	
 	/////////////////////////////////////////
 	

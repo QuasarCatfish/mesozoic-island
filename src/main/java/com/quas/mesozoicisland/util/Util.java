@@ -205,6 +205,13 @@ public class Util {
 			}
 		}
 	}
+
+	public static void clearChannelOldMessages(TextChannel channel) {
+		List<Message> history = getMessages(channel);
+		for (Message m : history) {
+			m.delete().complete();
+		}
+	}
 	
 	public static String getAvatar(User user) {
 		if (user.getAvatarUrl() != null) return user.getAvatarUrl();

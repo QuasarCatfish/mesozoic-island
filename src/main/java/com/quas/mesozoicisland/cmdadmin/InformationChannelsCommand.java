@@ -42,7 +42,7 @@ public class InformationChannelsCommand implements ICommand {
 
 	@Override
 	public String getCommandDescription() {
-		return "Posts the necessary information to " + DiscordChannel.Rules.toString() + ", " + DiscordChannel.Introduction.toString() + ", and " + DiscordChannel.Channels.toString() + ".";
+		return "Posts the necessary information to " + DiscordChannel.Rules.toString() + ", " + DiscordChannel.Introduction.toString() + ", and " + DiscordChannel.ServersAndChannels.toString() + ".";
 	}
 
 	@Override
@@ -95,6 +95,8 @@ public class InformationChannelsCommand implements ICommand {
 			rules.add("Thank you and enjoy your stay here on Mesozoic Island.");
 			
 			TextChannel channel = DiscordChannel.Rules.getChannel(MesozoicIsland.getProfessor());
+			Util.clearChannelOldMessages(channel);
+
 			for (String s : Util.bulkify(rules, "\n" + DiscordEmote.getBlank().toString() + "\n")) {
 				MessageBuilder mb = new MessageBuilder(s);
 				mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.ROLE, MentionType.USER);
@@ -197,6 +199,8 @@ public class InformationChannelsCommand implements ICommand {
 			introduction.add(DiscordEmote.getBlank().toString());
 
 			TextChannel channel = DiscordChannel.Introduction.getChannel(MesozoicIsland.getProfessor());
+			Util.clearChannelOldMessages(channel);
+
 			for (String s : Util.bulkify(introduction, "\n")) {
 				MessageBuilder mb = new MessageBuilder(s);
 				mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.ROLE, MentionType.USER);
@@ -204,26 +208,28 @@ public class InformationChannelsCommand implements ICommand {
 			}
 		}
 
-		if (c.contains(DiscordChannel.Channels.getIdLong())) {
+		if (c.contains(DiscordChannel.ServersAndChannels.getIdLong())) {
 			ArrayList<String> channels = new ArrayList<String>();
-			channels.add("__**Introduction**__");
-			channels.add(DiscordChannel.Rules.toString() + " - A list of the rules that everyone must follow.");
-			channels.add(DiscordChannel.Introduction.toString() + " - Basic information on the game and links for more information.");
-			channels.add(DiscordChannel.Channels.toString() + " - A list of all channels and their uses.");
-			channels.add(DiscordChannel.Announcements.toString() + " - Announcements that are currently relevant.");
-			channels.add(DiscordChannel.AnnouncementLog.toString() + " - Log of all announcements.");
-			channels.add(DiscordChannel.DailyAnnouncements.toString() + " - Announcements for daily features and updates.");
-			channels.add(DiscordChannel.Changelog.toString() + " - List of new and updated features to the game.");
+			channels.add(DiscordEmote.getBlank().toString());
+
+			channels.add("__**Information**__");
+			channels.add(DiscordChannel.Rules.toString() + " - The rules of the server! All trainers must follow them if they don't want to get muted or banned.");
+			channels.add(DiscordChannel.Introduction.toString() + " - An introduction to major features of the game are listed here. More information about these features can be found on the wiki.");
+			channels.add(DiscordChannel.ServersAndChannels.toString() + " - A list of related servers and all the channels in this server.");
+			channels.add(DiscordChannel.Announcements.toString() + " - Recent and relevant announcements can be found here. You can enable pings for the various types of announcements if you want to be notified immediately.");
+			channels.add(DiscordChannel.AnnouncementLog.toString() + " - All announcements get logged here (unless the bot is offline when the announcement is made).");
+			channels.add(DiscordChannel.DailyAnnouncements.toString() + " - Every day, an announcement here is made on relevant daily topics, such as raids and quests.");
+			channels.add(DiscordChannel.Changelog.toString() + " - A changelog of all the major updates to the game. More information about each update can be found on the wiki.");
 			channels.add(DiscordEmote.getBlank().toString());
 			
 			channels.add("__**Game**__");
-			channels.add(DiscordChannel.Game.toString() + " - Where all the action happens!");
-			channels.add(DiscordChannel.Trading.toString() + " - Where you can discuss and perform trades with other trainers.");
-			channels.add(DiscordChannel.BotCommands.toString() + " - A channel for users to use their spammy commands.");
-			channels.add(DiscordChannel.Wiki.toString() + " - A channel for the Mesozoic Island wiki.");
-			channels.add(DiscordChannel.Giveaways.toString() + " - A channel for various giveaways of Mesozoic Island items and other goodies.");
-			channels.add(DiscordChannel.Events.toString() + " - Information about in-game events.");
-			channels.add(DiscordChannel.Contest.toString() + " - Information about the current or most recent contest.");
+			channels.add(DiscordChannel.Game.toString() + " - Any dinosaurs, eggs, and dungeons that spawn will spawn in this channel.");
+			channels.add(DiscordChannel.Trading.toString() + " - Discusion about trading and trading dinosaurs, eggs, and items.");
+			channels.add(DiscordChannel.BotCommands.toString() + " - Mass usage of commands should be performed in this channel to prevent spam.");
+			channels.add(DiscordChannel.Wiki.toString() + " - Discussion about the Mesozoic Island wiki and any changes made to the wiki.");
+			channels.add(DiscordChannel.Giveaways.toString() + " - A channel for various giveaways of Mesozoic Island items and other prizes.");
+			channels.add(DiscordChannel.Events.toString() + " - Information about currently active and past events on Mesozoic Island.");
+			channels.add(DiscordChannel.Contest.toString() + " - Information about contests overall and the current or most recent contest.");
 			channels.add(DiscordEmote.getBlank().toString());
 			
 			channels.add("__**Chatting**__");
@@ -231,26 +237,41 @@ public class InformationChannelsCommand implements ICommand {
 			channels.add(DiscordEmote.getBlank().toString());
 
 			channels.add("__**Battle**__");
-			channels.add(DiscordChannel.Battle1.toString() + " - Novice Tier wild battles.");
-			channels.add(DiscordChannel.Battle2.toString() + " - Advanced Tier wild battles.");
-			channels.add(DiscordChannel.Battle3.toString() + " - Elite Tier wild battles.");
-			channels.add(DiscordChannel.BattleContest.toString() + " - Contest Tier wild battles.");
-			channels.add(DiscordChannel.BattleLog.toString() + " - Logs battles from wild battles.");
-			channels.add(DiscordChannel.BattleDungeon.toString() + " - Dungeon battles.");
-			channels.add(DiscordChannel.BattleDungeonLog.toString() + " - Logs battles from dungeons.");
-			channels.add(DiscordChannel.BattleSpecial.toString() + " - Special battles that do not fit in any other battle channel.");
-			channels.add(DiscordChannel.BattleSpecialLog.toString() + " - Logs special battles.");
+			channels.add(DiscordChannel.Battle1.toString() + " - Battles that are in the Novice Tier happen here.");
+			channels.add(DiscordChannel.Battle2.toString() + " - Battles that are in the Advanced Tier happen here.");
+			channels.add(DiscordChannel.Battle3.toString() + " - Battles that are in the Elite Tier happen here.");
+			// channels.add(DiscordChannel.Battle4.toString() + " - Battles that are in the Master Tier happen here.");
+			channels.add(DiscordChannel.BattleContest.toString() + " - Battles that are in the Contest Tier happen here.");
+			channels.add(DiscordChannel.BattleLog.toString() + " - A log of all battles from the aforementioned channels.");
+			channels.add(DiscordChannel.BattleDungeon.toString() + " - Battles against dungeons happen here.");
+			channels.add(DiscordChannel.BattleDungeonLog.toString() + " - A log of all dungeon battles.");
+			channels.add(DiscordChannel.BattleRaid.toString() + " - Battles against Raid Boss Dinosaurs happen here.");
+			channels.add(DiscordChannel.BattleSpecialLog.toString() + " - A log of all special battles.");
 			channels.add(DiscordEmote.getBlank().toString());
 
 			channels.add("__**Suggestions**__");
-			channels.add(DiscordChannel.GameSuggestions.toString() + " - Where you can make suggestions for the game or server.");
-			channels.add(DiscordChannel.SuggestionFeedback.toString() + " - Where you can discuss other peoples' suggestions.");
-			channels.add(DiscordChannel.PreviousSuggestions.toString() + " - Where you can see what suggestions have been previously made.");
+			channels.add(DiscordChannel.GameSuggestions.toString() + " - Suggestions for major features or changes to the game should be here. You can also vote on other people's suggestions.");
+			channels.add(DiscordChannel.SuggestionFeedback.toString() + " - A channel to discuss suggestions for the game.");
+			channels.add(DiscordChannel.PreviousSuggestions.toString() + " - A list of all previously accepted or rejected suggestions.");
 			channels.add(DiscordChannel.BugReports.toString() + " - Where you can report bugs that you find.");
-			channels.add(DiscordChannel.Feedback.toString() + " - Where you leave feedback you have on the game.");
+			channels.add(DiscordChannel.Feedback.toString() + " - Feedback or small suggestions for the game should be in this channel.");
 			channels.add(DiscordEmote.getBlank().toString());
 
-			TextChannel channel = DiscordChannel.Channels.getChannel(MesozoicIsland.getProfessor());
+			TextChannel channel = DiscordChannel.ServersAndChannels.getChannel(MesozoicIsland.getProfessor());
+			Util.clearChannelOldMessages(channel);
+
+			// send server info
+			String[] serverInfo = new String[] {
+				"Want more game emotes? Join the Extra Emotes server at https://discord.gg/xxmneMuc54 .",
+				"Want dual-type element emotes? Join the Element Emotes server at https://discord.gg/AaWMSJSCdW .",
+			};
+			for (String s : serverInfo) {
+				MessageBuilder mb = new MessageBuilder(s);
+				mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.ROLE, MentionType.USER);
+				channel.sendMessage(mb.build()).complete();
+			}
+
+			// send channel info
 			for (String s : Util.bulkify(channels, "\n")) {
 				MessageBuilder mb = new MessageBuilder(s);
 				mb.denyMentions(MentionType.EVERYONE, MentionType.HERE, MentionType.ROLE, MentionType.USER);

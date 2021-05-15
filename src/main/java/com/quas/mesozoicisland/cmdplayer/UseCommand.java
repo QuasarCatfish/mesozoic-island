@@ -646,12 +646,12 @@ public class UseCommand implements ICommand {
 					raid.addBoost(-raid.getLevel() / 3);
 
 					// Set up Battle
-					Battle b = new Battle(BattleChannel.Special, BattleType.Boss, MesozoicRandom.nextLocation());
+					Battle b = new Battle(BattleChannel.Raid, BattleType.Boss, MesozoicRandom.nextLocation());
 					BattleTeam boss = new BattleTeam(Player.getPlayer(CustomPlayer.RaidChallenge.getIdLong()), Util.arr(raid));
 					BattleTeam player = new BattleTeam(p);
 					b.addBoss(boss);
 					b.addTeam(player);
-					event.getChannel().sendMessageFormat("%s is battling the %s! Go to %s to watch the battle in action!", p.getAsMention(), raid.getEffectiveName(), BattleChannel.Special.getBattleChannel().toString()).complete();
+					event.getChannel().sendMessageFormat("%s is battling the %s! Go to %s to watch the battle in action!", p.getAsMention(), raid.getEffectiveName(), BattleChannel.Raid.getBattleChannel().toString()).complete();
 					
 					// Start Battle
 					Battle.markPlayerBattling(CustomPlayer.RaidChallenge.getIdLong(), true);
@@ -672,7 +672,7 @@ public class UseCommand implements ICommand {
 					}
 					
 					// Log Channel
-					Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), BattleChannel.Special.getBattleChannel().getIdLong(), time + 30_000);
+					Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), BattleChannel.Raid.getBattleChannel().getIdLong(), time + 30_000);
 				}
 			}
 
