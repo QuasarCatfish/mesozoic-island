@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.CustomPlayer;
-import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordEmote;
 import com.quas.mesozoicisland.enums.DiscordRole;
@@ -312,13 +311,7 @@ public class SpawnManager {
 			
 			sb.append("\nDinosaurs:");
 			for (Dinosaur d : wilds.get(tier)) {
-				sb.append(String.format("\n%s %s", Constants.BULLET_POINT, d.toString()));
-
-				// add form
-				if (d.getDinosaurForm() != DinosaurForm.Standard && d.getDinosaurForm().getOwnedEmote() != null) {
-					sb.append(" ");
-					sb.append(d.getDinosaurForm().getOwnedEmote().getEmote().getAsMention());
-				}
+				sb.append(String.format("\n%s %s", Constants.BULLET_POINT, d.toString(true)));
 
 				// add element and rarity
 				sb.append(String.format(" %s %s", d.getElement().getAsBrackets(), d.getRarity().getAsBrackets()));

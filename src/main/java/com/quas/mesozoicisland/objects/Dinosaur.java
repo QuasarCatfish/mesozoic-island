@@ -399,12 +399,22 @@ public class Dinosaur implements Comparable<Dinosaur> {
 
 	@Override
 	public String toString() {
+		return toString(false);
+	}
+
+	public String toString(boolean showFormIcon) {
 		StringBuilder sb = new StringBuilder();
 		
 		// ID
 		sb.append("#");
 		sb.append(getId());
 		
+		// add form
+		if (showFormIcon && getDinosaurForm() != DinosaurForm.Standard && getDinosaurForm().getOwnedEmote() != null) {
+			sb.append(" ");
+			sb.append(getDinosaurForm().getOwnedEmote().getEmote().getAsMention());
+		}
+
 		// Level
 		if (xp >= 0) {
 			sb.append(" Level ");
