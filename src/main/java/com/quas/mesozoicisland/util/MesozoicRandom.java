@@ -46,6 +46,10 @@ public class MesozoicRandom {
 		return ThreadLocalRandom.current().nextDouble(bound);
 	}
 	
+	public static int nextCoinAmount() {
+		return nextInt(20, 51);
+	}
+
 	public static int nextLevel() {
 		for (int q = 1;; q++) {
 			if (q == Constants.MAX_DINOSAUR_LEVEL || nextInt(4) == 0) {

@@ -359,7 +359,10 @@ public class Battle {
 
 				// Money - 20% Chance
 				if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis() || MesozoicRandom.nextInt(5) == 0) {
-					int amount = MesozoicRandom.nextInt(20, 51);
+					int amount = MesozoicRandom.nextCoinAmount();
+					if (winner.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis()) {
+						amount += MesozoicRandom.nextCoinAmount() / 2;
+					}
 					Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
 					Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s on the battlefield.", winner.getPlayer().getAsMention(), amount, Item.getItem(money).toString(amount)));
 					Action.addItemDelayed(winner.getPlayer().getIdLong(), time, money, amount);
@@ -716,7 +719,10 @@ public class Battle {
 				atkeff = BattleAttack.AlwaysHitAttack;
 			}
 		} else if (atkeff == BattleAttack.CoinGrab) {
-			int amount = MesozoicRandom.nextInt(20, 51);
+			int amount = MesozoicRandom.nextCoinAmount();
+			if (attack.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis()) {
+				amount += MesozoicRandom.nextCoinAmount() / 2;
+			}
 			Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
 			Action.addItemDelayed(attack.getPlayer().getIdLong(), time, money, amount);
 			return String.format("%s's %s searched around and found %,d %s on the battlefield.", attack.getPlayer().getAsMention(), attack.getDinosaur().getEffectiveName(), amount, Item.getItem(money).toString(amount));
