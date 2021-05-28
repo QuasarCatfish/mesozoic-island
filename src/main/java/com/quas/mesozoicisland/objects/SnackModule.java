@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.enums.DinosaurForm;
+import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.ItemTag;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Constants;
@@ -26,14 +27,14 @@ public class SnackModule {
 	private String result;
 
 	private SnackModule(Dinosaur dino) {
-		hp = 0;
-		atk = 0;
-		def = 0;
-		remhp = Constants.MAX_STAT_BOOST - dino.getHealthMultiplier();
-		rematk = Constants.MAX_STAT_BOOST - dino.getAttackMultiplier();
-		remdef = Constants.MAX_STAT_BOOST - dino.getDefenseMultiplier();
+		this.hp = 0;
+		this.atk = 0;
+		this.def = 0;
+		this.remhp = Constants.MAX_STAT_BOOST - dino.getHealthMultiplier();
+		this.rematk = Constants.MAX_STAT_BOOST - dino.getAttackMultiplier();
+		this.remdef = Constants.MAX_STAT_BOOST - dino.getDefenseMultiplier();
 		
-		snacksUsed = 0;
+		this.snacksUsed = 0;
 		this.dino = dino;
 	}
 
@@ -165,7 +166,9 @@ public class SnackModule {
 			JDBC.addItem(dino.getPlayerId(), Stat.SnacksFed.getId(), snacksUsed);
 		}
 
-		if (!canDinoEatSnacks()) {
+		if (lastItem == null) {
+			return String.format("%s, you do not have any %s to feed your %s.", dino.getPlayer().getAsMention(), Item.getItem(ItemID.DinosaurTreat).toString(2), dino.getEffectiveName());
+		} else if (!canDinoEatSnacks()) {
 			return String.format("%s, your %s refuses to eat the %s.", dino.getPlayer().getAsMention(), dino.getEffectiveName(), lastItem.toString());
 		} else if (snacksUsed == 0) {
 			return String.format("%s, your %s has maxed stats and refuses to eat the %s.", dino.getPlayer().getAsMention(), dino.getEffectiveName(), lastItem.toString());
