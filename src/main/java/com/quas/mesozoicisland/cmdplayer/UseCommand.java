@@ -285,7 +285,7 @@ public class UseCommand implements ICommand {
 
 				if (clayCount >= clayReq) {
 					event.getChannel().sendMessageFormat("%s, %,d %s were used to create a %s.", p.getAsMention(), clayReq, clay.toString(clayReq), statue.getDinosaurName()).complete();
-					JDBC.addItem(p.getIdLong(), i.getIdDmg(), -clayReq);
+					JDBC.addItem(p.getIdLong(), clay.getIdDmg(), -clayReq);
 					JDBC.addDinosaur(event.getChannel(), p.getIdLong(), statue.getIdPair(), 1);
 				} else {
 					long delta = clayReq - clayCount;
