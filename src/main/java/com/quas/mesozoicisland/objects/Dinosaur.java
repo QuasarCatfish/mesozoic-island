@@ -376,6 +376,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 				lowerAttack(Constants.TERROR_BOOST + attackboost / 2);
 				lowerDefense(Constants.TERROR_BOOST + defenseboost / 2);
 				break;
+			case Petrify:
+				int size = attacks.size();
+				for (int q = 0; 2 * q < size; q++) attacks.add(BattleAttack.Petrified);
+				break;
 		}
 	}
 

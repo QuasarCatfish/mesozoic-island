@@ -137,6 +137,15 @@ public enum ItemID {
 	PlasticWaste(409, 0),
 	MechanicalComponent(410, 0),
 
+	EnchantedClay(421, 0),
+	PterodactylArmature(422, 0),
+	IchthyosaurusArmature(423, 0),
+	PlesiosaurusArmature(424, 0),
+	MosasaurusArmature(425, 0),
+	MegalosaurusArmature(426, 0),
+	IguanodonArmature(427, 0),
+	HylaeosaurusArmature(428, 0),
+
 	// unused
 	PageOfFlames(411, 0),
 	PageOfSparks(412, 0),
@@ -146,6 +155,7 @@ public enum ItemID {
 	PageOfIron(416, 0),
 	PageOfLakes(417, 0),
 	PageOfGusts(418, 0),
+	PageOfEntropy(419, 0),
 
 	DinosaurVoucher(501, 0),
 	DungeonTicket(502, 0),

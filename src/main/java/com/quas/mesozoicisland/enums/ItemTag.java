@@ -30,6 +30,7 @@ public enum ItemTag {
 
 	RecycleItem("#recycleitem"),
 	LostPage("#lostpage"),
+	Armature("#armature"),
 
 	AchievementTitle("#achievementtitle"),
 	;

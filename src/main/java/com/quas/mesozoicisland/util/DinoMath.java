@@ -6,6 +6,7 @@ import java.util.List;
 import com.quas.mesozoicisland.battle.BattleTier;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.objects.Dinosaur;
+import com.quas.mesozoicisland.objects.Rarity;
 
 public class DinoMath {
 
@@ -52,6 +53,28 @@ public class DinoMath {
 		long xp = (defend + 5) * (defend + 5) - 25;
 		if (attack > defend) xp *= Math.max(1 - (attack - defend) / 100f, 0f);
 		return xp;
+	}
+
+	public static int getClayDropped(Rarity r) {
+		switch (r.getId() % 20) {
+			case 1: return MesozoicRandom.nextInt(5, 8);
+			case 4: return MesozoicRandom.nextInt(6, 10);
+			case 5: return MesozoicRandom.nextInt(7, 11);
+		}
+		return 0;
+	}
+
+	public static int getClayRequired(Rarity r) {
+		switch (r.getId() % 20) {
+			case 1: return 5;
+			case 4: return 10;
+			case 5: return 20;
+		}
+		return 1_000;
+	}
+
+	public static int getMechanicalComponentRequired(Rarity r) {
+		return 5 * (r.getId() % 20);
 	}
 	
 	public static BattleTier getBattleTier(Dinosaur... team) {

@@ -90,6 +90,10 @@ public abstract class Dungeon {
 		reward.put(item, reward.get(item) + count);
 	}
 
+	public String getFloorName() {
+		return "Floor";
+	}
+
 	public abstract String getEmbedTitle();
 	public abstract MessageEmbed getEmbed();
 	public abstract boolean hasNextFloor();
@@ -184,15 +188,17 @@ public abstract class Dungeon {
 			case "chaos": return new ChaosDungeon(data);
 		}
 
-		// Event Dungeons
-		if (Event.isEventActive(EventType.DarknessDescent)) {
-			return new DarknessDescentDungeon(data);
-		}
-
 		// Dungeon Variant
 		switch (MesozoicRandom.nextInt(Constants.DUNGEON_VARIANT_CHANCE)) {
 			case 0: return new InfiniDungeon(data);
 			case 1: return new ChaosDungeon(data);
+		}
+		
+		// Event Dungeons
+		if (Event.isEventActive(EventType.DarknessDescent)) {
+			return new DarknessDescentDungeon(data);
+		} else if (Event.isEventActive(EventType.CrystalPalaceFlashback)) {
+			return new CrystalPalaceDungeon(data);
 		}
 
 		// Basic Dungeon

@@ -150,7 +150,9 @@ public class MesozoicRandom {
 			return d.getRarity().getSpecialCount();
 		} else if (e.isEventActive(EventType.MechanicalMayhem) && d.getDinosaurForm() == DinosaurForm.Mechanical) {
 			return (long)(Constants.MECHANICAL_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
-		} else{
+		} else if (e.isEventActive(EventType.CrystalPalaceFlashback) && d.getDinosaurForm() == DinosaurForm.Statue) {
+			return (long)(Constants.STATUE_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
+		} else {
 			return d.getRarity().getDinoCount();
 		}
 	}
@@ -170,6 +172,18 @@ public class MesozoicRandom {
 			if (base.getDinosaurForm() != DinosaurForm.Standard) continue;
 			Dinosaur dino = Dinosaur.getDinosaur(base.getDex(), form.getId());
 			if (dino == null) continue;
+			return dino;
+		}
+	}
+
+	public static Dinosaur nextDinosaur(DinosaurForm form, Rarity r) {
+		while (true) {
+			Dinosaur base = MesozoicRandom.nextDinosaur();
+			if (base.getDex() < 0) continue;
+			if (base.getDinosaurForm() != DinosaurForm.Standard) continue;
+			Dinosaur dino = Dinosaur.getDinosaur(base.getDex(), form.getId());
+			if (dino == null) continue;
+			if (!dino.getRarity().equals(r)) continue;
 			return dino;
 		}
 	}

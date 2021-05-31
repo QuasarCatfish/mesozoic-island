@@ -40,6 +40,7 @@ public class Battle {
 	private boolean meteorWin = false;
 	private int impendingDoom = 0;
 	private int turnCount = 0;
+	private String floorName;
 
 	public Battle(BattleChannel channel, BattleType type, Location loc) {
 		teams = new ArrayList<BattleTeam>();
@@ -53,10 +54,8 @@ public class Battle {
 	}
 
 	public Battle addTeam(BattleTeam bt, boolean doBoost) {
-		if (bt.isInvalid())
-			return this;
-		if (!bt.hasDinosaur())
-			return this;
+		if (bt.isInvalid()) return this;
+		if (!bt.hasDinosaur()) return this;
 		teams.add(bt);
 
 		if (doBoost) {
@@ -110,6 +109,11 @@ public class Battle {
 
 	public Battle setDelayTime(long time) {
 		this.time = time;
+		return this;
+	}
+
+	public Battle setFloorName(String floorName) {
+		this.floorName = floorName;
 		return this;
 	}
 
@@ -240,11 +244,16 @@ public class Battle {
 							// Pick up dinosaur
 							if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0) {
 								String get = "";
-								int amount = MesozoicRandom.nextInt(defend.getDinosaur().getRarity().getId() % 20, 2 * (defend.getDinosaur().getRarity().getId() % 20));
+								int amount = 0;
 								
 								// crystal pickup or otherwise
 								if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) {
 									Item item = Item.getItem(ItemID.MechanicalComponent);
+									amount = MesozoicRandom.nextInt(defend.getDinosaur().getRarity().getId() % 20, 2 * (defend.getDinosaur().getRarity().getId() % 20));
+									get = String.format("%s picks up %,d %s", attackTeam.getPlayer().getName(), amount, item.toString(amount));
+								} else if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Statue) {
+									Item item = Item.getItem(ItemID.EnchantedClay);
+									amount = DinoMath.getClayDropped(defendTeam.getDinosaur().getRarity());
 									get = String.format("%s picks up %,d %s", attackTeam.getPlayer().getName(), amount, item.toString(amount));
 								} else {
 									get = String.format("%s picks up the %s crystal", attackTeam.getPlayer().getName(), defendTeam.getDinosaur().getDinosaurName());
@@ -264,9 +273,11 @@ public class Battle {
 								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, channel.getBattleChannel(), get + ".");
 								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, "**" + tier.toString() + ":** " + get + ".");
 								
-								// Give dinosaur, rune
+								// Give dinosaur
 								if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) {
 									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, ItemID.MechanicalComponent.getId(), amount);
+								} else if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Statue) {
+									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, ItemID.EnchantedClay.getId(), amount);
 								} else {
 									Action.addDinosaurDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, defendTeam.getDinosaur().getId());
 								}
@@ -550,10 +561,10 @@ public class Battle {
 			bosswin = true;
 			if (boss.getPlayer().getIdLong() == CustomPlayer.Dungeon.getIdLong()) {
 				if (teams.size() == 1) {
-					msg = teams.get(0).getPlayer().getName() + " has failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
+					msg = String.format("%s has failed to clear the %s %s of the dungeon.", teams.get(0).getPlayer().getName(), Util.getOrdinal(floor), floorName);
 					if (Event.isEventActive(EventType.DarknessDescent)) msg += " The player wakes up to find themself in an earlier section of the cave.";
 				} else {
-					msg = "The players have failed to clear the " + Util.getOrdinal(floor) + " floor of the dungeon.";
+					msg = String.format("The players have failed to clear the %s %s of the dungeon.", Util.getOrdinal(floor), floorName);
 					if (Event.isEventActive(EventType.DarknessDescent)) msg += " The players wake up to find themselves in an earlier section of the cave.";
 				}
 			} else {
@@ -565,11 +576,11 @@ public class Battle {
 		// Players win
 		else {
 			if (boss.getPlayer().getIdLong() == CustomPlayer.Dungeon.getIdLong()) {
-				if (teams.size() == 1) msg = teams.get(0).getPlayer().getName() + " has cleared the **" + Util.getOrdinal(floor) + " Floor** of the dungeon!";
-				else msg = "The players have cleared the **" + Util.getOrdinal(floor) + " Floor** of the dungeon!";
+				if (teams.size() == 1) msg = String.format("%s has cleared the **%s %s** of the dungeon!", teams.get(0).getPlayer().getName(), Util.getOrdinal(floor), floorName);
+				else msg = String.format("The players have cleared the **%s %s** of the dungeon!", Util.getOrdinal(floor), floorName);
 			} else {
-				if (teams.size() == 1) msg = teams.get(0).getPlayer().getName() + " has defeated " + boss.getPlayer().getName() + ".";
-				else msg = "The players have defeated " + boss.getPlayer().getName() + ".";
+				if (teams.size() == 1) msg = String.format("%s has defeated %s.", teams.get(0).getPlayer().getName(), boss.getPlayer().getName());
+				else msg = String.format("The players have defeated %s.", boss.getPlayer().getName());
 			}
 		}
 
@@ -725,6 +736,16 @@ public class Battle {
 			Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
 			Action.addItemDelayed(attack.getPlayer().getIdLong(), time, money, amount);
 			return String.format("%s's %s searched around and found %,d %s on the battlefield.", attack.getPlayer().getAsMention(), attack.getDinosaur().getEffectiveName(), amount, Item.getItem(money).toString(amount));
+		} else if (atkeff == BattleAttack.Petrify) {
+			if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Statue) {
+				return String.format("%s's %s attempts to petrify %s's %s, but it is already a statue.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName());
+			} else if (defend.getDinosaur().addEffect(StatusEffect.Petrify)) {
+				return String.format("%s's %s petrifies %s's %s.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName());
+			} else {
+				atkeff = BattleAttack.AlwaysHitAttack;
+			}
+		} else if (atkeff == BattleAttack.Petrified) {
+			return String.format("%s's %s is petrified and cannot attack.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName());
 		}
 
 		// Battlefield Charm
@@ -761,7 +782,10 @@ public class Battle {
 		// Defense
 		if (defeff == BattleAttack.Block) {
 			damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
-			if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
+			sb.append(" but it blocked the attack. ");
+		} else if (defeff == BattleAttack.DoubleBlock) {
+			damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
+			damage /= Constants.SPECIAL_DAMAGE_MODIFIER;
 			sb.append(" but it blocked the attack. ");
 		} else if ((atkeff != BattleAttack.AlwaysHitAttack && defeff == BattleAttack.Dodge) || atkeff == BattleAttack.Miss) {
 			damage = 0;

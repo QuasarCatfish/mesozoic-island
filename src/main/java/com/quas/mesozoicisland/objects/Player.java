@@ -229,18 +229,23 @@ public class Player {
 	}
 	
 	public long getItemCount(Item item) {
+		if (item == null) return 0L;
 		return getItemCount(item.getIdDmg());
 	}
 
 	public long getItemCount(ItemID item) {
+		if (item == null) return 0L;
 		return getItemCount(item.getId());
 	}
 
 	public long getItemCount(Stat stat) {
+		if (stat == null) return 0L;
 		return getItemCount(stat.getId());
 	}
 
 	private long getItemCount(Pair<Integer, Long> item) {
+		if (item == null) return 0L;
+		
 		try (ResultSet res = JDBC.executeQuery("select * from bags where player = %d and item = %d and dmg = %d and count > 0;", pid, item.getFirstValue(), item.getSecondValue())) {
 			if (res.next()) {
 				return res.getLong("count");

@@ -37,6 +37,7 @@ import com.quas.mesozoicisland.objects.Rarity;
 import com.quas.mesozoicisland.objects.SnackModule;
 import com.quas.mesozoicisland.util.Action;
 import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.DinoMath;
 import com.quas.mesozoicisland.util.MesozoicDate;
 import com.quas.mesozoicisland.util.MesozoicRandom;
 import com.quas.mesozoicisland.util.Pair;
@@ -259,7 +260,7 @@ public class UseCommand implements ICommand {
 					event.getChannel().sendMessageFormat("%s, you can only convert a Standard form dinosaur into its Mechanical form.", p.getAsMention()).complete();
 				} else if (d.isTradable()) {
 					Dinosaur mechanical = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Mechanical.getId());
-					int cost = 5 * d.getRarity().getId();
+					int cost = DinoMath.getMechanicalComponentRequired(d.getRarity());
 
 					if (mechanical == null) {
 						event.getChannel().sendMessageFormat("%s, this dinosaur does not have a Mechanical form.", p.getAsMention()).complete();
@@ -273,6 +274,22 @@ public class UseCommand implements ICommand {
 					}
 				} else {
 					event.getChannel().sendMessageFormat("%s, your %s does not have any RP to use.", p.getAsMention(), d.getEffectiveName()).complete();
+				}
+			}
+
+			else if (i.hasTag(ItemTag.Armature)) {
+				Dinosaur statue = Dinosaur.getDinosaur(Util.getDexForm(i.getData()));
+				Item clay = Item.getItem(ItemID.EnchantedClay);
+				long clayCount = bag.getOrDefault(clay, 0L);
+				long clayReq = DinoMath.getClayRequired(statue.getRarity());
+
+				if (clayCount >= clayReq) {
+					event.getChannel().sendMessageFormat("%s, %,d %s were used to create a %s.", p.getAsMention(), clayReq, clay.toString(clayReq), statue.getDinosaurName()).complete();
+					JDBC.addItem(p.getIdLong(), i.getIdDmg(), -clayReq);
+					JDBC.addDinosaur(event.getChannel(), p.getIdLong(), statue.getIdPair(), 1);
+				} else {
+					long delta = clayReq - clayCount;
+					event.getChannel().sendMessageFormat("%s, you need %,d more %s to create a %s.", p.getAsMention(), delta, clay.toString(delta), statue.getDinosaurName()).complete();
 				}
 			}
 
