@@ -85,7 +85,7 @@ public class RankupDinosaurCommand implements ICommand {
 			event.getChannel().sendMessageFormat("%s, this dinosaur does not exist.", event.getAuthor().getAsMention()).complete();
 		} else if (d.getRank() == Constants.MAX_RANK) {
 			event.getChannel().sendMessageFormat("%s, your %s is at the max rank and cannot rankup any further.", event.getAuthor().getAsMention(), d.getEffectiveName()).complete();
-		} else if (!d.canRankup() && (deltaItem > 0 || deltaDino > 0)) {
+		} else if (!d.canRankup() && (item == null || deltaItem > 0 || deltaDino > 0)) {
 			StringJoiner sj = new StringJoiner("\n");
 			sj.add(String.format("%s an additional %,d RP", Constants.BULLET_POINT, d.getRpToRankup()));
 
@@ -102,7 +102,7 @@ public class RankupDinosaurCommand implements ICommand {
 			}
 
 			event.getChannel().sendMessageFormat("%s, you need to meet one of the following to rank up your %s:\n%s", p.getAsMention(), d.getEffectiveName(), sj.toString()).complete();
-		} else if (!d.canRankup()) {
+		} else if (!d.canRankup() && item != null) {
 			// rankup by item
 			JDBC.addDinosaur(null, p.getIdLong(), d.getIdPair(), dinoReq);
 			if (consume != null) JDBC.addDinosaur(null, p.getIdLong(), consume.getIdPair(), -dinoReq);
