@@ -203,6 +203,7 @@ public abstract class LeaderboardCommand implements ICommand {
 		DexThanksgiving(Util.arr("dex thanksgiving"), "Dex Completion (Thanksgiving)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Thanksgiving.getId()),
 		DexChaos(Util.arr("dex chaos"), "Dex Completion (Chaos)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Chaos.getId()),
 		DexMechanical(Util.arr("dex mechanical"), "Dex Completion (Mechanical)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Mechanical.getId()),
+		DexStatue(Util.arr("dex statue"), "Dex Completion (Statue)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Statue.getId()),
 
 		// Runes
 //		Runes(Util.arr("runes", "rune"), "Rune Count", LeaderboardType.PlayerRuneCount, null),
@@ -216,6 +217,7 @@ public abstract class LeaderboardCommand implements ICommand {
 		LevelThanksgiving(Util.arr("level thanksgiving", "lvl thanksgiving", "lv thanksgiving"), "Dinosaur Level (Thanksgiving)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Thanksgiving.getId()),
 		LevelChaos(Util.arr("level chaos", "lvl chaos", "lv chaos"), "Dinosaur Level (Chaos)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Chaos.getId()),
 		LevelMechanical(Util.arr("level mechanical", "lvl mechanical", "lv mechanical"), "Dinosaur Level (Mechanical)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Mechanical.getId()),
+		LevelStatue(Util.arr("level statue", "lvl statue", "lv statue"), "Dinosaur Level (Statue)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Statue.getId()),
 		
 		// Rank
 		Rank(Util.arr("rank"), "Dinosaur Rank", LeaderboardType.DinosaurRank, null),
@@ -226,6 +228,7 @@ public abstract class LeaderboardCommand implements ICommand {
 		RankThanksgiving(Util.arr("rank thanksgiving"), "Dinosaur Rank (Thanksgiving)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Thanksgiving.getId()),
 		RankChaos(Util.arr("rank chaos"), "Dinosaur Rank (Chaos)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Chaos.getId()),
 		RankMechancial(Util.arr("rank mechanical"), "Dinosaur Rank (Mechanical)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Mechanical.getId()),
+		RankStatue(Util.arr("rank statue"), "Dinosaur Rank (Statue)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Statue.getId()),
 		
 		// Item
 		Money(Util.arr("money", "coins"), "Player Wealth", LeaderboardType.PlayerItem, null, ItemID.DinosaurCoin),
