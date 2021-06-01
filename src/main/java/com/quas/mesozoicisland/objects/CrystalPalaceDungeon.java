@@ -45,7 +45,7 @@ public class CrystalPalaceDungeon extends BasicDungeon {
 	@Override
 	public void onEndFloor(List<BattleTeam> teams, long timer, boolean bossWin) {
 		super.onEndFloor(teams, timer, bossWin);
-		if (!bossWin) setReward(ItemID.EnchantedClay, clay);
+		if (!bossWin) setReward(ItemID.EnchantedClay, (int)Math.ceil(1d * clay / teams.size()));
 	}
 
 	@Override
