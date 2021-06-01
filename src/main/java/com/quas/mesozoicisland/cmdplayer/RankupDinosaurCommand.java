@@ -133,7 +133,7 @@ public class RankupDinosaurCommand implements ICommand {
 			JDBC.addItem(p.getIdLong(), Stat.DinosaursRankedUp.getId());
 			
 			Dinosaur d2 = Dinosaur.getDinosaur(p.getIdLong(), d.getIdPair());
-			if ((d2.canRankup() || (deltaItem <= 0 && deltaDino <= 0)) && d2.getRank() < Constants.MAX_RANK) {
+			if ((d2.canRankup() || (item != null && deltaItem <= 0 && deltaDino <= 0)) && d2.getRank() < Constants.MAX_RANK) {
 				event.getChannel().sendMessageFormat("%s, your %s has reached **Rank %s**! It can now rankup to **Rank %s**. Use `rankup %s` to rankup this dinosaur.", event.getAuthor().getAsMention(), d.getEffectiveName(), d.getNextRankString(), d2.getNextRankString(), d2.getId()).complete();
 			} else {
 				event.getChannel().sendMessageFormat("%s, your %s has reached **Rank %s**!", event.getAuthor().getAsMention(), d.getEffectiveName(), d.getNextRankString()).complete();

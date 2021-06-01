@@ -18,6 +18,8 @@ import com.quas.mesozoicisland.util.Util;
 
 public class CrystalPalaceDungeon extends BasicDungeon {
 
+	private int clay = 0;
+
 	protected CrystalPalaceDungeon(HashMap<String, String> data) {
 		super(data);
 		loc = Location.PalacePark;
@@ -31,6 +33,19 @@ public class CrystalPalaceDungeon extends BasicDungeon {
 	@Override
 	public String getEmbedTitle() {
 		return "The park is open! Territorial Statue Dinosaurs challenge you!";
+	}
+
+	@Override
+	public Dinosaur[] nextFloor() {
+		Dinosaur[] dinos = super.nextFloor();
+		for (Dinosaur d : dinos) clay += DinoMath.getClayDropped(d.getRarity());
+		return dinos;
+	}
+
+	@Override
+	public void onEndFloor(List<BattleTeam> teams, long timer, boolean bossWin) {
+		super.onEndFloor(teams, timer, bossWin);
+		if (!bossWin) setReward(ItemID.EnchantedClay, clay);
 	}
 
 	@Override
@@ -52,7 +67,6 @@ public class CrystalPalaceDungeon extends BasicDungeon {
 			for (BattleTeam bt : teams) {
 				if (armature == null || bt.getPlayer().getItemCount(armature) > 0) {
 					int clay = DinoMath.getClayDropped(boss.getRarity());
-					clay *= 1.5;
 					Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, ItemID.EnchantedClay.getId(), clay);
 				} else {
 					armatureCount++;
