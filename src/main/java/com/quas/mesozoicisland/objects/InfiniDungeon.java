@@ -113,8 +113,9 @@ public class InfiniDungeon extends Dungeon {
 	}
 
 	private int randLevel() {
-		int minLevel = 100 * (difficulty - 1) + 25 * (getFloor() - 1);
-		int maxLevel = 100 * (difficulty - 1) + 25 * getFloor();
+		int scale = (15 + 5 * difficulty);
+		int minLevel = scale * (getFloor() - 1);
+		int maxLevel = scale * getFloor();
 		return MesozoicRandom.nextInt(minLevel, maxLevel) + 1;
 	}
 
