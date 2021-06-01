@@ -2,6 +2,7 @@ package com.quas.mesozoicisland.cmdplayer;
 
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.JDBC;
@@ -22,7 +23,7 @@ public class DinodexCommand implements ICommand {
 
 	@Override
 	public Pattern getCommand() {
-		return pattern("dinodex");
+		return pattern("dinodex( [a-z]+)*");
 	}
 
 	@Override
@@ -37,12 +38,12 @@ public class DinodexCommand implements ICommand {
 
 	@Override
 	public String getCommandSyntax() {
-		return "dinodex";
+		return "dinodex [form]";
 	}
 
 	@Override
 	public String getCommandDescription() {
-		return "Lists your dinodex.";
+		return "Lists your dinodex. If a form is specified, only dinosaurs with that form will be listed.";
 	}
 
 	@Override
@@ -67,6 +68,12 @@ public class DinodexCommand implements ICommand {
 		
 		event.getChannel().sendMessageFormat("**%s's Dinodex:**\nYou have obtained %,d of %,d dinosaurs.\nCheck your DMs for a detailed list.", event.getAuthor().getAsMention(), p.getDexCount(DinosaurForm.AllForms.getId()), JDBC.getDexCount(DinosaurForm.AllForms.getId())).complete();
 		
+		DinosaurForm target = DinosaurForm.AllForms;
+		if (args.length > 0) {
+			target = DinosaurForm.getDinosaurForm(Util.join(args, " ", 0, args.length));
+			if (target == DinosaurForm.Invalid) target = DinosaurForm.AllForms;
+		}
+
 		ArrayList<String> print = new ArrayList<String>();
 		print.add("__**DINODEX**__");
 		
@@ -83,10 +90,12 @@ public class DinodexCommand implements ICommand {
 		for (int key : dinos.keySet()) {
 			Dinosaur base = Dinosaur.getDinosaur(key, DinosaurForm.Standard.getId());
 			ArrayList<String> forms = new ArrayList<String>();
+			TreeSet<DinosaurForm> dinosaurForms = new TreeSet<>();
 
 			for (Pair<Dinosaur, Boolean> pair : dinos.get(key)) {
 				DinosaurForm form = pair.getFirstValue().getDinosaurForm();
 				if (form.getOwnedEmote() == null && form.getUnownedEmote() == null) continue;
+				dinosaurForms.add(form);
 				
 				if (pair.getSecondValue()) {
 					if (form.getOwnedEmote() == null) continue;
@@ -97,7 +106,9 @@ public class DinodexCommand implements ICommand {
 				}
 			}
 			
-			print.add(String.format("%s %s %s %s", base, base.getElement().getAsBrackets(), base.getRarity().getAsBrackets(), String.join(" ", forms)));
+			if (target == DinosaurForm.AllForms || dinosaurForms.contains(target)) {
+				print.add(String.format("%s %s %s %s", base, base.getElement().getAsBrackets(), base.getRarity().getAsBrackets(), String.join(" ", forms)));
+			}
 		}
 		
 		PrivateChannel pc = event.getAuthor().openPrivateChannel().complete();

@@ -88,4 +88,13 @@ public enum DinosaurForm {
 		}
 		return Invalid;
 	}
+
+	public static DinosaurForm getDinosaurForm(String name) {
+		for (DinosaurForm df : values()) {
+			if (df.symbol.contains(Constants.ZERO_WIDTH_SPACE)) continue;
+			if (df.symbol.equalsIgnoreCase(name)) return df;
+			if (df.name.equalsIgnoreCase(name)) return df;
+		}
+		return Invalid;
+	}
 }
