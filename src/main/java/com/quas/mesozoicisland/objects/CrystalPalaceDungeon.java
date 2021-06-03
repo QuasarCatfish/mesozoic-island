@@ -128,6 +128,14 @@ public class CrystalPalaceDungeon extends BasicDungeon {
 		int maxLevel = 5 * difficulty * (difficulty + 1);
 		int level = MesozoicRandom.nextInt(minLevel, maxLevel) + 1;
 		Dinosaur dino = MesozoicRandom.nextDinosaur(DinosaurForm.Statue).setLevel(level).addBoost(2 * Constants.DUNGEON_BOOST);
+
+		// Chance to have a random dinosaur charm
+		if (MesozoicRandom.nextInt(Constants.DUNGEON_CHARM_CHANCE) == 0) {
+			Item charm = Util.getRandomElement(Item.getItemsWithTag(ItemTag.DungeonDinoCharm));
+			dino.setItem(charm);
+			addReward(ItemID.CharmShard, 1);
+		}
+
 		return dino;
 	}
 
