@@ -45,10 +45,10 @@ public class BasicDungeon extends Dungeon {
 		eb.setColor(Constants.COLOR);
 
 		eb.setTitle(getEmbedTitle());
-		eb.addField("Dungeon Size", String.format("%,d Floors", floors), true);
+		eb.addField("Dungeon Size", String.format("%,d %s", floors, getFloorName()), true);
 		eb.addField("Difficulty", getDifficultyString(), true);
 		eb.addField("Location", loc.toString(), true);
-		eb.addField("Boss", String.format("%s %s", boss, boss.getElement().getAsBrackets()), false);
+		eb.addField("Boss", String.format("%s %s", boss.toString(true), boss.getElement().getAsBrackets()), false);
 
 		return eb.build();
 	}

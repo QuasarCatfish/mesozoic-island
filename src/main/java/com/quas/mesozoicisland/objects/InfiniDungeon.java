@@ -37,7 +37,7 @@ public class InfiniDungeon extends Dungeon {
 		eb.setColor(Constants.COLOR);
 
 		eb.setTitle(getEmbedTitle());
-		eb.addField("Dungeon Size", "??? Floors", true);
+		eb.addField("Dungeon Size", "??? " + getFloorName(), true);
 		eb.addField("Difficulty", getStars(difficulty), true);
 		eb.addField("Location", loc.toString(), true);
 
