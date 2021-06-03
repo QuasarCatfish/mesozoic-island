@@ -777,12 +777,17 @@ public class UseCommand implements ICommand {
 			break;
 			
 		case Held:
-			if (d.hasItem()) {
-				event.getChannel().sendMessageFormat("%s, the %s has been removed from your %s.", p.getAsMention(), d.getItem().toString(), d.getEffectiveName()).complete();
-				JDBC.addItem(p.getIdLong(), d.getItem().getIdDmg());
+			if (d.hasItem() && d.getItem().equals(i)) {
+				event.getChannel().sendMessageFormat("%s, your %s is already holding %s %s.", p.getAsMention(), d.getEffectiveName(), Util.getArticle(d.getItem().toString()), d.getItem().toString()).complete();
+				SUCCESS = false;
+			} else {
+				if (d.hasItem()) {
+					event.getChannel().sendMessageFormat("%s, the %s has been removed from your %s.", p.getAsMention(), d.getItem().toString(), d.getEffectiveName()).complete();
+					JDBC.addItem(p.getIdLong(), d.getItem().getIdDmg());
+				}
+				event.getChannel().sendMessageFormat("%s, the %s has been given to your %s.", p.getAsMention(), i.toString(), d.getEffectiveName()).complete();
+				JDBC.setItem(p.getIdLong(), d.getIdPair(), i.getIdDmg());
 			}
-			event.getChannel().sendMessageFormat("%s, the %s has been given to your %s.", p.getAsMention(), i.toString(), d.getEffectiveName()).complete();
-			JDBC.setItem(p.getIdLong(), d.getIdPair(), i.getIdDmg());
 			break;
 			
 		default:
