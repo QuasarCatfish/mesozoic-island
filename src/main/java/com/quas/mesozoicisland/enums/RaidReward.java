@@ -20,8 +20,8 @@ public enum RaidReward {
 	PrismaticConverter(ItemID.PrismaticConverter, 1, 1_000, 100),
 
 	// Dungeon Tickets
-	DungeonTicket(ItemID.DungeonTicket, 1, 3, 3),
-	PremiumDungeonTicket(ItemID.PremiumDungeonTicket, 1, 7, 10),
+	DungeonTicket(ItemID.DungeonTicket, 1, 2, 5),
+	PremiumDungeonTicket(ItemID.PremiumDungeonTicket, 1, 5, 12),
 	
 	// XP Potions
 	ATierPotion(ItemID.ATierXPPotion, 1, 3, 5),
