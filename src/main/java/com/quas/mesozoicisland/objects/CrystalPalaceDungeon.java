@@ -52,74 +52,76 @@ public class CrystalPalaceDungeon extends BasicDungeon {
 	public void onEndDungeon(List<BattleTeam> teams, long timer, boolean bossWin) {
 		super.onEndDungeon(teams, timer, bossWin);
 		
-		Item armature = null;
-		for (Item item : Item.getItemsWithTag(ItemTag.Armature)) {
-			Dinosaur dino = Dinosaur.getDinosaur(Util.getDexForm(item.getData()));
-			if (dino == null) continue;
-			if (!dino.getIdPair().equals(boss.getIdPair())) continue;
-			
-			armature = item;
-			break;
-		}
-
-		int armatureCount = 0;
 		if (!bossWin) {
-			for (BattleTeam bt : teams) {
-				if (armature == null || bt.getPlayer().getItemCount(armature) > 0) {
-					int clay = DinoMath.getClayDropped(boss.getRarity());
-					Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, ItemID.EnchantedClay.getId(), clay);
-				} else {
-					armatureCount++;
-					Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, armature.getIdDmg(), 1);
+			Item armature = null;
+			for (Item item : Item.getItemsWithTag(ItemTag.Armature)) {
+				Dinosaur dino = Dinosaur.getDinosaur(Util.getDexForm(item.getData()));
+				if (dino == null) continue;
+				if (!dino.getIdPair().equals(boss.getIdPair())) continue;
+				
+				armature = item;
+				break;
+			}
+	
+			int armatureCount = 0;
+			if (!bossWin) {
+				for (BattleTeam bt : teams) {
+					if (armature == null || bt.getPlayer().getItemCount(armature) > 0) {
+						int clay = DinoMath.getClayDropped(boss.getRarity());
+						Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, ItemID.EnchantedClay.getId(), clay);
+					} else {
+						armatureCount++;
+						Action.addItemDelayed(bt.getPlayer().getIdLong(), timer, armature.getIdDmg(), 1);
+					}
 				}
 			}
-		}
-
-		StringBuilder sb = new StringBuilder();
-		Item clay = Item.getItem(ItemID.EnchantedClay);
-
-		if (teams.size() == 1) {
-			if (armature == null || armatureCount == 0) {
-				sb.append(teams.get(0).getPlayer().getName());
-				sb.append(" finds some ");
-				sb.append(clay.toString(2));
-				sb.append(" at the end of the park and takes some.");
+	
+			StringBuilder sb = new StringBuilder();
+			Item clay = Item.getItem(ItemID.EnchantedClay);
+	
+			if (teams.size() == 1) {
+				if (armature == null || armatureCount == 0) {
+					sb.append(teams.get(0).getPlayer().getName());
+					sb.append(" finds some ");
+					sb.append(clay.toString(2));
+					sb.append(" at the end of the park and takes some.");
+				} else {
+					sb.append(teams.get(0).getPlayer().getName());
+					sb.append(" finds ");
+					sb.append(Util.getArticle(armature.toString()));
+					sb.append(" ");
+					sb.append(armature.toString());
+					sb.append(" at the end of the park and takes it.");
+				}
 			} else {
-				sb.append(teams.get(0).getPlayer().getName());
-				sb.append(" finds ");
-				sb.append(Util.getArticle(armature.toString()));
-				sb.append(" ");
-				sb.append(armature.toString());
-				sb.append(" at the end of the park and takes it.");
+				if (armature == null || armatureCount == 0) {
+					sb.append("The trainers find some ");
+					sb.append(clay.toString(2));
+					sb.append(" at the end of the park and each take some.");
+				} else if (armatureCount == teams.size()) {
+					sb.append("The trainers find some ");
+					sb.append(armature.toString(2));
+					sb.append(" at the end of the park and each take one.");
+				} else if (armatureCount > 1) {
+					sb.append("The trainers find some ");
+					sb.append(armature.toString(2));
+					sb.append(" and some ");
+					sb.append(clay.toString(2));
+					sb.append(" at the end of the park. Trainers without an Armature take it and the rest take some clay.");
+				} else {
+					sb.append("The trainers find ");
+					sb.append(Util.getArticle(armature.toString()));
+					sb.append(" ");
+					sb.append(armature.toString());
+					sb.append(" and some ");
+					sb.append(clay.toString(2));
+					sb.append(" at the end of the park. The trainer without an Armature takes it and the rest take some clay.");
+				}
 			}
-		} else {
-			if (armature == null || armatureCount == 0) {
-				sb.append("The trainers find some ");
-				sb.append(clay.toString(2));
-				sb.append(" at the end of the park and each take some.");
-			} else if (armatureCount == teams.size()) {
-				sb.append("The trainers find some ");
-				sb.append(armature.toString(2));
-				sb.append(" at the end of the park and each take one.");
-			} else if (armatureCount > 1) {
-				sb.append("The trainers find some ");
-				sb.append(armature.toString(2));
-				sb.append(" and some ");
-				sb.append(clay.toString(2));
-				sb.append(" at the end of the park. Trainers without an Armature take it and the rest take some clay.");
-			} else {
-				sb.append("The trainers find ");
-				sb.append(Util.getArticle(armature.toString()));
-				sb.append(" ");
-				sb.append(armature.toString());
-				sb.append(" and some ");
-				sb.append(clay.toString(2));
-				sb.append(" at the end of the park. The trainer without an Armature takes it and the rest take some clay.");
-			}
+	
+			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
+			Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
 		}
-
-		Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), sb.toString());
-		Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, Constants.SPAWN_CHANNEL, sb.toString());
 	}
 
 	@Override
