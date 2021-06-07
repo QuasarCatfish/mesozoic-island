@@ -45,7 +45,7 @@ public enum RaidReward {
 	EggEau(ItemID.EauDeOeuf, 1, 2, 3),
 	;
 
-	private static double weightsum = -1;
+	private static double weightsum = 0;
 
 	static {
 		for (RaidReward reward : values()) {
