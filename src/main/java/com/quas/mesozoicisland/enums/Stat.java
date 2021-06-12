@@ -13,7 +13,7 @@ public enum Stat {
 	DamageDealt(17),
 	DamageReceived(18),
 	DinosaursDefeated(24),
-
+	
 	// Dungeons
 	DungeonsEntered(3),
 	DungeonsCleared(4),
@@ -21,24 +21,24 @@ public enum Stat {
 	InfiniDungeonDeepestFloor(35),
 	ChaosDungeonsEntered(36),
 	ChaosDungeonsCleared(37),
-
+	
 	// Dinosaurs
 	DinosaursCaught(5),
 	DinosaursLeveledUp(6),
 	DinosaursRankedUp(7),
 	SnacksFed(19),
-
+	
 	// Runes
 	RunesObtained(8),
 	RunesRankedUp(9),
-
+	
 	// Trades
 	TimesTraded(10),
 
 	// Dinosaur Coins
 	DinosaurCoinsCollected(11),
 	DinosaurCoinsSpent(12),
-
+	
 	// Eggs
 	EggsReceived(13),
 	EggsHatched(14),
@@ -46,32 +46,33 @@ public enum Stat {
 
 	// Shop
 	TransactionsMade(15),
-
+	
 	// Daily
 	DailiesClaimed(16),
 	RafflesWon(20),
-
+	
 	// Raids
 	RaidsAttempted(21),
 	RaidsDefeated(22),
-
+	
 	// Quests
 	QuestsCompleted(23),
-
+	
 	// Accursed Dinosaurs
 	DamageDealtWithAccursed(25),
 	BattlesEnteredWithAccursed(26),
 	BattlesWonWithAccursed(27),
 	DungeonsEnteredWithAccursed(28),
 	DinosaursDefeatedWithAccursed(29),
-
+	
 	// Events
 	GiftPointsReceived(30),
 	DarknessDescentDungeonsEntered(31),
 	DarknessDescentDinosaursDefeated(32),
 	DarknessDescentFloorsCleared(33),
+	ChickensDefeated(39),
 	;
-
+	
 	private long id;
 	private Stat(long id) {
 		this.id = id;
