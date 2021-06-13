@@ -677,7 +677,7 @@ public class UseCommand implements ICommand {
 					long time = b.start(0);
 					
 					// End Battle
-					Action.removePlayerFromBattleDelayed(CustomPlayer.RaidChallenge.getIdLong(), time);
+					Action.removePlayerFromBattleDelayed(CustomPlayer.RaidChallenge.getIdLong(), time + 20_000);
 					Action.removePlayerFromBattleDelayed(p.getIdLong(), time);
 					
 					// Prizes
@@ -689,7 +689,7 @@ public class UseCommand implements ICommand {
 					}
 					
 					// Log Channel
-					Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), BattleChannel.Raid.getBattleChannel().getIdLong(), time + 30_000);
+					Action.logBattleChannelDelayed(MesozoicIsland.getAssistant().getIdLong(), BattleChannel.Raid.getBattleChannel().getIdLong(), time + 15_000);
 				}
 			}
 
