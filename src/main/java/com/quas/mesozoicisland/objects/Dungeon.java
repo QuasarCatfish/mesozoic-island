@@ -90,8 +90,8 @@ public abstract class Dungeon {
 		reward.put(item, reward.get(item) + count);
 	}
 
-	public String getFloorName() {
-		return "Floor";
+	public String getFloorName(boolean plural) {
+		return plural ? "Floors" : "Floor";
 	}
 
 	public abstract String getEmbedTitle();

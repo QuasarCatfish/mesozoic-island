@@ -26,8 +26,8 @@ public class CrystalPalaceDungeon extends BasicDungeon {
 	}
 
 	@Override
-	public String getFloorName() {
-		return "Park Sector";
+	public String getFloorName(boolean plural) {
+		return plural ? "Park Sectors" : "Park Sector";
 	}
 	
 	@Override

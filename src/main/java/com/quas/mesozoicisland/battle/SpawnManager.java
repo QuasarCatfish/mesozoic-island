@@ -499,7 +499,7 @@ public class SpawnManager {
 				Battle b = new Battle(BattleChannel.Dungeon, BattleType.Boss, d.getLocation());
 				b.addBoss(new BattleTeam(CustomPlayer.Dungeon.getPlayer(), boss));
 				b.setDelayTime(timer);
-				b.setFloorName(d.getFloorName());
+				b.setFloorName(d.getFloorName(false));
 				
 				Battle.markPlayerBattling(CustomPlayer.Dungeon.getIdLong(), true);
 				for (BattleTeam bt : teams) {
@@ -507,7 +507,7 @@ public class SpawnManager {
 					Battle.markPlayerBattling(bt.getPlayer().getIdLong(), true);
 				}
 				
-				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), String.format("The dungeon exploration team has reached " + d.getFloorName() + " " + d.getFloor() + " of the dungeon."));
+				Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), timer, BattleChannel.Dungeon.getBattleChannel(), String.format("The dungeon exploration team has reached " + d.getFloorName(false) + " " + d.getFloor() + " of the dungeon."));
 				timer = b.start(d.getFloor());
 				bossWin = b.didBossWin();
 				d.onEndFloor(teams, timer, bossWin);
