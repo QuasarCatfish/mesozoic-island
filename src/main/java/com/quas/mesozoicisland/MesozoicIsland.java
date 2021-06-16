@@ -69,6 +69,7 @@ import com.quas.mesozoicisland.cmdplayer.ElementsCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipCommand;
 import com.quas.mesozoicisland.cmdplayer.EquipReverseCommand;
 import com.quas.mesozoicisland.cmdplayer.FeedCommand;
+import com.quas.mesozoicisland.cmdplayer.FutureDinosaurCommand;
 import com.quas.mesozoicisland.cmdplayer.HatchAllCommand;
 import com.quas.mesozoicisland.cmdplayer.HatchCommand;
 import com.quas.mesozoicisland.cmdplayer.InfoDinosaurCommand;
@@ -320,6 +321,7 @@ public class MesozoicIsland {
 		CommandManager.addCommand(assistant.getIdLong(), new TopAllCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new ContestCheckCommand());
 		CommandManager.addCommand(assistant.getIdLong(), new FeedCommand());
+		CommandManager.addCommand(assistant.getIdLong(), new FutureDinosaurCommand());
 //		CommandManager.addCommand(assistant.getIdLong(), new Command());
 		
 		// Admin Commands

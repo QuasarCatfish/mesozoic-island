@@ -50,6 +50,8 @@ public class Player {
 	private long santa;
 	private String eventstate;
 	private boolean coopbanned;
+	private int futureDinoId;
+	private int futureDinoState;
 	
 	private Player() {}
 	
@@ -226,6 +228,14 @@ public class Player {
 
 	public boolean isBannedFromCoop() {
 		return coopbanned;
+	}
+
+	public int getFutureDinoId() {
+		return futureDinoId;
+	}
+
+	public int getFutureDinoState() {
+		return futureDinoState;
 	}
 	
 	public long getItemCount(Item item) {
@@ -405,6 +415,8 @@ public class Player {
 				p.santa = res.getLong("santa");
 				p.eventstate = res.getString("eventstate");
 				p.coopbanned = res.getBoolean("coopbanned");
+				p.futureDinoId = res.getInt("futuredino");
+				p.futureDinoState = res.getInt("futuredinostate");
 				return p;
 			}
 		} catch (SQLException e) {
