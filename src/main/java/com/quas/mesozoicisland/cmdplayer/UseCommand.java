@@ -750,11 +750,15 @@ public class UseCommand implements ICommand {
 			}
 
 			else if (i.getId() == ItemID.PrismaticConverter.getItemId()) {
+				Dinosaur prismatic = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Prismatic.getId());
+
 				if (d.getDinosaurForm() != DinosaurForm.Standard) {
 					event.getChannel().sendMessageFormat("%s, you can only convert a Standard form dinosaur into its Prismatic form.", p.getAsMention()).complete();
 					SUCCESS = false;
+				} else if (prismatic == null) {
+					event.getChannel().sendMessageFormat("%s, this dinosaur does not have a Prismatic form.", p.getAsMention()).complete();
+					SUCCESS = false;
 				} else if (d.isTradable()) {
-					Dinosaur prismatic = Dinosaur.getDinosaur(d.getDex(), DinosaurForm.Prismatic.getId());
 					event.getChannel().sendMessageFormat("%s, 1 RP from your %s was converted into a %s.", p.getAsMention(), d.getEffectiveName(), prismatic.getDinosaurName()).complete();
 					JDBC.addDinosaur(null, p.getIdLong(), d.getIdPair(), -1);
 					JDBC.addDinosaur(event.getChannel(), p.getIdLong(), prismatic.getIdPair(), 1);
