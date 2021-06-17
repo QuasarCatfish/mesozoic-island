@@ -112,7 +112,7 @@ public class FutureDinosaurCommand implements ICommand {
 				}
 
 				Pair<Integer, String> selected = Util.getRandomElement(futureDinos);
-				event.getChannel().sendMessageFormat("Does this link to the Wikipedia page for %s? <https://en.wikipedia.org/wiki/%s>\nPlease open the link and reply with `yes` or `no` depending on whether the page's title is %s.", selected.getSecondValue(), selected.getSecondValue(), selected.getSecondValue()).complete();
+				event.getChannel().sendMessageFormat("Does this link to the Wikipedia page for %s? <https://en.wikipedia.org/wiki/%s>\nPlease open the link and reply with `fd yes` or `fd no` depending on whether the page's title is %s.", selected.getSecondValue(), selected.getSecondValue(), selected.getSecondValue()).complete();
 				JDBC.executeUpdate("update players set futuredino = %d, futuredinostate = %d where playerid = %d;", selected.getFirstValue(), STATE_EXISTS, p.getIdLong());
 				JDBC.executeUpdate("insert into futuredinoinfo(player, fdinoid) values(%d, %d);", p.getIdLong(), selected.getFirstValue());
 			} else {
