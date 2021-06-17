@@ -229,6 +229,8 @@ public class FutureDinosaurCommand implements ICommand {
 						}
 					} break;
 				}
+
+				JDBC.executeUpdate("update players set futuredinostate = %d where playerid = %d;", STATE_NONE, p.getIdLong());
 			}
 		}
 	}
