@@ -1,5 +1,6 @@
 package com.quas.mesozoicisland.cmdplayer;
 
+import java.util.StringJoiner;
 import java.util.regex.Pattern;
 
 import com.quas.mesozoicisland.cmdbase.ICommand;
@@ -8,6 +9,8 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.util.Util;
 
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.Message.MentionType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public class CreditsCommand implements ICommand {
@@ -54,9 +57,15 @@ public class CreditsCommand implements ICommand {
 
 	@Override
 	public synchronized void run(MessageReceivedEvent event, String... args) {
-		event.getChannel().sendMessage(
-				"__**Credits:**__"
-				+ "\nDeveloper: Quas"
-				+ "").complete();
+		StringJoiner sj = new StringJoiner("\n");
+
+		sj.add("__**Credits:**__");
+		sj.add("Developer: <@563661703124877322>"); // Quas
+		sj.add("Emote Artist: <@484873357045792769>"); // Jamie
+		sj.add("Emote Artist: <@133374430905761792>"); // Link
+		
+		MessageBuilder mb = new MessageBuilder(sj.toString());
+		mb.denyMentions(MentionType.values());
+		event.getChannel().sendMessage(mb.build()).complete();
 	}
 }
