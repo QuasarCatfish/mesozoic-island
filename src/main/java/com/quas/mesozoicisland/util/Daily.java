@@ -10,6 +10,7 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.AchievementTitle;
 import com.quas.mesozoicisland.enums.CustomPlayer;
+import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
@@ -273,6 +274,12 @@ public class Daily {
 					JDBC.addItem(p.getIdLong(), title.getItem().getIdDmg());
 					channel.sendMessage(title.toString(p)).complete();
 				}
+			}
+
+			Dinosaur chicken = Dinosaur.getDinosaur(p.getIdLong(), DinoID.Chicken.getId());
+			if (p.getItemCount(ItemID.ChickenTamer) <= 0 && chicken != null && chicken.getLevel() >= 25) {
+				JDBC.addItem(p.getIdLong(), ItemID.ChickenTamer.getId());
+				channel.sendMessageFormat("%s, for training your %s to Level 25, you have earned the %s.", p.getAsMention(), chicken.getEffectiveName(), Item.getItem(ItemID.ChickenTamer).toString()).complete();
 			}
 		}
 	}
