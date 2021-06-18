@@ -152,6 +152,8 @@ public class MesozoicRandom {
 			return (long)(Constants.MECHANICAL_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
 		} else if (e.isEventActive(EventType.CrystalPalaceFlashback) && d.getDinosaurForm() == DinosaurForm.Statue) {
 			return (long)(Constants.STATUE_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
+		} else if (e.isEventActive(EventType.CluckingNightmare) && Util.contains(DinoID.WILD_CHICKENS, DinoID.of(d.getDex()))) {
+			return d.getRarity().getSpecialCount();
 		} else {
 			return d.getRarity().getDinoCount();
 		}

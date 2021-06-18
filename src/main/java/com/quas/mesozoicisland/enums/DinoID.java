@@ -134,4 +134,13 @@ public enum DinoID {
 	public Pair<Integer, Integer> getId(DinosaurForm form) {
 		return new Pair<Integer, Integer>(this.dex, form.getId());
 	}
+
+	public static DinoID of(int dex) {
+		for (DinoID id : values()) {
+			if (id.dex == dex) {
+				return id;
+			}
+		}
+		return null;
+	}
 }
