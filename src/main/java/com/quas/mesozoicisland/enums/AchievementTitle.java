@@ -1,7 +1,9 @@
 package com.quas.mesozoicisland.enums;
 
+import com.quas.mesozoicisland.objects.Dinosaur;
 import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
+import com.quas.mesozoicisland.util.Pair;
 
 public enum AchievementTitle {
 	
@@ -70,27 +72,45 @@ public enum AchievementTitle {
 
 	Veteran(ItemID.VeteranTitle, 365, Stat.DailiesClaimed, "claiming your daily for", "days"),
 	ChickenHunter(ItemID.ChickenHunterTitle, 200, Stat.ChickensDefeated, "defeating", "chickens"),
+	ChickenTamer(ItemID.ChickenTamerTitle, DinoID.Chicken, DinosaurForm.Standard, 25),
 	;
 
+	private boolean isDino;
 	private ItemID item;
 	private long amount;
 	private Stat stat;
 	private String verb;
 	private String statname;
+	private Pair<Integer, Integer> dinoid;
+	private int level;
+
 	private AchievementTitle(ItemID item, long amount, Stat stat, String verb, String statname) {
 		this.item = item;
 		this.amount = amount;
 		this.stat = stat;
 		this.verb = verb;
 		this.statname = statname;
+		this.isDino = false;
 	}
 
-	public String toString(Player p) {
+	private AchievementTitle(ItemID item, DinoID dino, DinosaurForm form, int level) {
+		this.item = item;
+		this.dinoid = dino.getId(form);
+		this.level = level;
+		this.isDino = true;
+	}
+
+	public String toString(Player p, Dinosaur dino) {
+		if (isDino) return String.format("%s, for training your %s to Level %,d, you have earned the %s.", p.getAsMention(), dino.getEffectiveName(), level, Item.getItem(item).toString());
 		return String.format("%s, for %s %,d %s, you have earned the %s.", p.getAsMention(), verb, amount, statname, Item.getItem(item).toString());
 	}
 
 	public Item getItem() {
 		return Item.getItem(item);
+	}
+
+	public Pair<Integer, Integer> getDinoId() {
+		return dinoid;
 	}
 
 	public Stat getStat() {
@@ -99,5 +119,13 @@ public enum AchievementTitle {
 
 	public long getStatAmount() {
 		return amount;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public boolean isDino() {
+		return isDino;
 	}
 }

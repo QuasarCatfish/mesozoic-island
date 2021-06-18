@@ -10,7 +10,6 @@ import com.quas.mesozoicisland.JDBC;
 import com.quas.mesozoicisland.MesozoicIsland;
 import com.quas.mesozoicisland.enums.AchievementTitle;
 import com.quas.mesozoicisland.enums.CustomPlayer;
-import com.quas.mesozoicisland.enums.DinoID;
 import com.quas.mesozoicisland.enums.DinosaurForm;
 import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
@@ -270,20 +269,19 @@ public class Daily {
 			if (p.getIdLong() < CustomPlayer.getUpperLimit()) continue;
 
 			for (AchievementTitle title : AchievementTitle.values()) {
-				if (p.getItemCount(title.getItem()) <= 0 && p.getItemCount(title.getStat()) >= title.getStatAmount()) {
-					JDBC.addItem(p.getIdLong(), title.getItem().getIdDmg());
-					channel.sendMessage(title.toString(p)).complete();
-				}
-			}
+				if (p.getItemCount(title.getItem()) > 0) continue;
 
-			{ // Chicken Tamer title
-				Dinosaur dino = Dinosaur.getDinosaur(p.getIdLong(), DinoID.Chicken.getId());
-				ItemID title = ItemID.ChickenTamerTitle;
-				final int level = 25;
-
-				if (p.getItemCount(title) <= 0 && dino != null && dino.getLevel() >= level) {
-					JDBC.addItem(p.getIdLong(), title.getId());
-					channel.sendMessageFormat("%s, for training your %s to Level %,d, you have earned the %s.", p.getAsMention(), dino.getEffectiveName(), level, Item.getItem(title).toString()).complete();
+				if (title.isDino()) {
+					Dinosaur dino = Dinosaur.getDinosaur(p.getIdLong(), title.getDinoId());
+					if (dino != null && dino.getLevel() >= title.getLevel()) {
+						JDBC.addItem(p.getIdLong(), title.getItem().getIdDmg());
+						channel.sendMessage(title.toString(p, dino)).complete();
+					}
+				} else {
+					if (p.getItemCount(title.getStat()) >= title.getStatAmount()) {
+						JDBC.addItem(p.getIdLong(), title.getItem().getIdDmg());
+						channel.sendMessage(title.toString(p, null)).complete();
+					}
 				}
 			}
 		}
