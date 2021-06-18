@@ -211,7 +211,7 @@ public enum ItemID {
 	ValorousTitle(10026, 0),
 	CursedTitle(10027, 0),
 	CleansedTitle(10027, 1),
-	ChickenTamer(10028, 0),
+	ChickenTamerTitle(10028, 0),
 	
 	NoviceDamagerTitle(11001, 0),
 	AdvancedDamagerTitle(11002, 0),

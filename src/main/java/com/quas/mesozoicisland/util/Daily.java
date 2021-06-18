@@ -276,10 +276,15 @@ public class Daily {
 				}
 			}
 
-			Dinosaur chicken = Dinosaur.getDinosaur(p.getIdLong(), DinoID.Chicken.getId());
-			if (p.getItemCount(ItemID.ChickenTamer) <= 0 && chicken != null && chicken.getLevel() >= 25) {
-				JDBC.addItem(p.getIdLong(), ItemID.ChickenTamer.getId());
-				channel.sendMessageFormat("%s, for training your %s to Level 25, you have earned the %s.", p.getAsMention(), chicken.getEffectiveName(), Item.getItem(ItemID.ChickenTamer).toString()).complete();
+			{ // Chicken Tamer title
+				Dinosaur dino = Dinosaur.getDinosaur(p.getIdLong(), DinoID.Chicken.getId());
+				ItemID title = ItemID.ChickenTamerTitle;
+				final int level = 25;
+
+				if (p.getItemCount(title) <= 0 && dino != null && dino.getLevel() >= level) {
+					JDBC.addItem(p.getIdLong(), title.getId());
+					channel.sendMessageFormat("%s, for training your %s to Level %,d, you have earned the %s.", p.getAsMention(), dino.getEffectiveName(), level, Item.getItem(title).toString()).complete();
+				}
 			}
 		}
 	}
