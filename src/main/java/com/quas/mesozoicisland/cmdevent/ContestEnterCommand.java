@@ -76,7 +76,11 @@ public class ContestEnterCommand implements ICommand {
 		}
 
 		Dinosaur contest = Dinosaur.getDinosaur(new Pair<Integer, Integer>(d.getDex(), DinosaurForm.Contest.getId()));
-		event.getChannel().sendMessageFormat("%s, you have chosen the %s as your representative for the contest.", event.getAuthor().getAsMention(), contest.getDinosaurName()).complete();
-		JDBC.setContest(p.getIdLong(), contest);
+		if (contest == null) {
+			event.getChannel().sendMessageFormat("%s, this dinosaur is banned from contests.", event.getAuthor().getAsMention()).complete();
+		} else {
+			event.getChannel().sendMessageFormat("%s, you have chosen the %s as your representative for the contest.", event.getAuthor().getAsMention(), contest.getDinosaurName()).complete();
+			JDBC.setContest(p.getIdLong(), contest);
+		}
 	}
 }
