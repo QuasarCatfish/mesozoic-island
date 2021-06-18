@@ -160,6 +160,8 @@ public enum ItemID {
 	DinosaurVoucher(501, 0),
 	DungeonTicket(502, 0),
 	PremiumDungeonTicket(503, 0),
+	ChickenVoucher(504, 0),
+	ChickenRankupVoucher(505, 0),
 
 	CopperRareGachaToken(601, 0),
 	BronzeRareGachaToken(602, 0),
@@ -209,6 +211,7 @@ public enum ItemID {
 	ValorousTitle(10026, 0),
 	CursedTitle(10027, 0),
 	CleansedTitle(10027, 1),
+	ChickenTamer(10028, 0),
 	
 	NoviceDamagerTitle(11001, 0),
 	AdvancedDamagerTitle(11002, 0),
