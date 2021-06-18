@@ -31,6 +31,8 @@ public enum ItemTag {
 	RecycleItem("#recycleitem"),
 	LostPage("#lostpage"),
 	Armature("#armature"),
+	RedeemDino("#redeemdino"),
+	RankupDino("#rankupdino"),
 
 	AchievementTitle("#achievementtitle"),
 	;
