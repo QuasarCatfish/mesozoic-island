@@ -73,6 +73,9 @@ public class ContestEnterCommand implements ICommand {
 		if (d == null) {
 			event.getChannel().sendMessageFormat("%s, I could not find the given dinosaur.", event.getAuthor().getAsMention()).complete();
 			return;
+		} else if (!d.getDiet().equals("Carnivore")) {
+			event.getChannel().sendMessageFormat("%s, %s is not a Carnivore. This contest is exclusie to Carnivore Dinosaurs only.", event.getAuthor().getAsMention(), d.getDinosaurName()).complete();
+			return;
 		}
 
 		Dinosaur contest = Dinosaur.getDinosaur(new Pair<Integer, Integer>(d.getDex(), DinosaurForm.Contest.getId()));
