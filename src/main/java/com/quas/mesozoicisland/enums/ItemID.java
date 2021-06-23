@@ -62,8 +62,8 @@ public enum ItemID {
 	YellowDungeonLocator(236, 0),
 	OrangeDungeonLocator(237, 0),
 	RedDungeonLocator(238, 0),
-	BlackDungeonLocator(239, 0),
-	GoldDungeonLocator(240, 0),
+	PurpleDungeonLocator(239, 0),
+	BlackDungeonLocator(240, 0),
 
 	RubyPendant(301, 0),
 	TopazPendant(302, 0),

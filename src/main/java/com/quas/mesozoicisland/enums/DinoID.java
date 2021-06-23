@@ -7,11 +7,11 @@ public enum DinoID {
 	WildChicken8(-18),
 	WildChicken7(-17),
 	WildChicken6(-16),
-	WildChicken5(-15),
-	WildChicken4(-14),
-	WildChicken3(-13),
-	WildChicken2(-12),
-	WildChicken1(-11),
+	PotionChicken(-15),
+	LocatorChicken(-14),
+	PrismaticConverterChicken(-13),
+	DungeonTicketChicken(-12),
+	WildChicken(-11),
 	Turkey(-10),
 
 	Chicken(0),
@@ -116,7 +116,7 @@ public enum DinoID {
 	Laosaurus(99),
 	Epanterias(100);
 
-	public static DinoID[] WILD_CHICKENS = new DinoID[] {WildChicken1, WildChicken2, WildChicken3, WildChicken4, WildChicken5, WildChicken6, WildChicken7, WildChicken8};
+	public static DinoID[] WILD_CHICKENS = new DinoID[] {WildChicken, DungeonTicketChicken, PrismaticConverterChicken, LocatorChicken, PotionChicken, WildChicken6, WildChicken7, WildChicken8};
 
 	private int dex;
 	private DinoID(int dex) {

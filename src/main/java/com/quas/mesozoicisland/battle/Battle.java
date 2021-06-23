@@ -291,7 +291,7 @@ public class Battle {
 							if (Event.isEventActive(EventType.LostPages)) {
 								
 							}
-							
+
 							// Dinosaur dopped halloween candy
 							if (Event.isEventActive(EventType.Halloween) && MesozoicRandom.nextInt(7) == 0) {
 								Item item = Item.getItem(Util.getRandomElement(Constants.HALLOWEEN_CANDY));
@@ -299,19 +299,65 @@ public class Battle {
 								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, item.getIdDmg(), 1);
 							}
 							
-							// Thanksgiving
-							if (Event.isEventActive(EventType.Thanksgiving)) {
-								if (defendTeam.getDinosaur().getDex() == DinoID.Turkey.getDex()) {
-									Item itemtoken = Item.getItem(ItemID.ThanksgivingToken);
-									int tokens = MesozoicRandom.nextInt(2, 5); // 2-4 tokens
-									
-									Item itemturkey = Item.getItem(ItemID.TurkeyLeg);
-									int turkeylegs = 2; // 2 turkey legs
-									
-									Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s and %,d %s.", attackTeam.getPlayer().getAsMention(), tokens, itemtoken.toString(tokens), turkeylegs, itemturkey.toString(turkeylegs)));
-									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, itemtoken.getIdDmg(), tokens);
-									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, itemturkey.getIdDmg(), turkeylegs);
+							// Negative ID Dinosaurs
+							if (defendTeam.getDinosaur().getDex() == DinoID.Turkey.getDex()) {
+								Item itemtoken = Item.getItem(ItemID.ThanksgivingToken);
+								int tokens = MesozoicRandom.nextInt(2, 5); // 2-4 tokens
+								
+								Item itemturkey = Item.getItem(ItemID.TurkeyLeg);
+								int turkeylegs = 2; // 2 turkey legs
+								
+								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s and %,d %s.", attackTeam.getPlayer().getAsMention(), tokens, itemtoken.toString(tokens), turkeylegs, itemturkey.toString(turkeylegs)));
+								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, itemtoken.getIdDmg(), tokens);
+								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, itemturkey.getIdDmg(), turkeylegs);
+							} else if (Util.contains(DinoID.WILD_CHICKENS, DinoID.of(defendTeam.getDinosaur().getDex()))) {
+								ItemID drop = null;
+								int dropAmount = 0;
+								int tokens = 1;
+
+								if (defendTeam.getDinosaur().getDex() == DinoID.WildChicken.getDex()) {
+									tokens = MesozoicRandom.nextInt(3) == 0 ? 3 : 2;
+								} else if (defendTeam.getDinosaur().getDex() == DinoID.DungeonTicketChicken.getDex()) {
+									drop = MesozoicRandom.nextInt(5) == 0 ? ItemID.PremiumDungeonTicket : ItemID.DungeonTicket;
+									dropAmount = 1;
+								} else if (defendTeam.getDinosaur().getDex() == DinoID.PrismaticConverterChicken.getDex()) {
+									drop = ItemID.PrismaticConverter;
+									dropAmount = 1;
+								} else if (defendTeam.getDinosaur().getDex() == DinoID.LocatorChicken.getDex()) {
+									switch (MesozoicRandom.nextInt(3)) {
+										case 0: {
+											drop = ItemID.DinosaurLocator;
+										} break;
+
+										case 1: {
+											drop = ItemID.EggLocator;
+										} break;
+
+										case 2: {
+											if (MesozoicRandom.nextInt(243) == 0) drop = MesozoicRandom.nextBoolean() ? ItemID.BlackDungeonLocator : ItemID.PurpleDungeonLocator;
+											else if (MesozoicRandom.nextInt(81) == 0) drop = ItemID.RedDungeonLocator;
+											else if (MesozoicRandom.nextInt(27) == 0) drop = ItemID.OrangeDungeonLocator;
+											else if (MesozoicRandom.nextInt(9) == 0) drop = ItemID.YellowDungeonLocator;
+											else if (MesozoicRandom.nextInt(3) == 0) drop = ItemID.GreenDungeonLocator;
+											else drop = ItemID.DungeonLocator;
+										} break;
+									}
+
+									dropAmount = 1;
+								} else if (defendTeam.getDinosaur().getDex() == DinoID.PotionChicken.getDex()) {
+									drop = MesozoicRandom.nextInt(100) == 0 ? ItemID.STierXPPotion : MesozoicRandom.nextInt(10) == 0 ? ItemID.ATierXPPotion : ItemID.BTierXPPotion;
+									dropAmount = 1;
 								}
+
+								if (drop == null) {
+									Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s.", attackTeam.getPlayer().getAsMention(), tokens, Item.getItem(ItemID.ChickenToken).toString(tokens)));
+								} else {
+									Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %,d %s and %,d %s.", attackTeam.getPlayer().getAsMention(), tokens, Item.getItem(ItemID.ChickenToken).toString(tokens), dropAmount, Item.getItem(drop).toString(dropAmount)));
+									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, drop.getId(), dropAmount);
+								}
+
+								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, ItemID.ChickenToken.getId(), tokens);
+								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, Stat.ChickensDefeated.getId(), 1);
 							}
 						}
 
