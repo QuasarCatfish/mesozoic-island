@@ -9,6 +9,7 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.objects.Element;
+import com.quas.mesozoicisland.objects.Item;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Util;
 
@@ -75,7 +76,15 @@ public class GuildPromoteCommand implements ICommand {
 		event.getChannel().sendMessageFormat("%s, you have promoted %s to guildmaster.", event.getAuthor().getAsMention(), p.getName()).complete();
 		event.getGuild().getTextChannelById(e.getGuild()).sendMessageFormat("%s has been promoted to guildmaster.", p.getAsMention()).complete();
 		Util.addRoleToMember(m, DiscordRole.Guildmaster.getIdLong());
-		if (p.getItemCount(ItemID.FormerGuildmasterTitle) > 0) JDBC.addItem(p.getIdLong(), ItemID.FormerGuildmasterTitle.getId(), -1);
 		JDBC.addItem(p.getIdLong(), ItemID.GuildmasterTitle.getId());
+
+		if (p.getItemCount(ItemID.FormerGuildmasterTitle) > 0) {
+			JDBC.addItem(p.getIdLong(), ItemID.FormerGuildmasterTitle.getId(), -1);
+
+			if (p.getTitle().equals(Item.getItem(ItemID.FormerGuildmasterTitle).toString())) {
+				Item title = Item.getItem(ItemID.GuildmasterTitle);
+				JDBC.setTitle(p.getIdLong(), title.getData(), Util.isInvertedTitle(title));
+			}
+		}
 	}
 }
