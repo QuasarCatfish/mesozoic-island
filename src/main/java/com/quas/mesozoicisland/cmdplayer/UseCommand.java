@@ -230,16 +230,20 @@ public class UseCommand implements ICommand {
 							JDBC.setCursed(p.getIdLong(), false);
 							JDBC.addItem(p.getIdLong(), ItemID.JasonToken.getId(), -Constants.ACCURSED_REMOVAL_QUESTS);
 
+							Item cursed = Item.getItem(ItemID.CursedTitle);
+							Item cleansed = Item.getItem(ItemID.CleansedTitle);
+
 							// remove cursed title and role
 							Member m = event.getMember();
-							JDBC.addItem(p.getIdLong(), ItemID.CursedTitle.getId(), -1);
+							JDBC.addItem(p.getIdLong(), cursed.getIdDmg(), -1);
 							Util.removeRoleFromMember(m, DiscordRole.Cursed.getIdLong());
 
 							// add cleansed title and role
-							JDBC.addItem(p.getIdLong(), ItemID.CleansedTitle.getId(), 1);
+							JDBC.addItem(p.getIdLong(), cleansed.getIdDmg(), 1);
 							Util.addRoleToMember(m, DiscordRole.Cleansed.getIdLong());
 
-							if (p.getTitle().equals("Cursed")) JDBC.setTitle(p.getIdLong(), "Cleansed", false);
+							// Update title
+							if (p.getTitle().equals(cursed.getData())) JDBC.setTitle(p.getIdLong(), cleansed.getData(), Util.isInvertedTitle(cleansed));
 						} else {
 							event.getChannel().sendMessageFormat("%s, you do not have an Accursed dinosaur.", p.getAsMention()).complete();
 						}
