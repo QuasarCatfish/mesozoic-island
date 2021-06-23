@@ -86,7 +86,7 @@ public class GuildDemoteCommand implements ICommand {
 		if (p.getItemCount(ItemID.GuildmasterTitle) > 0) {
 			JDBC.addItem(p.getIdLong(), ItemID.GuildmasterTitle.getId(), -1);
 
-			if (p.getTitle().equals(Item.getItem(ItemID.GuildmasterTitle).toString())) {
+			if (p.getTitle().equals(Item.getItem(ItemID.GuildmasterTitle).getData())) {
 				Item title = Item.getItem(ItemID.FormerGuildmasterTitle);
 				JDBC.setTitle(p.getIdLong(), title.getData(), Util.isInvertedTitle(title));
 			}

@@ -81,7 +81,7 @@ public class GuildPromoteCommand implements ICommand {
 		if (p.getItemCount(ItemID.FormerGuildmasterTitle) > 0) {
 			JDBC.addItem(p.getIdLong(), ItemID.FormerGuildmasterTitle.getId(), -1);
 
-			if (p.getTitle().equals(Item.getItem(ItemID.FormerGuildmasterTitle).toString())) {
+			if (p.getTitle().equals(Item.getItem(ItemID.FormerGuildmasterTitle).getData())) {
 				Item title = Item.getItem(ItemID.GuildmasterTitle);
 				JDBC.setTitle(p.getIdLong(), title.getData(), Util.isInvertedTitle(title));
 			}
