@@ -8,10 +8,10 @@ public enum ShopType {
 	Dungeon(0, Util.arr("Dungeons", "Dungeon"), "A shop to spend your Dungeon Tokens at.", true),
 	Title(1, Util.arr("Titles", "Title"), "A shop containing Title-related items.", true),
 	Eggs(2, Util.arr("Eggs", "Egg"), "A shop containing Egg-related items.", true),
-	Fragrances(3, Util.arr("Fragrances", "Fragrance", "Scents", "Scent"), "A shop containing various scents and fragrances.", true),
+	Fragrances(3, Util.arr("Fragrances", "Fragrance", "Frags", "Frag", "Scents", "Scent"), "A shop containing various scents and fragrances.", true),
 	Events(4, Util.arr("Events", "Event"), "A shop containing items for the current event.", true),
-	Quests(5, Util.arr("HeldItems", "HeldItem", "HI"), "A shop to buy held items with Quest Tokens or Charm Shards.", true),
-	Locators(6, Util.arr("Locators", "Locator", "Log"), "A shop to buy locators for dinosaurs, eggs, and dungeons.", true),
+	Quests(5, Util.arr("HeldItems", "HeldItem", "HI", "Held", "Hold"), "A shop to buy held items with Quest Tokens or Charm Shards.", true),
+	Locators(6, Util.arr("Locators", "Locator", "Loc"), "A shop to buy locators for dinosaurs, eggs, and dungeons.", true),
 	
 	Tutorial(-1, Util.arr(Util.generateRandomString(100)), "Tutorial shop!", false),
 	Debug(-2, Util.arr("Debug"), "Shop for debug items. Cannot be seen by users.", false),
