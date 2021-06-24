@@ -313,10 +313,10 @@ public class Battle {
 							} else if (Util.contains(DinoID.WILD_CHICKENS, DinoID.of(defendTeam.getDinosaur().getDex()))) {
 								ItemID drop = null;
 								int dropAmount = 0;
-								int tokens = 1;
+								int tokens = MesozoicRandom.nextInt(3) + 3;
 
 								if (defendTeam.getDinosaur().getDex() == DinoID.WildChicken.getDex()) {
-									tokens = MesozoicRandom.nextInt(3) == 0 ? 3 : 2;
+									tokens += MesozoicRandom.nextInt(3) + 3;
 								} else if (defendTeam.getDinosaur().getDex() == DinoID.DungeonTicketChicken.getDex()) {
 									drop = MesozoicRandom.nextInt(5) == 0 ? ItemID.PremiumDungeonTicket : ItemID.DungeonTicket;
 									dropAmount = 1;
