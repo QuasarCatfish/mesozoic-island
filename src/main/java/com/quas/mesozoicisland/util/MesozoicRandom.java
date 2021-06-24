@@ -242,13 +242,15 @@ public class MesozoicRandom {
 	}
 
 	public static Item nextWildHeldItem(int dex) {
-		
+		// Negative Dex Dinosaurs cannot hold an item.
+		if (dex < 0) return null;
+
 		// Event Held Items
 		if (Event.isEventActive(EventType.BoostedCharmShardChance) && MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {
 			return Item.getItem(ItemID.CharmShard);
 		}
 
-		if (Event.isEventActive(EventType.Thanksgiving) && dex != DinoID.Turkey.getDex()) {
+		if (Event.isEventActive(EventType.Thanksgiving)) {
 			return Item.getItem(ItemID.ThanksgivingToken);
 		}
 
