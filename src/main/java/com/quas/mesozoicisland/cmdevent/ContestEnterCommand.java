@@ -74,7 +74,7 @@ public class ContestEnterCommand implements ICommand {
 			event.getChannel().sendMessageFormat("%s, I could not find the given dinosaur.", event.getAuthor().getAsMention()).complete();
 			return;
 		} else if (!d.getDiet().equals("Carnivore")) {
-			event.getChannel().sendMessageFormat("%s, %s is not a Carnivore. This contest is exclusie to Carnivore Dinosaurs only.", event.getAuthor().getAsMention(), d.getDinosaurName()).complete();
+			event.getChannel().sendMessageFormat("%s, %s is not a Carnivore. This contest is exclusive to Carnivore Dinosaurs only.", event.getAuthor().getAsMention(), d.getDinosaurName()).complete();
 			return;
 		}
 
