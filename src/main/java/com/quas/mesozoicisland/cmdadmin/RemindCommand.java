@@ -58,7 +58,7 @@ public class RemindCommand implements ICommand {
 	@Override
 	public synchronized void run(MessageReceivedEvent event, String... args) {
 		long delta = Util.getTime(args[1]);
-		JDBC.addAction(ActionType.SendGuildMessage, MesozoicIsland.getProfessor().getIdLong(), event.getChannel().getIdLong(), event.getAuthor().getAsMention() + ", your reminder is here!\n" + Util.join(args, " ", 2, args.length), System.currentTimeMillis() + delta);
+		JDBC.addAction(ActionType.SendGuildMessage, MesozoicIsland.getProfessor().getIdLong(), event.getChannel().getIdLong(), event.getAuthor().getAsMention() + ", your reminder is here!\n" + Util.cleanQuotes(Util.join(args, " ", 2, args.length)), System.currentTimeMillis() + delta);
 		event.getChannel().sendMessageFormat("%s, you will be reminded in %s.", event.getAuthor().getAsMention(), Util.formatTime(delta)).complete();
 	}
 }
