@@ -553,10 +553,34 @@ public class UseCommand implements ICommand {
 				}
 
 			}
+			
+			else if (i.hasTag(ItemTag.RedeemDino)) {
+				Dinosaur redeem = Dinosaur.getDinosaur(Util.getDexForm(i.getData()));
 
-			else if (i.getId() == ItemID.DinosaurVoucher.getItemId()) {
-				sendUnimplemented(event);
-				SUCCESS = false;
+				if (redeem == null) {
+					event.getChannel().sendMessageFormat("%s, Error: Invalid Redeem Voucher", p.getAsMention()).complete();
+					SUCCESS = false;
+				} else {
+					event.getChannel().sendMessageFormat("%s, you have redeemed %s %s from the %s.", p.getAsMention(), Util.getArticle(redeem.getDinosaurName()), redeem.getDinosaurName(), i.toString()).complete();
+					JDBC.addDinosaur(event.getChannel(), p.getIdLong(), redeem.getIdPair());
+				}
+			}
+
+			else if (i.hasTag(ItemTag.RankupDino)) {
+				Dinosaur redeem = Dinosaur.getDinosaur(Util.getDexForm(i.getData()));
+				Dinosaur pDino = Dinosaur.getDinosaur(p.getIdLong(), Util.getDexForm(i.getData()));
+
+				if (redeem == null) {
+					event.getChannel().sendMessageFormat("%s, Error: Invalid Rankup Voucher", p.getAsMention()).complete();
+					SUCCESS = false;
+				} else if (pDino == null) {
+					event.getChannel().sendMessageFormat("%s, you cannot rankup your %s since you do not own one.", p.getAsMention(), redeem.getDinosaurName()).complete();
+					SUCCESS = false;
+				} else {
+					event.getChannel().sendMessageFormat("%s, you have ranked up your %s to **Rank %s**.", p.getAsMention(), pDino.getEffectiveName(), pDino.getNextRankString()).complete();
+					JDBC.rankupFree(p.getIdLong(), pDino.getIdPair());
+					JDBC.addItem(p.getIdLong(), Stat.DinosaursRankedUp.getId());
+				}
 			}
 
 			else if (i.hasTag(ItemTag.DungeonTicket)) {

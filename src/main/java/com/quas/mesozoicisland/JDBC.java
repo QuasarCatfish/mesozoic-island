@@ -610,6 +610,10 @@ public class JDBC {
 	public static synchronized boolean rankup(long pid, Pair<Integer, Integer> dino) {
 		return executeUpdate("update captures set rnk = rnk + 1, rp = rp - rnk where player = %d and dex = %d and form = %d;", pid, dino.getFirstValue(), dino.getSecondValue());
 	}
+
+	public static synchronized boolean rankupFree(long pid, Pair<Integer, Integer> dino) {
+		return executeUpdate("update captures set rnk = rnk + 1 where player = %d and dex = %d and form = %d;", pid, dino.getFirstValue(), dino.getSecondValue());
+	}
 	
 	public static synchronized boolean rankup(long pid, int rune) {
 		return executeUpdate("update runepouches set rnk = rnk + 1, rp = rp - rnk where player = %d and rune = %d", pid, rune);
