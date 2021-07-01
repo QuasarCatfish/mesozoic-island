@@ -94,8 +94,10 @@ public class InfoDinosaurCommand implements ICommand {
 				eb.addField("Element and Rarity", String.format("%s\n%s", d.getElement().getAsString(), d.getRarity().getAsString()), true);
 				
 				eb.addField("Level and Rank", String.format("Level %,d + %,d XP\nRank %s + %,d RP", d.getLevel(), d.getXpMinusLevel(), d.getRankString(), d.getRp()), true);
-				eb.addField("Battle Tier", String.format("%s + %,d%%", DinoMath.getBattleTier(d).toString(), DinoMath.getNextBattleTierPercent(d)), true);
-
+				long tierPercent = DinoMath.getNextBattleTierPercent(d);
+				if (tierPercent >= 0) eb.addField("Battle Tier", String.format("%s + %,d%%", DinoMath.getBattleTier(d).toString(), tierPercent), true);
+				else eb.addField("Battle Tier", String.format("%s", DinoMath.getBattleTier(d).toString()), true);
+				
 				boolean item = d.getItem() != null && d.getItem().getId() != 0;
 				boolean rune = d.getRune() != null && d.getRune().getId() != 0;
 				if (item && rune) {
