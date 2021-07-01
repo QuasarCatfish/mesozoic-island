@@ -83,7 +83,7 @@ public class RankupDinosaurCommand implements ICommand {
 
 		if (d == null) {
 			event.getChannel().sendMessageFormat("%s, this dinosaur does not exist.", event.getAuthor().getAsMention()).complete();
-		} else if (d.getRank() == Constants.MAX_RANK) {
+		} else if (d.getRank() >= Constants.MAX_RANK) {
 			event.getChannel().sendMessageFormat("%s, your %s is at the max rank and cannot rankup any further.", event.getAuthor().getAsMention(), d.getEffectiveName()).complete();
 		} else if (!d.canRankup() && (item == null || deltaItem > 0 || deltaDino > 0)) {
 			StringJoiner sj = new StringJoiner("\n");

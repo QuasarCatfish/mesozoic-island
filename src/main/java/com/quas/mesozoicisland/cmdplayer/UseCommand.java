@@ -576,6 +576,9 @@ public class UseCommand implements ICommand {
 				} else if (pDino == null) {
 					event.getChannel().sendMessageFormat("%s, you cannot rankup your %s since you do not own one.", p.getAsMention(), redeem.getDinosaurName()).complete();
 					SUCCESS = false;
+				} else if (pDino.getRank() >= Constants.MAX_RANK) {
+					event.getChannel().sendMessageFormat("%s, your %s is at the max rank and cannot rankup any further.", p.getAsMention(), pDino.getEffectiveName()).complete();
+					SUCCESS = false;
 				} else {
 					event.getChannel().sendMessageFormat("%s, you have ranked up your %s to **Rank %s**.", p.getAsMention(), pDino.getEffectiveName(), pDino.getNextRankString()).complete();
 					JDBC.rankupFree(p.getIdLong(), pDino.getIdPair());
