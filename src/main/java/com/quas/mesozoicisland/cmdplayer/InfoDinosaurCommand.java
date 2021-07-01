@@ -149,6 +149,7 @@ public class InfoDinosaurCommand implements ICommand {
 					eb.addField("Rank and RP", String.format("Rank %s + %,d RP\n(%,d RP to Rankup)", d.getRankString(), d.getRp(), d.getRpToRankup()), true);
 				}
 				
+				long tierPercent = DinoMath.getNextBattleTierPercent(d);
 				if (tierPercent >= 0) eb.addField("Battle Tier", String.format("%s + %,d%%", DinoMath.getBattleTier(d).toString(), tierPercent), true);
 				else eb.addField("Battle Tier", String.format("%s", DinoMath.getBattleTier(d).toString()), true);
 				eb.addField("Health", String.format("%,d (+%d%%)", d.getHealth(), d.getHealthMultiplier()), true);
