@@ -72,7 +72,7 @@ public enum AchievementTitle {
 
 	Veteran(ItemID.VeteranTitle, 365, Stat.DailiesClaimed, "claiming your daily for", "days"),
 	ChickenHunter(ItemID.ChickenHunterTitle, 200, Stat.ChickensDefeated, "defeating", "chickens"),
-	ChickenTamer(ItemID.ChickenTamerTitle, DinoID.Chicken, DinosaurForm.Standard, 25),
+	ChickenTamer(ItemID.ChickenTamerTitle, DinoID.Chicken, DinosaurForm.Standard, 30),
 	;
 
 	private boolean isDino;
