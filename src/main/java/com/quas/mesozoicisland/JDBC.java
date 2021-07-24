@@ -324,7 +324,7 @@ public class JDBC {
 		Scanner in = new Scanner(redeem.toLowerCase());
 		while (in.hasNext()) {
 			switch (in.next()) {
-			case "i": case "item":
+			case "i": case "item": case "sitem":
 				int itemid = in.nextInt();
 				long itemdmg = in.nextLong();
 				long count = in.hasNextLong() ? in.nextLong() : 1L;
