@@ -28,7 +28,7 @@ public interface ICommand {
 	public final String NICKNAME = "(([a-z0-9]| ){1,25})";
 	public final String ANY = "(.|\r|\n)";
 	public final String TIME = "((" + INTEGER + "[a-z])+)";
-	public final String YES = "(yes|yep|yeah|yea|ya|ye|mhm|y)";
+	public final String YES = "(yes|yep|yeah|yea|ya|ye|mhm|y|sure)";
 	public final String NO = "(no|nope|nah|na|n)";
 	public final String TEAM_NAME = "([a-z]([a-z0-9]){0,99})";
 	
