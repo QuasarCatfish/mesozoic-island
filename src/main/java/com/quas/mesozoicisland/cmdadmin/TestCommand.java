@@ -92,6 +92,11 @@ public class TestCommand implements ICommand {
 				event.getChannel().sendMessageFormat("%s, there are %,d commands.", event.getAuthor().getAsMention(), CommandManager.values().size()).complete();
 			} break;
 
+			case "pablo": {
+				for (int q = 1201; q <= 1212; q++) JDBC.addQuest(Constants.QUAS_ID, q);
+				event.getChannel().sendMessageFormat("Done").complete();
+			} break;
+
 			case "deletecontest": {
 				try (ResultSet res = JDBC.executeQuery("select * from captures where form = %d;", DinosaurForm.Contest.getId())) {
 					while (res.next()) {
