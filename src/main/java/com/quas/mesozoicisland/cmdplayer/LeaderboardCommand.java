@@ -202,9 +202,10 @@ public abstract class LeaderboardCommand implements ICommand {
 		DexHalloween(Util.arr("dex halloween"), "Dex Completion (Halloween)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Halloween.getId()),
 		DexThanksgiving(Util.arr("dex thanksgiving"), "Dex Completion (Thanksgiving)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Thanksgiving.getId()),
 		DexChaos(Util.arr("dex chaos"), "Dex Completion (Chaos)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Chaos.getId()),
-		DexMechanical(Util.arr("dex mechanical"), "Dex Completion (Mechanical)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Mechanical.getId()),
+		DexMechanical(Util.arr("dex mechanical", "dex mech"), "Dex Completion (Mechanical)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Mechanical.getId()),
 		DexStatue(Util.arr("dex statue"), "Dex Completion (Statue)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Statue.getId()),
-
+		DexFuel(Util.arr("dex fuel"), "Dex Completion (Fuel)", LeaderboardType.PlayerDexCount, null, DinosaurForm.Fuel.getId()),
+		
 		// Runes
 //		Runes(Util.arr("runes", "rune"), "Rune Count", LeaderboardType.PlayerRuneCount, null),
 		
@@ -216,8 +217,9 @@ public abstract class LeaderboardCommand implements ICommand {
 		LevelHalloween(Util.arr("level halloween", "lvl halloween", "lv halloween"), "Dinosaur Level (Halloween)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Halloween.getId()),
 		LevelThanksgiving(Util.arr("level thanksgiving", "lvl thanksgiving", "lv thanksgiving"), "Dinosaur Level (Thanksgiving)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Thanksgiving.getId()),
 		LevelChaos(Util.arr("level chaos", "lvl chaos", "lv chaos"), "Dinosaur Level (Chaos)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Chaos.getId()),
-		LevelMechanical(Util.arr("level mechanical", "lvl mechanical", "lv mechanical"), "Dinosaur Level (Mechanical)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Mechanical.getId()),
+		LevelMechanical(Util.arr("level mechanical", "lvl mechanical", "lv mechanical", "level mech", "lvl mech", "lv mech"), "Dinosaur Level (Mechanical)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Mechanical.getId()),
 		LevelStatue(Util.arr("level statue", "lvl statue", "lv statue"), "Dinosaur Level (Statue)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Statue.getId()),
+		LevelFuel(Util.arr("level fuel", "lvl fuel", "lv fuel"), "Dinosaur Level (Fuel)", LeaderboardType.DinosaurLevel, "form = " + DinosaurForm.Fuel.getId()),
 		
 		// Rank
 		Rank(Util.arr("rank"), "Dinosaur Rank", LeaderboardType.DinosaurRank, null),
@@ -229,6 +231,7 @@ public abstract class LeaderboardCommand implements ICommand {
 		RankChaos(Util.arr("rank chaos"), "Dinosaur Rank (Chaos)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Chaos.getId()),
 		RankMechancial(Util.arr("rank mechanical"), "Dinosaur Rank (Mechanical)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Mechanical.getId()),
 		RankStatue(Util.arr("rank statue"), "Dinosaur Rank (Statue)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Statue.getId()),
+		RankFuel(Util.arr("rank fuel"), "Dinosaur Rank (Fuel)", LeaderboardType.DinosaurRank, "form = " + DinosaurForm.Fuel.getId()),
 		
 		// Item
 		Money(Util.arr("money", "coins"), "Player Wealth", LeaderboardType.PlayerItem, null, ItemID.DinosaurCoin),

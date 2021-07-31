@@ -183,6 +183,7 @@ public class DinosaursCommand implements ICommand {
 		Chaos("Chaos", "chaos", "captures.form = " + DinosaurForm.Chaos.getId(), false),
 		Mechanical("Mechanical", "mechanical", "captures.form = " + DinosaurForm.Mechanical.getId(), false),
 		Statue("Statue", "statue", "captures.form = " + DinosaurForm.Statue.getId(), false),
+		Fuel("Fuel", "fuel", "captures.form = " + DinosaurForm.Fuel.getId(), false),
 		
 //		MinLevel
 //		MaxLevel
