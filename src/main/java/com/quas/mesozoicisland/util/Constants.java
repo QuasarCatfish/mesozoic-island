@@ -68,6 +68,8 @@ public class Constants {
 	public static final long MIN_DAMAGE = 25;
 	public static final int SCARE_BOOST = 10;
 	public static final int TERROR_BOOST = 50;
+	public static final int COMBUST_ATTACK_BOOST = 50;
+	public static final int COMBUST_DEFENSE_BOOST = 50;
 	public static final int MIN_BOOST = -75;
 	public static final int MAX_TURN_COUNT = 1000;
 	

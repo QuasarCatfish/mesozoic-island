@@ -266,6 +266,10 @@ public class Dinosaur implements Comparable<Dinosaur> {
 		return this;
 	}
 
+	private Dinosaur raiseAttack(int boost) {
+		return lowerAttack(-boost);
+	}
+
 	private Dinosaur lowerAttack(int boost) {
 		attackboost = Math.max(Constants.MIN_BOOST, attackboost - boost);
 		return this;
@@ -379,6 +383,15 @@ public class Dinosaur implements Comparable<Dinosaur> {
 			case Petrify:
 				int size = attacks.size();
 				for (int q = 0; 2 * q < size; q++) attacks.add(BattleAttack.Petrified);
+				break;
+			case Combust:
+				raiseAttack(Constants.COMBUST_ATTACK_BOOST);
+				lowerDefense(Constants.COMBUST_DEFENSE_BOOST);
+
+				int element = getElement().getId();
+				element &= Element.ALL.getId() ^ Element.EARTH.getId(); // remove earth
+				element |= Element.FIRE.getId(); // add fire
+				setElement(Element.of(element));
 				break;
 		}
 	}

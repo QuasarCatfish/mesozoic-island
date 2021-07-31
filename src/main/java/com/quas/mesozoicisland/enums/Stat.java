@@ -71,6 +71,20 @@ public enum Stat {
 	DarknessDescentDinosaursDefeated(32),
 	DarknessDescentFloorsCleared(33),
 	ChickensDefeated(39),
+
+	// Fossil Fuel Fighters Event
+	DefeatFuelPolyptychodon(40),
+	DefeatFuelCimoliasaurus(41),
+	DefeatFuelThespesius(42),
+	DefeatFuelHadrosaurus(43),
+	DefeatFuelDorygnathus(44),
+	DefeatFuelHypsilophodon(45),
+	DefeatFuelPlatecarpus(46),
+	DefeatFuelRhabdodon(47),
+	DefeatFuelOrnithostoma(48),
+	DefeatFuelDiopecephalus(49),
+	DefeatFuelRhomaleosaurus(50),
+	DefeatFuelColoborhynchus(51),
 	;
 	
 	private long id;

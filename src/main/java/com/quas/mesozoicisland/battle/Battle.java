@@ -241,8 +241,11 @@ public class Battle {
 						// Defeat Wild Dinosaur
 						if (defendTeam.getPlayer().getIdLong() == CustomPlayer.Wild.getIdLong()) {
 							
+							boolean pickup = attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0;
+							if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Fuel) pickup = false;
+
 							// Pick up dinosaur
-							if (attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0) {
+							if (pickup) {
 								String get = "";
 								int amount = 0;
 								
@@ -298,7 +301,56 @@ public class Battle {
 								Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1500, Constants.SPAWN_CHANNEL, String.format("%s, you found %s %s.", attackTeam.getPlayer().getAsMention(), Util.getArticle(item.toString()), item.toString()));
 								Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, item.getIdDmg(), 1);
 							}
-							
+
+							// Defeated Fuel Dinosaur
+							if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Fuel) {
+								Stat stat = null;
+								switch (DinoID.of(defend.getDinosaur().getDex())) {
+									case Polyptychodon:
+										stat = Stat.DefeatFuelPolyptychodon;
+										break;
+									case Cimoliasaurus:
+										stat = Stat.DefeatFuelCimoliasaurus;
+										break;
+									case Thespesius:
+										stat = Stat.DefeatFuelThespesius;
+										break;
+									case Hadrosaurus:
+										stat = Stat.DefeatFuelHadrosaurus;
+										break;
+									case Dorygnathus:
+										stat = Stat.DefeatFuelDorygnathus;
+										break;
+									case Hypsilophodon:
+										stat = Stat.DefeatFuelHypsilophodon;
+										break;
+									case Platecarpus:
+										stat = Stat.DefeatFuelPlatecarpus;
+										break;
+									case Rhabdodon:
+										stat = Stat.DefeatFuelRhabdodon;
+										break;
+									case Ornithostoma:
+										stat = Stat.DefeatFuelOrnithostoma;
+										break;
+									case Diopecephalus:
+										stat = Stat.DefeatFuelDiopecephalus;
+										break;
+									case Rhomaleosaurus:
+										stat = Stat.DefeatFuelRhomaleosaurus;
+										break;
+									case Coloborhynchus:
+										stat = Stat.DefeatFuelColoborhynchus;
+										break;
+									default:
+								}
+
+								if (stat != null) {
+									Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time, Constants.SPAWN_CHANNEL, String.format("**%s:** %s defeated a %s.", tier.toString(), attackTeam.getPlayer().getName(), defendTeam.getDinosaur().getDinosaurName()));
+									Action.addItemDelayed(attackTeam.getPlayer().getIdLong(), time + 1500, stat.getId(), 1);
+								}
+							}
+
 							// Negative ID Dinosaurs
 							if (defendTeam.getDinosaur().getDex() == DinoID.Turkey.getDex()) {
 								Item itemtoken = Item.getItem(ItemID.ThanksgivingToken);
@@ -779,27 +831,41 @@ public class Battle {
 			if (attack.getPlayer().getFragranceMoneyTimer() > System.currentTimeMillis()) {
 				amount += MesozoicRandom.nextCoinAmount() / 2;
 			}
+
 			Pair<Integer, Long> money = ItemID.DinosaurCoin.getId();
 			Action.addItemDelayed(attack.getPlayer().getIdLong(), time, money, amount);
-			return String.format("%s's %s searched around and found %,d %s on the battlefield.", attack.getPlayer().getAsMention(), attack.getDinosaur().getEffectiveName(), amount, Item.getItem(money).toString(amount));
+			sb.append(String.format("%s's %s searched around and found %,d %s on the battlefield.", attack.getPlayer().getAsMention(), attack.getDinosaur().getEffectiveName(), amount, Item.getItem(money).toString(amount)));
+			return sb.toString();
 		} else if (atkeff == BattleAttack.Petrify) {
 			if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Statue) {
-				return String.format("%s's %s attempts to petrify %s's %s, but it is already a statue.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName());
+				sb.append(String.format("%s's %s attempts to petrify %s's %s, but it is already a statue.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName()));
+				return sb.toString();
 			} else if (defend.getDinosaur().addEffect(StatusEffect.Petrify)) {
-				return String.format("%s's %s petrifies %s's %s.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName());
+				sb.append(String.format("%s's %s petrifies %s's %s.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), defend.getPlayer().getName(), defend.getDinosaur().getEffectiveName()));
+				return sb.toString();
 			} else {
 				atkeff = BattleAttack.AlwaysHitAttack;
 			}
 		} else if (atkeff == BattleAttack.Petrified) {
-			return String.format("%s's %s is petrified and cannot attack.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName());
+			sb.append(String.format("%s's %s is petrified and cannot attack.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName()));
+			return sb.toString();
 		} else if (atkeff == BattleAttack.Combust) {
-			if ((attack.getDinosaur().getElement().getId() & Element.EARTH.getId()) > 0) {
-				attack.getDinosaur().setElement(Element.of((attack.getDinosaur().getElement().getId() & (Element.ALL.getId() ^ Element.EARTH.getId())) | Element.FIRE.getId()));
-				return String.format("%s's %s combusts, replacing its Earth-element with the Fire-element.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName());
-			} else if ((attack.getDinosaur().getElement().getId() & Element.EARTH.getId()) > 0) {
-				atkeff = BattleAttack.AlwaysHitAttack;
+			// if less than half health
+			if (attack.getDinosaur().getCurrentHealth() * 2 <= attack.getDinosaur().getHealth()) {
+				// if not yet combusted
+				long atk = defend.getDinosaur().getAttack();
+				long def = defend.getDinosaur().getDefense();
+
+				if (attack.getDinosaur().addEffect(StatusEffect.Combust)) {
+					atk -= defend.getDinosaur().getAttack();
+					def -= defend.getDinosaur().getDefense();
+					sb.append(String.format("%s's %s combusts, changing its Earth-element to a Fire-element, raising its attack by %,d and lowering its defense by %,d.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), -atk, def));
+					return sb.toString();
+				} else {
+					atkeff = BattleAttack.BaseAttack;
+				}
 			} else {
-				return String.format("%s's %s tries to combust, but it fails.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName());
+				atkeff = BattleAttack.BaseAttack;
 			}
 		}
 
