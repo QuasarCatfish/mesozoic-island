@@ -190,6 +190,23 @@ public class Event {
 							e.printStackTrace();
 						}
 					}
+
+					// give 12 event quests
+					if (et == EventType.FossilFuelFighters) {
+						ItemID questbook = ItemID.QuestBook;
+						try (ResultSet res = JDBC.executeQuery("select * from bags where item = %d and dmg = %d;", questbook.getItemId(), questbook.getItemDamage())) {
+							while (res.next()) {
+								long player = res.getLong("bags.player");
+								if (player < CustomPlayer.getUpperLimit()) continue;
+
+								for (int quest = 1201; quest <= 1212; quest++) {
+									JDBC.addQuest(player, quest);
+								}
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+					}
 				}
 				
 				// End of Event

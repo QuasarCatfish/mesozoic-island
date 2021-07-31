@@ -7,7 +7,7 @@ public enum QuestType {
 	Curse("Jason", 2),
 	SecondaryElement("Midnight", 3),
 	DarknessDescent("Descent into Darkness", 4),
-	FossilFuelFighters("Birthday Party", 5);
+	FossilFuelFighters("Fossil Fuel Fighters", 5);
 
 	private String name;
 	private int id;
