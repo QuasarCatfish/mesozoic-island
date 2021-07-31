@@ -5,7 +5,7 @@ import com.quas.mesozoicisland.util.Util;
 public enum BattleAttack {
 	
 	// Attack
-	BaseAttack, AlwaysHitAttack, Critical, Rune, Heal10, Heal50, Miss, Scare, DoubleScare, Terror, CoinGrab, Petrify, Petrified,
+	BaseAttack, AlwaysHitAttack, Critical, Rune, Heal10, Heal50, Miss, Scare, DoubleScare, Terror, CoinGrab, Petrify, Petrified, Combust,
 	
 	// Battlefields
 	BattlefieldFog, BattlefieldEnchanted, BattlefieldLush, BattlefieldInhabited, BattlefieldImpendingDoom, BattlefieldPlagued, BattlefieldGlistening, BattlefieldDank,
@@ -17,6 +17,7 @@ public enum BattleAttack {
 	public static BattleAttack[] STANDARD_ATTACKS_HEAL = Util.arr(BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, Heal10, Critical, Critical, Rune);
 	public static BattleAttack[] STANDARD_ATTACKS_SCARE = Util.arr(BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, Scare, Critical, Critical, Rune);
 	public static BattleAttack[] STANDARD_ATTACKS_PETRIFY = Util.arr(BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, Petrify, Critical, Critical, Rune);
+	public static BattleAttack[] STANDARD_ATTACKS_COMBUST = Util.arr(BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, BaseAttack, Combust, Critical, Critical, Rune);
 	public static BattleAttack[] STANDARD_ATTACKS_LOW_ACCURACY = Util.arr(Miss, Miss, Miss, Miss, BaseAttack, BaseAttack, BaseAttack, BaseAttack, Critical, Rune);
 	
 	public static BattleAttack[] STANDARD_DEFENSE = Util.arr(BaseDefend, BaseDefend, BaseDefend, BaseDefend, BaseDefend, BaseDefend, BaseDefend, Block, Block, Dodge);

@@ -24,6 +24,10 @@ public class Element implements Comparable<Element> {
 
 	private Element() {}
 	
+	private Element(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -96,6 +100,8 @@ public class Element implements Comparable<Element> {
 	public static final Element WATER = Element.of(128);
 	public static final Element AIR = Element.of(256);
 	public static final Element CHAOS = Element.of(1024);
+	
+	public static final Element ALL = new Element(2047);
 
 	public static void refresh() {
 		elements.clear();

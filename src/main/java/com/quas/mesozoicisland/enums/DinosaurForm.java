@@ -23,6 +23,7 @@ public enum DinosaurForm {
 	Thanksgiving(1100, "Thanksgiving", "T", BattleAttack.STANDARD_ATTACKS_HEAL, BattleAttack.STANDARD_DEFENSE, DiscordEmote.getThanksgiving(true), DiscordEmote.getThanksgiving(false)),
 	Mechanical(1400, "Mechanical", "M", BattleAttack.STANDARD_ATTACKS, BattleAttack.STANDARD_DEFENSE_BLOCK, DiscordEmote.getMechanical(true), DiscordEmote.getMechanical(false)),
 	Statue(1500, "Statue", "S", BattleAttack.STANDARD_ATTACKS_PETRIFY, BattleAttack.STANDARD_DEFENSE, DiscordEmote.getStatue(true), DiscordEmote.getStatue(false)),
+	Fuel(1600, "Fuel", "F", BattleAttack.STANDARD_ATTACKS_COMBUST, BattleAttack.STANDARD_DEFENSE, null, null),
 
 	AllForms(Integer.MIN_VALUE, "All", Util.mult(Constants.ZERO_WIDTH_SPACE, 3), null, null, null, null),
 	AnyForms(Integer.MIN_VALUE + 1, "Any", Util.mult(Constants.ZERO_WIDTH_SPACE, 5), null, null, null, null);

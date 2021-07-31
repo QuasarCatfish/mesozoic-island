@@ -792,6 +792,15 @@ public class Battle {
 			}
 		} else if (atkeff == BattleAttack.Petrified) {
 			return String.format("%s's %s is petrified and cannot attack.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName());
+		} else if (atkeff == BattleAttack.Combust) {
+			if ((attack.getDinosaur().getElement().getId() & Element.EARTH.getId()) > 0) {
+				attack.getDinosaur().setElement(Element.of((attack.getDinosaur().getElement().getId() & (Element.ALL.getId() ^ Element.EARTH.getId())) | Element.FIRE.getId()));
+				return String.format("%s's %s combusts, replacing its Earth-element with the Fire-element.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName());
+			} else if ((attack.getDinosaur().getElement().getId() & Element.EARTH.getId()) > 0) {
+				atkeff = BattleAttack.AlwaysHitAttack;
+			} else {
+				return String.format("%s's %s tries to combust, but it fails.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName());
+			}
 		}
 
 		// Battlefield Charm
