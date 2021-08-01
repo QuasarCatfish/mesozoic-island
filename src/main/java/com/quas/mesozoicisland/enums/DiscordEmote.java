@@ -42,6 +42,9 @@ public class DiscordEmote {
 	public static DiscordEmote getStatue(boolean owned) {
 		return owned ? getEmote(849101439342870558L) : getEmote(849101439342084146L);
 	}
+	public static DiscordEmote getFuel(boolean owned) {
+		return owned ? getEmote(871184426418200576L) : getEmote(871184426539831306L);
+	}
 
 	private long id;
 	private DiscordEmote(long id) {
