@@ -155,7 +155,7 @@ public class MesozoicRandom {
 		} else if (e.isEventActive(EventType.CluckingNightmare) && Util.contains(DinoID.WILD_CHICKENS, DinoID.of(d.getDex()))) {
 			return d.getRarity().getSpecialCount();
 		} else if (e.isEventActive(EventType.FossilFuelFighters) && d.getDinosaurForm() == DinosaurForm.Fuel) {
-			return d.getRarity().getSpecialCount();
+			return (long)(Constants.FUEL_DINOSAUR_MULTIPLIER * d.getRarity().getSpecialCount());
 		} else {
 			return d.getRarity().getDinoCount();
 		}

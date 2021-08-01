@@ -52,6 +52,7 @@ public class Constants {
 	public static final double THANKSGIVING_DINOSAUR_MULTIPLIER = 0.2;
 	public static final double MECHANICAL_DINOSAUR_MULTIPLIER = 3;
 	public static final double STATUE_DINOSAUR_MULTIPLIER = 5;
+	public static final double FUEL_DINOSAUR_MULTIPLIER = 4;
 
 	// Spawn Item Multipliers
 	public static final int CHARM_SHARD_SPAWN_CHANCE = 10; // default 10 (10%)
