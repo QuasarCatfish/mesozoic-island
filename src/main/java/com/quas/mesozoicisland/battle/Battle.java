@@ -853,12 +853,12 @@ public class Battle {
 			// if less than half health
 			if (attack.getDinosaur().getCurrentHealth() * 2 <= attack.getDinosaur().getHealth()) {
 				// if not yet combusted
-				long atk = defend.getDinosaur().getAttack();
-				long def = defend.getDinosaur().getDefense();
+				long atk = attack.getDinosaur().getAttack();
+				long def = attack.getDinosaur().getDefense();
 
 				if (attack.getDinosaur().addEffect(StatusEffect.Combust)) {
-					atk -= defend.getDinosaur().getAttack();
-					def -= defend.getDinosaur().getDefense();
+					atk -= attack.getDinosaur().getAttack();
+					def -= attack.getDinosaur().getDefense();
 					sb.append(String.format("%s's %s combusts, changing its Earth-element to a Fire-element, raising its attack by %,d and lowering its defense by %,d.", attack.getPlayer().getName(), attack.getDinosaur().getEffectiveName(), -atk, def));
 					return sb.toString();
 				} else {
