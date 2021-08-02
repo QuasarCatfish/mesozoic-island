@@ -243,9 +243,11 @@ public class MesozoicRandom {
 		return hp;
 	}
 
-	public static Item nextWildHeldItem(int dex) {
+	public static Item nextWildHeldItem(Dinosaur d) {
 		// Negative Dex Dinosaurs cannot hold an item.
-		if (dex < 0) return null;
+		if (d.getDex() < 0) return null;
+		// Fuel dinosaurs cannot hold an item.
+		if (d.getDinosaurForm() == DinosaurForm.Fuel) return null;
 
 		// Event Held Items
 		if (Event.isEventActive(EventType.BoostedCharmShardChance) && MesozoicRandom.nextInt(Constants.CHARM_SHARD_SPAWN_CHANCE) == 0) {

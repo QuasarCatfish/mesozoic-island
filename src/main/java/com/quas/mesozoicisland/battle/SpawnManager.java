@@ -294,7 +294,7 @@ public class SpawnManager {
 			Dinosaur[] wild = new Dinosaur[MesozoicRandom.nextSpawnCount()];
 			for (int q = 0; q < wild.length; q++) {
 				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
-				wild[q].setItem(MesozoicRandom.nextWildHeldItem(wild[q].getDex()));
+				wild[q].setItem(MesozoicRandom.nextWildHeldItem(wild[q]));
 			}
 			wilds.put(tier, wild);
 			locations.put(tier, MesozoicRandom.nextLocation());
