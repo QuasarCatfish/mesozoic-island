@@ -704,6 +704,7 @@ public class UseCommand implements ICommand {
 					// Start Battle
 					Battle.markPlayerBattling(CustomPlayer.RaidChallenge.getIdLong(), true);
 					Battle.markPlayerBattling(p.getIdLong(), true);
+					JDBC.addItem(p.getIdLong(), Stat.BattlesEntered.getId());
 					JDBC.addItem(p.getIdLong(), Stat.RaidsAttempted.getId());
 					long time = b.start(0);
 					
@@ -716,6 +717,7 @@ public class UseCommand implements ICommand {
 						String prize = RaidReward.randomReward();
 						Action.sendDelayedMessage(MesozoicIsland.getAssistant().getIdLong(), time + 1_000, Constants.SPAWN_CHANNEL, String.format("%s, you find these rewards from the %s:\n%s", p.getAsMention(), raid.getEffectiveName(), JDBC.getRedeemMessage(prize)));
 						Action.addRedeemDelayed(MesozoicIsland.getAssistant().getIdLong(), p.getIdLong(), time + 1_000, prize);
+						Action.addItemDelayed(p.getIdLong(), time + 1_000, Stat.BattlesWon.getId(), 1);
 						Action.addItemDelayed(p.getIdLong(), time + 1_000, Stat.RaidsDefeated.getId(), 1);
 					}
 					
