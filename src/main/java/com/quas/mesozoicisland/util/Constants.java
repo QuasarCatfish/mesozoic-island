@@ -53,7 +53,8 @@ public class Constants {
 	public static final double MECHANICAL_DINOSAUR_MULTIPLIER = 3;
 	public static final double STATUE_DINOSAUR_MULTIPLIER = 5;
 	public static final double FUEL_DINOSAUR_MULTIPLIER = 4;
-
+	public static final int BOOSTED_RARE_SPAWNS_REROLL_COUNT = 2;
+	
 	// Spawn Item Multipliers
 	public static final int CHARM_SHARD_SPAWN_CHANCE = 10; // default 10 (10%)
 
@@ -92,7 +93,7 @@ public class Constants {
 	public static final long MIN_TIME_FOR_NEW_SPAWN = TimeUnit.SECONDS.toMillis(30); // default 30
 	public static final int MIN_SPAWN_COUNT = 1; // default 1
 	public static final int MAX_SPAWN_COUNT = 3; // default 3
-	
+
 	// Eggs
 	public static boolean SPAWN_EGGS = true;
 	public static boolean UPDATE_EGG_HP = true;

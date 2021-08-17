@@ -293,7 +293,9 @@ public class SpawnManager {
 		for (BattleTier tier : BattleTier.getBattleTiers()) {
 			Dinosaur[] wild = new Dinosaur[MesozoicRandom.nextSpawnCount()];
 			for (int q = 0; q < wild.length; q++) {
-				wild[q] = MesozoicRandom.nextDinosaur(tier.getRerollCount()).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
+				int reroll = tier.getRerollCount();
+				if (Event.isEventActive(EventType.BoostedRareSpawns)) reroll += Constants.BOOSTED_RARE_SPAWNS_REROLL_COUNT;
+				wild[q] = MesozoicRandom.nextDinosaur(reroll).setLevel(tier.getRandomLevel()).addBoost(tier.getBoost());
 				wild[q].setItem(MesozoicRandom.nextWildHeldItem(wild[q]));
 			}
 			wilds.put(tier, wild);
