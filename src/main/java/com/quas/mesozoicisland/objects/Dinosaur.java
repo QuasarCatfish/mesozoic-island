@@ -27,6 +27,7 @@ public class Dinosaur implements Comparable<Dinosaur> {
 
 	private int dex;
 	private int form;
+	private DinosaurForm dinosaurForm;
 	private String dinoname;
 	private Element element;
 	private Rarity rarity;
@@ -73,15 +74,16 @@ public class Dinosaur implements Comparable<Dinosaur> {
 	}
 	
 	public DinosaurForm getDinosaurForm() {
-		return DinosaurForm.of(form);
+		if (dinosaurForm == null) dinosaurForm = DinosaurForm.of(form);
+		return dinosaurForm;
 	}
 	
 	public String getFormSymbol() {
-		return DinosaurForm.of(form).getSymbol();
+		return getDinosaurForm().getSymbol();
 	}
 	
 	public String getFormName() {
-		return DinosaurForm.of(form).getName();
+		return getDinosaurForm().getName();
 	}
 	
 	public String getId() {

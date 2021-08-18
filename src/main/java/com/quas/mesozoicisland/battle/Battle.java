@@ -243,6 +243,7 @@ public class Battle {
 							
 							boolean pickup = attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0;
 							if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Fuel) pickup = false;
+							if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Invalid) pickup = false;
 
 							// Pick up dinosaur
 							if (pickup) {
