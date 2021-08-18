@@ -242,8 +242,8 @@ public class Battle {
 						if (defendTeam.getPlayer().getIdLong() == CustomPlayer.Wild.getIdLong()) {
 							
 							boolean pickup = attackTeam.getPlayer().getIdLong() > CustomPlayer.getUpperLimit() && defendTeam.hasDinosaur() && defendTeam.getDinosaur().getDex() > 0;
-							if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Fuel) pickup = false;
-							if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Invalid) pickup = false;
+							if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Fuel) pickup = false;
+							if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Invalid) pickup = false;
 
 							// Pick up dinosaur
 							if (pickup) {
@@ -253,7 +253,7 @@ public class Battle {
 								// crystal pickup or otherwise
 								if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Mechanical) {
 									Item item = Item.getItem(ItemID.MechanicalComponent);
-									amount = MesozoicRandom.nextInt(defend.getDinosaur().getRarity().getId() % 20, 2 * (defend.getDinosaur().getRarity().getId() % 20));
+									amount = MesozoicRandom.nextInt(defendTeam.getDinosaur().getRarity().getId() % 20, 2 * (defendTeam.getDinosaur().getRarity().getId() % 20));
 									get = String.format("%s picks up %,d %s", attackTeam.getPlayer().getName(), amount, item.toString(amount));
 								} else if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Statue) {
 									Item item = Item.getItem(ItemID.EnchantedClay);
@@ -304,9 +304,9 @@ public class Battle {
 							}
 
 							// Defeated Fuel Dinosaur
-							if (defend.getDinosaur().getDinosaurForm() == DinosaurForm.Fuel) {
+							if (defendTeam.getDinosaur().getDinosaurForm() == DinosaurForm.Fuel) {
 								Stat stat = null;
-								switch (DinoID.of(defend.getDinosaur().getDex())) {
+								switch (DinoID.of(defendTeam.getDinosaur().getDex())) {
 									case Polyptychodon:
 										stat = Stat.DefeatFuelPolyptychodon;
 										break;
