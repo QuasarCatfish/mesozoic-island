@@ -1,7 +1,6 @@
 package com.quas.mesozoicisland.objects;
 
 import java.awt.Color;
-import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,7 +13,6 @@ import com.quas.mesozoicisland.enums.ItemID;
 import com.quas.mesozoicisland.enums.Stat;
 import com.quas.mesozoicisland.util.Constants;
 import com.quas.mesozoicisland.util.DinoMath;
-import com.quas.mesozoicisland.util.DinosaurLicense;
 import com.quas.mesozoicisland.util.Pair;
 import com.quas.mesozoicisland.util.Util;
 
@@ -328,10 +326,6 @@ public class Player {
 			e.printStackTrace();
 		}
 		return 0;
-	}
-	
-	public File getTrainerLicense() {
-		return DinosaurLicense.of(this);
 	}
 	
 	////////////////////////////////////////////

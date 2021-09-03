@@ -9,6 +9,7 @@ import com.quas.mesozoicisland.enums.DiscordChannel;
 import com.quas.mesozoicisland.enums.DiscordRole;
 import com.quas.mesozoicisland.objects.Player;
 import com.quas.mesozoicisland.util.Constants;
+import com.quas.mesozoicisland.util.DinosaurLicense;
 import com.quas.mesozoicisland.util.Util;
 
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -61,7 +62,8 @@ public class LicenseCommand implements ICommand {
 		Player p = Player.getPlayer(event.getAuthor().getIdLong());
 		if (p == null) return;
 
-		File f = p.getTrainerLicense();
+		File f = DinosaurLicense.of2(p, event.getMember());
+
 		EmbedBuilder eb = new EmbedBuilder();
 		eb.setTitle(String.format("%s's Mesozoic Island License", p.getName()));
 		eb.setColor(Constants.COLOR);
