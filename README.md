@@ -4,7 +4,7 @@
 
 Welcome, trainers, to Mesozoic Island, an island inhabited by hundreds of dinosaur species! I am the resident researcher on this island, Professor Megan Lowe, and it is my dream to discover all the secrets and mysteries that this island holds.
 My assistant is F-055「ELISE」, but most people just call her Elise. She's a robot that helps me and all of you a whole bunch, even if you don't realize it.
-A lot of information about Mesozoic Island can be found on various pages on our wiki. Check it out at https://mesozoic-island.amazingwikis.org/wiki/Main_Page.
+A lot of information about Mesozoic Island can be found on various pages on our wiki. Check it out at https://mesozoic-island.amazingwikis.org/wiki/Mesozoic_Island_Wiki.
 
 ## Helpful Commands:
 * Using the `help` command lists all usable commands. You can also use this command to learn more about other commands.
